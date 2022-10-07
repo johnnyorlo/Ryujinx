@@ -9,6 +9,11 @@ namespace Ryujinx.Graphics.Shader.Translation.Optimizations
     {
         public static void RunPass(BasicBlock[] blocks, ShaderConfig config)
         {
+            for (int blkIndex = 0; blkIndex < blocks.Length; blkIndex++)
+            {
+                XmadOptimizer.RunPass(blocks[blkIndex], config);
+            }
+
             RunOptimizationPasses(blocks);
 
             // Those passes are looking for specific patterns and only needs to run once.
@@ -279,7 +284,7 @@ namespace Ryujinx.Graphics.Shader.Translation.Optimizations
             return modified;
         }
 
-        private static void RemoveNode(BasicBlock block, LinkedListNode<INode> llNode)
+        public static void RemoveNode(BasicBlock block, LinkedListNode<INode> llNode)
         {
             // Remove a node from the nodes list, and also remove itself
             // from all the use lists on the operands that this node uses.
