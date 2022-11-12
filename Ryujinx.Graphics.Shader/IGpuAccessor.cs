@@ -174,7 +174,7 @@ namespace Ryujinx.Graphics.Shader
         /// <returns>True if the shader translator can assume that the constant buffer contains the base IDs, false otherwise</returns>
         bool QueryHasConstantBufferDrawParameters()
         {
-            return false;
+            return true;
         }
 
         /// <summary>

@@ -64,42 +64,10 @@ namespace Ryujinx.Graphics.Shader.Translation.Optimizations
 
             config.SetUsedStorageBuffer(storageIndex, isWrite);
 
-            Operand GetStorageOffset()
-            {
-                Operand addrLow = operation.GetSource(0);
-
-                Operand baseAddrLow = Cbuf(0, GetStorageCbOffset(config.Stage, storageIndex));
-
-                Operand baseAddrTrunc = Local();
-
-                Operand alignMask = Const(-config.GpuAccessor.QueryHostStorageBufferOffsetAlignment());
-
-                Operation andOp = new Operation(Instruction.BitwiseAnd, baseAddrTrunc, baseAddrLow, alignMask);
-
-                node.List.AddBefore(node, andOp);
-
-                Operand byteOffset = Local();
-                Operation subOp = new Operation(Instruction.Subtract, byteOffset, addrLow, baseAddrTrunc);
-
-                node.List.AddBefore(node, subOp);
-
-                if (isStg16Or8)
-                {
-                    return byteOffset;
-                }
-
-                Operand wordOffset = Local();
-                Operation shrOp = new Operation(Instruction.ShiftRightU32, wordOffset, byteOffset, Const(2));
-
-                node.List.AddBefore(node, shrOp);
-
-                return wordOffset;
-            }
-
             Operand[] sources = new Operand[operation.SourcesCount];
 
             sources[0] = Const(storageIndex);
-            sources[1] = GetStorageOffset();
+            sources[1] = GetStorageOffset(node, config, storageIndex, operation.GetSource(0), isStg16Or8);
 
             for (int index = 2; index < operation.SourcesCount; index++)
             {
@@ -142,6 +110,96 @@ namespace Ryujinx.Graphics.Shader.Translation.Optimizations
             node.List.Remove(oldNode);
 
             return node;
+        }
+
+        private static Operand GetStorageOffset(
+            LinkedListNode<INode> node,
+            ShaderConfig config,
+            int storageIndex,
+            Operand addrLow,
+            bool isStg16Or8)
+        {
+            int baseAddressCbOffset = GetStorageCbOffset(config.Stage, storageIndex);
+
+            (Operand byteOffset, int constantOffset) = GetStorageOffset(addrLow, baseAddressCbOffset);
+
+            if (byteOffset == null)
+            {
+                Operand baseAddrLow = Cbuf(0, baseAddressCbOffset);
+                Operand baseAddrTrunc = Local();
+
+                Operand alignMask = Const(-config.GpuAccessor.QueryHostStorageBufferOffsetAlignment());
+
+                Operation andOp = new Operation(Instruction.BitwiseAnd, baseAddrTrunc, baseAddrLow, alignMask);
+
+                node.List.AddBefore(node, andOp);
+
+                Operand offset = Local();
+                Operation subOp = new Operation(Instruction.Subtract, offset, addrLow, baseAddrTrunc);
+
+                node.List.AddBefore(node, subOp);
+
+                byteOffset = offset;
+            }
+            else if (constantOffset != 0)
+            {
+                Operand offset = Local();
+                Operation addOp = new Operation(Instruction.Add, offset, byteOffset, Const(constantOffset));
+
+                node.List.AddBefore(node, addOp);
+
+                byteOffset = offset;
+            }
+
+            if (isStg16Or8)
+            {
+                return byteOffset;
+            }
+
+            Operand wordOffset = Local();
+            Operation shrOp = new Operation(Instruction.ShiftRightU32, wordOffset, byteOffset, Const(2));
+
+            node.List.AddBefore(node, shrOp);
+
+            return wordOffset;
+        }
+
+        private static (Operand, int) GetStorageOffset(Operand address, int baseAddressCbOffset)
+        {
+            (address, int constantOffset) = GetStorageConstantOffset(address);
+
+            if (!(address.AsgOp is Operation offsetAdd) || offsetAdd.Inst != Instruction.Add)
+            {
+                return (null, 0);
+            }
+
+            Operand src1 = offsetAdd.GetSource(0);
+            Operand src2 = offsetAdd.GetSource(1);
+
+            if (src2.Type != OperandType.ConstantBuffer || src2.GetCbufSlot() != 0 || src2.GetCbufOffset() != baseAddressCbOffset)
+            {
+                return (null, 0);
+            }
+
+            return (src1, constantOffset);
+        }
+
+        private static (Operand, int) GetStorageConstantOffset(Operand address)
+        {
+            if (!(address.AsgOp is Operation offsetAdd) || offsetAdd.Inst != Instruction.Add)
+            {
+                return (address, 0);
+            }
+
+            Operand src1 = offsetAdd.GetSource(0);
+            Operand src2 = offsetAdd.GetSource(1);
+
+            if (src2.Type != OperandType.Constant)
+            {
+                return (address, 0);
+            }
+
+            return (src1, src2.Value);
         }
 
         private static LinkedListNode<INode> ReplaceLdgWithLdc(LinkedListNode<INode> node, ShaderConfig config, int storageIndex)
