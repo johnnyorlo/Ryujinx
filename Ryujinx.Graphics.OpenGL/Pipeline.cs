@@ -27,7 +27,6 @@ namespace Ryujinx.Graphics.OpenGL
         private IntPtr _indexBaseOffset;
 
         private DrawElementsType _elementsType;
-
         private PrimitiveType _primitiveType;
 
         private int _stencilFrontMask;
@@ -70,9 +69,11 @@ namespace Ryujinx.Graphics.OpenGL
         private readonly BufferHandle[] _tfbs;
         private readonly BufferRange[] _tfbTargets;
 
+        private readonly BindlessManager _bindlessManager;
+
         private ColorF _blendConstant;
 
-        internal Pipeline()
+        internal Pipeline(OpenGLRenderer renderer)
         {
             _drawTexture = new DrawTextureEmulation();
             _rasterizerDiscard = false;
@@ -89,6 +90,8 @@ namespace Ryujinx.Graphics.OpenGL
 
             _tfbs = new BufferHandle[Constants.MaxTransformFeedbackBuffers];
             _tfbTargets = new BufferRange[Constants.MaxTransformFeedbackBuffers];
+
+            _bindlessManager = new BindlessManager(renderer);
         }
 
         public void Initialize(OpenGLRenderer renderer)
@@ -807,6 +810,11 @@ namespace Ryujinx.Graphics.OpenGL
             }
         }
 
+        public void SetBindlessTexture(int textureId, ITexture texture, int samplerId, ISampler sampler)
+        {
+            _bindlessManager.Add(textureId, texture, samplerId, sampler);
+        }
+
         public void SetBlendState(int index, BlendDescriptor blend)
         {
             if (_advancedBlendEnable)
@@ -1339,7 +1347,6 @@ namespace Ryujinx.Graphics.OpenGL
                 _unit0Sampler = glSampler;
             }
         }
-
 
         public void SetTransformFeedbackBuffers(ReadOnlySpan<BufferRange> buffers)
         {

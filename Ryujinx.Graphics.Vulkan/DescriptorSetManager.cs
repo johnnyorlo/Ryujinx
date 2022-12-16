@@ -43,6 +43,7 @@ namespace Ryujinx.Graphics.Vulkan
                     var descriptorPoolCreateInfo = new DescriptorPoolCreateInfo()
                     {
                         SType = StructureType.DescriptorPoolCreateInfo,
+                        Flags = DescriptorPoolCreateFlags.DescriptorPoolCreateUpdateAfterBindBit,
                         MaxSets = maxSets,
                         PoolSizeCount = (uint)poolSizes.Length,
                         PPoolSizes = pPoolsSize

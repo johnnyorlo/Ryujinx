@@ -614,21 +614,13 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 });
             }
 
-            bool isArray   = (texOp.Type & SamplerType.Array) != 0;
-            bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
+            bool isArray = (texOp.Type & SamplerType.Array) != 0;
 
             int srcIndex = isBindless ? 1 : 0;
 
             SpvInstruction Src(AggregateType type)
             {
                 return context.Get(type, texOp.GetSource(srcIndex++));
-            }
-
-            SpvInstruction index = null;
-
-            if (isIndexed)
-            {
-                index = Src(AggregateType.S32);
             }
 
             int coordsCount = texOp.Type.GetDimensions();
@@ -703,21 +695,13 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 return GetZeroOperationResult(context, texOp, componentType, isVector: true);
             }
 
-            bool isArray   = (texOp.Type & SamplerType.Array) != 0;
-            bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
+            bool isArray = (texOp.Type & SamplerType.Array) != 0;
 
             int srcIndex = isBindless ? 1 : 0;
 
             SpvInstruction Src(AggregateType type)
             {
                 return context.Get(type, texOp.GetSource(srcIndex++));
-            }
-
-            SpvInstruction index = null;
-
-            if (isIndexed)
-            {
-                index = Src(AggregateType.S32);
             }
 
             int coordsCount = texOp.Type.GetDimensions();
@@ -743,7 +727,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 pCoords = Src(AggregateType.S32);
             }
 
-            pCoords = ScalingHelpers.ApplyScaling(context, texOp, pCoords, intCoords: true, isBindless, isIndexed, isArray, pCount);
+            pCoords = ScalingHelpers.ApplyScaling(context, texOp, pCoords, intCoords: true, isBindless, isArray, pCount);
 
             (var imageType, var imageVariable) = context.Images[new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format)];
 
@@ -769,21 +753,13 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 return OperationResult.Invalid;
             }
 
-            bool isArray   = (texOp.Type & SamplerType.Array)   != 0;
-            bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
+            bool isArray = (texOp.Type & SamplerType.Array) != 0;
 
             int srcIndex = isBindless ? 1 : 0;
 
             SpvInstruction Src(AggregateType type)
             {
                 return context.Get(type, texOp.GetSource(srcIndex++));
-            }
-
-            SpvInstruction index = null;
-
-            if (isIndexed)
-            {
-                index = Src(AggregateType.S32);
             }
 
             int coordsCount = texOp.Type.GetDimensions();
@@ -988,8 +964,6 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             bool isBindless = (texOp.Flags & TextureFlags.Bindless) != 0;
 
-            bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
-
             // TODO: Bindless texture support. For now we just return 0.
             if (isBindless)
             {
@@ -1001,13 +975,6 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             SpvInstruction Src(AggregateType type)
             {
                 return context.Get(type, texOp.GetSource(srcIndex++));
-            }
-
-            SpvInstruction index = null;
-
-            if (isIndexed)
-            {
-                index = Src(AggregateType.S32);
             }
 
             int pCount = texOp.Type.GetDimensions();
@@ -1477,7 +1444,6 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             bool hasOffsets     = (texOp.Flags & TextureFlags.Offsets)     != 0;
 
             bool isArray       = (texOp.Type & SamplerType.Array)       != 0;
-            bool isIndexed     = (texOp.Type & SamplerType.Indexed)     != 0;
             bool isMultisample = (texOp.Type & SamplerType.Multisample) != 0;
             bool isShadow      = (texOp.Type & SamplerType.Shadow)      != 0;
 
@@ -1502,13 +1468,6 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             SpvInstruction Src(AggregateType type)
             {
                 return context.Get(type, texOp.GetSource(srcIndex++));
-            }
-
-            SpvInstruction index = null;
-
-            if (isIndexed)
-            {
-                index = Src(AggregateType.S32);
             }
 
             int coordsCount = texOp.Type.GetDimensions();
@@ -1557,7 +1516,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             }
 
             SpvInstruction pCoords = AssemblePVector(pCount);
-            pCoords = ScalingHelpers.ApplyScaling(context, texOp, pCoords, intCoords, isBindless, isIndexed, isArray, pCount);
+            pCoords = ScalingHelpers.ApplyScaling(context, texOp, pCoords, intCoords, isBindless, isArray, pCount);
 
             SpvInstruction AssembleDerivativesVector(int count)
             {
@@ -1779,15 +1738,6 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 return new OperationResult(AggregateType.S32, context.Constant(context.TypeS32(), 0));
             }
 
-            bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
-
-            SpvInstruction index = null;
-
-            if (isIndexed)
-            {
-                index = context.GetS32(texOp.GetSource(0));
-            }
-
             var meta = new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format);
 
             (var imageType, var sampledImageType, var sampledImageVariable) = context.Samplers[meta];
@@ -1817,7 +1767,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
                 if (hasLod)
                 {
-                    int lodSrcIndex = isBindless || isIndexed ? 1 : 0;
+                    int lodSrcIndex = isBindless ? 1 : 0;
                     var lod = context.GetS32(operation.GetSource(lodSrcIndex));
                     result = context.ImageQuerySizeLod(resultType, image, lod);
                 }
@@ -1833,7 +1783,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
                 if (texOp.Index < 2 || (type & SamplerType.Mask) == SamplerType.Texture3D)
                 {
-                    result = ScalingHelpers.ApplyUnscaling(context, texOp.WithType(type), result, isBindless, isIndexed);
+                    result = ScalingHelpers.ApplyUnscaling(context, texOp.WithType(type), result, isBindless);
                 }
 
                 return new OperationResult(AggregateType.S32, result);
