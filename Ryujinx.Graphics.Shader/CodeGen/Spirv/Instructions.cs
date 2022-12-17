@@ -603,25 +603,16 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             var componentType = texOp.Format.GetComponentType();
 
-            // TODO: Bindless texture support. For now we just return 0/do nothing.
-            if (isBindless)
-            {
-                return new OperationResult(componentType, componentType switch
-                {
-                    AggregateType.S32 => context.Constant(context.TypeS32(), 0),
-                    AggregateType.U32 => context.Constant(context.TypeU32(), 0u),
-                    _ => context.Constant(context.TypeFP32(), 0f),
-                });
-            }
-
             bool isArray = (texOp.Type & SamplerType.Array) != 0;
 
-            int srcIndex = isBindless ? 1 : 0;
+            int srcIndex = 0;
 
             SpvInstruction Src(AggregateType type)
             {
                 return context.Get(type, texOp.GetSource(srcIndex++));
             }
+
+            SpvInstruction bindlessHandle = isBindless ? Src(AggregateType.S32) : null;
 
             int coordsCount = texOp.Type.GetDimensions();
 
@@ -648,9 +639,19 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             SpvInstruction value = Src(componentType);
 
-            (var imageType, var imageVariable) = context.Images[new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format)];
+            SpvInstruction imageVariable;
 
-            var image = context.Load(imageType, imageVariable);
+            if (isBindless)
+            {
+                (_, var bindlessImagePointerType, var bindlessImageVariable) = context.BindlessImages[texOp.Type];
+
+                var imageIndex = GenerateBindlessTextureHandleToIndex(context, bindlessHandle);
+                imageVariable = context.AccessChain(bindlessImagePointerType, bindlessImageVariable, imageIndex);
+            }
+            else
+            {
+                (_, imageVariable) = context.Images[new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format)];
+            }
 
             SpvInstruction resultType = context.GetType(componentType);
             SpvInstruction imagePointerType = context.TypePointer(StorageClass.Image, resultType);
@@ -689,20 +690,16 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             var componentType = texOp.Format.GetComponentType();
 
-            // TODO: Bindless texture support. For now we just return 0/do nothing.
-            if (isBindless)
-            {
-                return GetZeroOperationResult(context, texOp, componentType, isVector: true);
-            }
-
             bool isArray = (texOp.Type & SamplerType.Array) != 0;
 
-            int srcIndex = isBindless ? 1 : 0;
+            int srcIndex = 0;
 
             SpvInstruction Src(AggregateType type)
             {
                 return context.Get(type, texOp.GetSource(srcIndex++));
             }
+
+            SpvInstruction bindlessHandle = isBindless ? Src(AggregateType.S32) : null;
 
             int coordsCount = texOp.Type.GetDimensions();
 
@@ -729,9 +726,24 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             pCoords = ScalingHelpers.ApplyScaling(context, texOp, pCoords, intCoords: true, isBindless, isArray, pCount);
 
-            (var imageType, var imageVariable) = context.Images[new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format)];
+            SpvInstruction image;
 
-            var image = context.Load(imageType, imageVariable);
+            if (isBindless)
+            {
+                (var imageType, var imagePointerType, var imageVariable) = context.BindlessImages[texOp.Type];
+
+                var imageIndex = GenerateBindlessTextureHandleToIndex(context, bindlessHandle);
+                var imagePointer = context.AccessChain(imagePointerType, imageVariable, imageIndex);
+
+                image = context.Load(imageType, imagePointer);
+            }
+            else
+            {
+                (var imageType, var imageVariable) = context.Images[new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format)];
+
+                image = context.Load(imageType, imageVariable);
+            }
+
             var imageComponentType = context.GetType(componentType);
             var swizzledResultType = texOp.GetVectorType(componentType);
 
@@ -747,20 +759,16 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             bool isBindless = (texOp.Flags & TextureFlags.Bindless) != 0;
 
-            // TODO: Bindless texture support. For now we just return 0/do nothing.
-            if (isBindless)
-            {
-                return OperationResult.Invalid;
-            }
-
             bool isArray = (texOp.Type & SamplerType.Array) != 0;
 
-            int srcIndex = isBindless ? 1 : 0;
+            int srcIndex = 0;
 
             SpvInstruction Src(AggregateType type)
             {
                 return context.Get(type, texOp.GetSource(srcIndex++));
             }
+
+            SpvInstruction bindlessHandle = isBindless ? Src(AggregateType.S32) : null;
 
             int coordsCount = texOp.Type.GetDimensions();
 
@@ -810,9 +818,23 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             var texel = context.CompositeConstruct(context.TypeVector(context.GetType(componentType), ComponentsCount), cElems);
 
-            (var imageType, var imageVariable) = context.Images[new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format)];
+            SpvInstruction image;
 
-            var image = context.Load(imageType, imageVariable);
+            if (isBindless)
+            {
+                (var imageType, var imagePointerType, var imageVariable) = context.BindlessImages[texOp.Type];
+
+                var imageIndex = GenerateBindlessTextureHandleToIndex(context, bindlessHandle);
+                var imagePointer = context.AccessChain(imagePointerType, imageVariable, imageIndex);
+
+                image = context.Load(imageType, imagePointer);
+            }
+            else
+            {
+                (var imageType, var imageVariable) = context.Images[new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format)];
+
+                image = context.Load(imageType, imageVariable);
+            }
 
             context.ImageWrite(image, pCoords, texel, ImageOperandsMask.MaskNone);
 
@@ -964,18 +986,14 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             bool isBindless = (texOp.Flags & TextureFlags.Bindless) != 0;
 
-            // TODO: Bindless texture support. For now we just return 0.
-            if (isBindless)
-            {
-                return new OperationResult(AggregateType.S32, context.Constant(context.TypeS32(), 0));
-            }
-
             int srcIndex = 0;
 
             SpvInstruction Src(AggregateType type)
             {
                 return context.Get(type, texOp.GetSource(srcIndex++));
             }
+
+            SpvInstruction bindlessHandle = isBindless ? Src(AggregateType.S32) : null;
 
             int pCount = texOp.Type.GetDimensions();
 
@@ -1000,9 +1018,23 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             var meta = new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format);
 
-            (_, var sampledImageType, var sampledImageVariable) = context.Samplers[meta];
+            SpvInstruction image;
 
-            var image = context.Load(sampledImageType, sampledImageVariable);
+            if (isBindless)
+            {
+                (var imageType, _, var imagePointerType, var imageVariable) = context.BindlessTextures[texOp.Type & ~SamplerType.Shadow];
+
+                var imageIndex = GenerateBindlessTextureHandleToIndex(context, bindlessHandle);
+                var imagePointer = context.AccessChain(imagePointerType, imageVariable, imageIndex);
+
+                image = context.Load(imageType, imagePointer);
+            }
+            else
+            {
+                (_, var sampledImageType, var sampledImageVariable) = context.Samplers[meta];
+
+                image = context.Load(sampledImageType, sampledImageVariable);
+            }
 
             var resultType = context.TypeVector(context.TypeFP32(), 2);
             var packed = context.ImageQueryLod(resultType, image, pCoords);
@@ -1449,12 +1481,6 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             bool colorIsVector = isGather || !isShadow;
 
-            // TODO: Bindless texture support. For now we just return 0.
-            if (isBindless)
-            {
-                return GetZeroOperationResult(context, texOp, AggregateType.FP32, colorIsVector);
-            }
-
             // This combination is valid, but not available on GLSL.
             // For now, ignore the LOD level and do a normal sample.
             // TODO: How to implement it properly?
@@ -1463,12 +1489,14 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 hasLodLevel = false;
             }
 
-            int srcIndex = isBindless ? 1 : 0;
+            int srcIndex = 0;
 
             SpvInstruction Src(AggregateType type)
             {
                 return context.Get(type, texOp.GetSource(srcIndex++));
             }
+
+            SpvInstruction bindlessHandle = isBindless ? Src(AggregateType.S32) : null;
 
             int coordsCount = texOp.Type.GetDimensions();
 
@@ -1664,11 +1692,33 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             var resultType = colorIsVector ? context.TypeVector(context.TypeFP32(), 4) : context.TypeFP32();
 
-            var meta = new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format);
+            SpvInstruction imageType;
+            SpvInstruction image;
 
-            (var imageType, var sampledImageType, var sampledImageVariable) = context.Samplers[meta];
+            if (isBindless)
+            {
+                (imageType, var sampledImageType, var imagePointerType, var imageVariable) = context.BindlessTextures[texOp.Type & ~SamplerType.Shadow];
 
-            var image = context.Load(sampledImageType, sampledImageVariable);
+                var imageIndex = GenerateBindlessTextureHandleToIndex(context, bindlessHandle);
+                var imagePointer = context.AccessChain(imagePointerType, imageVariable, imageIndex);
+
+                image = context.Load(imageType, imagePointer);
+
+                var samplerIndex = GenerateBindlessSamplerHandleToIndex(context, bindlessHandle);
+                var samplerPointer = context.AccessChain(context.SamplerPointerType, context.BindlessSamplersArray, samplerIndex);
+
+                var sampler = context.Load(context.SamplerType, samplerPointer);
+
+                image = context.SampledImage(sampledImageType, image, sampler);
+            }
+            else
+            {
+                var meta = new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format);
+
+                (imageType, var sampledImageType, var sampledImageVariable) = context.Samplers[meta];
+
+                image = context.Load(sampledImageType, sampledImageVariable);
+            }
 
             if (intCoords)
             {
@@ -1732,17 +1782,29 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             bool isBindless = (texOp.Flags & TextureFlags.Bindless) != 0;
 
-            // TODO: Bindless texture support. For now we just return 0.
-            if (isBindless)
-            {
-                return new OperationResult(AggregateType.S32, context.Constant(context.TypeS32(), 0));
-            }
-
             var meta = new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format);
 
-            (var imageType, var sampledImageType, var sampledImageVariable) = context.Samplers[meta];
+            SpvInstruction imageType;
+            SpvInstruction image;
 
-            var image = context.Load(sampledImageType, sampledImageVariable);
+            if (isBindless)
+            {
+                SpvInstruction bindlessHandle = context.GetS32(operation.GetSource(0));
+
+                (imageType, _, var imagePointerType, var imageVariable) = context.BindlessTextures[texOp.Type & ~SamplerType.Shadow];
+
+                var imageIndex = GenerateBindlessTextureHandleToIndex(context, bindlessHandle);
+                var imagePointer = context.AccessChain(imagePointerType, imageVariable, imageIndex);
+
+                image = context.Load(imageType, imagePointer);
+            }
+            else
+            {
+                (imageType, var sampledImageType, var sampledImageVariable) = context.Samplers[meta];
+
+                image = context.Load(sampledImageType, sampledImageVariable);
+            }
+
             image = context.Image(imageType, image);
 
             if (texOp.Index == 3)
@@ -1852,6 +1914,49 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             var execution = context.Constant(context.TypeU32(), Scope.Subgroup);
             var result = context.GroupNonUniformAny(context.TypeBool(), execution, context.Get(AggregateType.Bool, operation.GetSource(0)));
             return new OperationResult(AggregateType.Bool, result);
+        }
+
+        private static SpvInstruction GenerateBindlessTextureHandleToIndex(CodeGenContext context, SpvInstruction bindlessHandle)
+        {
+            var id = context.BitwiseAnd(context.TypeS32(), bindlessHandle, context.Constant(context.TypeS32(), 0xfffff));
+            var tableIndex = context.ShiftRightArithmetic(context.TypeS32(), id, context.Constant(context.TypeS32(), 8));
+
+            var pointerUint = context.TypePointer(StorageClass.Uniform, context.TypeU32());
+            var baseIndex = context.AccessChain(
+                pointerUint,
+                context.BindlessTable,
+                context.Constant(context.TypeS32(), 0),
+                tableIndex,
+                context.Constant(context.TypeU32(), 0));
+
+            baseIndex = context.Load(context.TypeU32(), baseIndex);
+
+            var idLow = context.BitwiseAnd(context.TypeS32(), id, context.Constant(context.TypeS32(), 0xff));
+            var index = context.BitwiseOr(context.TypeU32(), baseIndex, idLow);
+
+            return index;
+        }
+
+        private static SpvInstruction GenerateBindlessSamplerHandleToIndex(CodeGenContext context, SpvInstruction bindlessHandle)
+        {
+            var idHigh = context.ShiftRightArithmetic(context.TypeS32(), bindlessHandle, context.Constant(context.TypeS32(), 20));
+            var id = context.BitwiseAnd(context.TypeS32(), idHigh, context.Constant(context.TypeS32(), 0xfff));
+            var tableIndex = context.ShiftRightArithmetic(context.TypeS32(), id, context.Constant(context.TypeS32(), 8));
+
+            var pointerUint = context.TypePointer(StorageClass.Uniform, context.TypeU32());
+            var baseIndex = context.AccessChain(
+                pointerUint,
+                context.BindlessTable,
+                context.Constant(context.TypeS32(), 0),
+                tableIndex,
+                context.Constant(context.TypeU32(), 1));
+
+            baseIndex = context.Load(context.TypeU32(), baseIndex);
+
+            var idLow = context.BitwiseAnd(context.TypeS32(), id, context.Constant(context.TypeS32(), 0xff));
+            var index = context.BitwiseOr(context.TypeU32(), baseIndex, idLow);
+
+            return index;
         }
 
         private static OperationResult GenerateCompare(

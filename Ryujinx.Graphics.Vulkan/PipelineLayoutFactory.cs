@@ -51,11 +51,12 @@ namespace Ryujinx.Graphics.Vulkan
                 StageFlags = AllStages
             };
 
+            // TODO: Query maximum count supported by the device and use that instead.
             btLayoutBindings[1] = new DescriptorSetLayoutBinding()
             {
                 Binding = 1,
                 DescriptorType = DescriptorType.SampledImage,
-                DescriptorCount = 8192,
+                DescriptorCount = 16384,
                 StageFlags = AllStages
             };
 
@@ -63,7 +64,7 @@ namespace Ryujinx.Graphics.Vulkan
             {
                 Binding = 0,
                 DescriptorType = DescriptorType.Sampler,
-                DescriptorCount = 8192,
+                DescriptorCount = 16384,
                 StageFlags = AllStages
             };
 
@@ -71,7 +72,7 @@ namespace Ryujinx.Graphics.Vulkan
             {
                 Binding = 0,
                 DescriptorType = DescriptorType.StorageImage,
-                DescriptorCount = 8192,
+                DescriptorCount = 16384,
                 StageFlags = AllStages
             };
 
