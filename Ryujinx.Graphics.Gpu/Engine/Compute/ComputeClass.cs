@@ -1,9 +1,7 @@
 ﻿using Ryujinx.Graphics.Device;
-using Ryujinx.Graphics.GAL;
 using Ryujinx.Graphics.Gpu.Engine.InlineToMemory;
 using Ryujinx.Graphics.Gpu.Engine.Threed;
 using Ryujinx.Graphics.Gpu.Engine.Types;
-using Ryujinx.Graphics.Gpu.Image;
 using Ryujinx.Graphics.Gpu.Shader;
 using Ryujinx.Graphics.Shader;
 using System;
@@ -108,6 +106,8 @@ namespace Ryujinx.Graphics.Gpu.Engine.Compute
 
             shaderGpuVa += (uint)qmd.ProgramOffset;
 
+            var shaderCache = memoryManager.GetBackingMemory(shaderGpuVa).ShaderCache;
+
             int localMemorySize = qmd.ShaderLocalMemoryLowSize + qmd.ShaderLocalMemoryHighSize;
 
             int sharedMemorySize = Math.Min(qmd.SharedMemorySize, _context.Capabilities.MaximumComputeSharedMemorySize);
@@ -141,7 +141,7 @@ namespace Ryujinx.Graphics.Gpu.Engine.Compute
                 sharedMemorySize,
                 _channel.BufferManager.HasUnalignedStorageBuffers);
 
-            CachedShaderProgram cs = memoryManager.Physical.ShaderCache.GetComputeShader(_channel, poolState, computeState, shaderGpuVa);
+            CachedShaderProgram cs = shaderCache.GetComputeShader(_channel, poolState, computeState, shaderGpuVa);
 
             _context.Renderer.Pipeline.SetProgram(cs.HostProgram);
 
@@ -157,13 +157,13 @@ namespace Ryujinx.Graphics.Gpu.Engine.Compute
             {
                 BufferDescriptor sb = info.SBuffers[index];
 
-                ulong sbDescAddress = _channel.BufferManager.GetComputeUniformBufferAddress(0);
+                (var physical, ulong sbDescAddress) = _channel.BufferManager.GetComputeUniformBufferAddress(0);
 
                 int sbDescOffset = 0x310 + sb.Slot * 0x10;
 
                 sbDescAddress += (ulong)sbDescOffset;
 
-                SbDescriptor sbDescriptor = _channel.MemoryManager.Physical.Read<SbDescriptor>(sbDescAddress);
+                SbDescriptor sbDescriptor = physical.Read<SbDescriptor>(sbDescAddress);
 
                 _channel.BufferManager.SetComputeStorageBuffer(sb.Slot, sbDescriptor.PackAddress(), (uint)sbDescriptor.Size, sb.Flags);
             }
@@ -171,7 +171,7 @@ namespace Ryujinx.Graphics.Gpu.Engine.Compute
             if ((_channel.BufferManager.HasUnalignedStorageBuffers) != hasUnaligned)
             {
                 // Refetch the shader, as assumptions about storage buffer alignment have changed.
-                cs = memoryManager.Physical.ShaderCache.GetComputeShader(_channel, poolState, computeState, shaderGpuVa);
+                cs = shaderCache.GetComputeShader(_channel, poolState, computeState, shaderGpuVa);
 
                 _context.Renderer.Pipeline.SetProgram(cs.HostProgram);
 
@@ -191,13 +191,13 @@ namespace Ryujinx.Graphics.Gpu.Engine.Compute
                     continue;
                 }
 
-                ulong cbDescAddress = _channel.BufferManager.GetComputeUniformBufferAddress(0);
+                (var physical, ulong cbDescAddress) = _channel.BufferManager.GetComputeUniformBufferAddress(0);
 
                 int cbDescOffset = 0x260 + (cb.Slot - 8) * 0x10;
 
                 cbDescAddress += (ulong)cbDescOffset;
 
-                SbDescriptor cbDescriptor = _channel.MemoryManager.Physical.Read<SbDescriptor>(cbDescAddress);
+                SbDescriptor cbDescriptor = physical.Read<SbDescriptor>(cbDescAddress);
 
                 _channel.BufferManager.SetComputeUniformBuffer(cb.Slot, cbDescriptor.PackAddress(), (uint)cbDescriptor.Size);
             }

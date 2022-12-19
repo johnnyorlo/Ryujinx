@@ -399,7 +399,7 @@ namespace Ryujinx.Graphics.Gpu.Image
             {
                 ref BufferBounds bounds = ref _channel.BufferManager.GetUniformBufferBounds(_isCompute, stageIndex, textureBufferIndex);
 
-                cachedTextureBuffer = MemoryMarshal.Cast<byte, int>(_channel.MemoryManager.Physical.GetSpan(bounds.Address, (int)bounds.Size));
+                cachedTextureBuffer = MemoryMarshal.Cast<byte, int>(bounds.Physical.GetSpan(bounds.Address, (int)bounds.Size));
                 cachedTextureBufferIndex = textureBufferIndex;
 
                 if (samplerBufferIndex == textureBufferIndex)
@@ -413,7 +413,7 @@ namespace Ryujinx.Graphics.Gpu.Image
             {
                 ref BufferBounds bounds = ref _channel.BufferManager.GetUniformBufferBounds(_isCompute, stageIndex, samplerBufferIndex);
 
-                cachedSamplerBuffer = MemoryMarshal.Cast<byte, int>(_channel.MemoryManager.Physical.GetSpan(bounds.Address, (int)bounds.Size));
+                cachedSamplerBuffer = MemoryMarshal.Cast<byte, int>(bounds.Physical.GetSpan(bounds.Address, (int)bounds.Size));
                 cachedSamplerBufferIndex = samplerBufferIndex;
             }
         }
@@ -539,7 +539,8 @@ namespace Ryujinx.Graphics.Gpu.Image
                     // Ensure that the buffer texture is using the correct buffer as storage.
                     // Buffers are frequently re-created to accomodate larger data, so we need to re-bind
                     // to ensure we're not using a old buffer that was already deleted.
-                    _channel.BufferManager.SetBufferTextureStorage(stage, hostTexture, texture.Range.GetSubRange(0).Address, texture.Size, bindingInfo, bindingInfo.Format, false);
+                    var bufferCache = _channel.MemoryManager.GetBackingMemory(descriptor.UnpackAddress()).BufferCache;
+                    _channel.BufferManager.SetBufferTextureStorage(stage, hostTexture, bufferCache, texture.Range.GetSubRange(0).Address, texture.Size, bindingInfo, bindingInfo.Format, false);
 
                     // Cache is not used for buffer texture, it must always rebind.
                     state.CachedTexture = null;
@@ -676,7 +677,8 @@ namespace Ryujinx.Graphics.Gpu.Image
                         format = texture.Format;
                     }
 
-                    _channel.BufferManager.SetBufferTextureStorage(stage, hostTexture, texture.Range.GetSubRange(0).Address, texture.Size, bindingInfo, format, true);
+                    var bufferCache = _channel.MemoryManager.GetBackingMemory(descriptor.UnpackAddress()).BufferCache;
+                    _channel.BufferManager.SetBufferTextureStorage(stage, hostTexture, bufferCache, texture.Range.GetSubRange(0).Address, texture.Size, bindingInfo, format, true);
 
                     // Cache is not used for buffer texture, it must always rebind.
                     state.CachedTexture = null;
@@ -741,9 +743,10 @@ namespace Ryujinx.Graphics.Gpu.Image
             int packedId = ReadPackedId(stageIndex, handle, textureBufferIndex, samplerBufferIndex);
             int textureId = TextureHandle.UnpackTextureId(packedId);
 
+            var physical = _channel.MemoryManager.GetBackingMemory(poolGpuVa);
             ulong poolAddress = _channel.MemoryManager.Translate(poolGpuVa);
 
-            TexturePool texturePool = _texturePoolCache.FindOrCreate(_channel, poolAddress, maximumId);
+            TexturePool texturePool = _texturePoolCache.FindOrCreate(_channel, physical, poolAddress, maximumId);
 
             TextureDescriptor descriptor;
 
@@ -777,12 +780,12 @@ namespace Ryujinx.Graphics.Gpu.Image
         {
             (int textureWordOffset, int samplerWordOffset, TextureHandleType handleType) = TextureHandle.UnpackOffsets(wordOffset);
 
-            ulong textureBufferAddress = _isCompute
+            (var texturePhysicalMemory, ulong textureBufferAddress) = _isCompute
                 ? _channel.BufferManager.GetComputeUniformBufferAddress(textureBufferIndex)
                 : _channel.BufferManager.GetGraphicsUniformBufferAddress(stageIndex, textureBufferIndex);
 
             int handle = textureBufferAddress != 0
-                ? _channel.MemoryManager.Physical.Read<int>(textureBufferAddress + (uint)textureWordOffset * 4)
+                ? texturePhysicalMemory.Read<int>(textureBufferAddress + (uint)textureWordOffset * 4)
                 : 0;
 
             // The "wordOffset" (which is really the immediate value used on texture instructions on the shader)
@@ -797,12 +800,12 @@ namespace Ryujinx.Graphics.Gpu.Image
 
                 if (handleType != TextureHandleType.SeparateConstantSamplerHandle)
                 {
-                    ulong samplerBufferAddress = _isCompute
+                    (var samplerPhysicalMemory, ulong samplerBufferAddress) = _isCompute
                         ? _channel.BufferManager.GetComputeUniformBufferAddress(samplerBufferIndex)
                         : _channel.BufferManager.GetGraphicsUniformBufferAddress(stageIndex, samplerBufferIndex);
 
                     samplerHandle = samplerBufferAddress != 0
-                        ? _channel.MemoryManager.Physical.Read<int>(samplerBufferAddress + (uint)samplerWordOffset * 4)
+                        ? samplerPhysicalMemory.Read<int>(samplerBufferAddress + (uint)samplerWordOffset * 4)
                         : 0;
                 }
                 else
@@ -839,7 +842,8 @@ namespace Ryujinx.Graphics.Gpu.Image
 
                 if (poolAddress != MemoryManager.PteUnmapped)
                 {
-                    texturePool = _texturePoolCache.FindOrCreate(_channel, poolAddress, _texturePoolMaximumId);
+                    var physical = _channel.MemoryManager.GetBackingMemory(_texturePoolGpuVa);
+                    texturePool = _texturePoolCache.FindOrCreate(_channel, physical, poolAddress, _texturePoolMaximumId);
                     _texturePool = texturePool;
                 }
             }
@@ -850,7 +854,8 @@ namespace Ryujinx.Graphics.Gpu.Image
 
                 if (poolAddress != MemoryManager.PteUnmapped)
                 {
-                    samplerPool = _samplerPoolCache.FindOrCreate(_channel, poolAddress, _samplerPoolMaximumId);
+                    var physical = _channel.MemoryManager.GetBackingMemory(_samplerPoolGpuVa);
+                    samplerPool = _samplerPoolCache.FindOrCreate(_channel, physical, poolAddress, _samplerPoolMaximumId);
                     _samplerPool = samplerPool;
                 }
             }
