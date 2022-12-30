@@ -9,7 +9,7 @@ namespace Ryujinx.Horizon.Sdk.Nifm.Detail
     class NetworkProfile : INetworkProfile
     {
         [CmifCommand(0)]
-        public Result Update(out Uuid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x17C)] NetworkProfileData arg1)
+        public Result Update(out Uuid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x17C)] in NetworkProfileData arg1)
         {
             arg0 = default;
 

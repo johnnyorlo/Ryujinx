@@ -82,7 +82,7 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         }
 
         [CmifCommand(2400)]
-        public Result OpenIndirectLayer(out long arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<byte> arg1, ulong arg2, AppletResourceUserId arg3)
+        public Result OpenIndirectLayer(out long arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<byte> arg1, ulong arg2, AppletResourceUserId arg3, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -253,7 +253,7 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         }
 
         [CmifCommand(8225)]
-        public Result GetSharedBufferMemoryHandleId(out NativeMemoryHandleId arg0, out ulong arg1, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x188)] out SharedMemoryPoolLayout arg2, SharedBufferHandle arg3, AppletResourceUserId arg4)
+        public Result GetSharedBufferMemoryHandleId(out NativeMemoryHandleId arg0, out ulong arg1, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x188)] out SharedMemoryPoolLayout arg2, SharedBufferHandle arg3, AppletResourceUserId arg4, [ClientProcessId] ulong pid)
         {
             arg0 = default;
             arg1 = default;
@@ -263,7 +263,7 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         }
 
         [CmifCommand(8250)]
-        public Result OpenSharedLayer(SharedLayerHandle arg0, AppletResourceUserId arg1)
+        public Result OpenSharedLayer(SharedLayerHandle arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }

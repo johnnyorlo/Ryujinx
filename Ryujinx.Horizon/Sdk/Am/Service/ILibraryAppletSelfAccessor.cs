@@ -34,7 +34,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         Result UnpopExtraStorage(IStorage arg0);
         Result GetIndirectLayerProducerHandle(out ulong arg0);
         Result ReportVisibleError(ErrorCode arg0);
-        Result ReportVisibleErrorWithErrorContext(ErrorCode arg0, ErrorContext arg1);
+        Result ReportVisibleErrorWithErrorContext(ErrorCode arg0, in ErrorContext arg1);
         Result GetMainAppletApplicationDesiredLanguage(out LanguageCode arg0);
         Result GetCurrentApplicationId(out ApplicationId arg0);
         Result RequestExitToSelf();

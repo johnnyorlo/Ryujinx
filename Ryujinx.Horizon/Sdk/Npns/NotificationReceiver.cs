@@ -14,7 +14,7 @@ namespace Ryujinx.Horizon.Sdk.Npns
         }
 
         [CmifCommand(2)]
-        public Result ListenToMyApplicationId(ulong arg0)
+        public Result ListenToMyApplicationId(ulong arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }

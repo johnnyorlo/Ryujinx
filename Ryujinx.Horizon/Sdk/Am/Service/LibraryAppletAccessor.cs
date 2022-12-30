@@ -91,7 +91,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         }
 
         [CmifCommand(160)]
-        public Result GetIndirectLayerConsumerHandle(out ulong arg0, AppletResourceUserId arg1)
+        public Result GetIndirectLayerConsumerHandle(out ulong arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 

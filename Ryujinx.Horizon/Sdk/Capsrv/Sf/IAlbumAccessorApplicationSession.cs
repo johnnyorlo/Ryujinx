@@ -7,7 +7,7 @@ namespace Ryujinx.Horizon.Sdk.Capsrv.Sf
 {
     interface IAlbumAccessorApplicationSession : IServiceObject
     {
-        Result OpenAlbumMovieReadStream(out ulong arg0, ApplicationAlbumFileEntry arg1, AppletResourceUserId arg2);
+        Result OpenAlbumMovieReadStream(out ulong arg0, ApplicationAlbumFileEntry arg1, AppletResourceUserId arg2, ulong pid);
         Result CloseAlbumMovieReadStream(ulong arg0);
         Result GetAlbumMovieReadStreamMovieDataSize(out long arg0, ulong arg1);
         Result ReadMovieDataFromAlbumMovieReadStream(out long arg0, Span<byte> arg1, ulong arg2, long arg3);

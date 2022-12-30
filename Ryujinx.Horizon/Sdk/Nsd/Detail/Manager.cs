@@ -58,7 +58,7 @@ namespace Ryujinx.Horizon.Sdk.Nsd.Detail
         }
 
         [CmifCommand(20)]
-        public Result Resolve([Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x100)] out Fqdn arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x100)] Fqdn arg1)
+        public Result Resolve([Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x100)] out Fqdn arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x100)] in Fqdn arg1)
         {
             arg0 = default;
 
@@ -66,7 +66,7 @@ namespace Ryujinx.Horizon.Sdk.Nsd.Detail
         }
 
         [CmifCommand(21)]
-        public Result ResolveEx(out InnerResult arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x100)] out Fqdn arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x100)] Fqdn arg2)
+        public Result ResolveEx(out InnerResult arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x100)] out Fqdn arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x100)] in Fqdn arg2)
         {
             arg0 = default;
             arg1 = default;
@@ -75,7 +75,7 @@ namespace Ryujinx.Horizon.Sdk.Nsd.Detail
         }
 
         [CmifCommand(30)]
-        public Result GetNasServiceSetting([Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x108)] out NasServiceSetting arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x10)] NasServiceName arg1)
+        public Result GetNasServiceSetting([Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x108)] out NasServiceSetting arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x10)] in NasServiceName arg1)
         {
             arg0 = default;
 
@@ -83,7 +83,7 @@ namespace Ryujinx.Horizon.Sdk.Nsd.Detail
         }
 
         [CmifCommand(31)]
-        public Result GetNasServiceSettingEx(out InnerResult arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x108)] out NasServiceSetting arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x10)] NasServiceName arg2)
+        public Result GetNasServiceSettingEx(out InnerResult arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x108)] out NasServiceSetting arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x10)] in NasServiceName arg2)
         {
             arg0 = default;
             arg1 = default;
@@ -154,7 +154,7 @@ namespace Ryujinx.Horizon.Sdk.Nsd.Detail
         }
 
         [CmifCommand(61)]
-        public Result WriteSaveDataToFsForTest([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x2BF0)] SaveData arg0)
+        public Result WriteSaveDataToFsForTest([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x2BF0)] in SaveData arg0)
         {
             return Result.Success;
         }

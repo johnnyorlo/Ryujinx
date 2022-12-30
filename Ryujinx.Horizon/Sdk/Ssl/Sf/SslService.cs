@@ -8,7 +8,7 @@ namespace Ryujinx.Horizon.Sdk.Ssl.Sf
     class SslService : ISslService
     {
         [CmifCommand(0)]
-        public Result CreateContext(out ISslContext arg0, SslVersion arg1, ulong arg2)
+        public Result CreateContext(out ISslContext arg0, SslVersion arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             arg0 = new SslContext();
 

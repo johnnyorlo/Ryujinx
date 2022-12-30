@@ -8,7 +8,7 @@ namespace Ryujinx.Horizon.Sdk.Notification.Server
     class NotificationServicesCommon : INotificationServicesCommon
     {
         [CmifCommand(500)]
-        public Result RegisterAlarmSetting(out AlarmSettingId arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x40)] AlarmSetting arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg2)
+        public Result RegisterAlarmSetting(out AlarmSettingId arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x40)] in AlarmSetting arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg2)
         {
             arg0 = default;
 
@@ -16,7 +16,7 @@ namespace Ryujinx.Horizon.Sdk.Notification.Server
         }
 
         [CmifCommand(510)]
-        public Result UpdateAlarmSetting([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x40)] AlarmSetting arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg1)
+        public Result UpdateAlarmSetting([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x40)] in AlarmSetting arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg1)
         {
             return Result.Success;
         }

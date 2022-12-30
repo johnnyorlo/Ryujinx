@@ -132,7 +132,7 @@ namespace HoriGen
             return typeName.TrimEnd();
         }
 
-        public static void ParseAdditionalParameterInfo(TypeMaterializer materializer, string processFunctionSignature, MethodParameter[] funcParams)
+        public static void ParseAdditionalParameterInfo(TypeMaterializer materializer, string processFunctionSignature, ref MethodParameter[] funcParams)
         {
             string[] namespaceParts = Parser.Split(processFunctionSignature, "::");
 
@@ -148,9 +148,20 @@ namespace HoriGen
 
             (_, string subTemplate1) = UnwrapAt(template, 1);
             (_, string subTemplate2) = UnwrapAt(subTemplate1, 0);
+            (_, string sendPid) = UnwrapAt(subTemplate1, 3);
 
             (string tupleName, string tupleContent) = Unwrap(subTemplate2);
             string[] tupleParts = Parser.Split(tupleContent, ",");
+
+            if (sendPid.Trim() == "true" && funcParams.Length > 0)
+            {
+                int pidIndex = funcParams.Length;
+                Array.Resize(ref funcParams, pidIndex + 1);
+                funcParams[pidIndex] = new MethodParameter(Direction.In, null, "ulong", false, "pid")
+                {
+                    CommandArgType = CommandArgType.ClientProcessId
+                };
+            }
 
             for (int i = 0; i < tupleParts.Length; i++)
             {

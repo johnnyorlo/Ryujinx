@@ -55,11 +55,11 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         Result SetConductorLayer(ulong arg0, bool arg1);
         Result SetTimestampTracking(ulong arg0, bool arg1);
         Result SetIndirectProducerFlipOffset(ulong arg0, ulong arg1, TimeSpan arg2);
-        Result CreateSharedBufferStaticStorage(out SharedBufferHandle arg0, ulong arg1, SharedMemoryPoolLayout arg2);
-        Result CreateSharedBufferTransferMemory(out SharedBufferHandle arg0, int arg1, ulong arg2, SharedMemoryPoolLayout arg3);
+        Result CreateSharedBufferStaticStorage(out SharedBufferHandle arg0, ulong arg1, in SharedMemoryPoolLayout arg2);
+        Result CreateSharedBufferTransferMemory(out SharedBufferHandle arg0, int arg1, ulong arg2, in SharedMemoryPoolLayout arg3);
         Result DestroySharedBuffer(SharedBufferHandle arg0);
-        Result BindSharedLowLevelLayerToManagedLayer(ulong arg0, DisplayName arg1, AppletResourceUserId arg2);
-        Result BindSharedLowLevelLayerToIndirectLayer(ulong arg0, AppletResourceUserId arg1);
+        Result BindSharedLowLevelLayerToManagedLayer(ulong arg0, DisplayName arg1, AppletResourceUserId arg2, ulong pid);
+        Result BindSharedLowLevelLayerToIndirectLayer(ulong arg0, AppletResourceUserId arg1, ulong pid);
         Result UnbindSharedLowLevelLayer(ulong arg0);
         Result ConnectSharedLowLevelLayerToSharedBuffer(ulong arg0, SharedBufferHandle arg1);
         Result DisconnectSharedLowLevelLayerFromSharedBuffer(ulong arg0);
@@ -74,7 +74,7 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         Result CheckSharedLowLevelLayerSynchronized(out long arg0, ulong arg1);
         Result RegisterSharedBufferImporterAruid(SharedBufferHandle arg0, AppletResourceUserId arg1);
         Result UnregisterSharedBufferImporterAruid(SharedBufferHandle arg0, AppletResourceUserId arg1);
-        Result CreateSharedBufferProcessHeap(out SharedBufferHandle arg0, ulong arg1, SharedMemoryPoolLayout arg2);
+        Result CreateSharedBufferProcessHeap(out SharedBufferHandle arg0, ulong arg1, in SharedMemoryPoolLayout arg2);
         Result GetSharedLayerLayerStacks(out uint arg0, SharedLayerHandle arg1);
         Result SetSharedLayerLayerStacks(SharedLayerHandle arg0, uint arg1);
         Result PresentDetachedSharedFrameBufferToLowLevelLayer(SharedBufferHandle arg0, ulong arg1, long arg2);

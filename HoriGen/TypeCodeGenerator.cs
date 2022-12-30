@@ -180,6 +180,12 @@ namespace HoriGen
                 {
                     modifier = "out ";
                 }
+                else if (parameter.CommandArgType == CommandArgType.Buffer &&
+                         parameter.WrapperTypeName == null &&
+                         parameter.IsCustomType)
+                {
+                    modifier = "in ";
+                }
 
                 string attributeList = string.Empty;
 
@@ -202,6 +208,9 @@ namespace HoriGen
                             break;
                         case CommandArgType.MoveHandle:
                             attributeList = "[MoveHandle] ";
+                            break;
+                        case CommandArgType.ClientProcessId:
+                            attributeList = "[ClientProcessId] ";
                             break;
                     }
                 }

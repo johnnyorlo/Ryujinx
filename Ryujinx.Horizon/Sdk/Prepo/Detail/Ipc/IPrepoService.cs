@@ -7,12 +7,12 @@ namespace Ryujinx.Horizon.Sdk.Prepo.Detail.Ipc
 {
     interface IPrepoService : IServiceObject
     {
-        Result SaveReportOld(ReadOnlySpan<sbyte> arg0, ReadOnlySpan<byte> arg1, ulong arg2);
-        Result SaveReportWithUserOld(Uid arg0, ReadOnlySpan<sbyte> arg1, ReadOnlySpan<byte> arg2, ulong arg3);
-        Result SaveReportOld2(ReadOnlySpan<sbyte> arg0, ReadOnlySpan<byte> arg1, ulong arg2);
-        Result SaveReportWithUserOld2(Uid arg0, ReadOnlySpan<sbyte> arg1, ReadOnlySpan<byte> arg2, ulong arg3);
-        Result SaveReport(ReadOnlySpan<sbyte> arg0, ReadOnlySpan<byte> arg1, ulong arg2);
-        Result SaveReportWithUser(Uid arg0, ReadOnlySpan<sbyte> arg1, ReadOnlySpan<byte> arg2, ulong arg3);
+        Result SaveReportOld(ReadOnlySpan<sbyte> arg0, ReadOnlySpan<byte> arg1, ulong arg2, ulong pid);
+        Result SaveReportWithUserOld(Uid arg0, ReadOnlySpan<sbyte> arg1, ReadOnlySpan<byte> arg2, ulong arg3, ulong pid);
+        Result SaveReportOld2(ReadOnlySpan<sbyte> arg0, ReadOnlySpan<byte> arg1, ulong arg2, ulong pid);
+        Result SaveReportWithUserOld2(Uid arg0, ReadOnlySpan<sbyte> arg1, ReadOnlySpan<byte> arg2, ulong arg3, ulong pid);
+        Result SaveReport(ReadOnlySpan<sbyte> arg0, ReadOnlySpan<byte> arg1, ulong arg2, ulong pid);
+        Result SaveReportWithUser(Uid arg0, ReadOnlySpan<sbyte> arg1, ReadOnlySpan<byte> arg2, ulong arg3, ulong pid);
         Result RequestImmediateTransmission();
         Result GetTransmissionStatus(out int arg0);
         Result GetSystemSessionId(out ulong arg0);

@@ -88,7 +88,7 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         }
 
         [CmifCommand(2020)]
-        public Result OpenLayer(out long arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<byte> arg1, ulong arg2, DisplayName arg3, AppletResourceUserId arg4)
+        public Result OpenLayer(out long arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<byte> arg1, ulong arg2, DisplayName arg3, AppletResourceUserId arg4, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -131,7 +131,7 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         }
 
         [CmifCommand(2450)]
-        public Result GetIndirectLayerImageMap(out long arg0, out long arg1, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias | HipcBufferFlags.MapTransferAllowsNonSecure)] Span<byte> arg2, long arg3, long arg4, ulong arg5, AppletResourceUserId arg6)
+        public Result GetIndirectLayerImageMap(out long arg0, out long arg1, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias | HipcBufferFlags.MapTransferAllowsNonSecure)] Span<byte> arg2, long arg3, long arg4, ulong arg5, AppletResourceUserId arg6, [ClientProcessId] ulong pid)
         {
             arg0 = default;
             arg1 = default;
@@ -140,7 +140,7 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         }
 
         [CmifCommand(2451)]
-        public Result GetIndirectLayerImageCropMap(out long arg0, out long arg1, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias | HipcBufferFlags.MapTransferAllowsNonSecure)] Span<byte> arg2, long arg3, long arg4, float arg5, float arg6, float arg7, float arg8, ulong arg9, AppletResourceUserId arg10)
+        public Result GetIndirectLayerImageCropMap(out long arg0, out long arg1, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias | HipcBufferFlags.MapTransferAllowsNonSecure)] Span<byte> arg2, long arg3, long arg4, float arg5, float arg6, float arg7, float arg8, ulong arg9, AppletResourceUserId arg10, [ClientProcessId] ulong pid)
         {
             arg0 = default;
             arg1 = default;

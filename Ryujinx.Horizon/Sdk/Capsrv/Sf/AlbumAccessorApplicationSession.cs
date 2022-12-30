@@ -9,7 +9,7 @@ namespace Ryujinx.Horizon.Sdk.Capsrv.Sf
     class AlbumAccessorApplicationSession : IAlbumAccessorApplicationSession
     {
         [CmifCommand(2001)]
-        public Result OpenAlbumMovieReadStream(out ulong arg0, ApplicationAlbumFileEntry arg1, AppletResourceUserId arg2)
+        public Result OpenAlbumMovieReadStream(out ulong arg0, ApplicationAlbumFileEntry arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 

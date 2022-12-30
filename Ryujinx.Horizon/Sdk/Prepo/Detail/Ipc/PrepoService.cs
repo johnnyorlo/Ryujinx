@@ -9,37 +9,37 @@ namespace Ryujinx.Horizon.Sdk.Prepo.Detail.Ipc
     class PrepoService : IPrepoService
     {
         [CmifCommand(10100)]
-        public Result SaveReportOld([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg1, ulong arg2)
+        public Result SaveReportOld([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(10101)]
-        public Result SaveReportWithUserOld(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg2, ulong arg3)
+        public Result SaveReportWithUserOld(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg2, ulong arg3, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(10102)]
-        public Result SaveReportOld2([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg1, ulong arg2)
+        public Result SaveReportOld2([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(10103)]
-        public Result SaveReportWithUserOld2(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg2, ulong arg3)
+        public Result SaveReportWithUserOld2(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg2, ulong arg3, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(10104)]
-        public Result SaveReport([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg1, ulong arg2)
+        public Result SaveReport([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(10105)]
-        public Result SaveReportWithUser(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg2, ulong arg3)
+        public Result SaveReportWithUser(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<sbyte> arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg2, ulong arg3, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }

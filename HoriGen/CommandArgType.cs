@@ -12,6 +12,7 @@ namespace HoriGen
         Buffer,
         CopyHandle,
         MoveHandle,
-        Object
+        Object,
+        ClientProcessId
     }
 }

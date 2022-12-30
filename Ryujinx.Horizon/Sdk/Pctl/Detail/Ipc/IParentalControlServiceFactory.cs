@@ -5,7 +5,7 @@ namespace Ryujinx.Horizon.Sdk.Pctl.Detail.Ipc
 {
     interface IParentalControlServiceFactory : IServiceObject
     {
-        Result CreateService(out IParentalControlService arg0, ulong arg1);
-        Result CreateServiceWithoutInitialize(out IParentalControlService arg0, ulong arg1);
+        Result CreateService(out IParentalControlService arg0, ulong arg1, ulong pid);
+        Result CreateServiceWithoutInitialize(out IParentalControlService arg0, ulong arg1, ulong pid);
     }
 }

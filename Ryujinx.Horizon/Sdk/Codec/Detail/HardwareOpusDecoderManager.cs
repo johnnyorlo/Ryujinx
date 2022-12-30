@@ -23,7 +23,7 @@ namespace Ryujinx.Horizon.Sdk.Codec.Detail
         }
 
         [CmifCommand(2)]
-        public Result OpenHardwareOpusDecoderForMultiStream(out IHardwareOpusDecoder arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x110)] HardwareOpusMultiStreamDecoderParameterInternal arg1, [CopyHandle] int arg2, int arg3)
+        public Result OpenHardwareOpusDecoderForMultiStream(out IHardwareOpusDecoder arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x110)] in HardwareOpusMultiStreamDecoderParameterInternal arg1, [CopyHandle] int arg2, int arg3)
         {
             arg0 = new HardwareOpusDecoder();
 
@@ -31,7 +31,7 @@ namespace Ryujinx.Horizon.Sdk.Codec.Detail
         }
 
         [CmifCommand(3)]
-        public Result GetWorkBufferSizeForMultiStream(out int arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x110)] HardwareOpusMultiStreamDecoderParameterInternal arg1)
+        public Result GetWorkBufferSizeForMultiStream(out int arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x110)] in HardwareOpusMultiStreamDecoderParameterInternal arg1)
         {
             arg0 = default;
 
@@ -55,7 +55,7 @@ namespace Ryujinx.Horizon.Sdk.Codec.Detail
         }
 
         [CmifCommand(6)]
-        public Result OpenHardwareOpusDecoderForMultiStreamEx(out IHardwareOpusDecoder arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x118)] HardwareOpusMultiStreamDecoderParameterInternalEx arg1, [CopyHandle] int arg2, int arg3)
+        public Result OpenHardwareOpusDecoderForMultiStreamEx(out IHardwareOpusDecoder arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x118)] in HardwareOpusMultiStreamDecoderParameterInternalEx arg1, [CopyHandle] int arg2, int arg3)
         {
             arg0 = new HardwareOpusDecoder();
 
@@ -63,7 +63,7 @@ namespace Ryujinx.Horizon.Sdk.Codec.Detail
         }
 
         [CmifCommand(7)]
-        public Result GetWorkBufferSizeForMultiStreamEx(out int arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x118)] HardwareOpusMultiStreamDecoderParameterInternalEx arg1)
+        public Result GetWorkBufferSizeForMultiStreamEx(out int arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x118)] in HardwareOpusMultiStreamDecoderParameterInternalEx arg1)
         {
             arg0 = default;
 

@@ -8,7 +8,7 @@ namespace Ryujinx.Horizon.Sdk.Nim.Detail
     class ShopServiceAccessServerInterface : IShopServiceAccessServerInterface
     {
         [CmifCommand(0)]
-        public Result CreateServerInterface(out IShopServiceAccessServer arg0, ulong arg1, [CopyHandle] int arg2, ulong arg3)
+        public Result CreateServerInterface(out IShopServiceAccessServer arg0, ulong arg1, [CopyHandle] int arg2, ulong arg3, [ClientProcessId] ulong pid)
         {
             arg0 = new ShopServiceAccessServer();
 
@@ -34,7 +34,7 @@ namespace Ryujinx.Horizon.Sdk.Nim.Detail
         }
 
         [CmifCommand(4)]
-        public Result IsLargeResourceAvailable(out bool arg0, ulong arg1)
+        public Result IsLargeResourceAvailable(out bool arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 

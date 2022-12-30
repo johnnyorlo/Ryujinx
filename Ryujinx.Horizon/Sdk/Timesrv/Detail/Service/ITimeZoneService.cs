@@ -18,9 +18,9 @@ namespace Ryujinx.Horizon.Sdk.Timesrv.Detail.Service
         Result SetDeviceLocationNameWithTimeZoneRule(LocationName arg0, ReadOnlySpan<byte> arg1);
         Result ParseTimeZoneBinary(out TimeZoneRule arg0, ReadOnlySpan<byte> arg1);
         Result GetDeviceLocationNameOperationEventReadableHandle(out int arg0);
-        Result ToCalendarTime(out CalendarTime arg0, out CalendarAdditionalInfo arg1, PosixTime arg2, TimeZoneRule arg3);
+        Result ToCalendarTime(out CalendarTime arg0, out CalendarAdditionalInfo arg1, PosixTime arg2, in TimeZoneRule arg3);
         Result ToCalendarTimeWithMyRule(out CalendarTime arg0, out CalendarAdditionalInfo arg1, PosixTime arg2);
-        Result ToPosixTime(out int arg0, Span<PosixTime> arg1, CalendarTime arg2, TimeZoneRule arg3);
+        Result ToPosixTime(out int arg0, Span<PosixTime> arg1, CalendarTime arg2, in TimeZoneRule arg3);
         Result ToPosixTimeWithMyRule(out int arg0, Span<PosixTime> arg1, CalendarTime arg2);
     }
 }

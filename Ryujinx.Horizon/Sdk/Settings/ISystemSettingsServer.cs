@@ -45,12 +45,12 @@ namespace Ryujinx.Horizon.Sdk.Settings
         Result SetAccountNotificationSettings(ReadOnlySpan<AccountNotificationSettings> arg0);
         Result GetVibrationMasterVolume(out float arg0);
         Result SetVibrationMasterVolume(float arg0);
-        Result GetSettingsItemValueSize(out ulong arg0, SettingsName arg1, SettingsItemKey arg2);
-        Result GetSettingsItemValue(out ulong arg0, Span<byte> arg1, SettingsName arg2, SettingsItemKey arg3);
+        Result GetSettingsItemValueSize(out ulong arg0, in SettingsName arg1, in SettingsItemKey arg2);
+        Result GetSettingsItemValue(out ulong arg0, Span<byte> arg1, in SettingsName arg2, in SettingsItemKey arg3);
         Result GetTvSettings(out TvSettings arg0);
         Result SetTvSettings(TvSettings arg0);
         Result GetEdid(out Edid arg0);
-        Result SetEdid(Edid arg0);
+        Result SetEdid(in Edid arg0);
         Result GetAudioOutputMode(out int arg0, int arg1);
         Result SetAudioOutputMode(int arg0, int arg1);
         Result GetSpeakerAutoMuteFlag(out bool arg0);
@@ -86,7 +86,7 @@ namespace Ryujinx.Horizon.Sdk.Settings
         Result GetInitialLaunchSettings(out InitialLaunchSettings arg0);
         Result SetInitialLaunchSettings(InitialLaunchSettings arg0);
         Result GetDeviceNickName(out DeviceNickName arg0);
-        Result SetDeviceNickName(DeviceNickName arg0);
+        Result SetDeviceNickName(in DeviceNickName arg0);
         Result GetProductModel(out int arg0);
         Result GetLdnChannel(out int arg0);
         Result SetLdnChannel(int arg0);
@@ -206,7 +206,7 @@ namespace Ryujinx.Horizon.Sdk.Settings
         Result GetButtonConfigSettingsRight(out int arg0, Span<ButtonConfigSettings> arg1);
         Result SetButtonConfigSettingsRight(ReadOnlySpan<ButtonConfigSettings> arg0);
         Result GetButtonConfigRegisteredSettingsEmbedded(out ButtonConfigRegisteredSettings arg0);
-        Result SetButtonConfigRegisteredSettingsEmbedded(ButtonConfigRegisteredSettings arg0);
+        Result SetButtonConfigRegisteredSettingsEmbedded(in ButtonConfigRegisteredSettings arg0);
         Result GetButtonConfigRegisteredSettings(out int arg0, Span<ButtonConfigRegisteredSettings> arg1);
         Result SetButtonConfigRegisteredSettings(ReadOnlySpan<ButtonConfigRegisteredSettings> arg0);
         Result GetFieldTestingFlag(out bool arg0);

@@ -24,7 +24,7 @@ namespace Ryujinx.Horizon.Sdk.Friends.Detail.Ipc
         }
 
         [CmifCommand(10100)]
-        public Result GetFriendListIds(out int arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.Pointer)] Span<NetworkServiceAccountId> arg1, Uid arg2, int arg3, SizedFriendFilter arg4, ulong arg5)
+        public Result GetFriendListIds(out int arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.Pointer)] Span<NetworkServiceAccountId> arg1, Uid arg2, int arg3, SizedFriendFilter arg4, ulong arg5, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -32,7 +32,7 @@ namespace Ryujinx.Horizon.Sdk.Friends.Detail.Ipc
         }
 
         [CmifCommand(10101)]
-        public Result GetFriendList(out int arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<FriendImpl> arg1, Uid arg2, int arg3, SizedFriendFilter arg4, ulong arg5)
+        public Result GetFriendList(out int arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<FriendImpl> arg1, Uid arg2, int arg3, SizedFriendFilter arg4, ulong arg5, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -40,7 +40,7 @@ namespace Ryujinx.Horizon.Sdk.Friends.Detail.Ipc
         }
 
         [CmifCommand(10102)]
-        public Result UpdateFriendInfo([Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<FriendImpl> arg0, Uid arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<NetworkServiceAccountId> arg2, ulong arg3)
+        public Result UpdateFriendInfo([Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<FriendImpl> arg0, Uid arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<NetworkServiceAccountId> arg2, ulong arg3, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -68,13 +68,13 @@ namespace Ryujinx.Horizon.Sdk.Friends.Detail.Ipc
         }
 
         [CmifCommand(10200)]
-        public Result SendFriendRequestForApplication(Uid arg0, NetworkServiceAccountId arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] InAppScreenName arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] InAppScreenName arg3, ulong arg4)
+        public Result SendFriendRequestForApplication(Uid arg0, NetworkServiceAccountId arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in InAppScreenName arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in InAppScreenName arg3, ulong arg4, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(10211)]
-        public Result AddFacedFriendRequestForApplication(Uid arg0, FacedFriendRequestRegistrationKey arg1, Nickname arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg3, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] InAppScreenName arg4, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] InAppScreenName arg5, ulong arg6)
+        public Result AddFacedFriendRequestForApplication(Uid arg0, FacedFriendRequestRegistrationKey arg1, Nickname arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg3, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in InAppScreenName arg4, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in InAppScreenName arg5, ulong arg6, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -120,7 +120,7 @@ namespace Ryujinx.Horizon.Sdk.Friends.Detail.Ipc
         }
 
         [CmifCommand(10610)]
-        public Result UpdateUserPresence(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xE0)] UserPresenceImpl arg1, ulong arg2)
+        public Result UpdateUserPresence(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xE0)] in UserPresenceImpl arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -142,7 +142,7 @@ namespace Ryujinx.Horizon.Sdk.Friends.Detail.Ipc
         }
 
         [CmifCommand(10702)]
-        public Result AddPlayHistory(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x40)] PlayHistoryRegistrationKey arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] InAppScreenName arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] InAppScreenName arg3, ulong arg4)
+        public Result AddPlayHistory(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x40)] in PlayHistoryRegistrationKey arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in InAppScreenName arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in InAppScreenName arg3, ulong arg4, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -156,7 +156,7 @@ namespace Ryujinx.Horizon.Sdk.Friends.Detail.Ipc
         }
 
         [CmifCommand(20100)]
-        public Result GetFriendCount(out int arg0, Uid arg1, SizedFriendFilter arg2, ulong arg3)
+        public Result GetFriendCount(out int arg0, Uid arg1, SizedFriendFilter arg2, ulong arg3, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -398,7 +398,7 @@ namespace Ryujinx.Horizon.Sdk.Friends.Detail.Ipc
         }
 
         [CmifCommand(30201)]
-        public Result SendFriendRequestWithApplicationInfo(Uid arg0, NetworkServiceAccountId arg1, int arg2, ApplicationInfo arg3, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] InAppScreenName arg4, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] InAppScreenName arg5)
+        public Result SendFriendRequestWithApplicationInfo(Uid arg0, NetworkServiceAccountId arg1, int arg2, ApplicationInfo arg3, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in InAppScreenName arg4, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in InAppScreenName arg5)
         {
             return Result.Success;
         }
@@ -464,7 +464,7 @@ namespace Ryujinx.Horizon.Sdk.Friends.Detail.Ipc
         }
 
         [CmifCommand(30215)]
-        public Result SendFriendRequestWithExternalApplicationCatalogId(Uid arg0, NetworkServiceAccountId arg1, int arg2, ExternalApplicationCatalogId arg3, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] InAppScreenName arg4, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] InAppScreenName arg5)
+        public Result SendFriendRequestWithExternalApplicationCatalogId(Uid arg0, NetworkServiceAccountId arg1, int arg2, ExternalApplicationCatalogId arg3, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in InAppScreenName arg4, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in InAppScreenName arg5)
         {
             return Result.Success;
         }
@@ -502,7 +502,7 @@ namespace Ryujinx.Horizon.Sdk.Friends.Detail.Ipc
         }
 
         [CmifCommand(30401)]
-        public Result BlockUserWithApplicationInfo(Uid arg0, NetworkServiceAccountId arg1, int arg2, ApplicationInfo arg3, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] InAppScreenName arg4)
+        public Result BlockUserWithApplicationInfo(Uid arg0, NetworkServiceAccountId arg1, int arg2, ApplicationInfo arg3, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in InAppScreenName arg4)
         {
             return Result.Success;
         }
@@ -558,7 +558,7 @@ namespace Ryujinx.Horizon.Sdk.Friends.Detail.Ipc
         }
 
         [CmifCommand(30900)]
-        public Result SendFriendInvitation(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<NetworkServiceAccountId> arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0xC00)] FriendInvitationGameModeDescription arg2, ApplicationInfo arg3, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg4, bool arg5)
+        public Result SendFriendInvitation(Uid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<NetworkServiceAccountId> arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0xC00)] in FriendInvitationGameModeDescription arg2, ApplicationInfo arg3, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg4, bool arg5)
         {
             return Result.Success;
         }

@@ -178,7 +178,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         }
 
         [CmifCommand(51)]
-        public Result ReportVisibleErrorWithErrorContext(ErrorCode arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x200)] ErrorContext arg1)
+        public Result ReportVisibleErrorWithErrorContext(ErrorCode arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x200)] in ErrorContext arg1)
         {
             return Result.Success;
         }

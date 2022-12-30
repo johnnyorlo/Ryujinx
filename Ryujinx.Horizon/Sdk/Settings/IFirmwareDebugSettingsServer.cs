@@ -7,14 +7,14 @@ namespace Ryujinx.Horizon.Sdk.Settings
 {
     interface IFirmwareDebugSettingsServer : IServiceObject
     {
-        Result SetSettingsItemValue(SettingsName arg0, SettingsItemKey arg1, ReadOnlySpan<byte> arg2);
-        Result ResetSettingsItemValue(SettingsName arg0, SettingsItemKey arg1);
-        Result CreateSettingsItemKeyIterator(out ISettingsItemKeyIterator arg0, SettingsName arg1);
+        Result SetSettingsItemValue(in SettingsName arg0, in SettingsItemKey arg1, ReadOnlySpan<byte> arg2);
+        Result ResetSettingsItemValue(in SettingsName arg0, in SettingsItemKey arg1);
+        Result CreateSettingsItemKeyIterator(out ISettingsItemKeyIterator arg0, in SettingsName arg1);
         Result ReadSettings(out ulong arg0, Span<byte> arg1, int arg2);
         Result ResetSettings(int arg0);
         Result SetWebInspectorFlag(bool arg0);
         Result SetAllowedSslHosts(ReadOnlySpan<AllowedSslHost> arg0);
-        Result SetHostFsMountPoint(HostFsMountPoint arg0);
+        Result SetHostFsMountPoint(in HostFsMountPoint arg0);
         Result SetMemoryUsageRateFlag(bool arg0);
     }
 }

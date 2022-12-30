@@ -10,7 +10,7 @@ namespace Ryujinx.Horizon.Sdk.Ec
     class PurchaseEventManager : IPurchaseEventManager
     {
         [CmifCommand(0)]
-        public Result SetDefaultDeliveryTarget(ulong arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<int> arg1)
+        public Result SetDefaultDeliveryTarget(ulong arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<int> arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }

@@ -66,7 +66,7 @@ namespace Ryujinx.Horizon.Sdk.Nifm.Detail
         }
 
         [CmifCommand(9)]
-        public Result SetNetworkProfile(out Uuid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x17C)] NetworkProfileData arg1)
+        public Result SetNetworkProfile(out Uuid arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x17C)] in NetworkProfileData arg1)
         {
             arg0 = default;
 
@@ -104,7 +104,7 @@ namespace Ryujinx.Horizon.Sdk.Nifm.Detail
         }
 
         [CmifCommand(14)]
-        public Result CreateTemporaryNetworkProfile(out INetworkProfile arg0, out Uuid arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x17C)] NetworkProfileData arg2)
+        public Result CreateTemporaryNetworkProfile(out INetworkProfile arg0, out Uuid arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x17C)] in NetworkProfileData arg2)
         {
             arg0 = new NetworkProfile();
             arg1 = default;
@@ -158,7 +158,7 @@ namespace Ryujinx.Horizon.Sdk.Nifm.Detail
         }
 
         [CmifCommand(21)]
-        public Result IsAnyInternetRequestAccepted(out bool arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x4)] ClientId arg1)
+        public Result IsAnyInternetRequestAccepted(out bool arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x4)] in ClientId arg1)
         {
             arg0 = default;
 
@@ -194,7 +194,7 @@ namespace Ryujinx.Horizon.Sdk.Nifm.Detail
         }
 
         [CmifCommand(26)]
-        public Result SetExclusiveClient([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x4)] ClientId arg0)
+        public Result SetExclusiveClient([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x4)] in ClientId arg0)
         {
             return Result.Success;
         }
@@ -208,7 +208,7 @@ namespace Ryujinx.Horizon.Sdk.Nifm.Detail
         }
 
         [CmifCommand(28)]
-        public Result SetDefaultIpSetting([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xC2)] IpSettingData arg0)
+        public Result SetDefaultIpSetting([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xC2)] in IpSettingData arg0)
         {
             return Result.Success;
         }

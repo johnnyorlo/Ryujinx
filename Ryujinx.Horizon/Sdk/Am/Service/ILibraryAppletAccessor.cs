@@ -18,6 +18,6 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         Result NeedsToExitProcess(out bool arg0);
         Result GetLibraryAppletInfo(out LibraryAppletInfo arg0);
         Result RequestForAppletToGetForeground();
-        Result GetIndirectLayerConsumerHandle(out ulong arg0, AppletResourceUserId arg1);
+        Result GetIndirectLayerConsumerHandle(out ulong arg0, AppletResourceUserId arg1, ulong pid);
     }
 }

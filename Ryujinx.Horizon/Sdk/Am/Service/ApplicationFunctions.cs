@@ -47,13 +47,13 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         }
 
         [CmifCommand(14)]
-        public Result CreateApplicationWithAttributeAndPushAndRequestToStartForQuest(ApplicationId arg0, IStorage arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x20)] ApplicationAttribute arg2)
+        public Result CreateApplicationWithAttributeAndPushAndRequestToStartForQuest(ApplicationId arg0, IStorage arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x20)] in ApplicationAttribute arg2)
         {
             return Result.Success;
         }
 
         [CmifCommand(15)]
-        public Result CreateApplicationWithAttributeAndRequestToStartForQuest(ApplicationId arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x20)] ApplicationAttribute arg1)
+        public Result CreateApplicationWithAttributeAndRequestToStartForQuest(ApplicationId arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x20)] in ApplicationAttribute arg1)
         {
             return Result.Success;
         }
@@ -403,7 +403,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         }
 
         [CmifCommand(180)]
-        public Result GetLaunchRequiredVersion(out LaunchRequiredVersion arg0, ApplicationId arg1, ulong arg2)
+        public Result GetLaunchRequiredVersion(out LaunchRequiredVersion arg0, ApplicationId arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -411,7 +411,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         }
 
         [CmifCommand(181)]
-        public Result UpgradeLaunchRequiredVersion(ApplicationId arg0, LaunchRequiredVersion arg1, ulong arg2)
+        public Result UpgradeLaunchRequiredVersion(ApplicationId arg0, LaunchRequiredVersion arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }

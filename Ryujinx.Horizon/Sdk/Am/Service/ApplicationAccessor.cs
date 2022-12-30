@@ -109,7 +109,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         }
 
         [CmifCommand(160)]
-        public Result SetApplicationAttribute([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x20)] ApplicationAttribute arg0)
+        public Result SetApplicationAttribute([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x20)] in ApplicationAttribute arg0)
         {
             return Result.Success;
         }

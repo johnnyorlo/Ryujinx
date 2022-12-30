@@ -5,6 +5,6 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
 {
     interface IApplicationProxyService : IServiceObject
     {
-        Result OpenApplicationProxy(out IApplicationProxy arg0, ulong arg1, int arg2);
+        Result OpenApplicationProxy(out IApplicationProxy arg0, ulong arg1, int arg2, ulong pid);
     }
 }

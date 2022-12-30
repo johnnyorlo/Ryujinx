@@ -10,7 +10,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
     class HidServer : IHidServer
     {
         [CmifCommand(0)]
-        public Result CreateAppletResource(out IAppletResource arg0, AppletResourceUserId arg1)
+        public Result CreateAppletResource(out IAppletResource arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = new AppletResource();
 
@@ -18,31 +18,31 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1)]
-        public Result ActivateDebugPad(AppletResourceUserId arg0)
+        public Result ActivateDebugPad(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(11)]
-        public Result ActivateTouchScreen(AppletResourceUserId arg0)
+        public Result ActivateTouchScreen(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(21)]
-        public Result ActivateMouse(AppletResourceUserId arg0)
+        public Result ActivateMouse(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(31)]
-        public Result ActivateKeyboard(AppletResourceUserId arg0)
+        public Result ActivateKeyboard(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(32)]
-        public Result SendKeyboardLockKeyEvent(AppletResourceUserId arg0, KeyboardLockKeyEvent arg1)
+        public Result SendKeyboardLockKeyEvent(AppletResourceUserId arg0, KeyboardLockKeyEvent arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -62,7 +62,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(51)]
-        public Result ActivateXpad(AppletResourceUserId arg0, BasicXpadId arg1)
+        public Result ActivateXpad(AppletResourceUserId arg0, BasicXpadId arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -138,19 +138,19 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(66)]
-        public Result StartSixAxisSensor(AppletResourceUserId arg0, SixAxisSensorHandle arg1)
+        public Result StartSixAxisSensor(AppletResourceUserId arg0, SixAxisSensorHandle arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(67)]
-        public Result StopSixAxisSensor(AppletResourceUserId arg0, SixAxisSensorHandle arg1)
+        public Result StopSixAxisSensor(AppletResourceUserId arg0, SixAxisSensorHandle arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(68)]
-        public Result IsSixAxisSensorFusionEnabled(out bool arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2)
+        public Result IsSixAxisSensorFusionEnabled(out bool arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -158,19 +158,19 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(69)]
-        public Result EnableSixAxisSensorFusion(AppletResourceUserId arg0, SixAxisSensorHandle arg1, bool arg2)
+        public Result EnableSixAxisSensorFusion(AppletResourceUserId arg0, SixAxisSensorHandle arg1, bool arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(70)]
-        public Result SetSixAxisSensorFusionParameters(AppletResourceUserId arg0, SixAxisSensorHandle arg1, float arg2, float arg3)
+        public Result SetSixAxisSensorFusionParameters(AppletResourceUserId arg0, SixAxisSensorHandle arg1, float arg2, float arg3, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(71)]
-        public Result GetSixAxisSensorFusionParameters(out float arg0, out float arg1, AppletResourceUserId arg2, SixAxisSensorHandle arg3)
+        public Result GetSixAxisSensorFusionParameters(out float arg0, out float arg1, AppletResourceUserId arg2, SixAxisSensorHandle arg3, [ClientProcessId] ulong pid)
         {
             arg0 = default;
             arg1 = default;
@@ -179,19 +179,19 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(72)]
-        public Result ResetSixAxisSensorFusionParameters(AppletResourceUserId arg0, SixAxisSensorHandle arg1)
+        public Result ResetSixAxisSensorFusionParameters(AppletResourceUserId arg0, SixAxisSensorHandle arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(73)]
-        public Result SetAccelerometerParameters(AppletResourceUserId arg0, SixAxisSensorHandle arg1, float arg2, float arg3)
+        public Result SetAccelerometerParameters(AppletResourceUserId arg0, SixAxisSensorHandle arg1, float arg2, float arg3, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(74)]
-        public Result GetAccelerometerParameters(out float arg0, out float arg1, AppletResourceUserId arg2, SixAxisSensorHandle arg3)
+        public Result GetAccelerometerParameters(out float arg0, out float arg1, AppletResourceUserId arg2, SixAxisSensorHandle arg3, [ClientProcessId] ulong pid)
         {
             arg0 = default;
             arg1 = default;
@@ -200,19 +200,19 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(75)]
-        public Result ResetAccelerometerParameters(AppletResourceUserId arg0, SixAxisSensorHandle arg1)
+        public Result ResetAccelerometerParameters(AppletResourceUserId arg0, SixAxisSensorHandle arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(76)]
-        public Result SetAccelerometerPlayMode(AppletResourceUserId arg0, SixAxisSensorHandle arg1, uint arg2)
+        public Result SetAccelerometerPlayMode(AppletResourceUserId arg0, SixAxisSensorHandle arg1, uint arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(77)]
-        public Result GetAccelerometerPlayMode(out uint arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2)
+        public Result GetAccelerometerPlayMode(out uint arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -220,19 +220,19 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(78)]
-        public Result ResetAccelerometerPlayMode(AppletResourceUserId arg0, SixAxisSensorHandle arg1)
+        public Result ResetAccelerometerPlayMode(AppletResourceUserId arg0, SixAxisSensorHandle arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(79)]
-        public Result SetGyroscopeZeroDriftMode(AppletResourceUserId arg0, SixAxisSensorHandle arg1, uint arg2)
+        public Result SetGyroscopeZeroDriftMode(AppletResourceUserId arg0, SixAxisSensorHandle arg1, uint arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(80)]
-        public Result GetGyroscopeZeroDriftMode(out uint arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2)
+        public Result GetGyroscopeZeroDriftMode(out uint arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -240,13 +240,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(81)]
-        public Result ResetGyroscopeZeroDriftMode(AppletResourceUserId arg0, SixAxisSensorHandle arg1)
+        public Result ResetGyroscopeZeroDriftMode(AppletResourceUserId arg0, SixAxisSensorHandle arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(82)]
-        public Result IsSixAxisSensorAtRest(out bool arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2)
+        public Result IsSixAxisSensorAtRest(out bool arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -254,7 +254,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(83)]
-        public Result IsFirmwareUpdateAvailableForSixAxisSensor(out bool arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2)
+        public Result IsFirmwareUpdateAvailableForSixAxisSensor(out bool arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -262,13 +262,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(84)]
-        public Result EnableSixAxisSensorUnalteredPassthrough(AppletResourceUserId arg0, SixAxisSensorHandle arg1, bool arg2)
+        public Result EnableSixAxisSensorUnalteredPassthrough(AppletResourceUserId arg0, SixAxisSensorHandle arg1, bool arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(85)]
-        public Result IsSixAxisSensorUnalteredPassthroughEnabled(out bool arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2)
+        public Result IsSixAxisSensorUnalteredPassthroughEnabled(out bool arg0, AppletResourceUserId arg1, SixAxisSensorHandle arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -276,13 +276,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(86)]
-        public Result StoreSixAxisSensorCalibrationParameter(AppletResourceUserId arg0, SixAxisSensorHandle arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x744)] SixAxisSensorCalibrationParameter arg2)
+        public Result StoreSixAxisSensorCalibrationParameter(AppletResourceUserId arg0, SixAxisSensorHandle arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x744)] in SixAxisSensorCalibrationParameter arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(87)]
-        public Result LoadSixAxisSensorCalibrationParameter(AppletResourceUserId arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x744)] out SixAxisSensorCalibrationParameter arg1, SixAxisSensorHandle arg2)
+        public Result LoadSixAxisSensorCalibrationParameter(AppletResourceUserId arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias, 0x744)] out SixAxisSensorCalibrationParameter arg1, SixAxisSensorHandle arg2, [ClientProcessId] ulong pid)
         {
             arg1 = default;
 
@@ -290,7 +290,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(88)]
-        public Result GetSixAxisSensorIcInformation(AppletResourceUserId arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.Pointer, 0xC8)] out SixAxisSensorIcInformation arg1, SixAxisSensorHandle arg2)
+        public Result GetSixAxisSensorIcInformation(AppletResourceUserId arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.Pointer, 0xC8)] out SixAxisSensorIcInformation arg1, SixAxisSensorHandle arg2, [ClientProcessId] ulong pid)
         {
             arg1 = default;
 
@@ -298,25 +298,25 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(89)]
-        public Result ResetIsSixAxisSensorDeviceNewlyAssigned(AppletResourceUserId arg0, SixAxisSensorHandle arg1)
+        public Result ResetIsSixAxisSensorDeviceNewlyAssigned(AppletResourceUserId arg0, SixAxisSensorHandle arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(91)]
-        public Result ActivateGesture(AppletResourceUserId arg0, int arg1)
+        public Result ActivateGesture(AppletResourceUserId arg0, int arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(100)]
-        public Result SetSupportedNpadStyleSet(AppletResourceUserId arg0, NpadStyleTag arg1)
+        public Result SetSupportedNpadStyleSet(AppletResourceUserId arg0, NpadStyleTag arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(101)]
-        public Result GetSupportedNpadStyleSet(AppletResourceUserId arg0, out NpadStyleTag arg1)
+        public Result GetSupportedNpadStyleSet(AppletResourceUserId arg0, out NpadStyleTag arg1, [ClientProcessId] ulong pid)
         {
             arg1 = default;
 
@@ -324,25 +324,25 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(102)]
-        public Result SetSupportedNpadIdType(AppletResourceUserId arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<uint> arg1)
+        public Result SetSupportedNpadIdType(AppletResourceUserId arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<uint> arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(103)]
-        public Result ActivateNpad(AppletResourceUserId arg0)
+        public Result ActivateNpad(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(104)]
-        public Result DeactivateNpad(AppletResourceUserId arg0)
+        public Result DeactivateNpad(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(106)]
-        public Result AcquireNpadStyleSetUpdateEventHandle(AppletResourceUserId arg0, [CopyHandle] out int arg1, uint arg2, ulong arg3)
+        public Result AcquireNpadStyleSetUpdateEventHandle(AppletResourceUserId arg0, [CopyHandle] out int arg1, uint arg2, ulong arg3, [ClientProcessId] ulong pid)
         {
             arg1 = default;
 
@@ -350,7 +350,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(107)]
-        public Result DisconnectNpad(AppletResourceUserId arg0, uint arg1)
+        public Result DisconnectNpad(AppletResourceUserId arg0, uint arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -364,19 +364,19 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(109)]
-        public Result ActivateNpadWithRevision(AppletResourceUserId arg0, int arg1)
+        public Result ActivateNpadWithRevision(AppletResourceUserId arg0, int arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(120)]
-        public Result SetNpadJoyHoldType(AppletResourceUserId arg0, long arg1)
+        public Result SetNpadJoyHoldType(AppletResourceUserId arg0, long arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(121)]
-        public Result GetNpadJoyHoldType(AppletResourceUserId arg0, out long arg1)
+        public Result GetNpadJoyHoldType(AppletResourceUserId arg0, out long arg1, [ClientProcessId] ulong pid)
         {
             arg1 = default;
 
@@ -384,49 +384,49 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(122)]
-        public Result SetNpadJoyAssignmentModeSingleByDefault(AppletResourceUserId arg0, uint arg1)
+        public Result SetNpadJoyAssignmentModeSingleByDefault(AppletResourceUserId arg0, uint arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(123)]
-        public Result SetNpadJoyAssignmentModeSingle(AppletResourceUserId arg0, uint arg1, long arg2)
+        public Result SetNpadJoyAssignmentModeSingle(AppletResourceUserId arg0, uint arg1, long arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(124)]
-        public Result SetNpadJoyAssignmentModeDual(AppletResourceUserId arg0, uint arg1)
+        public Result SetNpadJoyAssignmentModeDual(AppletResourceUserId arg0, uint arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(125)]
-        public Result MergeSingleJoyAsDualJoy(AppletResourceUserId arg0, uint arg1, uint arg2)
+        public Result MergeSingleJoyAsDualJoy(AppletResourceUserId arg0, uint arg1, uint arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(126)]
-        public Result StartLrAssignmentMode(AppletResourceUserId arg0)
+        public Result StartLrAssignmentMode(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(127)]
-        public Result StopLrAssignmentMode(AppletResourceUserId arg0)
+        public Result StopLrAssignmentMode(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(128)]
-        public Result SetNpadHandheldActivationMode(AppletResourceUserId arg0, long arg1)
+        public Result SetNpadHandheldActivationMode(AppletResourceUserId arg0, long arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(129)]
-        public Result GetNpadHandheldActivationMode(AppletResourceUserId arg0, out long arg1)
+        public Result GetNpadHandheldActivationMode(AppletResourceUserId arg0, out long arg1, [ClientProcessId] ulong pid)
         {
             arg1 = default;
 
@@ -434,13 +434,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(130)]
-        public Result SwapNpadAssignment(AppletResourceUserId arg0, uint arg1, uint arg2)
+        public Result SwapNpadAssignment(AppletResourceUserId arg0, uint arg1, uint arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(131)]
-        public Result IsUnintendedHomeButtonInputProtectionEnabled(out bool arg0, AppletResourceUserId arg1, uint arg2)
+        public Result IsUnintendedHomeButtonInputProtectionEnabled(out bool arg0, AppletResourceUserId arg1, uint arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -448,13 +448,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(132)]
-        public Result EnableUnintendedHomeButtonInputProtection(AppletResourceUserId arg0, uint arg1, bool arg2)
+        public Result EnableUnintendedHomeButtonInputProtection(AppletResourceUserId arg0, uint arg1, bool arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(133)]
-        public Result SetNpadJoyAssignmentModeSingleWithDestination(out bool arg0, out uint arg1, AppletResourceUserId arg2, uint arg3, long arg4)
+        public Result SetNpadJoyAssignmentModeSingleWithDestination(out bool arg0, out uint arg1, AppletResourceUserId arg2, uint arg3, long arg4, [ClientProcessId] ulong pid)
         {
             arg0 = default;
             arg1 = default;
@@ -463,19 +463,19 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(134)]
-        public Result SetNpadAnalogStickUseCenterClamp(AppletResourceUserId arg0, bool arg1)
+        public Result SetNpadAnalogStickUseCenterClamp(AppletResourceUserId arg0, bool arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(135)]
-        public Result SetNpadCaptureButtonAssignment(AppletResourceUserId arg0, NpadStyleTag arg1, NpadButton arg2)
+        public Result SetNpadCaptureButtonAssignment(AppletResourceUserId arg0, NpadStyleTag arg1, NpadButton arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(136)]
-        public Result ClearNpadCaptureButtonAssignment(AppletResourceUserId arg0)
+        public Result ClearNpadCaptureButtonAssignment(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -489,13 +489,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(201)]
-        public Result SendVibrationValue(AppletResourceUserId arg0, VibrationDeviceHandle arg1, VibrationValue arg2)
+        public Result SendVibrationValue(AppletResourceUserId arg0, VibrationDeviceHandle arg1, VibrationValue arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(202)]
-        public Result GetActualVibrationValue(out VibrationValue arg0, AppletResourceUserId arg1, VibrationDeviceHandle arg2)
+        public Result GetActualVibrationValue(out VibrationValue arg0, AppletResourceUserId arg1, VibrationDeviceHandle arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -531,13 +531,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(207)]
-        public Result SendVibrationGcErmCommand(AppletResourceUserId arg0, VibrationDeviceHandle arg1, VibrationGcErmCommand arg2)
+        public Result SendVibrationGcErmCommand(AppletResourceUserId arg0, VibrationDeviceHandle arg1, VibrationGcErmCommand arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(208)]
-        public Result GetActualVibrationGcErmCommand(out VibrationGcErmCommand arg0, AppletResourceUserId arg1, VibrationDeviceHandle arg2)
+        public Result GetActualVibrationGcErmCommand(out VibrationGcErmCommand arg0, AppletResourceUserId arg1, VibrationDeviceHandle arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -557,7 +557,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(211)]
-        public Result IsVibrationDeviceMounted(out bool arg0, AppletResourceUserId arg1, VibrationDeviceHandle arg2)
+        public Result IsVibrationDeviceMounted(out bool arg0, AppletResourceUserId arg1, VibrationDeviceHandle arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -565,67 +565,67 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(212)]
-        public Result SendVibrationValueInBool(AppletResourceUserId arg0, VibrationDeviceHandle arg1, bool arg2)
+        public Result SendVibrationValueInBool(AppletResourceUserId arg0, VibrationDeviceHandle arg1, bool arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(300)]
-        public Result ActivateConsoleSixAxisSensor(AppletResourceUserId arg0)
+        public Result ActivateConsoleSixAxisSensor(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(301)]
-        public Result StartConsoleSixAxisSensor(AppletResourceUserId arg0, ConsoleSixAxisSensorHandle arg1)
+        public Result StartConsoleSixAxisSensor(AppletResourceUserId arg0, ConsoleSixAxisSensorHandle arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(302)]
-        public Result StopConsoleSixAxisSensor(AppletResourceUserId arg0, ConsoleSixAxisSensorHandle arg1)
+        public Result StopConsoleSixAxisSensor(AppletResourceUserId arg0, ConsoleSixAxisSensorHandle arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(303)]
-        public Result ActivateSevenSixAxisSensor(AppletResourceUserId arg0)
+        public Result ActivateSevenSixAxisSensor(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(304)]
-        public Result StartSevenSixAxisSensor(AppletResourceUserId arg0)
+        public Result StartSevenSixAxisSensor(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(305)]
-        public Result StopSevenSixAxisSensor(AppletResourceUserId arg0)
+        public Result StopSevenSixAxisSensor(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(306)]
-        public Result InitializeSevenSixAxisSensor(AppletResourceUserId arg0, [CopyHandle] int arg1, ulong arg2, [CopyHandle] int arg3, ulong arg4)
+        public Result InitializeSevenSixAxisSensor(AppletResourceUserId arg0, [CopyHandle] int arg1, ulong arg2, [CopyHandle] int arg3, ulong arg4, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(307)]
-        public Result FinalizeSevenSixAxisSensor(AppletResourceUserId arg0)
+        public Result FinalizeSevenSixAxisSensor(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(308)]
-        public Result SetSevenSixAxisSensorFusionStrength(AppletResourceUserId arg0, float arg1)
+        public Result SetSevenSixAxisSensorFusionStrength(AppletResourceUserId arg0, float arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(309)]
-        public Result GetSevenSixAxisSensorFusionStrength(out float arg0, AppletResourceUserId arg1)
+        public Result GetSevenSixAxisSensorFusionStrength(out float arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -633,7 +633,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(310)]
-        public Result ResetSevenSixAxisSensorTimestamp(AppletResourceUserId arg0)
+        public Result ResetSevenSixAxisSensorTimestamp(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -695,7 +695,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(407)]
-        public Result GetNpadOfHighestBatteryLevel(out uint arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<uint> arg1, AppletResourceUserId arg2)
+        public Result GetNpadOfHighestBatteryLevel(out uint arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<uint> arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -703,7 +703,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(500)]
-        public Result GetPalmaConnectionHandle(out PalmaConnectionHandle arg0, uint arg1, AppletResourceUserId arg2)
+        public Result GetPalmaConnectionHandle(out PalmaConnectionHandle arg0, uint arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -769,7 +769,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(510)]
-        public Result WritePalmaApplicationSection(PalmaConnectionHandle arg0, ulong arg1, ulong arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x100)] PalmaApplicationSectionAccessBuffer arg3)
+        public Result WritePalmaApplicationSection(PalmaConnectionHandle arg0, ulong arg1, ulong arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x100)] in PalmaApplicationSectionAccessBuffer arg3)
         {
             return Result.Success;
         }
@@ -841,13 +841,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(522)]
-        public Result SetIsPalmaAllConnectable(AppletResourceUserId arg0, bool arg1)
+        public Result SetIsPalmaAllConnectable(AppletResourceUserId arg0, bool arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(523)]
-        public Result SetIsPalmaPairedConnectable(AppletResourceUserId arg0, bool arg1)
+        public Result SetIsPalmaPairedConnectable(AppletResourceUserId arg0, bool arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -871,7 +871,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(527)]
-        public Result EnablePalmaBoostMode(AppletResourceUserId arg0, bool arg1)
+        public Result EnablePalmaBoostMode(AppletResourceUserId arg0, bool arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -885,13 +885,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(529)]
-        public Result SetDisallowedPalmaConnection(AppletResourceUserId arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<Address> arg1)
+        public Result SetDisallowedPalmaConnection(AppletResourceUserId arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer)] ReadOnlySpan<Address> arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(1000)]
-        public Result SetNpadCommunicationMode(AppletResourceUserId arg0, long arg1)
+        public Result SetNpadCommunicationMode(AppletResourceUserId arg0, long arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -905,13 +905,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1002)]
-        public Result SetTouchScreenConfiguration(AppletResourceUserId arg0, TouchScreenConfigurationForNx arg1)
+        public Result SetTouchScreenConfiguration(AppletResourceUserId arg0, TouchScreenConfigurationForNx arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(1003)]
-        public Result IsFirmwareUpdateNeededForNotification(out bool arg0, int arg1, AppletResourceUserId arg2)
+        public Result IsFirmwareUpdateNeededForNotification(out bool arg0, int arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -919,7 +919,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(2000)]
-        public Result ActivateDigitizer(AppletResourceUserId arg0)
+        public Result ActivateDigitizer(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }

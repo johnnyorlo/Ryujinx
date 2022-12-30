@@ -7,13 +7,13 @@ namespace Ryujinx.Horizon.Sdk.Nim.Detail
     class ShopServiceAccessSystemInterface : IShopServiceAccessSystemInterface
     {
         [CmifCommand(0)]
-        public Result RegisterSpecialClient(ulong arg0, ulong arg1, ClientCategory arg2)
+        public Result RegisterSpecialClient(ulong arg0, ulong arg1, ClientCategory arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(1)]
-        public Result UnregisterSpecialClient(ulong arg0)
+        public Result UnregisterSpecialClient(ulong arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }

@@ -51,7 +51,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(13)]
-        public Result GetTouchScreenConfiguration(out TouchScreenConfigurationForNx arg0, AppletResourceUserId arg1)
+        public Result GetTouchScreenConfiguration(out TouchScreenConfigurationForNx arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -71,7 +71,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(16)]
-        public Result ForceRestartTouchScreenManagement(AppletResourceUserId arg0, int arg1)
+        public Result ForceRestartTouchScreenManagement(AppletResourceUserId arg0, int arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -127,13 +127,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(60)]
-        public Result ClearNpadSystemCommonPolicy(AppletResourceUserId arg0)
+        public Result ClearNpadSystemCommonPolicy(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(61)]
-        public Result DeactivateNpad(AppletResourceUserId arg0)
+        public Result DeactivateNpad(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -205,13 +205,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(133)]
-        public Result SetShiftAccelerometerCalibrationValue(SixAxisSensorHandle arg0, AppletResourceUserId arg1, float arg2, float arg3)
+        public Result SetShiftAccelerometerCalibrationValue(SixAxisSensorHandle arg0, AppletResourceUserId arg1, float arg2, float arg3, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(134)]
-        public Result GetShiftAccelerometerCalibrationValue(out float arg0, out float arg1, SixAxisSensorHandle arg2, AppletResourceUserId arg3)
+        public Result GetShiftAccelerometerCalibrationValue(out float arg0, out float arg1, SixAxisSensorHandle arg2, AppletResourceUserId arg3, [ClientProcessId] ulong pid)
         {
             arg0 = default;
             arg1 = default;
@@ -220,13 +220,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(135)]
-        public Result SetShiftGyroscopeCalibrationValue(SixAxisSensorHandle arg0, AppletResourceUserId arg1, float arg2, float arg3)
+        public Result SetShiftGyroscopeCalibrationValue(SixAxisSensorHandle arg0, AppletResourceUserId arg1, float arg2, float arg3, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(136)]
-        public Result GetShiftGyroscopeCalibrationValue(out float arg0, out float arg1, SixAxisSensorHandle arg2, AppletResourceUserId arg3)
+        public Result GetShiftGyroscopeCalibrationValue(out float arg0, out float arg1, SixAxisSensorHandle arg2, AppletResourceUserId arg3, [ClientProcessId] ulong pid)
         {
             arg0 = default;
             arg1 = default;
@@ -241,7 +241,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(141)]
-        public Result GetConsoleSixAxisSensorSamplingFrequency(out long arg0, AppletResourceUserId arg1)
+        public Result GetConsoleSixAxisSensorSamplingFrequency(out long arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -255,7 +255,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(143)]
-        public Result GetConsoleSixAxisSensorCountStates(out int arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.AutoSelect)] Span<ConsoleSixAxisSensorCountState> arg1, AppletResourceUserId arg2)
+        public Result GetConsoleSixAxisSensorCountStates(out int arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.AutoSelect)] Span<ConsoleSixAxisSensorCountState> arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -263,7 +263,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(144)]
-        public Result GetAccelerometerFsr(out AccelerometerFsr arg0, AppletResourceUserId arg1)
+        public Result GetAccelerometerFsr(out AccelerometerFsr arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -271,13 +271,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(145)]
-        public Result SetAccelerometerFsr(AccelerometerFsr arg0, AppletResourceUserId arg1)
+        public Result SetAccelerometerFsr(AccelerometerFsr arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(146)]
-        public Result GetAccelerometerOdr(out AccelerometerOdr arg0, AppletResourceUserId arg1)
+        public Result GetAccelerometerOdr(out AccelerometerOdr arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -285,13 +285,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(147)]
-        public Result SetAccelerometerOdr(AccelerometerOdr arg0, AppletResourceUserId arg1)
+        public Result SetAccelerometerOdr(AccelerometerOdr arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(148)]
-        public Result GetGyroscopeFsr(out GyroscopeFsr arg0, AppletResourceUserId arg1)
+        public Result GetGyroscopeFsr(out GyroscopeFsr arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -299,13 +299,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(149)]
-        public Result SetGyroscopeFsr(GyroscopeFsr arg0, AppletResourceUserId arg1)
+        public Result SetGyroscopeFsr(GyroscopeFsr arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(150)]
-        public Result GetGyroscopeOdr(out GyroscopeOdr arg0, AppletResourceUserId arg1)
+        public Result GetGyroscopeOdr(out GyroscopeOdr arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -313,13 +313,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(151)]
-        public Result SetGyroscopeOdr(GyroscopeOdr arg0, AppletResourceUserId arg1)
+        public Result SetGyroscopeOdr(GyroscopeOdr arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(152)]
-        public Result GetWhoAmI(out WhoAmIValue arg0, AppletResourceUserId arg1)
+        public Result GetWhoAmI(out WhoAmIValue arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 

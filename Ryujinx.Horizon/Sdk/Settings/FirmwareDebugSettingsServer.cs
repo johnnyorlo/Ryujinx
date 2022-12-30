@@ -9,19 +9,19 @@ namespace Ryujinx.Horizon.Sdk.Settings
     class FirmwareDebugSettingsServer : IFirmwareDebugSettingsServer
     {
         [CmifCommand(2)]
-        public Result SetSettingsItemValue([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] SettingsName arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] SettingsItemKey arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg2)
+        public Result SetSettingsItemValue([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in SettingsName arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in SettingsItemKey arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<byte> arg2)
         {
             return Result.Success;
         }
 
         [CmifCommand(3)]
-        public Result ResetSettingsItemValue([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] SettingsName arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] SettingsItemKey arg1)
+        public Result ResetSettingsItemValue([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in SettingsName arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in SettingsItemKey arg1)
         {
             return Result.Success;
         }
 
         [CmifCommand(4)]
-        public Result CreateSettingsItemKeyIterator(out ISettingsItemKeyIterator arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] SettingsName arg1)
+        public Result CreateSettingsItemKeyIterator(out ISettingsItemKeyIterator arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in SettingsName arg1)
         {
             arg0 = new SettingsItemKeyIterator();
 
@@ -55,7 +55,7 @@ namespace Ryujinx.Horizon.Sdk.Settings
         }
 
         [CmifCommand(22)]
-        public Result SetHostFsMountPoint([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x100)] HostFsMountPoint arg0)
+        public Result SetHostFsMountPoint([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x100)] in HostFsMountPoint arg0)
         {
             return Result.Success;
         }

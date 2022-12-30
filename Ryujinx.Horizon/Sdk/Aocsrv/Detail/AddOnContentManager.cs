@@ -11,7 +11,7 @@ namespace Ryujinx.Horizon.Sdk.Aocsrv.Detail
     class AddOnContentManager : IAddOnContentManager
     {
         [CmifCommand(2)]
-        public Result CountAddOnContent(out int arg0, ulong arg1)
+        public Result CountAddOnContent(out int arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -19,7 +19,7 @@ namespace Ryujinx.Horizon.Sdk.Aocsrv.Detail
         }
 
         [CmifCommand(3)]
-        public Result ListAddOnContent(out int arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<int> arg1, ulong arg2, int arg3, int arg4)
+        public Result ListAddOnContent(out int arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<int> arg1, ulong arg2, int arg3, int arg4, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -27,7 +27,7 @@ namespace Ryujinx.Horizon.Sdk.Aocsrv.Detail
         }
 
         [CmifCommand(5)]
-        public Result GetAddOnContentBaseId(out ulong arg0, ulong arg1)
+        public Result GetAddOnContentBaseId(out ulong arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -35,7 +35,7 @@ namespace Ryujinx.Horizon.Sdk.Aocsrv.Detail
         }
 
         [CmifCommand(7)]
-        public Result PrepareAddOnContent(int arg0, ulong arg1)
+        public Result PrepareAddOnContent(int arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -49,7 +49,7 @@ namespace Ryujinx.Horizon.Sdk.Aocsrv.Detail
         }
 
         [CmifCommand(9)]
-        public Result GetAddOnContentLostErrorCode(out ErrorCode arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<int> arg1, ulong arg2)
+        public Result GetAddOnContentLostErrorCode(out ErrorCode arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<int> arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -57,7 +57,7 @@ namespace Ryujinx.Horizon.Sdk.Aocsrv.Detail
         }
 
         [CmifCommand(10)]
-        public Result GetAddOnContentListChangedEventWithProcessId([CopyHandle] out int arg0, ulong arg1)
+        public Result GetAddOnContentListChangedEventWithProcessId([CopyHandle] out int arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -65,19 +65,19 @@ namespace Ryujinx.Horizon.Sdk.Aocsrv.Detail
         }
 
         [CmifCommand(11)]
-        public Result NotifyMountAddOnContent(DataId arg0, ulong arg1)
+        public Result NotifyMountAddOnContent(DataId arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(12)]
-        public Result NotifyUnmountAddOnContent(DataId arg0, ulong arg1)
+        public Result NotifyUnmountAddOnContent(DataId arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(13)]
-        public Result IsAddOnContentMountedForDebug(out bool arg0, DataId arg1, ulong arg2)
+        public Result IsAddOnContentMountedForDebug(out bool arg0, DataId arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -85,7 +85,7 @@ namespace Ryujinx.Horizon.Sdk.Aocsrv.Detail
         }
 
         [CmifCommand(50)]
-        public Result CheckAddOnContentMountStatus(ulong arg0)
+        public Result CheckAddOnContentMountStatus(ulong arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -99,7 +99,7 @@ namespace Ryujinx.Horizon.Sdk.Aocsrv.Detail
         }
 
         [CmifCommand(101)]
-        public Result CreatePermanentEcPurchasedEventManager(out IPurchaseEventManager arg0, ulong arg1)
+        public Result CreatePermanentEcPurchasedEventManager(out IPurchaseEventManager arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             arg0 = new PurchaseEventManager();
 
@@ -115,7 +115,7 @@ namespace Ryujinx.Horizon.Sdk.Aocsrv.Detail
         }
 
         [CmifCommand(200)]
-        public Result SetRequiredAddOnContentsOnContentsAvailabilityTransition(ulong arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<int> arg1)
+        public Result SetRequiredAddOnContentsOnContentsAvailabilityTransition(ulong arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias)] ReadOnlySpan<int> arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }

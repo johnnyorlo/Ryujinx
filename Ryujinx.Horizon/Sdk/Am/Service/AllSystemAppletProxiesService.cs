@@ -7,7 +7,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
     class AllSystemAppletProxiesService : IAllSystemAppletProxiesService
     {
         [CmifCommand(100)]
-        public Result OpenSystemAppletProxy(out ISystemAppletProxy arg0, ulong arg1, [CopyHandle] int arg2)
+        public Result OpenSystemAppletProxy(out ISystemAppletProxy arg0, ulong arg1, [CopyHandle] int arg2, [ClientProcessId] ulong pid)
         {
             arg0 = new SystemAppletProxy();
 
@@ -15,7 +15,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         }
 
         [CmifCommand(200)]
-        public Result OpenLibraryAppletProxyOld(out ILibraryAppletProxy arg0, ulong arg1, [CopyHandle] int arg2)
+        public Result OpenLibraryAppletProxyOld(out ILibraryAppletProxy arg0, ulong arg1, [CopyHandle] int arg2, [ClientProcessId] ulong pid)
         {
             arg0 = new LibraryAppletProxy();
 
@@ -23,7 +23,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         }
 
         [CmifCommand(201)]
-        public Result OpenLibraryAppletProxy(out ILibraryAppletProxy arg0, ulong arg1, [CopyHandle] int arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x80)] AppletAttribute arg3)
+        public Result OpenLibraryAppletProxy(out ILibraryAppletProxy arg0, ulong arg1, [CopyHandle] int arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x80)] in AppletAttribute arg3, [ClientProcessId] ulong pid)
         {
             arg0 = new LibraryAppletProxy();
 
@@ -31,7 +31,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         }
 
         [CmifCommand(300)]
-        public Result OpenOverlayAppletProxy(out IOverlayAppletProxy arg0, ulong arg1, [CopyHandle] int arg2)
+        public Result OpenOverlayAppletProxy(out IOverlayAppletProxy arg0, ulong arg1, [CopyHandle] int arg2, [ClientProcessId] ulong pid)
         {
             arg0 = new OverlayAppletProxy();
 
@@ -39,7 +39,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         }
 
         [CmifCommand(350)]
-        public Result OpenSystemApplicationProxy(out IApplicationProxy arg0, ulong arg1, [CopyHandle] int arg2)
+        public Result OpenSystemApplicationProxy(out IApplicationProxy arg0, ulong arg1, [CopyHandle] int arg2, [ClientProcessId] ulong pid)
         {
             arg0 = new ApplicationProxy();
 
@@ -47,7 +47,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         }
 
         [CmifCommand(400)]
-        public Result CreateSelfLibraryAppletCreatorForDevelop(out ILibraryAppletCreator arg0, ulong arg1)
+        public Result CreateSelfLibraryAppletCreatorForDevelop(out ILibraryAppletCreator arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             arg0 = new LibraryAppletCreator();
 

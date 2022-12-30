@@ -18,8 +18,8 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         Result CreateApplicationAndPushAndRequestToStartForQuest(ApplicationId arg0, IStorage arg1, uint arg2, uint arg3);
         Result CreateApplicationAndRequestToStart(ApplicationId arg0);
         Result CreateApplicationAndRequestToStartForQuest(ApplicationId arg0, uint arg1, uint arg2);
-        Result CreateApplicationWithAttributeAndPushAndRequestToStartForQuest(ApplicationId arg0, IStorage arg1, ApplicationAttribute arg2);
-        Result CreateApplicationWithAttributeAndRequestToStartForQuest(ApplicationId arg0, ApplicationAttribute arg1);
+        Result CreateApplicationWithAttributeAndPushAndRequestToStartForQuest(ApplicationId arg0, IStorage arg1, in ApplicationAttribute arg2);
+        Result CreateApplicationWithAttributeAndRequestToStartForQuest(ApplicationId arg0, in ApplicationAttribute arg1);
         Result EnsureSaveData(out long arg0, Uid arg1);
         Result GetDesiredLanguage(out LanguageCode arg0);
         Result SetTerminateResult(uint arg0);
@@ -68,8 +68,8 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         Result TryPopFromNotificationStorageChannel(out IStorage arg0);
         Result GetHealthWarningDisappearedSystemEvent(out int arg0);
         Result SetHdcpAuthenticationActivated(bool arg0);
-        Result GetLaunchRequiredVersion(out LaunchRequiredVersion arg0, ApplicationId arg1, ulong arg2);
-        Result UpgradeLaunchRequiredVersion(ApplicationId arg0, LaunchRequiredVersion arg1, ulong arg2);
+        Result GetLaunchRequiredVersion(out LaunchRequiredVersion arg0, ApplicationId arg1, ulong arg2, ulong pid);
+        Result UpgradeLaunchRequiredVersion(ApplicationId arg0, LaunchRequiredVersion arg1, ulong arg2, ulong pid);
         Result SendServerMaintenanceOverlayNotification(PosixTime arg0, PosixTime arg1);
         Result GetLastApplicationExitReason(out int arg0);
         Result StartContinuousRecordingFlushForDebug(out int arg0, long arg1);

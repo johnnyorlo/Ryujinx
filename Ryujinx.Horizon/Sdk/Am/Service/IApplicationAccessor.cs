@@ -23,7 +23,7 @@ namespace Ryujinx.Horizon.Sdk.Am.Service
         Result GetNsRightsEnvironmentHandle(out ulong arg0);
         Result GetDesirableUids(out int arg0, Span<Uid> arg1);
         Result ReportApplicationExitTimeout();
-        Result SetApplicationAttribute(ApplicationAttribute arg0);
+        Result SetApplicationAttribute(in ApplicationAttribute arg0);
         Result HasSaveDataAccessPermission(out bool arg0, ApplicationId arg1);
         Result PushToFriendInvitationStorageChannel(IStorage arg0);
         Result PushToNotificationStorageChannel(IStorage arg0);

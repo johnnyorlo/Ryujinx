@@ -326,7 +326,7 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         }
 
         [CmifCommand(8200)]
-        public Result CreateSharedBufferStaticStorage(out SharedBufferHandle arg0, ulong arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x188)] SharedMemoryPoolLayout arg2)
+        public Result CreateSharedBufferStaticStorage(out SharedBufferHandle arg0, ulong arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x188)] in SharedMemoryPoolLayout arg2)
         {
             arg0 = default;
 
@@ -334,7 +334,7 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         }
 
         [CmifCommand(8201)]
-        public Result CreateSharedBufferTransferMemory(out SharedBufferHandle arg0, [CopyHandle] int arg1, ulong arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x188)] SharedMemoryPoolLayout arg3)
+        public Result CreateSharedBufferTransferMemory(out SharedBufferHandle arg0, [CopyHandle] int arg1, ulong arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x188)] in SharedMemoryPoolLayout arg3)
         {
             arg0 = default;
 
@@ -348,13 +348,13 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         }
 
         [CmifCommand(8203)]
-        public Result BindSharedLowLevelLayerToManagedLayer(ulong arg0, DisplayName arg1, AppletResourceUserId arg2)
+        public Result BindSharedLowLevelLayerToManagedLayer(ulong arg0, DisplayName arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(8204)]
-        public Result BindSharedLowLevelLayerToIndirectLayer(ulong arg0, AppletResourceUserId arg1)
+        public Result BindSharedLowLevelLayerToIndirectLayer(ulong arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -452,7 +452,7 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         }
 
         [CmifCommand(8227)]
-        public Result CreateSharedBufferProcessHeap(out SharedBufferHandle arg0, ulong arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x188)] SharedMemoryPoolLayout arg2)
+        public Result CreateSharedBufferProcessHeap(out SharedBufferHandle arg0, ulong arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x188)] in SharedMemoryPoolLayout arg2)
         {
             arg0 = default;
 

@@ -7,7 +7,7 @@ namespace Ryujinx.Horizon.Sdk.Npns
     interface INotificationReceiver : IServiceObject
     {
         Result ListenTo(ApplicationId arg0);
-        Result ListenToMyApplicationId(ulong arg0);
+        Result ListenToMyApplicationId(ulong arg0, ulong pid);
         Result Receive(Span<byte> arg0, ushort arg1);
         Result GetReceiveEvent(out int arg0);
     }

@@ -22,7 +22,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(101)]
-        public Result AcquireHomeButtonEventHandle([CopyHandle] out int arg0, AppletResourceUserId arg1)
+        public Result AcquireHomeButtonEventHandle([CopyHandle] out int arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -30,13 +30,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(111)]
-        public Result ActivateHomeButton(AppletResourceUserId arg0)
+        public Result ActivateHomeButton(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(121)]
-        public Result AcquireSleepButtonEventHandle([CopyHandle] out int arg0, AppletResourceUserId arg1)
+        public Result AcquireSleepButtonEventHandle([CopyHandle] out int arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -44,13 +44,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(131)]
-        public Result ActivateSleepButton(AppletResourceUserId arg0)
+        public Result ActivateSleepButton(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(141)]
-        public Result AcquireCaptureButtonEventHandle([CopyHandle] out int arg0, AppletResourceUserId arg1)
+        public Result AcquireCaptureButtonEventHandle([CopyHandle] out int arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -58,7 +58,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(151)]
-        public Result ActivateCaptureButton(AppletResourceUserId arg0)
+        public Result ActivateCaptureButton(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -96,7 +96,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(213)]
-        public Result ActivateNfc(uint arg0, bool arg1, AppletResourceUserId arg2)
+        public Result ActivateNfc(uint arg0, bool arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -126,13 +126,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(231)]
-        public Result ActivateIrSensor(uint arg0, bool arg1, AppletResourceUserId arg2)
+        public Result ActivateIrSensor(uint arg0, bool arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(232)]
-        public Result GetIrSensorState(uint arg0, out long arg1, AppletResourceUserId arg2)
+        public Result GetIrSensorState(uint arg0, out long arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             arg1 = default;
 
@@ -140,7 +140,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(233)]
-        public Result GetXcdHandleForNpadWithIrSensor(uint arg0, out DeviceHandle arg1, AppletResourceUserId arg2)
+        public Result GetXcdHandleForNpadWithIrSensor(uint arg0, out DeviceHandle arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             arg1 = default;
 
@@ -154,19 +154,19 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(303)]
-        public Result ApplyNpadSystemCommonPolicy(AppletResourceUserId arg0)
+        public Result ApplyNpadSystemCommonPolicy(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(304)]
-        public Result EnableAssigningSingleOnSlSrPress(AppletResourceUserId arg0)
+        public Result EnableAssigningSingleOnSlSrPress(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(305)]
-        public Result DisableAssigningSingleOnSlSrPress(AppletResourceUserId arg0)
+        public Result DisableAssigningSingleOnSlSrPress(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -189,7 +189,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(308)]
-        public Result ApplyNpadSystemCommonPolicyFull(AppletResourceUserId arg0)
+        public Result ApplyNpadSystemCommonPolicyFull(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -212,13 +212,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(311)]
-        public Result SetNpadPlayerLedBlinkingDevice(AppletResourceUserId arg0, uint arg1, DeviceType arg2)
+        public Result SetNpadPlayerLedBlinkingDevice(AppletResourceUserId arg0, uint arg1, DeviceType arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(312)]
-        public Result SetSupportedNpadStyleSetAll(AppletResourceUserId arg0)
+        public Result SetSupportedNpadStyleSetAll(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -290,7 +290,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(322)]
-        public Result SetNpadSystemExtStateEnabled(AppletResourceUserId arg0, bool arg1)
+        public Result SetNpadSystemExtStateEnabled(AppletResourceUserId arg0, bool arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -556,7 +556,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(700)]
-        public Result ActivateUniquePad(AppletResourceUserId arg0, UniquePadId arg1)
+        public Result ActivateUniquePad(AppletResourceUserId arg0, UniquePadId arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -578,7 +578,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(751)]
-        public Result AcquireJoyDetachOnBluetoothOffEventHandle([CopyHandle] out int arg0, AppletResourceUserId arg1)
+        public Result AcquireJoyDetachOnBluetoothOffEventHandle([CopyHandle] out int arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -882,7 +882,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1050)]
-        public Result IsSixAxisSensorAccurateUserCalibrationSupported(out bool arg0, UniqueSixAxisSensorHandle arg1, AppletResourceUserId arg2)
+        public Result IsSixAxisSensorAccurateUserCalibrationSupported(out bool arg0, UniqueSixAxisSensorHandle arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -890,19 +890,19 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1051)]
-        public Result StartSixAxisSensorAccurateUserCalibration(UniqueSixAxisSensorHandle arg0, AppletResourceUserId arg1)
+        public Result StartSixAxisSensorAccurateUserCalibration(UniqueSixAxisSensorHandle arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(1052)]
-        public Result CancelSixAxisSensorAccurateUserCalibration(UniqueSixAxisSensorHandle arg0, AppletResourceUserId arg1)
+        public Result CancelSixAxisSensorAccurateUserCalibration(UniqueSixAxisSensorHandle arg0, AppletResourceUserId arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(1053)]
-        public Result GetSixAxisSensorAccurateUserCalibrationState(out SixAxisSensorAccurateUserCalibrationState arg0, UniqueSixAxisSensorHandle arg1, AppletResourceUserId arg2)
+        public Result GetSixAxisSensorAccurateUserCalibrationState(out SixAxisSensorAccurateUserCalibrationState arg0, UniqueSixAxisSensorHandle arg1, AppletResourceUserId arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -924,19 +924,19 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1130)]
-        public Result InitializeUsbFirmwareUpdate(AppletResourceUserId arg0, [CopyHandle] int arg1, ulong arg2)
+        public Result InitializeUsbFirmwareUpdate(AppletResourceUserId arg0, [CopyHandle] int arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(1131)]
-        public Result FinalizeUsbFirmwareUpdate(AppletResourceUserId arg0)
+        public Result FinalizeUsbFirmwareUpdate(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(1132)]
-        public Result CheckUsbFirmwareUpdateRequired(AppletResourceUserId arg0, out long arg1)
+        public Result CheckUsbFirmwareUpdateRequired(AppletResourceUserId arg0, out long arg1, [ClientProcessId] ulong pid)
         {
             arg1 = default;
 
@@ -944,13 +944,13 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1133)]
-        public Result StartUsbFirmwareUpdate(AppletResourceUserId arg0)
+        public Result StartUsbFirmwareUpdate(AppletResourceUserId arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
 
         [CmifCommand(1134)]
-        public Result GetUsbFirmwareUpdateState(AppletResourceUserId arg0, out FirmwareUpdateState arg1, out int arg2, out int arg3)
+        public Result GetUsbFirmwareUpdateState(AppletResourceUserId arg0, out FirmwareUpdateState arg1, out int arg2, out int arg3, [ClientProcessId] ulong pid)
         {
             arg1 = default;
             arg2 = default;
@@ -988,7 +988,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1154)]
-        public Result IsFirmwareAvailableForNotification(out bool arg0, int arg1, UniquePadId arg2, AppletResourceUserId arg3)
+        public Result IsFirmwareAvailableForNotification(out bool arg0, int arg1, UniquePadId arg2, AppletResourceUserId arg3, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -1070,19 +1070,19 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1208)]
-        public Result SetButtonConfigEmbedded([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x2C8)] ButtonConfigEmbedded arg0)
+        public Result SetButtonConfigEmbedded([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x2C8)] in ButtonConfigEmbedded arg0)
         {
             return Result.Success;
         }
 
         [CmifCommand(1209)]
-        public Result SetButtonConfigFull([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x2C8)] ButtonConfigFull arg0, Address arg1)
+        public Result SetButtonConfigFull([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x2C8)] in ButtonConfigFull arg0, Address arg1)
         {
             return Result.Success;
         }
 
         [CmifCommand(1211)]
-        public Result SetButtonConfigRight([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x1A0)] ButtonConfigRight arg0, Address arg1)
+        public Result SetButtonConfigRight([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x1A0)] in ButtonConfigRight arg0, Address arg1)
         {
             return Result.Success;
         }
@@ -1128,7 +1128,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1251)]
-        public Result IsDefaultButtonConfigEmbedded(out bool arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] ButtonConfigEmbedded arg1)
+        public Result IsDefaultButtonConfigEmbedded(out bool arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] in ButtonConfigEmbedded arg1)
         {
             arg0 = default;
 
@@ -1136,7 +1136,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1252)]
-        public Result IsDefaultButtonConfigFull(out bool arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] ButtonConfigFull arg1)
+        public Result IsDefaultButtonConfigFull(out bool arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] in ButtonConfigFull arg1)
         {
             arg0 = default;
 
@@ -1144,7 +1144,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1253)]
-        public Result IsDefaultButtonConfigLeft(out bool arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x34)] ButtonConfigLeft arg1)
+        public Result IsDefaultButtonConfigLeft(out bool arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x34)] in ButtonConfigLeft arg1)
         {
             arg0 = default;
 
@@ -1152,7 +1152,7 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1254)]
-        public Result IsDefaultButtonConfigRight(out bool arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x30)] ButtonConfigRight arg1)
+        public Result IsDefaultButtonConfigRight(out bool arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x30)] in ButtonConfigRight arg1)
         {
             arg0 = default;
 
@@ -1250,25 +1250,25 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1276)]
-        public Result SetHidButtonConfigEmbedded([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] ButtonConfigEmbedded arg0, UniquePadId arg1)
+        public Result SetHidButtonConfigEmbedded([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] in ButtonConfigEmbedded arg0, UniquePadId arg1)
         {
             return Result.Success;
         }
 
         [CmifCommand(1277)]
-        public Result SetHidButtonConfigFull([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] ButtonConfigFull arg0, UniquePadId arg1)
+        public Result SetHidButtonConfigFull([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] in ButtonConfigFull arg0, UniquePadId arg1)
         {
             return Result.Success;
         }
 
         [CmifCommand(1278)]
-        public Result SetHidButtonConfigLeft([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x34)] ButtonConfigLeft arg0, UniquePadId arg1)
+        public Result SetHidButtonConfigLeft([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x34)] in ButtonConfigLeft arg0, UniquePadId arg1)
         {
             return Result.Success;
         }
 
         [CmifCommand(1279)]
-        public Result SetHidButtonConfigRight([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x30)] ButtonConfigRight arg0, UniquePadId arg1)
+        public Result SetHidButtonConfigRight([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x30)] in ButtonConfigRight arg0, UniquePadId arg1)
         {
             return Result.Success;
         }
@@ -1342,31 +1342,31 @@ namespace Ryujinx.Horizon.Sdk.Hid
         }
 
         [CmifCommand(1288)]
-        public Result SetButtonConfigStorageEmbedded([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] ButtonConfigEmbedded arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x81)] StorageName arg1, int arg2)
+        public Result SetButtonConfigStorageEmbedded([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] in ButtonConfigEmbedded arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x81)] in StorageName arg1, int arg2)
         {
             return Result.Success;
         }
 
         [CmifCommand(1289)]
-        public Result SetButtonConfigStorageFull([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] ButtonConfigFull arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x81)] StorageName arg1, int arg2)
+        public Result SetButtonConfigStorageFull([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x54)] in ButtonConfigFull arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x81)] in StorageName arg1, int arg2)
         {
             return Result.Success;
         }
 
         [CmifCommand(1290)]
-        public Result SetButtonConfigStorageLeft([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x34)] ButtonConfigLeft arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x81)] StorageName arg1, int arg2)
+        public Result SetButtonConfigStorageLeft([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x34)] in ButtonConfigLeft arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x81)] in StorageName arg1, int arg2)
         {
             return Result.Success;
         }
 
         [CmifCommand(1291)]
-        public Result SetButtonConfigStorageRight([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x30)] ButtonConfigRight arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x81)] StorageName arg1, int arg2)
+        public Result SetButtonConfigStorageRight([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x30)] in ButtonConfigRight arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x81)] in StorageName arg1, int arg2)
         {
             return Result.Success;
         }
 
         [CmifCommand(12010)]
-        public Result SetButtonConfigLeft([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x1C8)] ButtonConfigLeft arg0, Address arg1)
+        public Result SetButtonConfigLeft([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x1C8)] in ButtonConfigLeft arg0, Address arg1)
         {
             return Result.Success;
         }

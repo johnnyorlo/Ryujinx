@@ -87,7 +87,7 @@ namespace Ryujinx.Horizon.Sdk.Timesrv.Detail.Service
         }
 
         [CmifCommand(100)]
-        public Result ToCalendarTime(out CalendarTime arg0, out CalendarAdditionalInfo arg1, PosixTime arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x4000)] TimeZoneRule arg3)
+        public Result ToCalendarTime(out CalendarTime arg0, out CalendarAdditionalInfo arg1, PosixTime arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x4000)] in TimeZoneRule arg3)
         {
             arg0 = default;
             arg1 = default;
@@ -105,7 +105,7 @@ namespace Ryujinx.Horizon.Sdk.Timesrv.Detail.Service
         }
 
         [CmifCommand(201)]
-        public Result ToPosixTime(out int arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.Pointer)] Span<PosixTime> arg1, CalendarTime arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x4000)] TimeZoneRule arg3)
+        public Result ToPosixTime(out int arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.Pointer)] Span<PosixTime> arg1, CalendarTime arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x4000)] in TimeZoneRule arg3)
         {
             arg0 = default;
 

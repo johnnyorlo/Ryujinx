@@ -141,7 +141,7 @@ namespace Ryujinx.Horizon.Sdk.Timesrv.Detail.Service
         }
 
         [CmifCommand(500)]
-        public Result CalculateStandardUserSystemClockDifferenceByUser(out TimeSpanType arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xD0)] ClockSnapshot arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xD0)] ClockSnapshot arg2)
+        public Result CalculateStandardUserSystemClockDifferenceByUser(out TimeSpanType arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xD0)] in ClockSnapshot arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xD0)] in ClockSnapshot arg2)
         {
             arg0 = default;
 
@@ -149,7 +149,7 @@ namespace Ryujinx.Horizon.Sdk.Timesrv.Detail.Service
         }
 
         [CmifCommand(501)]
-        public Result CalculateSpanBetween(out TimeSpanType arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xD0)] ClockSnapshot arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xD0)] ClockSnapshot arg2)
+        public Result CalculateSpanBetween(out TimeSpanType arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xD0)] in ClockSnapshot arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0xD0)] in ClockSnapshot arg2)
         {
             arg0 = default;
 

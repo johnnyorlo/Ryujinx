@@ -24,7 +24,7 @@ namespace Ryujinx.Horizon.Sdk.Timesrv.Detail.Service
         Result CalculateMonotonicSystemClockBaseTimePoint(out long arg0, SystemClockContext arg1);
         Result GetClockSnapshot(out ClockSnapshot arg0, byte arg1);
         Result GetClockSnapshotFromSystemClockContext(out ClockSnapshot arg0, SystemClockContext arg1, SystemClockContext arg2, byte arg3);
-        Result CalculateStandardUserSystemClockDifferenceByUser(out TimeSpanType arg0, ClockSnapshot arg1, ClockSnapshot arg2);
-        Result CalculateSpanBetween(out TimeSpanType arg0, ClockSnapshot arg1, ClockSnapshot arg2);
+        Result CalculateStandardUserSystemClockDifferenceByUser(out TimeSpanType arg0, in ClockSnapshot arg1, in ClockSnapshot arg2);
+        Result CalculateSpanBetween(out TimeSpanType arg0, in ClockSnapshot arg1, in ClockSnapshot arg2);
     }
 }

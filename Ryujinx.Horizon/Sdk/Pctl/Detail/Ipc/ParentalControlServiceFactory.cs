@@ -6,7 +6,7 @@ namespace Ryujinx.Horizon.Sdk.Pctl.Detail.Ipc
     class ParentalControlServiceFactory : IParentalControlServiceFactory
     {
         [CmifCommand(0)]
-        public Result CreateService(out IParentalControlService arg0, ulong arg1)
+        public Result CreateService(out IParentalControlService arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             arg0 = new ParentalControlService();
 
@@ -14,7 +14,7 @@ namespace Ryujinx.Horizon.Sdk.Pctl.Detail.Ipc
         }
 
         [CmifCommand(1)]
-        public Result CreateServiceWithoutInitialize(out IParentalControlService arg0, ulong arg1)
+        public Result CreateServiceWithoutInitialize(out IParentalControlService arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             arg0 = new ParentalControlService();
 

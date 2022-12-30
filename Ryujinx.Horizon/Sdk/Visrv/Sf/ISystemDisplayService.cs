@@ -21,7 +21,7 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         Result SetLayerZ(ulong arg0, long arg1);
         Result SetLayerVisibility(ulong arg0, bool arg1);
         Result SetLayerAlpha(ulong arg0, float arg1);
-        Result OpenIndirectLayer(out long arg0, Span<byte> arg1, ulong arg2, AppletResourceUserId arg3);
+        Result OpenIndirectLayer(out long arg0, Span<byte> arg1, ulong arg2, AppletResourceUserId arg3, ulong pid);
         Result CloseIndirectLayer(ulong arg0);
         Result FlipIndirectLayer(ulong arg0);
         Result ListDisplayModes(out long arg0, Span<DisplayModeInfo> arg1, ulong arg2);
@@ -45,8 +45,8 @@ namespace Ryujinx.Horizon.Sdk.Visrv.Sf
         Result SetDisplayCmuLuma(ulong arg0, float arg1);
         Result SetDisplayCrcMode(ulong arg0, byte arg1);
         Result GetLayerPresentationSubmissionTimestamps(out ulong arg0, out uint arg1, uint arg2, Span<long> arg3);
-        Result GetSharedBufferMemoryHandleId(out NativeMemoryHandleId arg0, out ulong arg1, out SharedMemoryPoolLayout arg2, SharedBufferHandle arg3, AppletResourceUserId arg4);
-        Result OpenSharedLayer(SharedLayerHandle arg0, AppletResourceUserId arg1);
+        Result GetSharedBufferMemoryHandleId(out NativeMemoryHandleId arg0, out ulong arg1, out SharedMemoryPoolLayout arg2, SharedBufferHandle arg3, AppletResourceUserId arg4, ulong pid);
+        Result OpenSharedLayer(SharedLayerHandle arg0, AppletResourceUserId arg1, ulong pid);
         Result CloseSharedLayer(SharedLayerHandle arg0);
         Result ConnectSharedLayer(SharedLayerHandle arg0);
         Result DisconnectSharedLayer(SharedLayerHandle arg0);

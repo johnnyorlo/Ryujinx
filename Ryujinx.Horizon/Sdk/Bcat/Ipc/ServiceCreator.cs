@@ -6,7 +6,7 @@ namespace Ryujinx.Horizon.Sdk.Bcat.Ipc
     class ServiceCreator : IServiceCreator
     {
         [CmifCommand(0)]
-        public Result CreateBcatService(out IBcatService arg0, ulong arg1)
+        public Result CreateBcatService(out IBcatService arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             arg0 = new BcatService();
 
@@ -14,7 +14,7 @@ namespace Ryujinx.Horizon.Sdk.Bcat.Ipc
         }
 
         [CmifCommand(1)]
-        public Result CreateDeliveryCacheStorageService(out IDeliveryCacheStorageService arg0, ulong arg1)
+        public Result CreateDeliveryCacheStorageService(out IDeliveryCacheStorageService arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             arg0 = new DeliveryCacheStorageService();
 

@@ -49,7 +49,7 @@ namespace Ryujinx.Horizon.Sdk.Npns
         }
 
         [CmifCommand(21)]
-        public Result CreateToken(out NotificationToken arg0, Uid arg1, ulong arg2)
+        public Result CreateToken(out NotificationToken arg0, Uid arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             arg0 = default;
 
@@ -57,7 +57,7 @@ namespace Ryujinx.Horizon.Sdk.Npns
         }
 
         [CmifCommand(23)]
-        public Result DestroyToken(Uid arg0, ulong arg1)
+        public Result DestroyToken(Uid arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -71,7 +71,7 @@ namespace Ryujinx.Horizon.Sdk.Npns
         }
 
         [CmifCommand(26)]
-        public Result ListenToMyApplicationId(ulong arg0)
+        public Result ListenToMyApplicationId(ulong arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }
@@ -141,7 +141,7 @@ namespace Ryujinx.Horizon.Sdk.Npns
         }
 
         [CmifCommand(154)]
-        public Result CreateTokenAsync(out ICreateTokenAsyncContext arg0, Uid arg1, ulong arg2)
+        public Result CreateTokenAsync(out ICreateTokenAsyncContext arg0, Uid arg1, ulong arg2, [ClientProcessId] ulong pid)
         {
             arg0 = new CreateTokenAsyncContext();
 

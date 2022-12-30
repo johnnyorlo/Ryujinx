@@ -8,7 +8,7 @@ namespace Ryujinx.Horizon.Sdk.Ec
 {
     interface IPurchaseEventManager : IServiceObject
     {
-        Result SetDefaultDeliveryTarget(ulong arg0, ReadOnlySpan<int> arg1);
+        Result SetDefaultDeliveryTarget(ulong arg0, ReadOnlySpan<int> arg1, ulong pid);
         Result SetDeliveryTarget(ulong arg0, ReadOnlySpan<int> arg1);
         Result GetPurchasedEventReadableHandle(out int arg0);
         Result PopPurchasedProductInfo(out PurchasedProductInfo arg0);

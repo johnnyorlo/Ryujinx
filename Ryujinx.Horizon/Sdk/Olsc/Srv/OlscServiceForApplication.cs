@@ -9,7 +9,7 @@ namespace Ryujinx.Horizon.Sdk.Olsc.Srv
     class OlscServiceForApplication : IOlscServiceForApplication
     {
         [CmifCommand(0)]
-        public Result Initialize(ulong arg0)
+        public Result Initialize(ulong arg0, [ClientProcessId] ulong pid)
         {
             return Result.Success;
         }

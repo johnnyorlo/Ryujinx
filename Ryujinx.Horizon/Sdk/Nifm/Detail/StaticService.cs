@@ -14,7 +14,7 @@ namespace Ryujinx.Horizon.Sdk.Nifm.Detail
         }
 
         [CmifCommand(5)]
-        public Result CreateGeneralService(out IGeneralService arg0, ulong arg1)
+        public Result CreateGeneralService(out IGeneralService arg0, ulong arg1, [ClientProcessId] ulong pid)
         {
             arg0 = new GeneralService();
 

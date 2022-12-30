@@ -253,7 +253,7 @@ namespace Ryujinx.Horizon.Sdk.Settings
         }
 
         [CmifCommand(37)]
-        public Result GetSettingsItemValueSize(out ulong arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] SettingsName arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] SettingsItemKey arg2)
+        public Result GetSettingsItemValueSize(out ulong arg0, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in SettingsName arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in SettingsItemKey arg2)
         {
             arg0 = default;
 
@@ -261,7 +261,7 @@ namespace Ryujinx.Horizon.Sdk.Settings
         }
 
         [CmifCommand(38)]
-        public Result GetSettingsItemValue(out ulong arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<byte> arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] SettingsName arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] SettingsItemKey arg3)
+        public Result GetSettingsItemValue(out ulong arg0, [Buffer(HipcBufferFlags.Out | HipcBufferFlags.MapAlias)] Span<byte> arg1, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in SettingsName arg2, [Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x48)] in SettingsItemKey arg3)
         {
             arg0 = default;
 
@@ -291,7 +291,7 @@ namespace Ryujinx.Horizon.Sdk.Settings
         }
 
         [CmifCommand(42)]
-        public Result SetEdid([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x200)] Edid arg0)
+        public Result SetEdid([Buffer(HipcBufferFlags.In | HipcBufferFlags.Pointer, 0x200)] in Edid arg0)
         {
             return Result.Success;
         }
@@ -549,7 +549,7 @@ namespace Ryujinx.Horizon.Sdk.Settings
         }
 
         [CmifCommand(78)]
-        public Result SetDeviceNickName([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x80)] DeviceNickName arg0)
+        public Result SetDeviceNickName([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x80)] in DeviceNickName arg0)
         {
             return Result.Success;
         }
@@ -1405,7 +1405,7 @@ namespace Ryujinx.Horizon.Sdk.Settings
         }
 
         [CmifCommand(198)]
-        public Result SetButtonConfigRegisteredSettingsEmbedded([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x5C8)] ButtonConfigRegisteredSettings arg0)
+        public Result SetButtonConfigRegisteredSettingsEmbedded([Buffer(HipcBufferFlags.In | HipcBufferFlags.MapAlias, 0x5C8)] in ButtonConfigRegisteredSettings arg0)
         {
             return Result.Success;
         }

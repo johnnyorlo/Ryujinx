@@ -13,10 +13,10 @@ namespace Ryujinx.Horizon.Sdk.Nsd.Detail
         Result DeleteSettings(int arg0);
         Result ImportSettings(ReadOnlySpan<byte> arg0, Span<byte> arg1, int arg2);
         Result SetChangeEnvironmentIdentifierDisabled(bool arg0);
-        Result Resolve(out Fqdn arg0, Fqdn arg1);
-        Result ResolveEx(out InnerResult arg0, out Fqdn arg1, Fqdn arg2);
-        Result GetNasServiceSetting(out NasServiceSetting arg0, NasServiceName arg1);
-        Result GetNasServiceSettingEx(out InnerResult arg0, out NasServiceSetting arg1, NasServiceName arg2);
+        Result Resolve(out Fqdn arg0, in Fqdn arg1);
+        Result ResolveEx(out InnerResult arg0, out Fqdn arg1, in Fqdn arg2);
+        Result GetNasServiceSetting(out NasServiceSetting arg0, in NasServiceName arg1);
+        Result GetNasServiceSettingEx(out InnerResult arg0, out NasServiceSetting arg1, in NasServiceName arg2);
         Result GetNasRequestFqdn(out Fqdn arg0);
         Result GetNasRequestFqdnEx(out InnerResult arg0, out Fqdn arg1);
         Result GetNasApiFqdn(out Fqdn arg0);
@@ -25,7 +25,7 @@ namespace Ryujinx.Horizon.Sdk.Nsd.Detail
         Result WriteTestParameter(ReadOnlySpan<byte> arg0);
         Result ReadTestParameter(Span<byte> arg0);
         Result ReadSaveDataFromFsForTest(out SaveData arg0);
-        Result WriteSaveDataToFsForTest(SaveData arg0);
+        Result WriteSaveDataToFsForTest(in SaveData arg0);
         Result DeleteSaveDataOfFsForTest();
         Result IsChangeEnvironmentIdentifierDisabled(out bool arg0);
         Result SetWithoutDomainExchangeFqdns(ReadOnlySpan<Fqdn> arg0);

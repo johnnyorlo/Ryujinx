@@ -7,7 +7,7 @@ namespace Ryujinx.Horizon.Sdk.Olsc.Srv
 {
     interface IOlscServiceForApplication : IServiceObject
     {
-        Result Initialize(ulong arg0);
+        Result Initialize(ulong arg0, ulong pid);
         Result VerifySaveDataBackupLicenseAsync(out IAsyncResult arg0, Uid arg1);
         Result GetSaveDataBackupSetting(out SaveDataBackupSetting arg0, Uid arg1);
         Result SetSaveDataBackupSettingEnabled(Uid arg0, bool arg1);

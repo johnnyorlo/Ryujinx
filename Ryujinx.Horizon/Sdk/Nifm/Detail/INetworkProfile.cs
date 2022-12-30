@@ -7,7 +7,7 @@ namespace Ryujinx.Horizon.Sdk.Nifm.Detail
 {
     interface INetworkProfile : IServiceObject
     {
-        Result Update(out Uuid arg0, NetworkProfileData arg1);
+        Result Update(out Uuid arg0, in NetworkProfileData arg1);
         Result PersistOld(out Uuid arg0, Uuid arg1);
         Result Persist(out Uuid arg0);
     }

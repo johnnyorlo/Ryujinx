@@ -70,7 +70,7 @@ namespace HoriGen
                     if (processFuncAddress != 0 && image.SymbolsByAddress.TryGetValue(processFuncAddress, out var processFuncSym))
                     {
                         string processFuncName = Demangler.Parse(processFuncSym.Name);
-                        FunctionSignatureParser.ParseAdditionalParameterInfo(materializer, processFuncName, funcParams);
+                        FunctionSignatureParser.ParseAdditionalParameterInfo(materializer, processFuncName, ref funcParams);
                     }
 
                     typeDef.AddMember(new MethodDefinition(funcName, funcParams, commandId));
