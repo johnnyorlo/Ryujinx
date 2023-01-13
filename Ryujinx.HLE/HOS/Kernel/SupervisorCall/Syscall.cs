@@ -1932,34 +1932,50 @@ namespace Ryujinx.HLE.HOS.Kernel.SupervisorCall
 
                         switch (id)
                         {
-                            case InfoType.CoreMask: value = process.Capabilities.AllowedCpuCoresMask; break;
-                            case InfoType.PriorityMask: value = process.Capabilities.AllowedThreadPriosMask; break;
+                            case InfoType.CoreMask:
+                                value = process.Capabilities.AllowedCpuCoresMask;
+                                break;
+                            case InfoType.PriorityMask:
+                                value = process.Capabilities.AllowedThreadPriosMask;
+                                break;
 
-                            case InfoType.AliasRegionAddress: value = process.MemoryManager.AliasRegionStart; break;
+                            case InfoType.AliasRegionAddress:
+                                value = process.MemoryManager.AliasRegionStart;
+                                break;
                             case InfoType.AliasRegionSize:
-                                value = (process.MemoryManager.AliasRegionEnd -
-                                         process.MemoryManager.AliasRegionStart); break;
+                                value = process.MemoryManager.AliasRegionEnd -process.MemoryManager.AliasRegionStart;
+                                break;
 
-                            case InfoType.HeapRegionAddress: value = process.MemoryManager.HeapRegionStart; break;
+                            case InfoType.HeapRegionAddress:
+                                value = process.MemoryManager.HeapRegionStart; break;
                             case InfoType.HeapRegionSize:
-                                value = (process.MemoryManager.HeapRegionEnd -
-                                         process.MemoryManager.HeapRegionStart); break;
+                                value = process.MemoryManager.HeapRegionEnd - process.MemoryManager.HeapRegionStart;
+                                break;
 
-                            case InfoType.TotalMemorySize: value = process.GetMemoryCapacity(); break;
+                            case InfoType.TotalMemorySize:
+                                value = process.GetMemoryCapacity();
+                                break;
+                            case InfoType.UsedMemorySize:
+                                value = process.GetMemoryUsage();
+                                break;
 
-                            case InfoType.UsedMemorySize: value = process.GetMemoryUsage(); break;
+                            case InfoType.AslrRegionAddress:
+                                value = process.MemoryManager.AslrRegionStart;
+                                break;
+                            case InfoType.AslrRegionSize:
+                                value = process.MemoryManager.AslrRegionEnd - process.MemoryManager.AslrRegionStart;
+                                break;
 
-                            case InfoType.AslrRegionAddress: value = process.MemoryManager.GetAddrSpaceBaseAddr(); break;
-
-                            case InfoType.AslrRegionSize: value = process.MemoryManager.GetAddrSpaceSize(); break;
-
-                            case InfoType.StackRegionAddress: value = process.MemoryManager.StackRegionStart; break;
+                            case InfoType.StackRegionAddress:
+                                value = process.MemoryManager.StackRegionStart;
+                                break;
                             case InfoType.StackRegionSize:
-                                value = (process.MemoryManager.StackRegionEnd -
-                                         process.MemoryManager.StackRegionStart); break;
+                                value = process.MemoryManager.StackRegionEnd - process.MemoryManager.StackRegionStart;
+                                break;
 
-                            case InfoType.SystemResourceSizeTotal: value = process.PersonalMmHeapPagesCount * KPageTableBase.PageSize; break;
-
+                            case InfoType.SystemResourceSizeTotal:
+                                value = process.PersonalMmHeapPagesCount * KPageTableBase.PageSize;
+                                break;
                             case InfoType.SystemResourceSizeUsed:
                                 if (process.PersonalMmHeapPagesCount != 0)
                                 {
@@ -1968,15 +1984,24 @@ namespace Ryujinx.HLE.HOS.Kernel.SupervisorCall
 
                                 break;
 
-                            case InfoType.ProgramId: value = process.TitleId; break;
+                            case InfoType.ProgramId:
+                                value = process.TitleId;
+                                break;
 
-                            case InfoType.UserExceptionContextAddress: value = process.UserExceptionContextAddress; break;
+                            case InfoType.UserExceptionContextAddress:
+                                value = process.UserExceptionContextAddress;
+                                break;
 
-                            case InfoType.TotalNonSystemMemorySize: value = process.GetMemoryCapacityWithoutPersonalMmHeap(); break;
+                            case InfoType.TotalNonSystemMemorySize:
+                                value = process.GetMemoryCapacityWithoutPersonalMmHeap();
+                                break;
+                            case InfoType.UsedNonSystemMemorySize:
+                                value = process.GetMemoryUsageWithoutPersonalMmHeap();
+                                break;
 
-                            case InfoType.UsedNonSystemMemorySize: value = process.GetMemoryUsageWithoutPersonalMmHeap(); break;
-
-                            case InfoType.IsApplication: value = process.IsApplication ? 1UL : 0UL; break;
+                            case InfoType.IsApplication:
+                                value = process.IsApplication ? 1UL : 0UL;
+                                break;
 
                             case InfoType.FreeThreadCount:
                                 if (process.ResourceLimit != null)
@@ -2736,7 +2761,7 @@ namespace Ryujinx.HLE.HOS.Kernel.SupervisorCall
             {
                 KProcess currentProcess = KernelStatic.GetCurrentProcess();
 
-                if (currentProcess.MemoryManager.AddrSpaceStart > handlesPtr)
+                if (currentProcess.MemoryManager.AddressSpaceStart > handlesPtr)
                 {
                     return KernelResult.UserCopyFailed;
                 }
@@ -2748,7 +2773,7 @@ namespace Ryujinx.HLE.HOS.Kernel.SupervisorCall
                     return KernelResult.UserCopyFailed;
                 }
 
-                if (handlesPtr + (ulong)handlesSize - 1 > currentProcess.MemoryManager.AddrSpaceEnd - 1)
+                if (handlesPtr + (ulong)handlesSize - 1 > currentProcess.MemoryManager.AddressSpaceEnd - 1)
                 {
                     return KernelResult.UserCopyFailed;
                 }
