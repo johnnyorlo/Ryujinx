@@ -1,7 +1,7 @@
-using System;
-using System.Runtime.Versioning;
-using System.Runtime.InteropServices;
 using Avalonia;
+using System;
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace Ryujinx.Ava.UI.Helpers
 {
