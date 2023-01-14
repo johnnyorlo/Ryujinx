@@ -94,7 +94,7 @@ namespace Ryujinx.HLE.HOS.Services.Account.Acc.AccountService
 
         public ResultCode EnsureIdTokenCacheAsync(ServiceCtx context, out IAsyncContext asyncContext)
         {
-            KEvent         asyncEvent     = new KEvent(context.Device.System.KernelContext);
+            KEvent asyncEvent = new KEvent(context.Device.System.KernelContext);
             AsyncExecution asyncExecution = new AsyncExecution(asyncEvent);
 
             asyncExecution.Initialize(1000, EnsureIdTokenCacheAsyncImpl);
@@ -123,7 +123,7 @@ namespace Ryujinx.HLE.HOS.Services.Account.Acc.AccountService
         public ResultCode LoadIdTokenCache(ServiceCtx context)
         {
             ulong bufferPosition = context.Request.ReceiveBuff[0].Position;
-            ulong bufferSize     = context.Request.ReceiveBuff[0].Size;
+            ulong bufferSize = context.Request.ReceiveBuff[0].Size;
 
             // NOTE: This opens the file at "su/cache/USERID_IN_UUID_STRING.dat" (where USERID_IN_UUID_STRING is formatted as "%08x-%04x-%04x-%02x%02x-%08x%04x")
             //       in the "account:/" savedata and writes some data in the buffer.

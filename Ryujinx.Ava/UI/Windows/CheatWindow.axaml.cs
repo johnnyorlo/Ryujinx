@@ -85,7 +85,7 @@ namespace Ryujinx.Ava.UI.Windows
             }
 
             DataContext = this;
-            
+
             Title = $"Ryujinx {Program.Version} - " + LocaleManager.Instance[LocaleKeys.CheatWindowTitle];
         }
 

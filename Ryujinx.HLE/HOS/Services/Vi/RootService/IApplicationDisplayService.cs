@@ -27,27 +27,27 @@ namespace Ryujinx.HLE.HOS.Services.Vi.RootService
             public int RetrievedEventsCount;
         }
 
-        private readonly List<DisplayInfo>               _displayInfo;
+        private readonly List<DisplayInfo> _displayInfo;
         private readonly Dictionary<ulong, DisplayState> _openDisplays;
 
         private int _vsyncEventHandle;
 
         public IApplicationDisplayService(ViServiceType serviceType)
         {
-            _serviceType  = serviceType;
-            _displayInfo  = new List<DisplayInfo>();
+            _serviceType = serviceType;
+            _displayInfo = new List<DisplayInfo>();
             _openDisplays = new Dictionary<ulong, DisplayState>();
 
             void AddDisplayInfo(string name, bool layerLimitEnabled, ulong layerLimitMax, ulong width, ulong height)
             {
                 DisplayInfo displayInfo = new DisplayInfo()
                 {
-                    Name              = new Array64<byte>(),
+                    Name = new Array64<byte>(),
                     LayerLimitEnabled = layerLimitEnabled,
-                    Padding           = new Array7<byte>(),
-                    LayerLimitMax     = layerLimitMax,
-                    Width             = width,
-                    Height            = height
+                    Padding = new Array7<byte>(),
+                    LayerLimitMax = layerLimitMax,
+                    Width = width,
+                    Height = height
                 };
 
                 Encoding.ASCII.GetBytes(name).AsSpan().CopyTo(displayInfo.Name.AsSpan());
@@ -55,11 +55,11 @@ namespace Ryujinx.HLE.HOS.Services.Vi.RootService
                 _displayInfo.Add(displayInfo);
             }
 
-            AddDisplayInfo("Default",  true,  1, 1920, 1080);
-            AddDisplayInfo("External", true,  1, 1920, 1080);
-            AddDisplayInfo("Edid",     true,  1, 0,    0);
-            AddDisplayInfo("Internal", true,  1, 1920, 1080);
-            AddDisplayInfo("Null",     false, 0, 1920, 1080);
+            AddDisplayInfo("Default", true, 1, 1920, 1080);
+            AddDisplayInfo("External", true, 1, 1920, 1080);
+            AddDisplayInfo("Edid", true, 1, 0, 0);
+            AddDisplayInfo("Internal", true, 1, 1920, 1080);
+            AddDisplayInfo("Null", false, 0, 1920, 1080);
         }
 
         [CommandHipc(100)]
@@ -234,8 +234,8 @@ namespace Ryujinx.HLE.HOS.Services.Vi.RootService
             // TODO: support multi display.
             byte[] displayName = context.RequestData.ReadBytes(0x40);
 
-            long  layerId   = context.RequestData.ReadInt64();
-            long  userId    = context.RequestData.ReadInt64();
+            long layerId = context.RequestData.ReadInt64();
+            long userId = context.RequestData.ReadInt64();
             ulong parcelPtr = context.Request.ReceiveBuff[0].Position;
 
             ResultCode result = context.Device.System.SurfaceFlinger.OpenLayer(context.Request.HandleDesc.PId, layerId, out IBinder producer);
@@ -274,7 +274,7 @@ namespace Ryujinx.HLE.HOS.Services.Vi.RootService
         public ResultCode CreateStrayLayer(ServiceCtx context)
         {
             long layerFlags = context.RequestData.ReadInt64();
-            long displayId  = context.RequestData.ReadInt64();
+            long displayId = context.RequestData.ReadInt64();
 
             ulong parcelPtr = context.Request.ReceiveBuff[0].Position;
 
@@ -327,10 +327,10 @@ namespace Ryujinx.HLE.HOS.Services.Vi.RootService
 
             DestinationScalingMode? convertedScalingMode = scalingMode switch
             {
-                SourceScalingMode.None                => DestinationScalingMode.None,
-                SourceScalingMode.Freeze              => DestinationScalingMode.Freeze,
-                SourceScalingMode.ScaleAndCrop        => DestinationScalingMode.ScaleAndCrop,
-                SourceScalingMode.ScaleToWindow       => DestinationScalingMode.ScaleToWindow,
+                SourceScalingMode.None => DestinationScalingMode.None,
+                SourceScalingMode.Freeze => DestinationScalingMode.Freeze,
+                SourceScalingMode.ScaleAndCrop => DestinationScalingMode.ScaleAndCrop,
+                SourceScalingMode.ScaleToWindow => DestinationScalingMode.ScaleToWindow,
                 SourceScalingMode.PreserveAspectRatio => DestinationScalingMode.PreserveAspectRatio,
                 _ => null,
             };
@@ -354,13 +354,13 @@ namespace Ryujinx.HLE.HOS.Services.Vi.RootService
 
         private ulong GetA8B8G8R8LayerSize(int width, int height, out int pitch, out int alignment)
         {
-            const int   defaultAlignment = 0x1000;
-            const ulong defaultSize      = 0x20000;
+            const int defaultAlignment = 0x1000;
+            const ulong defaultSize = 0x20000;
 
             alignment = defaultAlignment;
-            pitch     = BitUtils.AlignUp(BitUtils.DivRoundUp(width * 32, 8), 64);
+            pitch = BitUtils.AlignUp(BitUtils.DivRoundUp(width * 32, 8), 64);
 
-            int   memorySize         = pitch * BitUtils.AlignUp(height, 64);
+            int memorySize = pitch * BitUtils.AlignUp(height, 64);
             ulong requiredMemorySize = (ulong)BitUtils.AlignUp(memorySize, alignment);
 
             return (requiredMemorySize + defaultSize - 1) / defaultSize * defaultSize;
@@ -373,11 +373,11 @@ namespace Ryujinx.HLE.HOS.Services.Vi.RootService
             // The size of the layer buffer should be an aligned multiple of width * height
             // because it was created using GetIndirectLayerImageRequiredMemoryInfo as a guide.
 
-            long  layerWidth        = context.RequestData.ReadInt64();
-            long  layerHeight       = context.RequestData.ReadInt64();
-            long  layerHandle       = context.RequestData.ReadInt64();
+            long layerWidth = context.RequestData.ReadInt64();
+            long layerHeight = context.RequestData.ReadInt64();
+            long layerHandle = context.RequestData.ReadInt64();
             ulong layerBuffPosition = context.Request.ReceiveBuff[0].Position;
-            ulong layerBuffSize     = context.Request.ReceiveBuff[0].Size;
+            ulong layerBuffSize = context.Request.ReceiveBuff[0].Size;
 
             // Get the pitch of the layer that is necessary to render correctly.
             ulong size = GetA8B8G8R8LayerSize((int)layerWidth, (int)layerHeight, out int pitch, out _);
@@ -425,7 +425,7 @@ namespace Ryujinx.HLE.HOS.Services.Vi.RootService
             }
             */
 
-            int width  = (int)context.RequestData.ReadUInt64();
+            int width = (int)context.RequestData.ReadUInt64();
             int height = (int)context.RequestData.ReadUInt64();
 
             if (height < 0 || width < 0)

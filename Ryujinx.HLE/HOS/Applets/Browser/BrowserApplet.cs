@@ -18,7 +18,7 @@ namespace Ryujinx.HLE.HOS.Applets.Browser
         private List<BrowserArgument> _arguments;
         private ShimKind _shimKind;
 
-        public BrowserApplet(Horizon system) {}
+        public BrowserApplet(Horizon system) { }
 
         public ResultCode GetResult()
         {
@@ -57,7 +57,7 @@ namespace Ryujinx.HLE.HOS.Applets.Browser
             {
                 WebCommonReturnValue result = new WebCommonReturnValue()
                 {
-                    ExitReason  = WebExitReason.ExitButton,
+                    ExitReason = WebExitReason.ExitButton,
                 };
 
                 _normalSession.Push(BuildResponseOld(result));
@@ -85,7 +85,7 @@ namespace Ryujinx.HLE.HOS.Applets.Browser
             {
                 writer.WriteStruct(new WebArgHeader
                 {
-                    Count    = (ushort)outputArguments.Count,
+                    Count = (ushort)outputArguments.Count,
                     ShimKind = _shimKind
                 });
 

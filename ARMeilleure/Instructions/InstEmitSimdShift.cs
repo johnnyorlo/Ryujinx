@@ -17,12 +17,12 @@ namespace ARMeilleure.Instructions
 
     static partial class InstEmit
     {
-#region "Masks"
+        #region "Masks"
         private static readonly long[] _masks_SliSri = new long[] // Replication masks.
         {
             0x0101010101010101L, 0x0001000100010001L, 0x0000000100000001L, 0x0000000000000001L
         };
-#endregion
+        #endregion
 
         public static void Rshrn_V(ArmEmitterContext context)
         {
@@ -53,7 +53,7 @@ namespace ARMeilleure.Instructions
                 {
                     case 1: mask = X86GetAllElements(context, (int)roundConst * 0x00010001); break;
                     case 2: mask = X86GetAllElements(context, (int)roundConst); break;
-                    case 3: mask = X86GetAllElements(context,      roundConst); break;
+                    case 3: mask = X86GetAllElements(context, roundConst); break;
                 }
 
                 Intrinsic addInst = X86PaddInstruction[op.Size + 1];
@@ -1174,7 +1174,7 @@ namespace ARMeilleure.Instructions
             Scalar = 1 << 0,
             Signed = 1 << 1,
 
-            Round      = 1 << 2,
+            Round = 1 << 2,
             Accumulate = 1 << 3,
 
             ScalarSx = Scalar | Signed,
@@ -1210,9 +1210,9 @@ namespace ARMeilleure.Instructions
 
             Operand res = context.VectorZero();
 
-            bool scalar     = (flags & ShrImmFlags.Scalar)     != 0;
-            bool signed     = (flags & ShrImmFlags.Signed)     != 0;
-            bool round      = (flags & ShrImmFlags.Round)      != 0;
+            bool scalar = (flags & ShrImmFlags.Scalar) != 0;
+            bool signed = (flags & ShrImmFlags.Signed) != 0;
+            bool round = (flags & ShrImmFlags.Round) != 0;
             bool accumulate = (flags & ShrImmFlags.Accumulate) != 0;
 
             int shift = GetImmShr(op);
@@ -1288,7 +1288,7 @@ namespace ARMeilleure.Instructions
         [Flags]
         private enum ShrImmSaturatingNarrowFlags
         {
-            Scalar    = 1 << 0,
+            Scalar = 1 << 0,
             SignedSrc = 1 << 1,
             SignedDst = 1 << 2,
 
@@ -1312,10 +1312,10 @@ namespace ARMeilleure.Instructions
         {
             OpCodeSimdShImm op = (OpCodeSimdShImm)context.CurrOp;
 
-            bool scalar    = (flags & ShrImmSaturatingNarrowFlags.Scalar)    != 0;
+            bool scalar = (flags & ShrImmSaturatingNarrowFlags.Scalar) != 0;
             bool signedSrc = (flags & ShrImmSaturatingNarrowFlags.SignedSrc) != 0;
             bool signedDst = (flags & ShrImmSaturatingNarrowFlags.SignedDst) != 0;
-            bool round     = (flags & ShrImmSaturatingNarrowFlags.Round)     != 0;
+            bool round = (flags & ShrImmSaturatingNarrowFlags.Round) != 0;
 
             int shift = GetImmShr(op);
 

@@ -10,7 +10,7 @@ namespace Ryujinx.HLE.HOS.Services.Am.AppletAE.AllSystemAppletProxiesService.Sys
         // SetExpectedMasterVolume(f32, f32)
         public ResultCode SetExpectedMasterVolume(ServiceCtx context)
         {
-            float appletVolume        = context.RequestData.ReadSingle();
+            float appletVolume = context.RequestData.ReadSingle();
             float libraryAppletVolume = context.RequestData.ReadSingle();
 
             Logger.Stub?.PrintStub(LogClass.ServiceAm);
@@ -45,7 +45,7 @@ namespace Ryujinx.HLE.HOS.Services.Am.AppletAE.AllSystemAppletProxiesService.Sys
         public ResultCode ChangeMainAppletMasterVolume(ServiceCtx context)
         {
             float unknown0 = context.RequestData.ReadSingle();
-            long  unknown1 = context.RequestData.ReadInt64();
+            long unknown1 = context.RequestData.ReadInt64();
 
             Logger.Stub?.PrintStub(LogClass.ServiceAm);
 

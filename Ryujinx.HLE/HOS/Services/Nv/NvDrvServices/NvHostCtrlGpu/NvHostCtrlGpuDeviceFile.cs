@@ -10,15 +10,15 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrlGpu
 {
     class NvHostCtrlGpuDeviceFile : NvDeviceFile
     {
-        private static Stopwatch _pTimer    = new Stopwatch();
-        private static double    _ticksToNs = (1.0 / Stopwatch.Frequency) * 1_000_000_000;
+        private static Stopwatch _pTimer = new Stopwatch();
+        private static double _ticksToNs = (1.0 / Stopwatch.Frequency) * 1_000_000_000;
 
         private KEvent _errorEvent;
         private KEvent _unknownEvent;
 
         public NvHostCtrlGpuDeviceFile(ServiceCtx context, IVirtualMemoryManager memory, ulong owner) : base(context, owner)
         {
-            _errorEvent   = new KEvent(context.Device.System.KernelContext);
+            _errorEvent = new KEvent(context.Device.System.KernelContext);
             _unknownEvent = new KEvent(context.Device.System.KernelContext);
         }
 
@@ -125,16 +125,16 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrlGpu
 
         private NvInternalResult ZcullGetInfo(ref ZcullGetInfoArguments arguments)
         {
-            arguments.WidthAlignPixels           = 0x20;
-            arguments.HeightAlignPixels          = 0x20;
-            arguments.PixelSquaresByAliquots     = 0x400;
-            arguments.AliquotTotal               = 0x800;
-            arguments.RegionByteMultiplier       = 0x20;
-            arguments.RegionHeaderSize           = 0x20;
-            arguments.SubregionHeaderSize        = 0xc0;
-            arguments.SubregionWidthAlignPixels  = 0x20;
+            arguments.WidthAlignPixels = 0x20;
+            arguments.HeightAlignPixels = 0x20;
+            arguments.PixelSquaresByAliquots = 0x400;
+            arguments.AliquotTotal = 0x800;
+            arguments.RegionByteMultiplier = 0x20;
+            arguments.RegionHeaderSize = 0x20;
+            arguments.SubregionHeaderSize = 0xc0;
+            arguments.SubregionWidthAlignPixels = 0x20;
             arguments.SubregionHeightAlignPixels = 0x40;
-            arguments.SubregionCount             = 0x10;
+            arguments.SubregionCount = 0x10;
 
             return NvInternalResult.Success;
         }
@@ -155,41 +155,41 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrlGpu
         {
             arguments.Header.BufferSize = 0xa0;
 
-            characteristics.Arch                   = 0x120;
-            characteristics.Impl                   = 0xb;
-            characteristics.Rev                    = 0xa1;
-            characteristics.NumGpc                 = 0x1;
-            characteristics.L2CacheSize            = 0x40000;
+            characteristics.Arch = 0x120;
+            characteristics.Impl = 0xb;
+            characteristics.Rev = 0xa1;
+            characteristics.NumGpc = 0x1;
+            characteristics.L2CacheSize = 0x40000;
             characteristics.OnBoardVideoMemorySize = 0x0;
-            characteristics.NumTpcPerGpc           = 0x2;
-            characteristics.BusType                = 0x20;
-            characteristics.BigPageSize            = 0x20000;
-            characteristics.CompressionPageSize    = 0x20000;
-            characteristics.PdeCoverageBitCount    = 0x1b;
-            characteristics.AvailableBigPageSizes  = 0x30000;
-            characteristics.GpcMask                = 0x1;
-            characteristics.SmArchSmVersion        = 0x503;
-            characteristics.SmArchSpaVersion       = 0x503;
-            characteristics.SmArchWarpCount        = 0x80;
-            characteristics.GpuVaBitCount          = 0x28;
-            characteristics.Reserved               = 0x0;
-            characteristics.Flags                  = 0x55;
-            characteristics.TwodClass              = 0x902d;
-            characteristics.ThreedClass            = 0xb197;
-            characteristics.ComputeClass           = 0xb1c0;
-            characteristics.GpfifoClass            = 0xb06f;
-            characteristics.InlineToMemoryClass    = 0xa140;
-            characteristics.DmaCopyClass           = 0xb0b5;
-            characteristics.MaxFbpsCount           = 0x1;
-            characteristics.FbpEnMask              = 0x0;
-            characteristics.MaxLtcPerFbp           = 0x2;
-            characteristics.MaxLtsPerLtc           = 0x1;
-            characteristics.MaxTexPerTpc           = 0x0;
-            characteristics.MaxGpcCount            = 0x1;
-            characteristics.RopL2EnMask0           = 0x21d70;
-            characteristics.RopL2EnMask1           = 0x0;
-            characteristics.ChipName               = 0x6230326d67;
-            characteristics.GrCompbitStoreBaseHw   = 0x0;
+            characteristics.NumTpcPerGpc = 0x2;
+            characteristics.BusType = 0x20;
+            characteristics.BigPageSize = 0x20000;
+            characteristics.CompressionPageSize = 0x20000;
+            characteristics.PdeCoverageBitCount = 0x1b;
+            characteristics.AvailableBigPageSizes = 0x30000;
+            characteristics.GpcMask = 0x1;
+            characteristics.SmArchSmVersion = 0x503;
+            characteristics.SmArchSpaVersion = 0x503;
+            characteristics.SmArchWarpCount = 0x80;
+            characteristics.GpuVaBitCount = 0x28;
+            characteristics.Reserved = 0x0;
+            characteristics.Flags = 0x55;
+            characteristics.TwodClass = 0x902d;
+            characteristics.ThreedClass = 0xb197;
+            characteristics.ComputeClass = 0xb1c0;
+            characteristics.GpfifoClass = 0xb06f;
+            characteristics.InlineToMemoryClass = 0xa140;
+            characteristics.DmaCopyClass = 0xb0b5;
+            characteristics.MaxFbpsCount = 0x1;
+            characteristics.FbpEnMask = 0x0;
+            characteristics.MaxLtcPerFbp = 0x2;
+            characteristics.MaxLtsPerLtc = 0x1;
+            characteristics.MaxTexPerTpc = 0x0;
+            characteristics.MaxGpcCount = 0x1;
+            characteristics.RopL2EnMask0 = 0x21d70;
+            characteristics.RopL2EnMask1 = 0x0;
+            characteristics.ChipName = 0x6230326d67;
+            characteristics.GrCompbitStoreBaseHw = 0x0;
 
             arguments.Characteristics = characteristics;
 
@@ -205,7 +205,7 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrlGpu
         {
             if (arguments.MaskBufferSize != 0)
             {
-                tpcMask           = 3;
+                tpcMask = 3;
                 arguments.TpcMask = tpcMask;
             }
 

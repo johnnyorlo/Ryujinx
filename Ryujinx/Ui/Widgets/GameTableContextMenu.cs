@@ -30,19 +30,19 @@ namespace Ryujinx.Ui.Widgets
 {
     public partial class GameTableContextMenu : Menu
     {
-        private readonly MainWindow                             _parent;
-        private readonly VirtualFileSystem                      _virtualFileSystem;
-        private readonly AccountManager                         _accountManager;
-        private readonly HorizonClient                          _horizonClient;
+        private readonly MainWindow _parent;
+        private readonly VirtualFileSystem _virtualFileSystem;
+        private readonly AccountManager _accountManager;
+        private readonly HorizonClient _horizonClient;
         private readonly BlitStruct<ApplicationControlProperty> _controlData;
 
         private readonly string _titleFilePath;
         private readonly string _titleName;
         private readonly string _titleIdText;
-        private readonly ulong  _titleId;
+        private readonly ulong _titleId;
 
         private MessageDialog _dialog;
-        private bool          _cancel;
+        private bool _cancel;
 
         public GameTableContextMenu(MainWindow parent, VirtualFileSystem virtualFileSystem, AccountManager accountManager, HorizonClient horizonClient, string titleFilePath, string titleName, string titleId, BlitStruct<ApplicationControlProperty> controlData)
         {
@@ -51,12 +51,12 @@ namespace Ryujinx.Ui.Widgets
             InitializeComponent();
 
             _virtualFileSystem = virtualFileSystem;
-            _accountManager    = accountManager;
-            _horizonClient     = horizonClient;
-            _titleFilePath     = titleFilePath;
-            _titleName         = titleName;
-            _titleIdText       = titleId;
-            _controlData       = controlData;
+            _accountManager = accountManager;
+            _horizonClient = horizonClient;
+            _titleFilePath = titleFilePath;
+            _titleName = titleName;
+            _titleIdText = titleId;
+            _controlData = controlData;
 
             if (!ulong.TryParse(_titleIdText, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out _titleId))
             {
@@ -65,16 +65,16 @@ namespace Ryujinx.Ui.Widgets
                 return;
             }
 
-            _openSaveUserDirMenuItem.Sensitive   = !Utilities.IsZeros(controlData.ByteSpan) && controlData.Value.UserAccountSaveDataSize      > 0;
-            _openSaveDeviceDirMenuItem.Sensitive = !Utilities.IsZeros(controlData.ByteSpan) && controlData.Value.DeviceSaveDataSize           > 0;
-            _openSaveBcatDirMenuItem.Sensitive   = !Utilities.IsZeros(controlData.ByteSpan) && controlData.Value.BcatDeliveryCacheStorageSize > 0;
+            _openSaveUserDirMenuItem.Sensitive = !Utilities.IsZeros(controlData.ByteSpan) && controlData.Value.UserAccountSaveDataSize > 0;
+            _openSaveDeviceDirMenuItem.Sensitive = !Utilities.IsZeros(controlData.ByteSpan) && controlData.Value.DeviceSaveDataSize > 0;
+            _openSaveBcatDirMenuItem.Sensitive = !Utilities.IsZeros(controlData.ByteSpan) && controlData.Value.BcatDeliveryCacheStorageSize > 0;
 
             string fileExt = System.IO.Path.GetExtension(_titleFilePath).ToLower();
-            bool   hasNca  = fileExt == ".nca" || fileExt == ".nsp" || fileExt == ".pfs0" || fileExt == ".xci";
+            bool hasNca = fileExt == ".nca" || fileExt == ".nsp" || fileExt == ".pfs0" || fileExt == ".xci";
 
             _extractRomFsMenuItem.Sensitive = hasNca;
             _extractExeFsMenuItem.Sensitive = hasNca;
-            _extractLogoMenuItem.Sensitive  = hasNca;
+            _extractLogoMenuItem.Sensitive = hasNca;
 
             PopupAtPointer(null);
         }
@@ -98,7 +98,7 @@ namespace Ryujinx.Ui.Widgets
                     control = ref new BlitStruct<ApplicationControlProperty>(1).Value;
 
                     // The set sizes don't actually matter as long as they're non-zero because we use directory savedata.
-                    control.UserAccountSaveDataSize        = 0x4000;
+                    control.UserAccountSaveDataSize = 0x4000;
                     control.UserAccountSaveDataJournalSize = 0x4000;
 
                     Logger.Warning?.Print(LogClass.Application, "No control file was found for this game. Using a dummy one instead. This may cause inaccuracies in some games.");
@@ -147,7 +147,7 @@ namespace Ryujinx.Ui.Widgets
             }
 
             string committedPath = System.IO.Path.Combine(saveRootPath, "0");
-            string workingPath   = System.IO.Path.Combine(saveRootPath, "1");
+            string workingPath = System.IO.Path.Combine(saveRootPath, "1");
 
             // If the committed directory exists, that path will be loaded the next time the savedata is mounted
             if (Directory.Exists(committedPath))
@@ -171,8 +171,8 @@ namespace Ryujinx.Ui.Widgets
         {
             FileChooserNative fileChooser = new FileChooserNative("Choose the folder to extract into", _parent, FileChooserAction.SelectFolder, "Extract", "Cancel");
 
-            ResponseType response    = (ResponseType)fileChooser.Run();
-            string       destination = fileChooser.Filename;
+            ResponseType response = (ResponseType)fileChooser.Run();
+            string destination = fileChooser.Filename;
 
             fileChooser.Dispose();
 
@@ -184,9 +184,9 @@ namespace Ryujinx.Ui.Widgets
                     {
                         _dialog = new MessageDialog(null, DialogFlags.DestroyWithParent, MessageType.Info, ButtonsType.Cancel, null)
                         {
-                            Title          = "Ryujinx - NCA Section Extractor",
-                            Icon           = new Gdk.Pixbuf(Assembly.GetAssembly(typeof(ConfigurationState)), "Ryujinx.Ui.Common.Resources.Logo_Ryujinx.png"),
-                            SecondaryText  = $"Extracting {ncaSectionType} section from {System.IO.Path.GetFileName(_titleFilePath)}...",
+                            Title = "Ryujinx - NCA Section Extractor",
+                            Icon = new Gdk.Pixbuf(Assembly.GetAssembly(typeof(ConfigurationState)), "Ryujinx.Ui.Common.Resources.Logo_Ryujinx.png"),
+                            SecondaryText = $"Extracting {ncaSectionType} section from {System.IO.Path.GetFileName(_titleFilePath)}...",
                             WindowPosition = WindowPosition.Center
                         };
 
@@ -200,10 +200,10 @@ namespace Ryujinx.Ui.Widgets
 
                     using (FileStream file = new FileStream(_titleFilePath, FileMode.Open, FileAccess.Read))
                     {
-                        Nca mainNca  = null;
+                        Nca mainNca = null;
                         Nca patchNca = null;
 
-                        if ((System.IO.Path.GetExtension(_titleFilePath).ToLower() == ".nsp")  ||
+                        if ((System.IO.Path.GetExtension(_titleFilePath).ToLower() == ".nsp") ||
                             (System.IO.Path.GetExtension(_titleFilePath).ToLower() == ".pfs0") ||
                             (System.IO.Path.GetExtension(_titleFilePath).ToLower() == ".xci"))
                         {
@@ -306,9 +306,9 @@ namespace Ryujinx.Ui.Widgets
 
                                     MessageDialog dialog = new MessageDialog(null, DialogFlags.DestroyWithParent, MessageType.Info, ButtonsType.Ok, null)
                                     {
-                                        Title          = "Ryujinx - NCA Section Extractor",
-                                        Icon           = new Gdk.Pixbuf(Assembly.GetAssembly(typeof(ConfigurationState)), "Ryujinx.Ui.Common.Resources.Logo_Ryujinx.png"),
-                                        SecondaryText  = "Extraction completed successfully.",
+                                        Title = "Ryujinx - NCA Section Extractor",
+                                        Icon = new Gdk.Pixbuf(Assembly.GetAssembly(typeof(ConfigurationState)), "Ryujinx.Ui.Common.Resources.Logo_Ryujinx.png"),
+                                        SecondaryText = "Extraction completed successfully.",
                                         WindowPosition = WindowPosition.Center
                                     };
 
@@ -323,7 +323,7 @@ namespace Ryujinx.Ui.Widgets
                     }
                 });
 
-                extractorThread.Name         = "GUI.NcaSectionExtractorThread";
+                extractorThread.Name = "GUI.NcaSectionExtractorThread";
                 extractorThread.IsBackground = true;
                 extractorThread.Start();
             }
@@ -459,7 +459,7 @@ namespace Ryujinx.Ui.Widgets
 
         private void OpenTitleModDir_Clicked(object sender, EventArgs args)
         {
-            string modsBasePath  = _virtualFileSystem.ModLoader.GetModsBasePath();
+            string modsBasePath = _virtualFileSystem.ModLoader.GetModsBasePath();
             string titleModsPath = _virtualFileSystem.ModLoader.GetTitleDir(modsBasePath, _titleIdText);
 
             OpenHelper.OpenFolder(titleModsPath);
@@ -467,8 +467,8 @@ namespace Ryujinx.Ui.Widgets
 
         private void OpenTitleSdModDir_Clicked(object sender, EventArgs args)
         {
-            string sdModsBasePath  = _virtualFileSystem.ModLoader.GetSdModsBasePath();
-            string titleModsPath   = _virtualFileSystem.ModLoader.GetTitleDir(sdModsBasePath, _titleIdText);
+            string sdModsBasePath = _virtualFileSystem.ModLoader.GetSdModsBasePath();
+            string titleModsPath = _virtualFileSystem.ModLoader.GetTitleDir(sdModsBasePath, _titleIdText);
 
             OpenHelper.OpenFolder(titleModsPath);
         }
@@ -490,9 +490,9 @@ namespace Ryujinx.Ui.Widgets
 
         private void OpenPtcDir_Clicked(object sender, EventArgs args)
         {
-            string ptcDir  = System.IO.Path.Combine(AppDataManager.GamesDirPath, _titleIdText, "cache", "cpu");
+            string ptcDir = System.IO.Path.Combine(AppDataManager.GamesDirPath, _titleIdText, "cache", "cpu");
 
-            string mainPath   = System.IO.Path.Combine(ptcDir, "0");
+            string mainPath = System.IO.Path.Combine(ptcDir, "0");
             string backupPath = System.IO.Path.Combine(ptcDir, "1");
 
             if (!Directory.Exists(ptcDir))
@@ -519,7 +519,7 @@ namespace Ryujinx.Ui.Widgets
 
         private void PurgePtcCache_Clicked(object sender, EventArgs args)
         {
-            DirectoryInfo mainDir   = new DirectoryInfo(System.IO.Path.Combine(AppDataManager.GamesDirPath, _titleIdText, "cache", "cpu", "0"));
+            DirectoryInfo mainDir = new DirectoryInfo(System.IO.Path.Combine(AppDataManager.GamesDirPath, _titleIdText, "cache", "cpu", "0"));
             DirectoryInfo backupDir = new DirectoryInfo(System.IO.Path.Combine(AppDataManager.GamesDirPath, _titleIdText, "cache", "cpu", "1"));
 
             MessageDialog warningDialog = GtkDialog.CreateConfirmationDialog("Warning", $"You are about to queue a PPTC rebuild on the next boot of:\n\n<b>{_titleName}</b>\n\nAre you sure you want to proceed?");
@@ -544,7 +544,7 @@ namespace Ryujinx.Ui.Widgets
                     {
                         file.Delete();
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         GtkDialog.CreateErrorDialog($"Error purging PPTC cache {file.Name}: {e}");
                     }

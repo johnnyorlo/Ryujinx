@@ -65,7 +65,7 @@ namespace ARMeilleure.Translation.Cache
                 {
                     unsafe
                     {
-                        fixed (byte *codePtr = code)
+                        fixed (byte* codePtr = code)
                         {
                             JitSupportDarwin.Copy(funcPtr, (IntPtr)codePtr, (ulong)code.Length);
                         }

@@ -12,17 +12,17 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrl
 {
     class NvHostEvent
     {
-        public NvFence          Fence;
+        public NvFence Fence;
         public NvHostEventState State;
-        public KEvent           Event;
-        public int              EventHandle;
+        public KEvent Event;
+        public int EventHandle;
 
-        private uint                  _eventId;
-        private NvHostSyncpt          _syncpointManager;
+        private uint _eventId;
+        private NvHostSyncpt _syncpointManager;
         private SyncpointWaiterHandle _waiterInformation;
 
         private NvFence _previousFailingFence;
-        private uint    _failingCount;
+        private uint _failingCount;
 
         public readonly object Lock = new object();
 
@@ -54,9 +54,9 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrl
 
         private void ResetFailingState()
         {
-            _previousFailingFence.Id    = NvFence.InvalidSyncPointId;
+            _previousFailingFence.Id = NvFence.InvalidSyncPointId;
             _previousFailingFence.Value = 0;
-            _failingCount               = 0;
+            _failingCount = 0;
         }
 
         private void Signal()

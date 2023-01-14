@@ -31,7 +31,7 @@ namespace Ryujinx.Graphics.Gpu.Image
         }
 
         private const int OverlapsBufferInitialCapacity = 10;
-        private const int OverlapsBufferMaxCapacity     = 10000;
+        private const int OverlapsBufferMaxCapacity = 10000;
 
         private readonly GpuContext _context;
         private readonly PhysicalMemory _physicalMemory;
@@ -315,12 +315,12 @@ namespace Ryujinx.Graphics.Gpu.Image
             // so the width we get here is the aligned width.
             if (isLinear)
             {
-                width  = colorState.WidthOrStride / formatInfo.BytesPerPixel;
+                width = colorState.WidthOrStride / formatInfo.BytesPerPixel;
                 stride = colorState.WidthOrStride;
             }
             else
             {
-                width  = colorState.WidthOrStride;
+                width = colorState.WidthOrStride;
                 stride = 0;
             }
 
@@ -1014,17 +1014,17 @@ namespace Ryujinx.Graphics.Gpu.Image
             // - If the parent format is not compressed, and the view is, the view
             // size is calculated as described on the first point, but the width and height
             // of the view must be also multiplied by the block width and height.
-            int width  = Math.Max(1, parent.Info.Width  >> firstLevel);
+            int width = Math.Max(1, parent.Info.Width >> firstLevel);
             int height = Math.Max(1, parent.Info.Height >> firstLevel);
 
             if (parent.Info.FormatInfo.IsCompressed && !info.FormatInfo.IsCompressed)
             {
-                width  = BitUtils.DivRoundUp(width,  parent.Info.FormatInfo.BlockWidth);
+                width = BitUtils.DivRoundUp(width, parent.Info.FormatInfo.BlockWidth);
                 height = BitUtils.DivRoundUp(height, parent.Info.FormatInfo.BlockHeight);
             }
             else if (!parent.Info.FormatInfo.IsCompressed && info.FormatInfo.IsCompressed)
             {
-                width  *= info.FormatInfo.BlockWidth;
+                width *= info.FormatInfo.BlockWidth;
                 height *= info.FormatInfo.BlockHeight;
             }
 
@@ -1115,14 +1115,14 @@ namespace Ryujinx.Graphics.Gpu.Image
                 }
             }
 
-            int width  = info.Width  / info.SamplesInX;
+            int width = info.Width / info.SamplesInX;
             int height = info.Height / info.SamplesInY;
 
             int depth = info.GetDepth() * info.GetLayers();
 
             if (scale != 1f)
             {
-                width  = (int)MathF.Ceiling(width  * scale);
+                width = (int)MathF.Ceiling(width * scale);
                 height = (int)MathF.Ceiling(height * scale);
             }
 

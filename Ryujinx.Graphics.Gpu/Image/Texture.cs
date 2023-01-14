@@ -119,7 +119,7 @@ namespace Ryujinx.Graphics.Gpu.Image
         private bool _modifiedStale = true;
 
         private ITexture _arrayViewTexture;
-        private Target   _arrayViewTarget;
+        private Target _arrayViewTarget;
 
         private ITexture _flushHostTexture;
 
@@ -413,7 +413,7 @@ namespace Ryujinx.Graphics.Gpu.Image
             int blockWidth = Info.FormatInfo.BlockWidth;
             int blockHeight = Info.FormatInfo.BlockHeight;
 
-            width  <<= FirstLevel;
+            width <<= FirstLevel;
             height <<= FirstLevel;
 
             if (Target == Target.Texture3D)
@@ -429,7 +429,7 @@ namespace Ryujinx.Graphics.Gpu.Image
 
             foreach (Texture view in _viewStorage._views)
             {
-                int viewWidth  = Math.Max(1, width  >> view.FirstLevel);
+                int viewWidth = Math.Max(1, width >> view.FirstLevel);
                 int viewHeight = Math.Max(1, height >> view.FirstLevel);
 
                 int viewDepthOrLayers;
@@ -1319,7 +1319,7 @@ namespace Ryujinx.Graphics.Gpu.Image
                 ITexture viewTexture = HostTexture.CreateView(createInfo, 0, 0);
 
                 _arrayViewTexture = viewTexture;
-                _arrayViewTarget  = target;
+                _arrayViewTarget = target;
 
                 return viewTexture;
             }
@@ -1443,7 +1443,7 @@ namespace Ryujinx.Graphics.Gpu.Image
             Height = info.Height;
             CanForceAnisotropy = CanTextureForceAnisotropy();
 
-            _depth  = info.GetDepth();
+            _depth = info.GetDepth();
             _layers = info.GetLayers();
         }
 

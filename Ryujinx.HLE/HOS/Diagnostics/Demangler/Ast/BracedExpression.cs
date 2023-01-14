@@ -6,12 +6,12 @@ namespace Ryujinx.HLE.HOS.Diagnostics.Demangler.Ast
     {
         private BaseNode _element;
         private BaseNode _expression;
-        private bool     _isArrayExpression;
+        private bool _isArrayExpression;
 
         public BracedExpression(BaseNode element, BaseNode expression, bool isArrayExpression) : base(NodeType.BracedExpression)
         {
-            _element           = element;
-            _expression        = expression;
+            _element = element;
+            _expression = expression;
             _isArrayExpression = isArrayExpression;
         }
 

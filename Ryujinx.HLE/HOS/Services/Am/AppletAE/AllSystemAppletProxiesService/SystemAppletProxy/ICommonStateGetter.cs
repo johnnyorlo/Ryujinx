@@ -11,7 +11,7 @@ namespace Ryujinx.HLE.HOS.Services.Am.AppletAE.AllSystemAppletProxiesService.Sys
 {
     class ICommonStateGetter : IpcService
     {
-        private Apm.ManagerServer       _apmManagerServer;
+        private Apm.ManagerServer _apmManagerServer;
         private Apm.SystemManagerServer _apmSystemManagerServer;
         private Lbl.LblControllerServer _lblControllerServer;
 
@@ -20,14 +20,14 @@ namespace Ryujinx.HLE.HOS.Services.Am.AppletAE.AllSystemAppletProxiesService.Sys
         private bool _lcdBacklighOffEnabled;
         private bool _requestExitToLibraryAppletAtExecuteNextProgramEnabled;
 #pragma warning restore CS0414
-        private int  _messageEventHandle;
-        private int  _displayResolutionChangedEventHandle;
+        private int _messageEventHandle;
+        private int _displayResolutionChangedEventHandle;
 
         public ICommonStateGetter(ServiceCtx context)
         {
-            _apmManagerServer       = new Apm.ManagerServer(context);
+            _apmManagerServer = new Apm.ManagerServer(context);
             _apmSystemManagerServer = new Apm.SystemManagerServer(context);
-            _lblControllerServer    = new Lbl.LblControllerServer(context);
+            _lblControllerServer = new Lbl.LblControllerServer(context);
         }
 
         [CommandHipc(0)]

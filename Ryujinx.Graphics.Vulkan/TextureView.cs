@@ -651,7 +651,7 @@ namespace Ryujinx.Graphics.Vulkan
         private bool SupportsBlitFromD32FS8ToD32FAndS8()
         {
             var formatFeatureFlags = FormatFeatureFlags.BlitSrcBit | FormatFeatureFlags.BlitDstBit;
-            return _gd.FormatCapabilities.OptimalFormatSupports(formatFeatureFlags, GAL.Format.D32Float)  &&
+            return _gd.FormatCapabilities.OptimalFormatSupports(formatFeatureFlags, GAL.Format.D32Float) &&
                    _gd.FormatCapabilities.OptimalFormatSupports(formatFeatureFlags, GAL.Format.S8Uint);
         }
 

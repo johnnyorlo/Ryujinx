@@ -10,9 +10,9 @@ namespace Ryujinx.Ui.Common.Helper
         {
             Process.Start(new ProcessStartInfo
             {
-                FileName        = path,
+                FileName = path,
                 UseShellExecute = true,
-                Verb            = "open"
+                Verb = "open"
             });
         }
 

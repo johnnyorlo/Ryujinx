@@ -58,7 +58,7 @@ namespace Ryujinx.HLE.Ui.Input
             }
         }
 
-        public void Update(bool supressEvents=false)
+        public void Update(bool supressEvents = false)
         {
             ref var npads = ref _device.Hid.SharedMemory.Npads;
 

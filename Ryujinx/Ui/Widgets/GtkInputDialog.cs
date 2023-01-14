@@ -27,8 +27,8 @@ namespace Ryujinx.Ui.Widgets
                 Text = $"(Max length: {inputMax})"
             };
 
-            ((Box)MessageArea).PackStart(mainTextLabel,     true, true, 0);
-            ((Box)MessageArea).PackStart(InputEntry,        true, true, 5);
+            ((Box)MessageArea).PackStart(mainTextLabel, true, true, 0);
+            ((Box)MessageArea).PackStart(InputEntry, true, true, 5);
             ((Box)MessageArea).PackStart(inputMaxTextLabel, true, true, 0);
 
             ShowAll();

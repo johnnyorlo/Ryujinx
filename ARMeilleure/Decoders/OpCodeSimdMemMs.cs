@@ -2,10 +2,10 @@ namespace ARMeilleure.Decoders
 {
     class OpCodeSimdMemMs : OpCodeMemReg, IOpCodeSimd
     {
-        public int  Reps   { get; }
-        public int  SElems { get; }
-        public int  Elems  { get; }
-        public bool WBack  { get; }
+        public int Reps { get; }
+        public int SElems { get; }
+        public int Elems { get; }
+        public bool WBack { get; }
 
         public new static OpCode Create(InstDescriptor inst, ulong address, int opCode) => new OpCodeSimdMemMs(inst, address, opCode);
 
@@ -24,7 +24,7 @@ namespace ARMeilleure.Decoders
                 default: Instruction = InstDescriptor.Undefined; return;
             }
 
-            Size  =  (opCode >> 10) & 3;
+            Size = (opCode >> 10) & 3;
             WBack = ((opCode >> 23) & 1) != 0;
 
             bool q = ((opCode >> 30) & 1) != 0;

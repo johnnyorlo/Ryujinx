@@ -11,10 +11,10 @@ namespace Ryujinx.HLE.HOS.Services.Mii.Types
     {
         public const int Size = 0x44;
 
-        public  CoreData CoreData;
+        public CoreData CoreData;
         private CreateId _createId;
-        public  ushort   DataCrc;
-        public  ushort   DeviceCrc;
+        public ushort DataCrc;
+        public ushort DeviceCrc;
 
         public byte Type => CoreData.Type;
 
@@ -99,56 +99,56 @@ namespace Ryujinx.HLE.HOS.Services.Mii.Types
 
             coreData.SetDefault();
 
-            coreData.Nickname        = template.Nickname;
-            coreData.FontRegion      = (FontRegion)template.FontRegion;
-            coreData.FavoriteColor   = (byte)template.FavoriteColor;
-            coreData.Gender          = (Gender)template.Gender;
-            coreData.Height          = (byte)template.Height;
-            coreData.Build           = (byte)template.Build;
-            coreData.Type            = (byte)template.Type;
-            coreData.RegionMove      = (byte)template.RegionMove;
-            coreData.FacelineType    = (FacelineType)template.FacelineType;
-            coreData.FacelineColor   = (FacelineColor)Helper.Ver3FacelineColorTable[template.FacelineColorVer3];
+            coreData.Nickname = template.Nickname;
+            coreData.FontRegion = (FontRegion)template.FontRegion;
+            coreData.FavoriteColor = (byte)template.FavoriteColor;
+            coreData.Gender = (Gender)template.Gender;
+            coreData.Height = (byte)template.Height;
+            coreData.Build = (byte)template.Build;
+            coreData.Type = (byte)template.Type;
+            coreData.RegionMove = (byte)template.RegionMove;
+            coreData.FacelineType = (FacelineType)template.FacelineType;
+            coreData.FacelineColor = (FacelineColor)Helper.Ver3FacelineColorTable[template.FacelineColorVer3];
             coreData.FacelineWrinkle = (FacelineWrinkle)template.FacelineWrinkle;
-            coreData.FacelineMake    = (FacelineMake)template.FacelineMake;
-            coreData.HairType        = (HairType)template.HairType;
-            coreData.HairColor       = (CommonColor)Helper.Ver3HairColorTable[template.HairColorVer3];
-            coreData.HairFlip        = (HairFlip)template.HairFlip;
-            coreData.EyeType         = (EyeType)template.EyeType;
-            coreData.EyeColor        = (CommonColor)Helper.Ver3EyeColorTable[template.EyeColorVer3];
-            coreData.EyeScale        = (byte)template.EyeScale;
-            coreData.EyeAspect       = (byte)template.EyeAspect;
-            coreData.EyeRotate       = (byte)template.EyeRotate;
-            coreData.EyeX            = (byte)template.EyeX;
-            coreData.EyeY            = (byte)template.EyeY;
-            coreData.EyebrowType     = (EyebrowType)template.EyebrowType;
-            coreData.EyebrowColor    = (CommonColor)Helper.Ver3HairColorTable[template.EyebrowColorVer3];
-            coreData.EyebrowScale    = (byte)template.EyebrowScale;
-            coreData.EyebrowAspect   = (byte)template.EyebrowAspect;
-            coreData.EyebrowRotate   = (byte)template.EyebrowRotate;
-            coreData.EyebrowX        = (byte)template.EyebrowX;
-            coreData.EyebrowY        = (byte)template.EyebrowY;
-            coreData.NoseType        = (NoseType)template.NoseType;
-            coreData.NoseScale       = (byte)template.NoseScale;
-            coreData.NoseY           = (byte)template.NoseY;
-            coreData.MouthType       = (MouthType)template.MouthType;
-            coreData.MouthColor      = (CommonColor)Helper.Ver3MouthColorTable[template.MouthColorVer3];
-            coreData.MouthScale      = (byte)template.MouthScale;
-            coreData.MouthAspect     = (byte)template.MouthAspect;
-            coreData.MouthY          = (byte)template.MouthY;
-            coreData.BeardColor      = (CommonColor)Helper.Ver3HairColorTable[template.BeardColorVer3];
-            coreData.BeardType       = (BeardType)template.BeardType;
-            coreData.MustacheType    = (MustacheType)template.MustacheType;
-            coreData.MustacheScale   = (byte)template.MustacheScale;
-            coreData.MustacheY       = (byte)template.MustacheY;
-            coreData.GlassType       = (GlassType)template.GlassType;
-            coreData.GlassColor      = (CommonColor)Helper.Ver3GlassColorTable[template.GlassColorVer3];
-            coreData.GlassScale      = (byte)template.GlassScale;
-            coreData.GlassY          = (byte)template.GlassY;
-            coreData.MoleType        = (MoleType)template.MoleType;
-            coreData.MoleScale       = (byte)template.MoleScale;
-            coreData.MoleX           = (byte)template.MoleX;
-            coreData.MoleY           = (byte)template.MoleY;
+            coreData.FacelineMake = (FacelineMake)template.FacelineMake;
+            coreData.HairType = (HairType)template.HairType;
+            coreData.HairColor = (CommonColor)Helper.Ver3HairColorTable[template.HairColorVer3];
+            coreData.HairFlip = (HairFlip)template.HairFlip;
+            coreData.EyeType = (EyeType)template.EyeType;
+            coreData.EyeColor = (CommonColor)Helper.Ver3EyeColorTable[template.EyeColorVer3];
+            coreData.EyeScale = (byte)template.EyeScale;
+            coreData.EyeAspect = (byte)template.EyeAspect;
+            coreData.EyeRotate = (byte)template.EyeRotate;
+            coreData.EyeX = (byte)template.EyeX;
+            coreData.EyeY = (byte)template.EyeY;
+            coreData.EyebrowType = (EyebrowType)template.EyebrowType;
+            coreData.EyebrowColor = (CommonColor)Helper.Ver3HairColorTable[template.EyebrowColorVer3];
+            coreData.EyebrowScale = (byte)template.EyebrowScale;
+            coreData.EyebrowAspect = (byte)template.EyebrowAspect;
+            coreData.EyebrowRotate = (byte)template.EyebrowRotate;
+            coreData.EyebrowX = (byte)template.EyebrowX;
+            coreData.EyebrowY = (byte)template.EyebrowY;
+            coreData.NoseType = (NoseType)template.NoseType;
+            coreData.NoseScale = (byte)template.NoseScale;
+            coreData.NoseY = (byte)template.NoseY;
+            coreData.MouthType = (MouthType)template.MouthType;
+            coreData.MouthColor = (CommonColor)Helper.Ver3MouthColorTable[template.MouthColorVer3];
+            coreData.MouthScale = (byte)template.MouthScale;
+            coreData.MouthAspect = (byte)template.MouthAspect;
+            coreData.MouthY = (byte)template.MouthY;
+            coreData.BeardColor = (CommonColor)Helper.Ver3HairColorTable[template.BeardColorVer3];
+            coreData.BeardType = (BeardType)template.BeardType;
+            coreData.MustacheType = (MustacheType)template.MustacheType;
+            coreData.MustacheScale = (byte)template.MustacheScale;
+            coreData.MustacheY = (byte)template.MustacheY;
+            coreData.GlassType = (GlassType)template.GlassType;
+            coreData.GlassColor = (CommonColor)Helper.Ver3GlassColorTable[template.GlassColorVer3];
+            coreData.GlassScale = (byte)template.GlassScale;
+            coreData.GlassY = (byte)template.GlassY;
+            coreData.MoleType = (MoleType)template.MoleType;
+            coreData.MoleScale = (byte)template.MoleScale;
+            coreData.MoleX = (byte)template.MoleX;
+            coreData.MoleY = (byte)template.MoleY;
 
             result.CoreData = coreData;
 
@@ -166,7 +166,7 @@ namespace Ryujinx.HLE.HOS.Services.Mii.Types
         {
             StoreData result = new StoreData
             {
-                CoreData  = coreData,
+                CoreData = coreData,
                 _createId = utilImpl.MakeCreateId()
             };
 

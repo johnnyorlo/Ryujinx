@@ -40,66 +40,66 @@ namespace ARMeilleure.CodeGen.Arm64
         {
             _instTable = new Action<CodeGenContext, Operation>[EnumUtils.GetCount(typeof(Instruction))];
 
-            Add(Instruction.Add,                     GenerateAdd);
-            Add(Instruction.BitwiseAnd,              GenerateBitwiseAnd);
-            Add(Instruction.BitwiseExclusiveOr,      GenerateBitwiseExclusiveOr);
-            Add(Instruction.BitwiseNot,              GenerateBitwiseNot);
-            Add(Instruction.BitwiseOr,               GenerateBitwiseOr);
-            Add(Instruction.BranchIf,                GenerateBranchIf);
-            Add(Instruction.ByteSwap,                GenerateByteSwap);
-            Add(Instruction.Call,                    GenerateCall);
+            Add(Instruction.Add, GenerateAdd);
+            Add(Instruction.BitwiseAnd, GenerateBitwiseAnd);
+            Add(Instruction.BitwiseExclusiveOr, GenerateBitwiseExclusiveOr);
+            Add(Instruction.BitwiseNot, GenerateBitwiseNot);
+            Add(Instruction.BitwiseOr, GenerateBitwiseOr);
+            Add(Instruction.BranchIf, GenerateBranchIf);
+            Add(Instruction.ByteSwap, GenerateByteSwap);
+            Add(Instruction.Call, GenerateCall);
             //Add(Instruction.Clobber,                 GenerateClobber);
-            Add(Instruction.Compare,                 GenerateCompare);
-            Add(Instruction.CompareAndSwap,          GenerateCompareAndSwap);
-            Add(Instruction.CompareAndSwap16,        GenerateCompareAndSwap16);
-            Add(Instruction.CompareAndSwap8,         GenerateCompareAndSwap8);
-            Add(Instruction.ConditionalSelect,       GenerateConditionalSelect);
-            Add(Instruction.ConvertI64ToI32,         GenerateConvertI64ToI32);
-            Add(Instruction.ConvertToFP,             GenerateConvertToFP);
-            Add(Instruction.ConvertToFPUI,           GenerateConvertToFPUI);
-            Add(Instruction.Copy,                    GenerateCopy);
-            Add(Instruction.CountLeadingZeros,       GenerateCountLeadingZeros);
-            Add(Instruction.Divide,                  GenerateDivide);
-            Add(Instruction.DivideUI,                GenerateDivideUI);
-            Add(Instruction.Fill,                    GenerateFill);
-            Add(Instruction.Load,                    GenerateLoad);
-            Add(Instruction.Load16,                  GenerateLoad16);
-            Add(Instruction.Load8,                   GenerateLoad8);
-            Add(Instruction.MemoryBarrier,           GenerateMemoryBarrier);
-            Add(Instruction.Multiply,                GenerateMultiply);
-            Add(Instruction.Multiply64HighSI,        GenerateMultiply64HighSI);
-            Add(Instruction.Multiply64HighUI,        GenerateMultiply64HighUI);
-            Add(Instruction.Negate,                  GenerateNegate);
-            Add(Instruction.Return,                  GenerateReturn);
-            Add(Instruction.RotateRight,             GenerateRotateRight);
-            Add(Instruction.ShiftLeft,               GenerateShiftLeft);
-            Add(Instruction.ShiftRightSI,            GenerateShiftRightSI);
-            Add(Instruction.ShiftRightUI,            GenerateShiftRightUI);
-            Add(Instruction.SignExtend16,            GenerateSignExtend16);
-            Add(Instruction.SignExtend32,            GenerateSignExtend32);
-            Add(Instruction.SignExtend8,             GenerateSignExtend8);
-            Add(Instruction.Spill,                   GenerateSpill);
-            Add(Instruction.SpillArg,                GenerateSpillArg);
-            Add(Instruction.StackAlloc,              GenerateStackAlloc);
-            Add(Instruction.Store,                   GenerateStore);
-            Add(Instruction.Store16,                 GenerateStore16);
-            Add(Instruction.Store8,                  GenerateStore8);
-            Add(Instruction.Subtract,                GenerateSubtract);
-            Add(Instruction.Tailcall,                GenerateTailcall);
-            Add(Instruction.VectorCreateScalar,      GenerateVectorCreateScalar);
-            Add(Instruction.VectorExtract,           GenerateVectorExtract);
-            Add(Instruction.VectorExtract16,         GenerateVectorExtract16);
-            Add(Instruction.VectorExtract8,          GenerateVectorExtract8);
-            Add(Instruction.VectorInsert,            GenerateVectorInsert);
-            Add(Instruction.VectorInsert16,          GenerateVectorInsert16);
-            Add(Instruction.VectorInsert8,           GenerateVectorInsert8);
-            Add(Instruction.VectorOne,               GenerateVectorOne);
-            Add(Instruction.VectorZero,              GenerateVectorZero);
-            Add(Instruction.VectorZeroUpper64,       GenerateVectorZeroUpper64);
-            Add(Instruction.VectorZeroUpper96,       GenerateVectorZeroUpper96);
-            Add(Instruction.ZeroExtend16,            GenerateZeroExtend16);
-            Add(Instruction.ZeroExtend32,            GenerateZeroExtend32);
-            Add(Instruction.ZeroExtend8,             GenerateZeroExtend8);
+            Add(Instruction.Compare, GenerateCompare);
+            Add(Instruction.CompareAndSwap, GenerateCompareAndSwap);
+            Add(Instruction.CompareAndSwap16, GenerateCompareAndSwap16);
+            Add(Instruction.CompareAndSwap8, GenerateCompareAndSwap8);
+            Add(Instruction.ConditionalSelect, GenerateConditionalSelect);
+            Add(Instruction.ConvertI64ToI32, GenerateConvertI64ToI32);
+            Add(Instruction.ConvertToFP, GenerateConvertToFP);
+            Add(Instruction.ConvertToFPUI, GenerateConvertToFPUI);
+            Add(Instruction.Copy, GenerateCopy);
+            Add(Instruction.CountLeadingZeros, GenerateCountLeadingZeros);
+            Add(Instruction.Divide, GenerateDivide);
+            Add(Instruction.DivideUI, GenerateDivideUI);
+            Add(Instruction.Fill, GenerateFill);
+            Add(Instruction.Load, GenerateLoad);
+            Add(Instruction.Load16, GenerateLoad16);
+            Add(Instruction.Load8, GenerateLoad8);
+            Add(Instruction.MemoryBarrier, GenerateMemoryBarrier);
+            Add(Instruction.Multiply, GenerateMultiply);
+            Add(Instruction.Multiply64HighSI, GenerateMultiply64HighSI);
+            Add(Instruction.Multiply64HighUI, GenerateMultiply64HighUI);
+            Add(Instruction.Negate, GenerateNegate);
+            Add(Instruction.Return, GenerateReturn);
+            Add(Instruction.RotateRight, GenerateRotateRight);
+            Add(Instruction.ShiftLeft, GenerateShiftLeft);
+            Add(Instruction.ShiftRightSI, GenerateShiftRightSI);
+            Add(Instruction.ShiftRightUI, GenerateShiftRightUI);
+            Add(Instruction.SignExtend16, GenerateSignExtend16);
+            Add(Instruction.SignExtend32, GenerateSignExtend32);
+            Add(Instruction.SignExtend8, GenerateSignExtend8);
+            Add(Instruction.Spill, GenerateSpill);
+            Add(Instruction.SpillArg, GenerateSpillArg);
+            Add(Instruction.StackAlloc, GenerateStackAlloc);
+            Add(Instruction.Store, GenerateStore);
+            Add(Instruction.Store16, GenerateStore16);
+            Add(Instruction.Store8, GenerateStore8);
+            Add(Instruction.Subtract, GenerateSubtract);
+            Add(Instruction.Tailcall, GenerateTailcall);
+            Add(Instruction.VectorCreateScalar, GenerateVectorCreateScalar);
+            Add(Instruction.VectorExtract, GenerateVectorExtract);
+            Add(Instruction.VectorExtract16, GenerateVectorExtract16);
+            Add(Instruction.VectorExtract8, GenerateVectorExtract8);
+            Add(Instruction.VectorInsert, GenerateVectorInsert);
+            Add(Instruction.VectorInsert16, GenerateVectorInsert16);
+            Add(Instruction.VectorInsert8, GenerateVectorInsert8);
+            Add(Instruction.VectorOne, GenerateVectorOne);
+            Add(Instruction.VectorZero, GenerateVectorZero);
+            Add(Instruction.VectorZeroUpper64, GenerateVectorZeroUpper64);
+            Add(Instruction.VectorZeroUpper96, GenerateVectorZeroUpper96);
+            Add(Instruction.ZeroExtend16, GenerateZeroExtend16);
+            Add(Instruction.ZeroExtend32, GenerateZeroExtend32);
+            Add(Instruction.ZeroExtend8, GenerateZeroExtend8);
 
             static void Add(Instruction inst, Action<CodeGenContext, Operation> func)
             {
@@ -294,7 +294,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateBitwiseNot(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             ValidateUnOp(dest, source);
@@ -332,7 +332,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateByteSwap(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             ValidateUnOp(dest, source);
@@ -366,15 +366,15 @@ namespace ARMeilleure.CodeGen.Arm64
         {
             if (operation.SourcesCount == 5) // CompareAndSwap128 has 5 sources, compared to CompareAndSwap64/32's 3.
             {
-                Operand actualLow    = operation.GetDestination(0);
-                Operand actualHigh   = operation.GetDestination(1);
-                Operand temp0        = operation.GetDestination(2);
-                Operand temp1        = operation.GetDestination(3);
-                Operand address      = operation.GetSource(0);
-                Operand expectedLow  = operation.GetSource(1);
+                Operand actualLow = operation.GetDestination(0);
+                Operand actualHigh = operation.GetDestination(1);
+                Operand temp0 = operation.GetDestination(2);
+                Operand temp1 = operation.GetDestination(3);
+                Operand address = operation.GetSource(0);
+                Operand expectedLow = operation.GetSource(1);
                 Operand expectedHigh = operation.GetSource(2);
-                Operand desiredLow   = operation.GetSource(3);
-                Operand desiredHigh  = operation.GetSource(4);
+                Operand desiredLow = operation.GetSource(3);
+                Operand desiredHigh = operation.GetSource(4);
 
                 GenerateAtomicDcas(
                     context,
@@ -390,11 +390,11 @@ namespace ARMeilleure.CodeGen.Arm64
             }
             else
             {
-                Operand actual   = operation.GetDestination(0);
-                Operand result   = operation.GetDestination(1);
-                Operand address  = operation.GetSource(0);
+                Operand actual = operation.GetDestination(0);
+                Operand result = operation.GetDestination(1);
+                Operand address = operation.GetSource(0);
                 Operand expected = operation.GetSource(1);
-                Operand desired  = operation.GetSource(2);
+                Operand desired = operation.GetSource(2);
 
                 GenerateAtomicCas(context, address, expected, desired, actual, result, AccessSize.Auto);
             }
@@ -402,22 +402,22 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateCompareAndSwap16(CodeGenContext context, Operation operation)
         {
-            Operand actual   = operation.GetDestination(0);
-            Operand result   = operation.GetDestination(1);
-            Operand address  = operation.GetSource(0);
+            Operand actual = operation.GetDestination(0);
+            Operand result = operation.GetDestination(1);
+            Operand address = operation.GetSource(0);
             Operand expected = operation.GetSource(1);
-            Operand desired  = operation.GetSource(2);
+            Operand desired = operation.GetSource(2);
 
             GenerateAtomicCas(context, address, expected, desired, actual, result, AccessSize.Hword);
         }
 
         private static void GenerateCompareAndSwap8(CodeGenContext context, Operation operation)
         {
-            Operand actual   = operation.GetDestination(0);
-            Operand result   = operation.GetDestination(1);
-            Operand address  = operation.GetSource(0);
+            Operand actual = operation.GetDestination(0);
+            Operand result = operation.GetDestination(1);
+            Operand address = operation.GetSource(0);
             Operand expected = operation.GetSource(1);
-            Operand desired  = operation.GetSource(2);
+            Operand desired = operation.GetSource(2);
 
             GenerateAtomicCas(context, address, expected, desired, actual, result, AccessSize.Byte);
         }
@@ -446,13 +446,13 @@ namespace ARMeilleure.CodeGen.Arm64
             Debug.Assert(dest.Type.IsInteger());
             Debug.Assert(src1.Type == OperandType.I32);
 
-            context.Assembler.Cmp (src1, Const(src1.Type, 0));
+            context.Assembler.Cmp(src1, Const(src1.Type, 0));
             context.Assembler.Csel(dest, src2, src3, ArmCondition.Ne);
         }
 
         private static void GenerateConvertI64ToI32(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             Debug.Assert(dest.Type == OperandType.I32 && source.Type == OperandType.I64);
@@ -462,7 +462,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateConvertToFP(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             Debug.Assert(dest.Type == OperandType.FP32 || dest.Type == OperandType.FP64);
@@ -481,7 +481,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateConvertToFPUI(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             Debug.Assert(dest.Type == OperandType.FP32 || dest.Type == OperandType.FP64);
@@ -493,7 +493,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateCopy(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             EnsureSameType(dest, source);
@@ -525,7 +525,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateCountLeadingZeros(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             EnsureSameType(dest, source);
@@ -537,9 +537,9 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateDivide(CodeGenContext context, Operation operation)
         {
-            Operand dest     = operation.Destination;
+            Operand dest = operation.Destination;
             Operand dividend = operation.GetSource(0);
-            Operand divisor  = operation.GetSource(1);
+            Operand divisor = operation.GetSource(1);
 
             ValidateBinOp(dest, dividend, divisor);
 
@@ -555,9 +555,9 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateDivideUI(CodeGenContext context, Operation operation)
         {
-            Operand dest     = operation.Destination;
+            Operand dest = operation.Destination;
             Operand dividend = operation.GetSource(0);
-            Operand divisor  = operation.GetSource(1);
+            Operand divisor = operation.GetSource(1);
 
             ValidateBinOp(dest, dividend, divisor);
 
@@ -566,7 +566,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateLoad(CodeGenContext context, Operation operation)
         {
-            Operand value   = operation.Destination;
+            Operand value = operation.Destination;
             Operand address = operation.GetSource(0);
 
             context.Assembler.Ldr(value, address);
@@ -574,7 +574,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateLoad16(CodeGenContext context, Operation operation)
         {
-            Operand value   = operation.Destination;
+            Operand value = operation.Destination;
             Operand address = operation.GetSource(0);
 
             Debug.Assert(value.Type.IsInteger());
@@ -584,7 +584,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateLoad8(CodeGenContext context, Operation operation)
         {
-            Operand value   = operation.Destination;
+            Operand value = operation.Destination;
             Operand address = operation.GetSource(0);
 
             Debug.Assert(value.Type.IsInteger());
@@ -643,7 +643,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateNegate(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             ValidateUnOp(dest, source);
@@ -730,7 +730,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateSignExtend16(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             Debug.Assert(dest.Type.IsInteger() && source.Type.IsInteger());
@@ -740,7 +740,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateSignExtend32(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             Debug.Assert(dest.Type.IsInteger() && source.Type.IsInteger());
@@ -750,7 +750,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateSignExtend8(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             Debug.Assert(dest.Type.IsInteger() && source.Type.IsInteger());
@@ -760,7 +760,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateFill(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand offset = operation.GetSource(0);
 
             Debug.Assert(offset.Kind == OperandKind.Constant);
@@ -801,7 +801,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateStackAlloc(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand offset = operation.GetSource(0);
 
             Debug.Assert(offset.Kind == OperandKind.Constant);
@@ -813,7 +813,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateStore(CodeGenContext context, Operation operation)
         {
-            Operand value   = operation.GetSource(1);
+            Operand value = operation.GetSource(1);
             Operand address = operation.GetSource(0);
 
             context.Assembler.Str(value, address);
@@ -821,7 +821,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateStore16(CodeGenContext context, Operation operation)
         {
-            Operand value   = operation.GetSource(1);
+            Operand value = operation.GetSource(1);
             Operand address = operation.GetSource(0);
 
             Debug.Assert(value.Type.IsInteger());
@@ -831,7 +831,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateStore8(CodeGenContext context, Operation operation)
         {
-            Operand value   = operation.GetSource(1);
+            Operand value = operation.GetSource(1);
             Operand address = operation.GetSource(0);
 
             Debug.Assert(value.Type.IsInteger());
@@ -878,7 +878,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateVectorCreateScalar(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             if (dest != default)
@@ -1024,7 +1024,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateVectorZeroUpper64(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             Debug.Assert(dest.Type == OperandType.V128 && source.Type == OperandType.V128);
@@ -1034,7 +1034,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateVectorZeroUpper96(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             Debug.Assert(dest.Type == OperandType.V128 && source.Type == OperandType.V128);
@@ -1044,7 +1044,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateZeroExtend16(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             Debug.Assert(dest.Type.IsInteger() && source.Type.IsInteger());
@@ -1054,7 +1054,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateZeroExtend32(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             Debug.Assert(dest.Type.IsInteger() && source.Type.IsInteger());
@@ -1070,7 +1070,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
         private static void GenerateZeroExtend8(CodeGenContext context, Operation operation)
         {
-            Operand dest   = operation.Destination;
+            Operand dest = operation.Destination;
             Operand source = operation.GetSource(0);
 
             Debug.Assert(dest.Type.IsInteger() && source.Type.IsInteger());

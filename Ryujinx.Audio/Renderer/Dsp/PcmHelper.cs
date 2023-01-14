@@ -37,7 +37,7 @@ namespace Ryujinx.Audio.Renderer.Dsp
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TOutput ConvertSample<TInput, TOutput>(TInput value) where TInput: INumber<TInput>, IMinMaxValue<TInput> where TOutput : INumber<TOutput>, IMinMaxValue<TOutput>
+        public static TOutput ConvertSample<TInput, TOutput>(TInput value) where TInput : INumber<TInput>, IMinMaxValue<TInput> where TOutput : INumber<TOutput>, IMinMaxValue<TOutput>
         {
             TInput conversionRate = TInput.CreateSaturating(TOutput.MaxValue / TOutput.CreateSaturating(TInput.MaxValue));
 

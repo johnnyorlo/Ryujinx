@@ -49,8 +49,8 @@ namespace Ryujinx.Ui.Applet
                 {
                     msgDialog = new MessageDialog(_parent, DialogFlags.DestroyWithParent, MessageType.Info, ButtonsType.Ok, null)
                     {
-                        Title     = title,
-                        Text      = message,
+                        Title = title,
+                        Text = message,
                         UseMarkup = true
                     };
 
@@ -86,8 +86,8 @@ namespace Ryujinx.Ui.Applet
         {
             ManualResetEvent dialogCloseEvent = new ManualResetEvent(false);
 
-            bool   okPressed = false;
-            bool   error     = false;
+            bool okPressed = false;
+            bool error = false;
             string inputText = args.InitialText ?? "";
 
             Application.Invoke(delegate
@@ -96,14 +96,14 @@ namespace Ryujinx.Ui.Applet
                 {
                     var swkbdDialog = new SwkbdAppletDialog(_parent)
                     {
-                        Title         = "Software Keyboard",
-                        Text          = args.HeaderText,
+                        Title = "Software Keyboard",
+                        Text = args.HeaderText,
                         SecondaryText = args.SubtitleText
                     };
 
-                    swkbdDialog.InputEntry.Text            = inputText;
+                    swkbdDialog.InputEntry.Text = inputText;
                     swkbdDialog.InputEntry.PlaceholderText = args.GuideText;
-                    swkbdDialog.OkButton.Label             = args.SubmitText;
+                    swkbdDialog.OkButton.Label = args.SubmitText;
 
                     swkbdDialog.SetInputLengthValidation(args.StringLengthMin, args.StringLengthMax);
 
@@ -152,9 +152,9 @@ namespace Ryujinx.Ui.Applet
                 {
                     ErrorAppletDialog msgDialog = new ErrorAppletDialog(_parent, DialogFlags.DestroyWithParent, MessageType.Error, buttons)
                     {
-                        Title          = title,
-                        Text           = message,
-                        UseMarkup      = true,
+                        Title = title,
+                        Text = message,
+                        UseMarkup = true,
                         WindowPosition = WindowPosition.CenterAlways
                     };
 

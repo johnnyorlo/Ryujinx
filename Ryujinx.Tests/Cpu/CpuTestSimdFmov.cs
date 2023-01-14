@@ -11,7 +11,7 @@ namespace Ryujinx.Tests.Cpu
     {
 #if SimdFmov
 
-#region "ValueSource"
+        #region "ValueSource"
         private static uint[] _F_Mov_Si_S_()
         {
             return new uint[]
@@ -27,9 +27,10 @@ namespace Ryujinx.Tests.Cpu
                 0x1E601000u // FMOV D0, #2.0
             };
         }
-#endregion
+        #endregion
 
-        [Test, Pairwise] [Explicit]
+        [Test, Pairwise]
+        [Explicit]
         public void F_Mov_Si_S([ValueSource("_F_Mov_Si_S_")] uint opcodes,
                                [Range(0u, 255u, 1u)] uint imm8)
         {
@@ -43,7 +44,8 @@ namespace Ryujinx.Tests.Cpu
             CompareAgainstUnicorn();
         }
 
-        [Test, Pairwise] [Explicit]
+        [Test, Pairwise]
+        [Explicit]
         public void F_Mov_Si_D([ValueSource("_F_Mov_Si_D_")] uint opcodes,
                                [Range(0u, 255u, 1u)] uint imm8)
         {

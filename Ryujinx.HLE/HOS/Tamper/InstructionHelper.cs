@@ -34,12 +34,12 @@ namespace Ryujinx.HLE.HOS.Tamper
 
             switch (comparison)
             {
-                case Comparison.Greater       : return Create(typeof(CondGT<>));
+                case Comparison.Greater: return Create(typeof(CondGT<>));
                 case Comparison.GreaterOrEqual: return Create(typeof(CondGE<>));
-                case Comparison.Less          : return Create(typeof(CondLT<>));
-                case Comparison.LessOrEqual   : return Create(typeof(CondLE<>));
-                case Comparison.Equal         : return Create(typeof(CondEQ<>));
-                case Comparison.NotEqual      : return Create(typeof(CondNE<>));
+                case Comparison.Less: return Create(typeof(CondLT<>));
+                case Comparison.LessOrEqual: return Create(typeof(CondLE<>));
+                case Comparison.Equal: return Create(typeof(CondEQ<>));
+                case Comparison.NotEqual: return Create(typeof(CondNE<>));
                 default:
                     throw new TamperCompilationException($"Invalid comparison {comparison} in Atmosphere cheat");
             }

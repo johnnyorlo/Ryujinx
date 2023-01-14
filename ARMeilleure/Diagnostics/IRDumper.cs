@@ -110,10 +110,10 @@ namespace ARMeilleure.Diagnostics
 
                     switch (reg.Type)
                     {
-                        case RegisterType.Flag:    _builder.Append('b'); break;
-                        case RegisterType.FpFlag:  _builder.Append('f'); break;
+                        case RegisterType.Flag: _builder.Append('b'); break;
+                        case RegisterType.FpFlag: _builder.Append('f'); break;
                         case RegisterType.Integer: _builder.Append('r'); break;
-                        case RegisterType.Vector:  _builder.Append('v'); break;
+                        case RegisterType.Vector: _builder.Append('v'); break;
                     }
 
                     _builder.Append(reg.Index);

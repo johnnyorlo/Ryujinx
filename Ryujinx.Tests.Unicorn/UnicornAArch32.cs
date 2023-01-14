@@ -302,7 +302,7 @@ namespace Ryujinx.Tests.Unicorn
             {
                 Interface.uc_version(out _, out _);
             }
-            catch (DllNotFoundException) {  }
+            catch (DllNotFoundException) { }
 
             return Interface.IsUnicornAvailable;
         }

@@ -216,7 +216,7 @@ namespace Ryujinx.Memory.Tests
             {
                 int region = regionSizes[i];
                 handle.QueryModified(address, (ulong)(PageSize * region), (address, size) => { });
-                
+
                 // There should be a gap between regions,
                 // So that they don't combine and we can see the full effects.
                 address += (ulong)(PageSize * (region + 1));
@@ -239,7 +239,8 @@ namespace Ryujinx.Memory.Tests
             ulong expectedAddress = 0;
 
             // Expect each region to trigger in its entirety, in address ascending order.
-            handle.QueryModified((address, size) => {
+            handle.QueryModified((address, size) =>
+            {
                 int region = regionSizes[regionInd++];
 
                 Assert.AreEqual(address, expectedAddress);

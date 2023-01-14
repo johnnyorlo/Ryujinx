@@ -250,50 +250,50 @@ namespace Ryujinx.HLE.HOS.Services.Hid
             switch (type)
             {
                 case ControllerType.ProController:
-                    controller.StyleSet           = NpadStyleTag.FullKey;
-                    controller.DeviceType         = DeviceType.FullKey;
-                    controller.SystemProperties  |= NpadSystemProperties.IsAbxyButtonOriented |
-                                                    NpadSystemProperties.IsPlusAvailable      |
+                    controller.StyleSet = NpadStyleTag.FullKey;
+                    controller.DeviceType = DeviceType.FullKey;
+                    controller.SystemProperties |= NpadSystemProperties.IsAbxyButtonOriented |
+                                                    NpadSystemProperties.IsPlusAvailable |
                                                     NpadSystemProperties.IsMinusAvailable;
                     controller.AppletFooterUiType = AppletFooterUiType.SwitchProController;
                     break;
                 case ControllerType.Handheld:
-                    controller.StyleSet           = NpadStyleTag.Handheld;
-                    controller.DeviceType         = DeviceType.HandheldLeft |
+                    controller.StyleSet = NpadStyleTag.Handheld;
+                    controller.DeviceType = DeviceType.HandheldLeft |
                                                     DeviceType.HandheldRight;
-                    controller.SystemProperties  |= NpadSystemProperties.IsAbxyButtonOriented |
-                                                    NpadSystemProperties.IsPlusAvailable      |
+                    controller.SystemProperties |= NpadSystemProperties.IsAbxyButtonOriented |
+                                                    NpadSystemProperties.IsPlusAvailable |
                                                     NpadSystemProperties.IsMinusAvailable;
                     controller.AppletFooterUiType = AppletFooterUiType.HandheldJoyConLeftJoyConRight;
                     break;
                 case ControllerType.JoyconPair:
-                    controller.StyleSet           = NpadStyleTag.JoyDual;
-                    controller.DeviceType         = DeviceType.JoyLeft |
+                    controller.StyleSet = NpadStyleTag.JoyDual;
+                    controller.DeviceType = DeviceType.JoyLeft |
                                                     DeviceType.JoyRight;
-                    controller.SystemProperties  |= NpadSystemProperties.IsAbxyButtonOriented |
-                                                    NpadSystemProperties.IsPlusAvailable      |
+                    controller.SystemProperties |= NpadSystemProperties.IsAbxyButtonOriented |
+                                                    NpadSystemProperties.IsPlusAvailable |
                                                     NpadSystemProperties.IsMinusAvailable;
                     controller.AppletFooterUiType = _device.System.State.DockedMode ? AppletFooterUiType.JoyDual : AppletFooterUiType.HandheldJoyConLeftJoyConRight;
                     break;
                 case ControllerType.JoyconLeft:
-                    controller.StyleSet           = NpadStyleTag.JoyLeft;
-                    controller.JoyAssignmentMode  = NpadJoyAssignmentMode.Single;
-                    controller.DeviceType         = DeviceType.JoyLeft;
-                    controller.SystemProperties  |= NpadSystemProperties.IsSlSrButtonOriented |
+                    controller.StyleSet = NpadStyleTag.JoyLeft;
+                    controller.JoyAssignmentMode = NpadJoyAssignmentMode.Single;
+                    controller.DeviceType = DeviceType.JoyLeft;
+                    controller.SystemProperties |= NpadSystemProperties.IsSlSrButtonOriented |
                                                     NpadSystemProperties.IsMinusAvailable;
                     controller.AppletFooterUiType = _device.System.State.DockedMode ? AppletFooterUiType.JoyDualLeftOnly : AppletFooterUiType.HandheldJoyConLeftOnly;
                     break;
                 case ControllerType.JoyconRight:
-                    controller.StyleSet           = NpadStyleTag.JoyRight;
-                    controller.JoyAssignmentMode  = NpadJoyAssignmentMode.Single;
-                    controller.DeviceType         = DeviceType.JoyRight;
-                    controller.SystemProperties  |= NpadSystemProperties.IsSlSrButtonOriented |
+                    controller.StyleSet = NpadStyleTag.JoyRight;
+                    controller.JoyAssignmentMode = NpadJoyAssignmentMode.Single;
+                    controller.DeviceType = DeviceType.JoyRight;
+                    controller.SystemProperties |= NpadSystemProperties.IsSlSrButtonOriented |
                                                     NpadSystemProperties.IsPlusAvailable;
                     controller.AppletFooterUiType = _device.System.State.DockedMode ? AppletFooterUiType.JoyDualRightOnly : AppletFooterUiType.HandheldJoyConRightOnly;
                     break;
                 case ControllerType.Pokeball:
-                    controller.StyleSet           = NpadStyleTag.Palma;
-                    controller.DeviceType         = DeviceType.Palma;
+                    controller.StyleSet = NpadStyleTag.Palma;
+                    controller.DeviceType = DeviceType.Palma;
                     controller.AppletFooterUiType = AppletFooterUiType.None;
                     break;
             }
@@ -381,16 +381,16 @@ namespace Ryujinx.HLE.HOS.Services.Hid
 
             NpadCommonState newState = new NpadCommonState
             {
-                Buttons      = (NpadButton)state.Buttons,
+                Buttons = (NpadButton)state.Buttons,
                 AnalogStickL = new AnalogStickState
                 {
-                    X        = state.LStick.Dx,
-                    Y        = state.LStick.Dy,
+                    X = state.LStick.Dx,
+                    Y = state.LStick.Dy,
                 },
                 AnalogStickR = new AnalogStickState
                 {
-                    X        = state.RStick.Dx,
-                    Y        = state.RStick.Dy,
+                    X = state.RStick.Dx,
+                    Y = state.RStick.Dy,
                 }
             };
 
@@ -537,10 +537,10 @@ namespace Ryujinx.HLE.HOS.Services.Hid
 
             SixAxisSensorState newState = new SixAxisSensorState
             {
-                Acceleration    = accel,
+                Acceleration = accel,
                 AngularVelocity = gyro,
-                Angle           = rotation,
-                Attributes      = SixAxisSensorAttribute.IsConnected
+                Angle = rotation,
+                Attributes = SixAxisSensorAttribute.IsConnected
             };
 
             state.Orientation.AsSpan().CopyTo(newState.Direction.AsSpan());

@@ -48,7 +48,7 @@ namespace Ryujinx.HLE.HOS.Services.Ssl.SslService
             CertificateFormat certificateFormat = (CertificateFormat)context.RequestData.ReadUInt32();
 
             ulong certificateDataPosition = context.Request.SendBuff[0].Position;
-            ulong certificateDataSize     = context.Request.SendBuff[0].Size;
+            ulong certificateDataSize = context.Request.SendBuff[0].Size;
 
             context.ResponseData.Write(_serverCertificateId++);
 
@@ -62,10 +62,10 @@ namespace Ryujinx.HLE.HOS.Services.Ssl.SslService
         public ResultCode ImportClientPki(ServiceCtx context)
         {
             ulong certificateDataPosition = context.Request.SendBuff[0].Position;
-            ulong certificateDataSize     = context.Request.SendBuff[0].Size;
+            ulong certificateDataSize = context.Request.SendBuff[0].Size;
 
             ulong asciiPasswordDataPosition = context.Request.SendBuff[1].Position;
-            ulong asciiPasswordDataSize     = context.Request.SendBuff[1].Size;
+            ulong asciiPasswordDataSize = context.Request.SendBuff[1].Size;
 
             byte[] asciiPasswordData = new byte[asciiPasswordDataSize];
 

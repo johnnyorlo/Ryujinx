@@ -66,8 +66,8 @@ namespace Ryujinx.HLE.HOS.Kernel.Threading
                     syncNodes[index] = syncObjs[index].AddWaitingThread(currentThread);
                 }
 
-                currentThread.WaitingSync   = true;
-                currentThread.SignaledObj   = null;
+                currentThread.WaitingSync = true;
+                currentThread.SignaledObj = null;
                 currentThread.ObjSyncResult = result;
 
                 currentThread.Reschedule(ThreadSchedState.Paused);
@@ -122,7 +122,7 @@ namespace Ryujinx.HLE.HOS.Kernel.Threading
 
                     if ((thread.SchedFlags & ThreadSchedState.LowMask) == ThreadSchedState.Paused)
                     {
-                        thread.SignaledObj   = syncObj;
+                        thread.SignaledObj = syncObj;
                         thread.ObjSyncResult = Result.Success;
 
                         thread.Reschedule(ThreadSchedState.Running);

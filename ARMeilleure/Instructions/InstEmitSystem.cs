@@ -79,19 +79,19 @@ namespace ARMeilleure.Instructions
             switch (GetPackedId(op))
             {
                 case 0b11_011_0111_0100_001:
-                {
-                    // DC ZVA
-                    Operand t = GetIntOrZR(context, op.Rt);
-
-                    for (long offset = 0; offset < DczSizeInBytes; offset += 8)
                     {
-                        Operand address = context.Add(t, Const(offset));
+                        // DC ZVA
+                        Operand t = GetIntOrZR(context, op.Rt);
 
-                        InstEmitMemoryHelper.EmitStore(context, address, RegisterConsts.ZeroIndex, 3);
+                        for (long offset = 0; offset < DczSizeInBytes; offset += 8)
+                        {
+                            Operand address = context.Add(t, Const(offset));
+
+                            InstEmitMemoryHelper.EmitStore(context, address, RegisterConsts.ZeroIndex, 3);
+                        }
+
+                        break;
                     }
-
-                    break;
-                }
 
                 // No-op
                 case 0b11_011_0111_1110_001: // DC CIVAC
@@ -108,7 +108,7 @@ namespace ARMeilleure.Instructions
         {
             int id;
 
-            id  = op.Op2 << 0;
+            id = op.Op2 << 0;
             id |= op.CRm << 3;
             id |= op.CRn << 7;
             id |= op.Op1 << 11;
@@ -170,7 +170,7 @@ namespace ARMeilleure.Instructions
             OpCodeSystem op = (OpCodeSystem)context.CurrOp;
 
             Operand nzcv = GetIntOrZR(context, op.Rt);
-                    nzcv = context.ConvertI64ToI32(nzcv);
+            nzcv = context.ConvertI64ToI32(nzcv);
 
             SetFlag(context, PState.VFlag, context.BitwiseAnd(context.ShiftRightUI(nzcv, Const((int)PState.VFlag)), Const(1)));
             SetFlag(context, PState.CFlag, context.BitwiseAnd(context.ShiftRightUI(nzcv, Const((int)PState.CFlag)), Const(1)));
@@ -183,7 +183,7 @@ namespace ARMeilleure.Instructions
             OpCodeSystem op = (OpCodeSystem)context.CurrOp;
 
             Operand fpcr = GetIntOrZR(context, op.Rt);
-                    fpcr = context.ConvertI64ToI32(fpcr);
+            fpcr = context.ConvertI64ToI32(fpcr);
 
             for (int flag = 0; flag < RegisterConsts.FpFlagsCount; flag++)
             {
@@ -201,7 +201,7 @@ namespace ARMeilleure.Instructions
             context.ClearQcFlagIfModified();
 
             Operand fpsr = GetIntOrZR(context, op.Rt);
-                    fpsr = context.ConvertI64ToI32(fpsr);
+            fpsr = context.ConvertI64ToI32(fpsr);
 
             for (int flag = 0; flag < RegisterConsts.FpFlagsCount; flag++)
             {

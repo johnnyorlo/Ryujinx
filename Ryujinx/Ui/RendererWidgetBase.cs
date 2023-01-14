@@ -297,7 +297,7 @@ namespace Ryujinx.Ui
                 Window.Cursor = (cursorMoveDelta >= CursorHideIdleTime * Stopwatch.Frequency) ? _invisibleCursor : null;
             }
 
-            if(ConfigurationState.Instance.Hid.EnableMouse && _isMouseInClient)
+            if (ConfigurationState.Instance.Hid.EnableMouse && _isMouseInClient)
             {
                 Window.Cursor = _invisibleCursor;
             }
@@ -334,9 +334,9 @@ namespace Ryujinx.Ui
                 {
                     lock (this)
                     {
-                        var    currentTime = DateTime.Now;
-                        string filename    = $"ryujinx_capture_{currentTime.Year}-{currentTime.Month:D2}-{currentTime.Day:D2}_{currentTime.Hour:D2}-{currentTime.Minute:D2}-{currentTime.Second:D2}.png";
-                        string directory   = AppDataManager.Mode switch
+                        var currentTime = DateTime.Now;
+                        string filename = $"ryujinx_capture_{currentTime.Year}-{currentTime.Month:D2}-{currentTime.Day:D2}_{currentTime.Hour:D2}-{currentTime.Minute:D2}-{currentTime.Second:D2}.png";
+                        string directory = AppDataManager.Mode switch
                         {
                             AppDataManager.LaunchMode.Portable => System.IO.Path.Combine(AppDataManager.BaseDirPath, "screenshots"),
                             _ => System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "Ryujinx")

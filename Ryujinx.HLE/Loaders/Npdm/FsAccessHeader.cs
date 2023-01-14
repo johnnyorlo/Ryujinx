@@ -6,7 +6,7 @@ namespace Ryujinx.HLE.Loaders.Npdm
 {
     class FsAccessHeader
     {
-        public int   Version            { get; private set; }
+        public int Version { get; private set; }
         public ulong PermissionsBitmask { get; private set; }
 
         public FsAccessHeader(Stream stream, int offset, int size)
@@ -15,7 +15,7 @@ namespace Ryujinx.HLE.Loaders.Npdm
 
             BinaryReader reader = new BinaryReader(stream);
 
-            Version            = reader.ReadInt32();
+            Version = reader.ReadInt32();
             PermissionsBitmask = reader.ReadUInt64();
 
             int dataSize = reader.ReadInt32();
@@ -25,7 +25,7 @@ namespace Ryujinx.HLE.Loaders.Npdm
                 throw new InvalidNpdmException("FsAccessHeader is corrupted!");
             }
 
-            int contentOwnerIdSize        = reader.ReadInt32();
+            int contentOwnerIdSize = reader.ReadInt32();
             int dataAndContentOwnerIdSize = reader.ReadInt32();
 
             if (dataAndContentOwnerIdSize != 0x1c)

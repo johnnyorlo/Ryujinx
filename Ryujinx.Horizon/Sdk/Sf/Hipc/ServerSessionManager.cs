@@ -75,7 +75,7 @@ namespace Ryujinx.Horizon.Sdk.Sf.Hipc
             }
 
             session.PointerBuffer = GetSessionPointerBuffer(session);
-            session.SavedMessage  = GetSessionSavedMessageBuffer(session);
+            session.SavedMessage = GetSessionSavedMessageBuffer(session);
 
             RegisterSessionToWaitList(session);
 
@@ -110,10 +110,10 @@ namespace Ryujinx.Horizon.Sdk.Sf.Hipc
         }
 
         protected virtual Server AllocateServer(
-            int                 portIndex,
-            int                 portHandle,
-            ServiceName         name,
-            bool                managed,
+            int portIndex,
+            int portHandle,
+            ServiceName name,
+            bool managed,
             ServiceObjectHolder staticHoder)
         {
             throw new NotSupportedException();
@@ -202,8 +202,8 @@ namespace Ryujinx.Horizon.Sdk.Sf.Hipc
                     return DispatchManagerRequest(session, inMessage, outMessage);
                 default:
                     return HipcResult.UnknownCommandType;
+            }
         }
-    }
 
         private static int GetInlineContext(CommandType commandType, ReadOnlySpan<byte> inMessage)
         {
@@ -236,7 +236,7 @@ namespace Ryujinx.Horizon.Sdk.Sf.Hipc
                 {
                     HipcMessageData messageData = HipcMessage.WriteMessage(message, new HipcMetadata()
                     {
-                        Type                = (int)CommandType.Invalid,
+                        Type = (int)CommandType.Invalid,
                         ReceiveStaticsCount = HipcMessage.AutoReceiveStatic
                     });
 
@@ -276,9 +276,9 @@ namespace Ryujinx.Horizon.Sdk.Sf.Hipc
 
         protected virtual Result DispatchRequest(
             ServiceObjectHolder objectHolder,
-            ServerSession       session,
-            Span<byte>          inMessage,
-            Span<byte>          outMessage)
+            ServerSession session,
+            Span<byte> inMessage,
+            Span<byte> outMessage)
         {
             HipcMessage request;
 
@@ -293,14 +293,14 @@ namespace Ryujinx.Horizon.Sdk.Sf.Hipc
 
             var dispatchCtx = new ServiceDispatchContext()
             {
-                ServiceObject    = objectHolder.ServiceObject,
-                Manager          = this,
-                Session          = session,
-                HandlesToClose   = new HandlesToClose(),
-                PointerBuffer    = session.PointerBuffer,
-                InMessageBuffer  = inMessage,
+                ServiceObject = objectHolder.ServiceObject,
+                Manager = this,
+                Session = session,
+                HandlesToClose = new HandlesToClose(),
+                PointerBuffer = session.PointerBuffer,
+                InMessageBuffer = inMessage,
                 OutMessageBuffer = outMessage,
-                Request          = request
+                Request = request
             };
 
             ReadOnlySpan<byte> inRawData = MemoryMarshal.Cast<uint, byte>(dispatchCtx.Request.Data.DataWords);

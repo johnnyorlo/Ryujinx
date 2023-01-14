@@ -302,10 +302,10 @@ namespace ARMeilleure.CodeGen.Arm64
                 if (source.Type == OperandType.V128 && passOnReg)
                 {
                     // V128 is a struct, we pass each half on a GPR if possible.
-                    Operand argReg  = Gpr(CallingConvention.GetIntArgumentRegister(intCount++), OperandType.I64);
+                    Operand argReg = Gpr(CallingConvention.GetIntArgumentRegister(intCount++), OperandType.I64);
                     Operand argReg2 = Gpr(CallingConvention.GetIntArgumentRegister(intCount++), OperandType.I64);
 
-                    nodes.AddBefore(node, Operation(Instruction.VectorExtract, argReg,  source, Const(0)));
+                    nodes.AddBefore(node, Operation(Instruction.VectorExtract, argReg, source, Const(0)));
                     nodes.AddBefore(node, Operation(Instruction.VectorExtract, argReg2, source, Const(1)));
 
                     continue;
@@ -339,7 +339,7 @@ namespace ARMeilleure.CodeGen.Arm64
             {
                 if (dest.Type == OperandType.V128)
                 {
-                    Operand retLReg = Gpr(CallingConvention.GetIntReturnRegister(),     OperandType.I64);
+                    Operand retLReg = Gpr(CallingConvention.GetIntReturnRegister(), OperandType.I64);
                     Operand retHReg = Gpr(CallingConvention.GetIntReturnRegisterHigh(), OperandType.I64);
 
                     node = nodes.AddAfter(node, Operation(Instruction.VectorCreateScalar, dest, retLReg));
@@ -403,7 +403,7 @@ namespace ARMeilleure.CodeGen.Arm64
                 if (source.Type == OperandType.V128 && passOnReg)
                 {
                     // V128 is a struct, we pass each half on a GPR if possible.
-                    Operand argReg  = Gpr(CallingConvention.GetIntArgumentRegister(intCount++), OperandType.I64);
+                    Operand argReg = Gpr(CallingConvention.GetIntArgumentRegister(intCount++), OperandType.I64);
                     Operand argReg2 = Gpr(CallingConvention.GetIntArgumentRegister(intCount++), OperandType.I64);
 
                     nodes.AddBefore(node, Operation(Instruction.VectorExtract, argReg, source, Const(0)));
@@ -519,7 +519,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
             if (source.Type == OperandType.V128)
             {
-                Operand retLReg = Gpr(CallingConvention.GetIntReturnRegister(),     OperandType.I64);
+                Operand retLReg = Gpr(CallingConvention.GetIntReturnRegister(), OperandType.I64);
                 Operand retHReg = Gpr(CallingConvention.GetIntReturnRegisterHigh(), OperandType.I64);
 
                 nodes.AddBefore(node, Operation(Instruction.VectorExtract, retLReg, source, Const(0)));

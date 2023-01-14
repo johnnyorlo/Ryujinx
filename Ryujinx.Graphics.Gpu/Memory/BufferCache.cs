@@ -12,7 +12,7 @@ namespace Ryujinx.Graphics.Gpu.Memory
     class BufferCache : IDisposable
     {
         private const int OverlapsBufferInitialCapacity = 10;
-        private const int OverlapsBufferMaxCapacity     = 10000;
+        private const int OverlapsBufferMaxCapacity = 10000;
 
         private const ulong BufferAlignmentSize = 0x1000;
         private const ulong BufferAlignmentMask = BufferAlignmentSize - 1;
@@ -246,7 +246,7 @@ namespace Ryujinx.Graphics.Gpu.Memory
                     {
                         Buffer buffer = _bufferOverlaps[index];
 
-                        address    = Math.Min(address,    buffer.Address);
+                        address = Math.Min(address, buffer.Address);
                         endAddress = Math.Max(endAddress, buffer.EndAddress);
 
                         lock (_buffers)

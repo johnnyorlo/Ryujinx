@@ -14,7 +14,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
     static class Instructions
     {
-        private const  MemorySemanticsMask DefaultMemorySemantics =
+        private const MemorySemanticsMask DefaultMemorySemantics =
             MemorySemanticsMask.ImageMemory |
             MemorySemanticsMask.AtomicCounterMemory |
             MemorySemanticsMask.WorkgroupMemory |
@@ -27,130 +27,130 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
         {
             InstTable = new Func<CodeGenContext, AstOperation, OperationResult>[(int)Instruction.Count];
 
-            Add(Instruction.Absolute,                 GenerateAbsolute);
-            Add(Instruction.Add,                      GenerateAdd);
-            Add(Instruction.AtomicAdd,                GenerateAtomicAdd);
-            Add(Instruction.AtomicAnd,                GenerateAtomicAnd);
-            Add(Instruction.AtomicCompareAndSwap,     GenerateAtomicCompareAndSwap);
-            Add(Instruction.AtomicMinS32,             GenerateAtomicMinS32);
-            Add(Instruction.AtomicMinU32,             GenerateAtomicMinU32);
-            Add(Instruction.AtomicMaxS32,             GenerateAtomicMaxS32);
-            Add(Instruction.AtomicMaxU32,             GenerateAtomicMaxU32);
-            Add(Instruction.AtomicOr,                 GenerateAtomicOr);
-            Add(Instruction.AtomicSwap,               GenerateAtomicSwap);
-            Add(Instruction.AtomicXor,                GenerateAtomicXor);
-            Add(Instruction.Ballot,                   GenerateBallot);
-            Add(Instruction.Barrier,                  GenerateBarrier);
-            Add(Instruction.BitCount,                 GenerateBitCount);
-            Add(Instruction.BitfieldExtractS32,       GenerateBitfieldExtractS32);
-            Add(Instruction.BitfieldExtractU32,       GenerateBitfieldExtractU32);
-            Add(Instruction.BitfieldInsert,           GenerateBitfieldInsert);
-            Add(Instruction.BitfieldReverse,          GenerateBitfieldReverse);
-            Add(Instruction.BitwiseAnd,               GenerateBitwiseAnd);
-            Add(Instruction.BitwiseExclusiveOr,       GenerateBitwiseExclusiveOr);
-            Add(Instruction.BitwiseNot,               GenerateBitwiseNot);
-            Add(Instruction.BitwiseOr,                GenerateBitwiseOr);
-            Add(Instruction.Call,                     GenerateCall);
-            Add(Instruction.Ceiling,                  GenerateCeiling);
-            Add(Instruction.Clamp,                    GenerateClamp);
-            Add(Instruction.ClampU32,                 GenerateClampU32);
-            Add(Instruction.Comment,                  GenerateComment);
-            Add(Instruction.CompareEqual,             GenerateCompareEqual);
-            Add(Instruction.CompareGreater,           GenerateCompareGreater);
-            Add(Instruction.CompareGreaterOrEqual,    GenerateCompareGreaterOrEqual);
+            Add(Instruction.Absolute, GenerateAbsolute);
+            Add(Instruction.Add, GenerateAdd);
+            Add(Instruction.AtomicAdd, GenerateAtomicAdd);
+            Add(Instruction.AtomicAnd, GenerateAtomicAnd);
+            Add(Instruction.AtomicCompareAndSwap, GenerateAtomicCompareAndSwap);
+            Add(Instruction.AtomicMinS32, GenerateAtomicMinS32);
+            Add(Instruction.AtomicMinU32, GenerateAtomicMinU32);
+            Add(Instruction.AtomicMaxS32, GenerateAtomicMaxS32);
+            Add(Instruction.AtomicMaxU32, GenerateAtomicMaxU32);
+            Add(Instruction.AtomicOr, GenerateAtomicOr);
+            Add(Instruction.AtomicSwap, GenerateAtomicSwap);
+            Add(Instruction.AtomicXor, GenerateAtomicXor);
+            Add(Instruction.Ballot, GenerateBallot);
+            Add(Instruction.Barrier, GenerateBarrier);
+            Add(Instruction.BitCount, GenerateBitCount);
+            Add(Instruction.BitfieldExtractS32, GenerateBitfieldExtractS32);
+            Add(Instruction.BitfieldExtractU32, GenerateBitfieldExtractU32);
+            Add(Instruction.BitfieldInsert, GenerateBitfieldInsert);
+            Add(Instruction.BitfieldReverse, GenerateBitfieldReverse);
+            Add(Instruction.BitwiseAnd, GenerateBitwiseAnd);
+            Add(Instruction.BitwiseExclusiveOr, GenerateBitwiseExclusiveOr);
+            Add(Instruction.BitwiseNot, GenerateBitwiseNot);
+            Add(Instruction.BitwiseOr, GenerateBitwiseOr);
+            Add(Instruction.Call, GenerateCall);
+            Add(Instruction.Ceiling, GenerateCeiling);
+            Add(Instruction.Clamp, GenerateClamp);
+            Add(Instruction.ClampU32, GenerateClampU32);
+            Add(Instruction.Comment, GenerateComment);
+            Add(Instruction.CompareEqual, GenerateCompareEqual);
+            Add(Instruction.CompareGreater, GenerateCompareGreater);
+            Add(Instruction.CompareGreaterOrEqual, GenerateCompareGreaterOrEqual);
             Add(Instruction.CompareGreaterOrEqualU32, GenerateCompareGreaterOrEqualU32);
-            Add(Instruction.CompareGreaterU32,        GenerateCompareGreaterU32);
-            Add(Instruction.CompareLess,              GenerateCompareLess);
-            Add(Instruction.CompareLessOrEqual,       GenerateCompareLessOrEqual);
-            Add(Instruction.CompareLessOrEqualU32,    GenerateCompareLessOrEqualU32);
-            Add(Instruction.CompareLessU32,           GenerateCompareLessU32);
-            Add(Instruction.CompareNotEqual,          GenerateCompareNotEqual);
-            Add(Instruction.ConditionalSelect,        GenerateConditionalSelect);
-            Add(Instruction.ConvertFP32ToFP64,        GenerateConvertFP32ToFP64);
-            Add(Instruction.ConvertFP32ToS32,         GenerateConvertFP32ToS32);
-            Add(Instruction.ConvertFP32ToU32,         GenerateConvertFP32ToU32);
-            Add(Instruction.ConvertFP64ToFP32,        GenerateConvertFP64ToFP32);
-            Add(Instruction.ConvertFP64ToS32,         GenerateConvertFP64ToS32);
-            Add(Instruction.ConvertFP64ToU32,         GenerateConvertFP64ToU32);
-            Add(Instruction.ConvertS32ToFP32,         GenerateConvertS32ToFP32);
-            Add(Instruction.ConvertS32ToFP64,         GenerateConvertS32ToFP64);
-            Add(Instruction.ConvertU32ToFP32,         GenerateConvertU32ToFP32);
-            Add(Instruction.ConvertU32ToFP64,         GenerateConvertU32ToFP64);
-            Add(Instruction.Cosine,                   GenerateCosine);
-            Add(Instruction.Ddx,                      GenerateDdx);
-            Add(Instruction.Ddy,                      GenerateDdy);
-            Add(Instruction.Discard,                  GenerateDiscard);
-            Add(Instruction.Divide,                   GenerateDivide);
-            Add(Instruction.EmitVertex,               GenerateEmitVertex);
-            Add(Instruction.EndPrimitive,             GenerateEndPrimitive);
-            Add(Instruction.ExponentB2,               GenerateExponentB2);
-            Add(Instruction.FSIBegin,                 GenerateFSIBegin);
-            Add(Instruction.FSIEnd,                   GenerateFSIEnd);
-            Add(Instruction.FindLSB,                  GenerateFindLSB);
-            Add(Instruction.FindMSBS32,               GenerateFindMSBS32);
-            Add(Instruction.FindMSBU32,               GenerateFindMSBU32);
-            Add(Instruction.Floor,                    GenerateFloor);
-            Add(Instruction.FusedMultiplyAdd,         GenerateFusedMultiplyAdd);
-            Add(Instruction.GroupMemoryBarrier,       GenerateGroupMemoryBarrier);
-            Add(Instruction.ImageAtomic,              GenerateImageAtomic);
-            Add(Instruction.ImageLoad,                GenerateImageLoad);
-            Add(Instruction.ImageStore,               GenerateImageStore);
-            Add(Instruction.IsNan,                    GenerateIsNan);
-            Add(Instruction.LoadAttribute,            GenerateLoadAttribute);
-            Add(Instruction.LoadConstant,             GenerateLoadConstant);
-            Add(Instruction.LoadLocal,                GenerateLoadLocal);
-            Add(Instruction.LoadShared,               GenerateLoadShared);
-            Add(Instruction.LoadStorage,              GenerateLoadStorage);
-            Add(Instruction.Lod,                      GenerateLod);
-            Add(Instruction.LogarithmB2,              GenerateLogarithmB2);
-            Add(Instruction.LogicalAnd,               GenerateLogicalAnd);
-            Add(Instruction.LogicalExclusiveOr,       GenerateLogicalExclusiveOr);
-            Add(Instruction.LogicalNot,               GenerateLogicalNot);
-            Add(Instruction.LogicalOr,                GenerateLogicalOr);
-            Add(Instruction.LoopBreak,                GenerateLoopBreak);
-            Add(Instruction.LoopContinue,             GenerateLoopContinue);
-            Add(Instruction.Maximum,                  GenerateMaximum);
-            Add(Instruction.MaximumU32,               GenerateMaximumU32);
-            Add(Instruction.MemoryBarrier,            GenerateMemoryBarrier);
-            Add(Instruction.Minimum,                  GenerateMinimum);
-            Add(Instruction.MinimumU32,               GenerateMinimumU32);
-            Add(Instruction.Multiply,                 GenerateMultiply);
-            Add(Instruction.MultiplyHighS32,          GenerateMultiplyHighS32);
-            Add(Instruction.MultiplyHighU32,          GenerateMultiplyHighU32);
-            Add(Instruction.Negate,                   GenerateNegate);
-            Add(Instruction.PackDouble2x32,           GeneratePackDouble2x32);
-            Add(Instruction.PackHalf2x16,             GeneratePackHalf2x16);
-            Add(Instruction.ReciprocalSquareRoot,     GenerateReciprocalSquareRoot);
-            Add(Instruction.Return,                   GenerateReturn);
-            Add(Instruction.Round,                    GenerateRound);
-            Add(Instruction.ShiftLeft,                GenerateShiftLeft);
-            Add(Instruction.ShiftRightS32,            GenerateShiftRightS32);
-            Add(Instruction.ShiftRightU32,            GenerateShiftRightU32);
-            Add(Instruction.Shuffle,                  GenerateShuffle);
-            Add(Instruction.ShuffleDown,              GenerateShuffleDown);
-            Add(Instruction.ShuffleUp,                GenerateShuffleUp);
-            Add(Instruction.ShuffleXor,               GenerateShuffleXor);
-            Add(Instruction.Sine,                     GenerateSine);
-            Add(Instruction.SquareRoot,               GenerateSquareRoot);
-            Add(Instruction.StoreAttribute,           GenerateStoreAttribute);
-            Add(Instruction.StoreLocal,               GenerateStoreLocal);
-            Add(Instruction.StoreShared,              GenerateStoreShared);
-            Add(Instruction.StoreShared16,            GenerateStoreShared16);
-            Add(Instruction.StoreShared8,             GenerateStoreShared8);
-            Add(Instruction.StoreStorage,             GenerateStoreStorage);
-            Add(Instruction.StoreStorage16,           GenerateStoreStorage16);
-            Add(Instruction.StoreStorage8,            GenerateStoreStorage8);
-            Add(Instruction.Subtract,                 GenerateSubtract);
-            Add(Instruction.SwizzleAdd,               GenerateSwizzleAdd);
-            Add(Instruction.TextureSample,            GenerateTextureSample);
-            Add(Instruction.TextureSize,              GenerateTextureSize);
-            Add(Instruction.Truncate,                 GenerateTruncate);
-            Add(Instruction.UnpackDouble2x32,         GenerateUnpackDouble2x32);
-            Add(Instruction.UnpackHalf2x16,           GenerateUnpackHalf2x16);
-            Add(Instruction.VectorExtract,            GenerateVectorExtract);
-            Add(Instruction.VoteAll,                  GenerateVoteAll);
-            Add(Instruction.VoteAllEqual,             GenerateVoteAllEqual);
-            Add(Instruction.VoteAny,                  GenerateVoteAny);
+            Add(Instruction.CompareGreaterU32, GenerateCompareGreaterU32);
+            Add(Instruction.CompareLess, GenerateCompareLess);
+            Add(Instruction.CompareLessOrEqual, GenerateCompareLessOrEqual);
+            Add(Instruction.CompareLessOrEqualU32, GenerateCompareLessOrEqualU32);
+            Add(Instruction.CompareLessU32, GenerateCompareLessU32);
+            Add(Instruction.CompareNotEqual, GenerateCompareNotEqual);
+            Add(Instruction.ConditionalSelect, GenerateConditionalSelect);
+            Add(Instruction.ConvertFP32ToFP64, GenerateConvertFP32ToFP64);
+            Add(Instruction.ConvertFP32ToS32, GenerateConvertFP32ToS32);
+            Add(Instruction.ConvertFP32ToU32, GenerateConvertFP32ToU32);
+            Add(Instruction.ConvertFP64ToFP32, GenerateConvertFP64ToFP32);
+            Add(Instruction.ConvertFP64ToS32, GenerateConvertFP64ToS32);
+            Add(Instruction.ConvertFP64ToU32, GenerateConvertFP64ToU32);
+            Add(Instruction.ConvertS32ToFP32, GenerateConvertS32ToFP32);
+            Add(Instruction.ConvertS32ToFP64, GenerateConvertS32ToFP64);
+            Add(Instruction.ConvertU32ToFP32, GenerateConvertU32ToFP32);
+            Add(Instruction.ConvertU32ToFP64, GenerateConvertU32ToFP64);
+            Add(Instruction.Cosine, GenerateCosine);
+            Add(Instruction.Ddx, GenerateDdx);
+            Add(Instruction.Ddy, GenerateDdy);
+            Add(Instruction.Discard, GenerateDiscard);
+            Add(Instruction.Divide, GenerateDivide);
+            Add(Instruction.EmitVertex, GenerateEmitVertex);
+            Add(Instruction.EndPrimitive, GenerateEndPrimitive);
+            Add(Instruction.ExponentB2, GenerateExponentB2);
+            Add(Instruction.FSIBegin, GenerateFSIBegin);
+            Add(Instruction.FSIEnd, GenerateFSIEnd);
+            Add(Instruction.FindLSB, GenerateFindLSB);
+            Add(Instruction.FindMSBS32, GenerateFindMSBS32);
+            Add(Instruction.FindMSBU32, GenerateFindMSBU32);
+            Add(Instruction.Floor, GenerateFloor);
+            Add(Instruction.FusedMultiplyAdd, GenerateFusedMultiplyAdd);
+            Add(Instruction.GroupMemoryBarrier, GenerateGroupMemoryBarrier);
+            Add(Instruction.ImageAtomic, GenerateImageAtomic);
+            Add(Instruction.ImageLoad, GenerateImageLoad);
+            Add(Instruction.ImageStore, GenerateImageStore);
+            Add(Instruction.IsNan, GenerateIsNan);
+            Add(Instruction.LoadAttribute, GenerateLoadAttribute);
+            Add(Instruction.LoadConstant, GenerateLoadConstant);
+            Add(Instruction.LoadLocal, GenerateLoadLocal);
+            Add(Instruction.LoadShared, GenerateLoadShared);
+            Add(Instruction.LoadStorage, GenerateLoadStorage);
+            Add(Instruction.Lod, GenerateLod);
+            Add(Instruction.LogarithmB2, GenerateLogarithmB2);
+            Add(Instruction.LogicalAnd, GenerateLogicalAnd);
+            Add(Instruction.LogicalExclusiveOr, GenerateLogicalExclusiveOr);
+            Add(Instruction.LogicalNot, GenerateLogicalNot);
+            Add(Instruction.LogicalOr, GenerateLogicalOr);
+            Add(Instruction.LoopBreak, GenerateLoopBreak);
+            Add(Instruction.LoopContinue, GenerateLoopContinue);
+            Add(Instruction.Maximum, GenerateMaximum);
+            Add(Instruction.MaximumU32, GenerateMaximumU32);
+            Add(Instruction.MemoryBarrier, GenerateMemoryBarrier);
+            Add(Instruction.Minimum, GenerateMinimum);
+            Add(Instruction.MinimumU32, GenerateMinimumU32);
+            Add(Instruction.Multiply, GenerateMultiply);
+            Add(Instruction.MultiplyHighS32, GenerateMultiplyHighS32);
+            Add(Instruction.MultiplyHighU32, GenerateMultiplyHighU32);
+            Add(Instruction.Negate, GenerateNegate);
+            Add(Instruction.PackDouble2x32, GeneratePackDouble2x32);
+            Add(Instruction.PackHalf2x16, GeneratePackHalf2x16);
+            Add(Instruction.ReciprocalSquareRoot, GenerateReciprocalSquareRoot);
+            Add(Instruction.Return, GenerateReturn);
+            Add(Instruction.Round, GenerateRound);
+            Add(Instruction.ShiftLeft, GenerateShiftLeft);
+            Add(Instruction.ShiftRightS32, GenerateShiftRightS32);
+            Add(Instruction.ShiftRightU32, GenerateShiftRightU32);
+            Add(Instruction.Shuffle, GenerateShuffle);
+            Add(Instruction.ShuffleDown, GenerateShuffleDown);
+            Add(Instruction.ShuffleUp, GenerateShuffleUp);
+            Add(Instruction.ShuffleXor, GenerateShuffleXor);
+            Add(Instruction.Sine, GenerateSine);
+            Add(Instruction.SquareRoot, GenerateSquareRoot);
+            Add(Instruction.StoreAttribute, GenerateStoreAttribute);
+            Add(Instruction.StoreLocal, GenerateStoreLocal);
+            Add(Instruction.StoreShared, GenerateStoreShared);
+            Add(Instruction.StoreShared16, GenerateStoreShared16);
+            Add(Instruction.StoreShared8, GenerateStoreShared8);
+            Add(Instruction.StoreStorage, GenerateStoreStorage);
+            Add(Instruction.StoreStorage16, GenerateStoreStorage16);
+            Add(Instruction.StoreStorage8, GenerateStoreStorage8);
+            Add(Instruction.Subtract, GenerateSubtract);
+            Add(Instruction.SwizzleAdd, GenerateSwizzleAdd);
+            Add(Instruction.TextureSample, GenerateTextureSample);
+            Add(Instruction.TextureSize, GenerateTextureSize);
+            Add(Instruction.Truncate, GenerateTruncate);
+            Add(Instruction.UnpackDouble2x32, GenerateUnpackDouble2x32);
+            Add(Instruction.UnpackHalf2x16, GenerateUnpackHalf2x16);
+            Add(Instruction.VectorExtract, GenerateVectorExtract);
+            Add(Instruction.VoteAll, GenerateVoteAll);
+            Add(Instruction.VoteAllEqual, GenerateVoteAllEqual);
+            Add(Instruction.VoteAny, GenerateVoteAny);
         }
 
         private static void Add(Instruction inst, Func<CodeGenContext, AstOperation, OperationResult> handler)
@@ -614,7 +614,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 });
             }
 
-            bool isArray   = (texOp.Type & SamplerType.Array) != 0;
+            bool isArray = (texOp.Type & SamplerType.Array) != 0;
             bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
 
             int srcIndex = isBindless ? 1 : 0;
@@ -669,21 +669,21 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             var result = (texOp.Flags & TextureFlags.AtomicMask) switch
             {
-                TextureFlags.Add        => context.AtomicIAdd(resultType, pointer, one, zero, value),
-                TextureFlags.Minimum    => componentType == AggregateType.S32
+                TextureFlags.Add => context.AtomicIAdd(resultType, pointer, one, zero, value),
+                TextureFlags.Minimum => componentType == AggregateType.S32
                     ? context.AtomicSMin(resultType, pointer, one, zero, value)
                     : context.AtomicUMin(resultType, pointer, one, zero, value),
-                TextureFlags.Maximum    => componentType == AggregateType.S32
+                TextureFlags.Maximum => componentType == AggregateType.S32
                     ? context.AtomicSMax(resultType, pointer, one, zero, value)
                     : context.AtomicUMax(resultType, pointer, one, zero, value),
-                TextureFlags.Increment  => context.AtomicIIncrement(resultType, pointer, one, zero),
-                TextureFlags.Decrement  => context.AtomicIDecrement(resultType, pointer, one, zero),
+                TextureFlags.Increment => context.AtomicIIncrement(resultType, pointer, one, zero),
+                TextureFlags.Decrement => context.AtomicIDecrement(resultType, pointer, one, zero),
                 TextureFlags.BitwiseAnd => context.AtomicAnd(resultType, pointer, one, zero, value),
-                TextureFlags.BitwiseOr  => context.AtomicOr(resultType, pointer, one, zero, value),
+                TextureFlags.BitwiseOr => context.AtomicOr(resultType, pointer, one, zero, value),
                 TextureFlags.BitwiseXor => context.AtomicXor(resultType, pointer, one, zero, value),
-                TextureFlags.Swap       => context.AtomicExchange(resultType, pointer, one, zero, value),
-                TextureFlags.CAS        => context.AtomicCompareExchange(resultType, pointer, one, zero, zero, Src(componentType), value),
-                _                       => context.AtomicIAdd(resultType, pointer, one, zero, value),
+                TextureFlags.Swap => context.AtomicExchange(resultType, pointer, one, zero, value),
+                TextureFlags.CAS => context.AtomicCompareExchange(resultType, pointer, one, zero, zero, Src(componentType), value),
+                _ => context.AtomicIAdd(resultType, pointer, one, zero, value),
             };
 
             return new OperationResult(componentType, result);
@@ -703,7 +703,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 return GetZeroOperationResult(context, texOp, componentType, isVector: true);
             }
 
-            bool isArray   = (texOp.Type & SamplerType.Array) != 0;
+            bool isArray = (texOp.Type & SamplerType.Array) != 0;
             bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
 
             int srcIndex = isBindless ? 1 : 0;
@@ -769,7 +769,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 return OperationResult.Invalid;
             }
 
-            bool isArray   = (texOp.Type & SamplerType.Array)   != 0;
+            bool isArray = (texOp.Type & SamplerType.Array) != 0;
             bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
 
             int srcIndex = isBindless ? 1 : 0;
@@ -1467,19 +1467,19 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
         {
             AstTextureOperation texOp = (AstTextureOperation)operation;
 
-            bool isBindless     = (texOp.Flags & TextureFlags.Bindless)    != 0;
-            bool isGather       = (texOp.Flags & TextureFlags.Gather)      != 0;
+            bool isBindless = (texOp.Flags & TextureFlags.Bindless) != 0;
+            bool isGather = (texOp.Flags & TextureFlags.Gather) != 0;
             bool hasDerivatives = (texOp.Flags & TextureFlags.Derivatives) != 0;
-            bool intCoords      = (texOp.Flags & TextureFlags.IntCoords)   != 0;
-            bool hasLodBias     = (texOp.Flags & TextureFlags.LodBias)     != 0;
-            bool hasLodLevel    = (texOp.Flags & TextureFlags.LodLevel)    != 0;
-            bool hasOffset      = (texOp.Flags & TextureFlags.Offset)      != 0;
-            bool hasOffsets     = (texOp.Flags & TextureFlags.Offsets)     != 0;
+            bool intCoords = (texOp.Flags & TextureFlags.IntCoords) != 0;
+            bool hasLodBias = (texOp.Flags & TextureFlags.LodBias) != 0;
+            bool hasLodLevel = (texOp.Flags & TextureFlags.LodLevel) != 0;
+            bool hasOffset = (texOp.Flags & TextureFlags.Offset) != 0;
+            bool hasOffsets = (texOp.Flags & TextureFlags.Offsets) != 0;
 
-            bool isArray       = (texOp.Type & SamplerType.Array)       != 0;
-            bool isIndexed     = (texOp.Type & SamplerType.Indexed)     != 0;
+            bool isArray = (texOp.Type & SamplerType.Array) != 0;
+            bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
             bool isMultisample = (texOp.Type & SamplerType.Multisample) != 0;
-            bool isShadow      = (texOp.Type & SamplerType.Shadow)      != 0;
+            bool isShadow = (texOp.Type & SamplerType.Shadow) != 0;
 
             bool colorIsVector = isGather || !isShadow;
 
@@ -1651,7 +1651,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             if (hasLodBias)
             {
-               lodBias = Src(AggregateType.FP32);
+                lodBias = Src(AggregateType.FP32);
             }
 
             SpvInstruction compIdx = null;
@@ -1660,7 +1660,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             // not needed for shadow samplers.
             if (isGather && !isShadow)
             {
-               compIdx = Src(AggregateType.S32);
+                compIdx = Src(AggregateType.S32);
             }
 
             var operandsList = new List<SpvInstruction>();
@@ -2164,10 +2164,10 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             return new OperationResult(AggregateType.Bool, emitB(context.TypeBool(), context.Get(AggregateType.Bool, source)));
         }
 
-         private static OperationResult GenerateUnaryFP32(
-            CodeGenContext context,
-            AstOperation operation,
-            Func<SpvInstruction, SpvInstruction, SpvInstruction> emit)
+        private static OperationResult GenerateUnaryFP32(
+           CodeGenContext context,
+           AstOperation operation,
+           Func<SpvInstruction, SpvInstruction, SpvInstruction> emit)
         {
             var source = operation.GetSource(0);
             return new OperationResult(AggregateType.FP32, emit(context.TypeFP32(), context.GetFP32(source)));

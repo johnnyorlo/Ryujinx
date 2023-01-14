@@ -34,11 +34,11 @@ namespace Ryujinx.Ava.UI.Helpers
 
             ContentDialog contentDialog = new()
             {
-                Title               = title,
-                PrimaryButtonText   = primaryButton,
+                Title = title,
+                PrimaryButtonText = primaryButton,
                 SecondaryButtonText = secondaryButton,
-                CloseButtonText     = closeButton,
-                Content             = content
+                CloseButtonText = closeButton,
+                Content = content
             };
 
             contentDialog.PrimaryButtonCommand = MiniCommand.Create(() =>
@@ -154,7 +154,7 @@ namespace Ryujinx.Ava.UI.Helpers
         {
             Grid content = new()
             {
-                RowDefinitions    = new RowDefinitions()    { new RowDefinition(), new RowDefinition() },
+                RowDefinitions = new RowDefinitions() { new RowDefinition(), new RowDefinition() },
                 ColumnDefinitions = new ColumnDefinitions() { new ColumnDefinition(GridLength.Auto), new ColumnDefinition() },
 
                 MinHeight = 80
@@ -162,9 +162,9 @@ namespace Ryujinx.Ava.UI.Helpers
 
             SymbolIcon icon = new()
             {
-                Symbol            = (Symbol)symbol,
-                Margin            = new Thickness(10),
-                FontSize          = 40,
+                Symbol = (Symbol)symbol,
+                Margin = new Thickness(10),
+                FontSize = 40,
                 VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
             };
 
@@ -174,18 +174,18 @@ namespace Ryujinx.Ava.UI.Helpers
 
             TextBlock primaryLabel = new()
             {
-                Text         = primaryText,
-                Margin       = new Thickness(5),
+                Text = primaryText,
+                Margin = new Thickness(5),
                 TextWrapping = TextWrapping.Wrap,
-                MaxWidth     = 450
+                MaxWidth = 450
             };
 
             TextBlock secondaryLabel = new()
             {
-                Text         = secondaryText,
-                Margin       = new Thickness(5),
+                Text = secondaryText,
+                Margin = new Thickness(5),
                 TextWrapping = TextWrapping.Wrap,
-                MaxWidth     = 450
+                MaxWidth = 450
             };
 
             Grid.SetColumn(primaryLabel, 1);
@@ -353,9 +353,9 @@ namespace Ryujinx.Ava.UI.Helpers
             {
                 contentDialogOverlayWindow = new()
                 {
-                    Height        = parent.Bounds.Height,
-                    Width         = parent.Bounds.Width,
-                    Position      = parent.PointToScreen(new Point()),
+                    Height = parent.Bounds.Height,
+                    Width = parent.Bounds.Width,
+                    Position = parent.PointToScreen(new Point()),
                     ShowInTaskbar = false
                 };
 

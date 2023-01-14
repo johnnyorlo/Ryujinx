@@ -36,9 +36,9 @@ namespace Ryujinx.Ui.Windows
 
             InitializeComponent();
 
-            _selectedColor.Red   = 0.212;
+            _selectedColor.Red = 0.212;
             _selectedColor.Green = 0.843;
-            _selectedColor.Blue  = 0.718;
+            _selectedColor.Blue = 0.718;
             _selectedColor.Alpha = 1;
 
             _accountManager = accountManager;
@@ -50,10 +50,10 @@ namespace Ryujinx.Ui.Windows
             // NOTE: Uncomment following line when multiple selection of user profiles is supported.
             //_usersTreeView.AppendColumn("Selected",  userSelectedToggle,       "active", 0);
             _usersTreeView.AppendColumn("User Icon", new CellRendererPixbuf(), "pixbuf", 1);
-            _usersTreeView.AppendColumn("User Info", new CellRendererText(),   "text",   2, "background-rgba", 3);
+            _usersTreeView.AppendColumn("User Info", new CellRendererText(), "text", 2, "background-rgba", 3);
 
             _tableStore.SetSortColumnId(0, SortType.Descending);
-            
+
             RefreshList();
 
             if (_contentManager.GetCurrentFirmwareVersion() != null)
@@ -76,8 +76,8 @@ namespace Ryujinx.Ui.Windows
 
                 if (userProfile.AccountState == AccountState.Open)
                 {
-                    _selectedUserImage.Pixbuf   = new Gdk.Pixbuf(userProfile.Image, 96, 96);
-                    _selectedUserIdLabel.Text   = userProfile.UserId.ToString();
+                    _selectedUserImage.Pixbuf = new Gdk.Pixbuf(userProfile.Image, 96, 96);
+                    _selectedUserIdLabel.Text = userProfile.UserId.ToString();
                     _selectedUserNameEntry.Text = userProfile.Name;
 
                     _deleteButton.Sensitive = userProfile.UserId != AccountManager.DefaultUserId;
@@ -110,7 +110,7 @@ namespace Ryujinx.Ui.Windows
             Gdk.Pixbuf userPicture = (Gdk.Pixbuf)_tableStore.GetValue(selectedIter, 1);
 
             string userName = _tableStore.GetValue(selectedIter, 2).ToString().Split("\n")[0];
-            string userId   = _tableStore.GetValue(selectedIter, 2).ToString().Split("\n")[1];
+            string userId = _tableStore.GetValue(selectedIter, 2).ToString().Split("\n")[1];
 
             // Unselect the first user.
             _usersTreeView.Model.GetIterFirst(out TreeIter firstIter);
@@ -120,9 +120,9 @@ namespace Ryujinx.Ui.Windows
             // Set new informations.
             _tableStore.SetValue(selectedIter, 0, true);
 
-            _selectedUserImage.Pixbuf        = userPicture;
-            _selectedUserNameEntry.Text      = userName;
-            _selectedUserIdLabel.Text        = userId;
+            _selectedUserImage.Pixbuf = userPicture;
+            _selectedUserNameEntry.Text = userName;
+            _selectedUserIdLabel.Text = userId;
             _saveProfileNameButton.Sensitive = false;
 
             // Open the selected one.
@@ -232,7 +232,7 @@ namespace Ryujinx.Ui.Windows
 
                 ResponseType responseDialog = GtkDialog.CreateCustomDialog("Profile Image Selection",
                                                                            "Choose a Profile Image",
-                                                                           "You may import a custom profile image, or select an avatar from the system firmware.", 
+                                                                           "You may import a custom profile image, or select an avatar from the system firmware.",
                                                                            buttons, MessageType.Question);
 
                 if (responseDialog == 0)

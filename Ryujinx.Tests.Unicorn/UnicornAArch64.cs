@@ -14,7 +14,7 @@ namespace Ryujinx.Tests.Unicorn
             get
             {
                 return new IndexedProperty<int, ulong>(
-                    (int i)              => GetX(i),
+                    (int i) => GetX(i),
                     (int i, ulong value) => SetX(i, value));
             }
         }
@@ -24,7 +24,7 @@ namespace Ryujinx.Tests.Unicorn
             get
             {
                 return new IndexedProperty<int, SimdValue>(
-                    (int i)                  => GetQ(i),
+                    (int i) => GetQ(i),
                     (int i, SimdValue value) => SetQ(i, value));
             }
         }
@@ -50,42 +50,42 @@ namespace Ryujinx.Tests.Unicorn
         public uint Pstate
         {
             get => (uint)GetRegister(Arm64.REG_PSTATE);
-            set =>       SetRegister(Arm64.REG_PSTATE, (uint)value);
+            set => SetRegister(Arm64.REG_PSTATE, (uint)value);
         }
 
         public int Fpcr
         {
             get => (int)GetRegister(Arm64.REG_FPCR);
-            set =>      SetRegister(Arm64.REG_FPCR, (uint)value);
+            set => SetRegister(Arm64.REG_FPCR, (uint)value);
         }
 
         public int Fpsr
         {
             get => (int)GetRegister(Arm64.REG_FPSR);
-            set =>      SetRegister(Arm64.REG_FPSR, (uint)value);
+            set => SetRegister(Arm64.REG_FPSR, (uint)value);
         }
 
         public bool OverflowFlag
         {
-            get =>          (Pstate &  0x10000000u) != 0;
+            get => (Pstate & 0x10000000u) != 0;
             set => Pstate = (Pstate & ~0x10000000u) | (value ? 0x10000000u : 0u);
         }
 
         public bool CarryFlag
         {
-            get =>          (Pstate &  0x20000000u) != 0;
+            get => (Pstate & 0x20000000u) != 0;
             set => Pstate = (Pstate & ~0x20000000u) | (value ? 0x20000000u : 0u);
         }
 
         public bool ZeroFlag
         {
-            get =>          (Pstate &  0x40000000u) != 0;
+            get => (Pstate & 0x40000000u) != 0;
             set => Pstate = (Pstate & ~0x40000000u) | (value ? 0x40000000u : 0u);
         }
 
         public bool NegativeFlag
         {
-            get =>          (Pstate &  0x80000000u) != 0;
+            get => (Pstate & 0x80000000u) != 0;
             set => Pstate = (Pstate & ~0x80000000u) | (value ? 0x80000000u : 0u);
         }
 
@@ -278,7 +278,7 @@ namespace Ryujinx.Tests.Unicorn
             return value;
         }
 
-        public byte   MemoryRead8 (ulong address) => MemoryRead(address, 1)[0];
+        public byte MemoryRead8(ulong address) => MemoryRead(address, 1)[0];
         public UInt16 MemoryRead16(ulong address) => (UInt16)BitConverter.ToInt16(MemoryRead(address, 2), 0);
         public UInt32 MemoryRead32(ulong address) => (UInt32)BitConverter.ToInt32(MemoryRead(address, 4), 0);
         public UInt64 MemoryRead64(ulong address) => (UInt64)BitConverter.ToInt64(MemoryRead(address, 8), 0);
@@ -288,12 +288,12 @@ namespace Ryujinx.Tests.Unicorn
             Interface.Checked(Interface.uc_mem_write(uc, address, value, (ulong)value.Length));
         }
 
-        public void MemoryWrite8 (ulong address, byte value)   => MemoryWrite(address, new byte[]{value});
-        public void MemoryWrite16(ulong address, Int16 value)  => MemoryWrite(address, BitConverter.GetBytes(value));
+        public void MemoryWrite8(ulong address, byte value) => MemoryWrite(address, new byte[] { value });
+        public void MemoryWrite16(ulong address, Int16 value) => MemoryWrite(address, BitConverter.GetBytes(value));
         public void MemoryWrite16(ulong address, UInt16 value) => MemoryWrite(address, BitConverter.GetBytes(value));
-        public void MemoryWrite32(ulong address, Int32 value)  => MemoryWrite(address, BitConverter.GetBytes(value));
+        public void MemoryWrite32(ulong address, Int32 value) => MemoryWrite(address, BitConverter.GetBytes(value));
         public void MemoryWrite32(ulong address, UInt32 value) => MemoryWrite(address, BitConverter.GetBytes(value));
-        public void MemoryWrite64(ulong address, Int64 value)  => MemoryWrite(address, BitConverter.GetBytes(value));
+        public void MemoryWrite64(ulong address, Int64 value) => MemoryWrite(address, BitConverter.GetBytes(value));
         public void MemoryWrite64(ulong address, UInt64 value) => MemoryWrite(address, BitConverter.GetBytes(value));
 
         public void MemoryMap(ulong address, ulong size, MemoryPermission permissions)
@@ -317,7 +317,7 @@ namespace Ryujinx.Tests.Unicorn
             {
                 Interface.uc_version(out _, out _);
             }
-            catch (DllNotFoundException) {  }
+            catch (DllNotFoundException) { }
 
             return Interface.IsUnicornAvailable;
         }

@@ -181,7 +181,8 @@ namespace Ryujinx.Graphics.Vulkan
                             first.Waitable = null;
                         }
                     }
-                } else
+                }
+                else
                 {
                     // This sync handle and any following have not been reached yet.
                     break;

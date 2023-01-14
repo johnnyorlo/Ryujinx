@@ -83,7 +83,7 @@ namespace Ryujinx.HLE.HOS.Services.Sdb.Pl
         public ResultCode GetSharedFontInOrderOfPriority(ServiceCtx context)
         {
             long languageCode = context.RequestData.ReadInt64();
-            int  loadedCount  = 0;
+            int loadedCount = 0;
 
             for (SharedFontType type = 0; type < SharedFontType.Count; type++)
             {
@@ -115,15 +115,15 @@ namespace Ryujinx.HLE.HOS.Services.Sdb.Pl
         private bool AddFontToOrderOfPriorityList(ServiceCtx context, SharedFontType fontType, uint offset)
         {
             ulong typesPosition = context.Request.ReceiveBuff[0].Position;
-            ulong typesSize     = context.Request.ReceiveBuff[0].Size;
+            ulong typesSize = context.Request.ReceiveBuff[0].Size;
 
             ulong offsetsPosition = context.Request.ReceiveBuff[1].Position;
-            ulong offsetsSize     = context.Request.ReceiveBuff[1].Size;
+            ulong offsetsSize = context.Request.ReceiveBuff[1].Size;
 
             ulong fontSizeBufferPosition = context.Request.ReceiveBuff[2].Position;
-            ulong fontSizeBufferSize     = context.Request.ReceiveBuff[2].Size;
+            ulong fontSizeBufferSize = context.Request.ReceiveBuff[2].Size;
 
-            if (offset + 4 > (uint)typesSize   ||
+            if (offset + 4 > (uint)typesSize ||
                 offset + 4 > (uint)offsetsSize ||
                 offset + 4 > (uint)fontSizeBufferSize)
             {

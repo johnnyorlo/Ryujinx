@@ -4,13 +4,13 @@ namespace Ryujinx.HLE.HOS.Services.Time.Clock
 {
     class TickBasedSteadyClockCore : SteadyClockCore
     {
-        public TickBasedSteadyClockCore() {}
+        public TickBasedSteadyClockCore() { }
 
         public override SteadyClockTimePoint GetTimePoint(ITickSource tickSource)
         {
             SteadyClockTimePoint result = new SteadyClockTimePoint
             {
-                TimePoint     = 0,
+                TimePoint = 0,
                 ClockSourceId = GetClockSourceId()
             };
 

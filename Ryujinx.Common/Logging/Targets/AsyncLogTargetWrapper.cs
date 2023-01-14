@@ -35,11 +35,12 @@ namespace Ryujinx.Common.Logging
 
         public AsyncLogTargetWrapper(ILogTarget target, int queueLimit, AsyncLogTargetOverflowAction overflowAction)
         {
-            _target          = target;
-            _messageQueue    = new BlockingCollection<LogEventArgs>(queueLimit);
+            _target = target;
+            _messageQueue = new BlockingCollection<LogEventArgs>(queueLimit);
             _overflowTimeout = overflowAction == AsyncLogTargetOverflowAction.Block ? -1 : 0;
 
-            _messageThread = new Thread(() => {
+            _messageThread = new Thread(() =>
+            {
                 while (!_messageQueue.IsCompleted)
                 {
                     try
@@ -57,7 +58,7 @@ namespace Ryujinx.Common.Logging
                 }
             });
 
-            _messageThread.Name         = "Logger.MessageThread";
+            _messageThread.Name = "Logger.MessageThread";
             _messageThread.IsBackground = true;
             _messageThread.Start();
         }

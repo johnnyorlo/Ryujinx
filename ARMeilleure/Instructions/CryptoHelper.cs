@@ -7,7 +7,7 @@ namespace ARMeilleure.Instructions
 {
     static class CryptoHelper
     {
-#region "LookUp Tables"
+        #region "LookUp Tables"
         private static ReadOnlySpan<byte> _sBox => new byte[]
         {
             0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
@@ -177,11 +177,11 @@ namespace ARMeilleure.Instructions
         {
             0, 5, 10, 15, 4, 9, 14, 3, 8, 13, 2, 7, 12, 1, 6, 11
         };
-#endregion
+        #endregion
 
         public static V128 AesInvMixColumns(V128 op)
         {
-            byte[] inState  = op.ToArray();
+            byte[] inState = op.ToArray();
             byte[] outState = new byte[16];
 
             for (int columns = 0; columns <= 3; columns++)
@@ -204,7 +204,7 @@ namespace ARMeilleure.Instructions
 
         public static V128 AesInvShiftRows(V128 op)
         {
-            byte[] inState  = op.ToArray();
+            byte[] inState = op.ToArray();
             byte[] outState = new byte[16];
 
             for (int idx = 0; idx <= 15; idx++)
@@ -217,7 +217,7 @@ namespace ARMeilleure.Instructions
 
         public static V128 AesInvSubBytes(V128 op)
         {
-            byte[] inState  = op.ToArray();
+            byte[] inState = op.ToArray();
             byte[] outState = new byte[16];
 
             for (int idx = 0; idx <= 15; idx++)
@@ -230,7 +230,7 @@ namespace ARMeilleure.Instructions
 
         public static V128 AesMixColumns(V128 op)
         {
-            byte[] inState  = op.ToArray();
+            byte[] inState = op.ToArray();
             byte[] outState = new byte[16];
 
             for (int columns = 0; columns <= 3; columns++)
@@ -253,7 +253,7 @@ namespace ARMeilleure.Instructions
 
         public static V128 AesShiftRows(V128 op)
         {
-            byte[] inState  = op.ToArray();
+            byte[] inState = op.ToArray();
             byte[] outState = new byte[16];
 
             for (int idx = 0; idx <= 15; idx++)
@@ -266,7 +266,7 @@ namespace ARMeilleure.Instructions
 
         public static V128 AesSubBytes(V128 op)
         {
-            byte[] inState  = op.ToArray();
+            byte[] inState = op.ToArray();
             byte[] outState = new byte[16];
 
             for (int idx = 0; idx <= 15; idx++)

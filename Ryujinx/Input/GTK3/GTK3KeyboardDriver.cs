@@ -28,13 +28,13 @@ namespace Ryujinx.Input.GTK3
 
         public event Action<string> OnGamepadConnected
         {
-            add    { }
+            add { }
             remove { }
         }
 
         public event Action<string> OnGamepadDisconnected
         {
-            add    { }
+            add { }
             remove { }
         }
 

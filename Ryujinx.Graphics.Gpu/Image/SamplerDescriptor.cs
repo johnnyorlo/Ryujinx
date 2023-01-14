@@ -162,7 +162,7 @@ namespace Ryujinx.Graphics.Gpu.Image
                     switch (minFilter)
                     {
                         case SamplerMinFilter.Nearest: return MinFilter.Nearest;
-                        case SamplerMinFilter.Linear:  return MinFilter.Linear;
+                        case SamplerMinFilter.Linear: return MinFilter.Linear;
                     }
                     break;
 
@@ -170,7 +170,7 @@ namespace Ryujinx.Graphics.Gpu.Image
                     switch (minFilter)
                     {
                         case SamplerMinFilter.Nearest: return MinFilter.NearestMipmapNearest;
-                        case SamplerMinFilter.Linear:  return MinFilter.LinearMipmapNearest;
+                        case SamplerMinFilter.Linear: return MinFilter.LinearMipmapNearest;
                     }
                     break;
 
@@ -178,7 +178,7 @@ namespace Ryujinx.Graphics.Gpu.Image
                     switch (minFilter)
                     {
                         case SamplerMinFilter.Nearest: return MinFilter.NearestMipmapLinear;
-                        case SamplerMinFilter.Linear:  return MinFilter.LinearMipmapLinear;
+                        case SamplerMinFilter.Linear: return MinFilter.LinearMipmapLinear;
                     }
                     break;
             }

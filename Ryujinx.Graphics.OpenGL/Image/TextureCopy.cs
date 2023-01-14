@@ -23,13 +23,13 @@ namespace Ryujinx.Graphics.OpenGL.Image
         public void Copy(
             TextureView src,
             TextureView dst,
-            Extents2D   srcRegion,
-            Extents2D   dstRegion,
-            bool        linearFilter,
-            int         srcLayer = 0,
-            int         dstLayer = 0,
-            int         srcLevel = 0,
-            int         dstLevel = 0)
+            Extents2D srcRegion,
+            Extents2D dstRegion,
+            bool linearFilter,
+            int srcLayer = 0,
+            int dstLayer = 0,
+            int srcLevel = 0,
+            int dstLevel = 0)
         {
             int levels = Math.Min(src.Info.Levels - srcLevel, dst.Info.Levels - dstLevel);
             int layers = Math.Min(src.Info.GetLayers() - srcLayer, dst.Info.GetLayers() - dstLayer);
@@ -40,15 +40,15 @@ namespace Ryujinx.Graphics.OpenGL.Image
         public void Copy(
             TextureView src,
             TextureView dst,
-            Extents2D   srcRegion,
-            Extents2D   dstRegion,
-            bool        linearFilter,
-            int         srcLayer,
-            int         dstLayer,
-            int         srcLevel,
-            int         dstLevel,
-            int         layers,
-            int         levels)
+            Extents2D srcRegion,
+            Extents2D dstRegion,
+            bool linearFilter,
+            int srcLayer,
+            int dstLayer,
+            int srcLevel,
+            int dstLevel,
+            int layers,
+            int levels)
         {
             TextureView srcConverted = src.Format.IsBgr() != dst.Format.IsBgr() ? BgraSwap(src) : src;
 

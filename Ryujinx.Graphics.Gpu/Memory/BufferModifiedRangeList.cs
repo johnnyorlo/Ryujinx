@@ -125,7 +125,7 @@ namespace Ryujinx.Graphics.Gpu.Memory
                 for (int i = 0; i < count; i++)
                 {
                     BufferModifiedRange overlap = overlaps[i];
-                    
+
                     if (overlap.Address > address)
                     {
                         // The start of the remaining region is uncovered by this overlap. Call the action for it.

@@ -38,7 +38,7 @@ namespace Ryujinx.Graphics.Shader.Translation
                 int key = GetKeyFromRegister(reg);
 
                 int index = key / 64;
-                int bit   = key & 63;
+                int bit = key & 63;
 
                 long mask = 1L << bit;
 
@@ -57,7 +57,7 @@ namespace Ryujinx.Graphics.Shader.Translation
                 int key = GetKeyFromRegister(reg);
 
                 int index = key / 64;
-                int bit   = key & 63;
+                int bit = key & 63;
 
                 return (_phiMasks[index] & (1L << bit)) != 0;
             }
@@ -111,7 +111,7 @@ namespace Ryujinx.Graphics.Shader.Translation
         private readonly struct Definition
         {
             public BasicBlock Block { get; }
-            public Operand    Local { get; }
+            public Operand Local { get; }
 
             public Definition(BasicBlock block, Operand local)
             {

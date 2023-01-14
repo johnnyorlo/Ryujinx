@@ -15,7 +15,7 @@ namespace Ryujinx.HLE.HOS.Services.Time.StaticService
     class ITimeZoneServiceForPsc : IpcService
     {
         private TimeZoneManager _timeZoneManager;
-        private bool            _writePermission;
+        private bool _writePermission;
 
         public ITimeZoneServiceForPsc(TimeZoneManager timeZoneManager, bool writePermission)
         {
@@ -149,7 +149,7 @@ namespace Ryujinx.HLE.HOS.Services.Time.StaticService
             (ulong bufferPosition, ulong bufferSize) = context.Request.GetBufferType0x21();
 
             ulong timeZoneRuleBufferPosition = context.Request.ReceiveBuff[0].Position;
-            ulong timeZoneRuleBufferSize     = context.Request.ReceiveBuff[0].Size;
+            ulong timeZoneRuleBufferSize = context.Request.ReceiveBuff[0].Size;
 
             if (timeZoneRuleBufferSize != 0x4000)
             {
@@ -189,9 +189,9 @@ namespace Ryujinx.HLE.HOS.Services.Time.StaticService
         // ToCalendarTime(nn::time::PosixTime time, buffer<nn::time::TimeZoneRule, 0x15> rules) -> (nn::time::CalendarTime, nn::time::sf::CalendarAdditionalInfo)
         public ResultCode ToCalendarTime(ServiceCtx context)
         {
-            long  posixTime      = context.RequestData.ReadInt64();
+            long posixTime = context.RequestData.ReadInt64();
             ulong bufferPosition = context.Request.SendBuff[0].Position;
-            ulong bufferSize     = context.Request.SendBuff[0].Size;
+            ulong bufferSize = context.Request.SendBuff[0].Size;
 
             if (bufferSize != 0x4000)
             {
@@ -234,7 +234,7 @@ namespace Ryujinx.HLE.HOS.Services.Time.StaticService
         public ResultCode ToPosixTime(ServiceCtx context)
         {
             ulong inBufferPosition = context.Request.SendBuff[0].Position;
-            ulong inBufferSize     = context.Request.SendBuff[0].Size;
+            ulong inBufferSize = context.Request.SendBuff[0].Size;
 
             CalendarTime calendarTime = context.RequestData.ReadStruct<CalendarTime>();
 
@@ -253,7 +253,7 @@ namespace Ryujinx.HLE.HOS.Services.Time.StaticService
             if (resultCode == ResultCode.Success)
             {
                 ulong outBufferPosition = context.Request.RecvListBuff[0].Position;
-                ulong outBufferSize     = context.Request.RecvListBuff[0].Size;
+                ulong outBufferSize = context.Request.RecvListBuff[0].Size;
 
                 context.Memory.Write(outBufferPosition, posixTime);
                 context.ResponseData.Write(1);
@@ -273,7 +273,7 @@ namespace Ryujinx.HLE.HOS.Services.Time.StaticService
             if (resultCode == ResultCode.Success)
             {
                 ulong outBufferPosition = context.Request.RecvListBuff[0].Position;
-                ulong outBufferSize     = context.Request.RecvListBuff[0].Size;
+                ulong outBufferSize = context.Request.RecvListBuff[0].Size;
 
                 context.Memory.Write(outBufferPosition, posixTime);
 

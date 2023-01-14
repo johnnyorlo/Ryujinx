@@ -182,7 +182,7 @@ namespace Ryujinx.Graphics.Shader.StructuredIr
             // this is not valid as the loop condition would be evaluated,
             // and it could erroneously jump back to the start of the loop.
             bool inRange =
-                block.Branch.Index <  _currEndIndex ||
+                block.Branch.Index < _currEndIndex ||
                (block.Branch.Index == _currEndIndex && block.Branch.Index < _loopEndIndex);
 
             bool isLoop = block.Branch.Index <= block.Index;
@@ -259,7 +259,7 @@ namespace Ryujinx.Graphics.Shader.StructuredIr
 
             _blockStack.Push((_currBlock, _currEndIndex, _loopEndIndex));
 
-            _currBlock    = childBlock;
+            _currBlock = childBlock;
             _currEndIndex = endIndex;
 
             if (type == AstBlockType.DoWhile)

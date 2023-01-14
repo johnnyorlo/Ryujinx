@@ -10,7 +10,7 @@ namespace Ryujinx.Tests.Cpu
     {
 #if SimdLogical32
 
-#region "ValueSource (Types)"
+        #region "ValueSource (Types)"
         private static ulong[] _8B4H2S_()
         {
             return new ulong[] { 0x0000000000000000ul, 0x7F7F7F7F7F7F7F7Ful,
@@ -18,9 +18,9 @@ namespace Ryujinx.Tests.Cpu
                                  0x8000800080008000ul, 0x7FFFFFFF7FFFFFFFul,
                                  0x8000000080000000ul, 0xFFFFFFFFFFFFFFFFul };
         }
-#endregion
+        #endregion
 
-#region "ValueSource (Opcodes)"
+        #region "ValueSource (Opcodes)"
         private static uint[] _Vbic_Vbif_Vbit_Vbsl_Vand_Vorn_Vorr_Veor_I_()
         {
             return new uint[]
@@ -46,7 +46,7 @@ namespace Ryujinx.Tests.Cpu
                 0xf2800910u  // VORR.I16 D0, #0 (A2)
             };
         }
- #endregion
+        #endregion
 
         private const int RndCnt = 2;
 
@@ -55,9 +55,9 @@ namespace Ryujinx.Tests.Cpu
                                                               [Range(0u, 5u)] uint rd,
                                                               [Range(0u, 5u)] uint rn,
                                                               [Range(0u, 5u)] uint rm,
-                                                              [Values(ulong.MinValue, ulong.MaxValue)] [Random(RndCnt)] ulong z,
-                                                              [Values(ulong.MinValue, ulong.MaxValue)] [Random(RndCnt)] ulong a,
-                                                              [Values(ulong.MinValue, ulong.MaxValue)] [Random(RndCnt)] ulong b,
+                                                              [Values(ulong.MinValue, ulong.MaxValue)][Random(RndCnt)] ulong z,
+                                                              [Values(ulong.MinValue, ulong.MaxValue)][Random(RndCnt)] ulong a,
+                                                              [Values(ulong.MinValue, ulong.MaxValue)][Random(RndCnt)] ulong b,
                                                               [Values] bool q)
         {
             if (q)
@@ -71,7 +71,7 @@ namespace Ryujinx.Tests.Cpu
 
             opcode |= ((rd & 0xf) << 12) | ((rd & 0x10) << 18);
             opcode |= ((rn & 0xf) << 16) | ((rn & 0x10) << 3);
-            opcode |= ((rm & 0xf) << 0)  | ((rm & 0x10) << 1);
+            opcode |= ((rm & 0xf) << 0) | ((rm & 0x10) << 1);
 
             V128 v0 = MakeVectorE0E1(z, ~z);
             V128 v1 = MakeVectorE0E1(a, ~a);
@@ -85,8 +85,8 @@ namespace Ryujinx.Tests.Cpu
         [Test, Pairwise]
         public void Vbic_Vorr_II([ValueSource("_Vbic_Vorr_II_")] uint opcode,
                                  [Values(0u, 1u)] uint rd,
-                                 [Values(ulong.MinValue, ulong.MaxValue)] [Random(RndCnt)] ulong z,
-                                 [Values(byte.MinValue, byte.MaxValue)] [Random(RndCnt)] byte imm,
+                                 [Values(ulong.MinValue, ulong.MaxValue)][Random(RndCnt)] ulong z,
+                                 [Values(byte.MinValue, byte.MaxValue)][Random(RndCnt)] byte imm,
                                  [Values(0u, 1u, 2u, 3u)] uint cMode,
                                  [Values] bool q)
         {
@@ -102,7 +102,7 @@ namespace Ryujinx.Tests.Cpu
                 rd >>= 1; rd <<= 1;
             }
 
-            opcode |= ((uint)imm & 0xf)  << 0;
+            opcode |= ((uint)imm & 0xf) << 0;
             opcode |= ((uint)imm & 0x70) << 12;
             opcode |= ((uint)imm & 0x80) << 17;
             opcode |= (cMode & 0x3) << 9;
@@ -119,9 +119,9 @@ namespace Ryujinx.Tests.Cpu
         public void Vtst([Range(0u, 5u)] uint rd,
                          [Range(0u, 5u)] uint rn,
                          [Range(0u, 5u)] uint rm,
-                         [ValueSource("_8B4H2S_")] [Random(RndCnt)] ulong z,
-                         [ValueSource("_8B4H2S_")] [Random(RndCnt)] ulong a,
-                         [ValueSource("_8B4H2S_")] [Random(RndCnt)] ulong b,
+                         [ValueSource("_8B4H2S_")][Random(RndCnt)] ulong z,
+                         [ValueSource("_8B4H2S_")][Random(RndCnt)] ulong a,
+                         [ValueSource("_8B4H2S_")][Random(RndCnt)] ulong b,
                          [Values(0u, 1u, 2u)] uint size,
                          [Values] bool q)
         {
@@ -138,7 +138,7 @@ namespace Ryujinx.Tests.Cpu
 
             opcode |= ((rd & 0xf) << 12) | ((rd & 0x10) << 18);
             opcode |= ((rn & 0xf) << 16) | ((rn & 0x10) << 3);
-            opcode |= ((rm & 0xf) << 0)  | ((rm & 0x10) << 1);
+            opcode |= ((rm & 0xf) << 0) | ((rm & 0x10) << 1);
 
             opcode |= (size & 0x3) << 20;
 

@@ -16,7 +16,7 @@ namespace Ryujinx.HLE.HOS.Services.Friend.ServiceCreator
     class IFriendService : IpcService
     {
         private FriendServicePermissionLevel _permissionLevel;
-        private KEvent                       _completionEvent;
+        private KEvent _completionEvent;
 
         public IFriendService(FriendServicePermissionLevel permissionLevel)
         {
@@ -62,7 +62,7 @@ namespace Ryujinx.HLE.HOS.Services.Friend.ServiceCreator
             // Padding
             context.RequestData.ReadInt32();
 
-            UserId       userId = context.RequestData.ReadStruct<UserId>();
+            UserId userId = context.RequestData.ReadStruct<UserId>();
             FriendFilter filter = context.RequestData.ReadStruct<FriendFilter>();
 
             // Pid placeholder
@@ -101,7 +101,7 @@ namespace Ryujinx.HLE.HOS.Services.Friend.ServiceCreator
             // Padding
             context.RequestData.ReadInt32();
 
-            UserId       userId = context.RequestData.ReadStruct<UserId>();
+            UserId userId = context.RequestData.ReadStruct<UserId>();
             FriendFilter filter = context.RequestData.ReadStruct<FriendFilter>();
 
             // Pid placeholder
@@ -115,7 +115,8 @@ namespace Ryujinx.HLE.HOS.Services.Friend.ServiceCreator
             // There are no friends online, so we return 0 because the nn::account::NetworkServiceAccountId array is empty.
             context.ResponseData.Write(0);
 
-            Logger.Stub?.PrintStub(LogClass.ServiceFriend, new {
+            Logger.Stub?.PrintStub(LogClass.ServiceFriend, new
+            {
                 UserId = userId.ToString(),
                 offset,
                 filter.PresenceStatus,
@@ -233,7 +234,7 @@ namespace Ryujinx.HLE.HOS.Services.Friend.ServiceCreator
             context.RequestData.ReadInt64();
 
             ulong position = context.Request.PtrBuff[0].Position;
-            ulong size     = context.Request.PtrBuff[0].Size;
+            ulong size = context.Request.PtrBuff[0].Size;
 
             ReadOnlySpan<UserPresence> userPresenceInputArray = MemoryMarshal.Cast<byte, UserPresence>(context.Memory.GetSpan(position, (int)size));
 
@@ -251,8 +252,8 @@ namespace Ryujinx.HLE.HOS.Services.Friend.ServiceCreator
         // nn::friends::GetPlayHistoryRegistrationKey(b8 unknown, nn::account::Uid) -> buffer<nn::friends::PlayHistoryRegistrationKey, 0x1a>
         public ResultCode GetPlayHistoryRegistrationKey(ServiceCtx context)
         {
-            bool   unknownBool = context.RequestData.ReadBoolean();
-            UserId userId      = context.RequestData.ReadStruct<UserId>();
+            bool unknownBool = context.RequestData.ReadBoolean();
+            UserId userId = context.RequestData.ReadStruct<UserId>();
 
             context.Response.PtrBuff[0] = context.Response.PtrBuff[0].WithSize(0x40UL);
 
@@ -280,12 +281,12 @@ namespace Ryujinx.HLE.HOS.Services.Friend.ServiceCreator
 
             PlayHistoryRegistrationKey playHistoryRegistrationKey = new PlayHistoryRegistrationKey
             {
-                Type        = 0x101,
-                KeyIndex    = (byte)(randomBytes[0] & 7),
-                UserIdBool  = 0, // TODO: Find it.
+                Type = 0x101,
+                KeyIndex = (byte)(randomBytes[0] & 7),
+                UserIdBool = 0, // TODO: Find it.
                 UnknownBool = (byte)(unknownBool ? 1 : 0), // TODO: Find it.
-                Reserved    = new Array11<byte>(),
-                Uuid        = randomGuid
+                Reserved = new Array11<byte>(),
+                Uuid = randomGuid
             };
 
             ReadOnlySpan<byte> playHistoryRegistrationKeyBuffer = SpanHelpers.AsByteSpan(ref playHistoryRegistrationKey);
@@ -303,7 +304,7 @@ namespace Ryujinx.HLE.HOS.Services.Friend.ServiceCreator
 
             */
 
-            context.Memory.Write(bufferPosition,        playHistoryRegistrationKeyBuffer);
+            context.Memory.Write(bufferPosition, playHistoryRegistrationKeyBuffer);
             context.Memory.Write(bufferPosition + 0x20, new byte[0x20]); // HmacHash
 
             return ResultCode.Success;
@@ -320,13 +321,13 @@ namespace Ryujinx.HLE.HOS.Services.Friend.ServiceCreator
             ulong pid = context.Request.HandleDesc.PId;
 
             ulong playHistoryRegistrationKeyPosition = context.Request.PtrBuff[0].Position;
-            ulong PlayHistoryRegistrationKeySize     = context.Request.PtrBuff[0].Size;
+            ulong PlayHistoryRegistrationKeySize = context.Request.PtrBuff[0].Size;
 
             ulong inAppScreenName1Position = context.Request.PtrBuff[1].Position;
-            ulong inAppScreenName1Size     = context.Request.PtrBuff[1].Size;
+            ulong inAppScreenName1Size = context.Request.PtrBuff[1].Size;
 
             ulong inAppScreenName2Position = context.Request.PtrBuff[2].Position;
-            ulong inAppScreenName2Size     = context.Request.PtrBuff[2].Size;
+            ulong inAppScreenName2Size = context.Request.PtrBuff[2].Size;
 
             if (userId.IsNull || inAppScreenName1Size > 0x48 || inAppScreenName2Size > 0x48)
             {

@@ -17,7 +17,7 @@ namespace Ryujinx.Horizon.LogManager.Ipc
         private const int MessageLengthLimit = 5000;
 
         private readonly LogService _log;
-        private readonly ulong      _pid;
+        private readonly ulong _pid;
 
         private LogPacket _logPacket;
 
@@ -74,7 +74,7 @@ namespace Ryujinx.Horizon.LogManager.Ipc
 
         private bool LogImpl(ReadOnlySpan<byte> message)
         {
-            SpanReader      reader = new(message);
+            SpanReader reader = new(message);
             LogPacketHeader header = reader.Read<LogPacketHeader>();
 
             bool isHeadPacket = (header.Flags & LogPacketFlags.IsHead) != 0;
@@ -157,7 +157,7 @@ namespace Ryujinx.Horizon.LogManager.Ipc
         private static int ReadUleb128(ref SpanReader reader)
         {
             int result = 0;
-            int count  = 0;
+            int count = 0;
 
             byte encoded;
 

@@ -146,10 +146,10 @@ namespace Ryujinx.Graphics.Shader.IntermediateRepresentation
 
         MrShift = 18,
 
-        MrGlobal  = 0 << MrShift,
-        MrShared  = 1 << MrShift,
+        MrGlobal = 0 << MrShift,
+        MrShared = 1 << MrShift,
         MrStorage = 2 << MrShift,
-        MrMask    = 3 << MrShift,
+        MrMask = 3 << MrShift,
 
         Mask = 0xffff
     }

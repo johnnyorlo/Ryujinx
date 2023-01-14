@@ -107,7 +107,7 @@ namespace Ryujinx.Common.Collections
             Node<K, V> node = GetNode(key);
             if (node != null)
             {
-                Node<K, V> successor =  SuccessorOf(node);
+                Node<K, V> successor = SuccessorOf(node);
 
                 return successor != null ? successor.Key : default;
             }

@@ -14,13 +14,13 @@ namespace Ryujinx.HLE.HOS.Services.Time.StaticService
     {
         private TimeZoneContentManager _timeZoneContentManager;
         private ITimeZoneServiceForPsc _inner;
-        private bool                   _writePermission;
+        private bool _writePermission;
 
         public ITimeZoneServiceForGlue(TimeZoneContentManager timeZoneContentManager, bool writePermission)
         {
             _timeZoneContentManager = timeZoneContentManager;
-            _writePermission        = writePermission;
-            _inner                  = new ITimeZoneServiceForPsc(timeZoneContentManager.Manager, writePermission);
+            _writePermission = writePermission;
+            _inner = new ITimeZoneServiceForPsc(timeZoneContentManager.Manager, writePermission);
         }
 
         [CommandHipc(0)]
@@ -55,9 +55,9 @@ namespace Ryujinx.HLE.HOS.Services.Time.StaticService
         // LoadLocationNameList(u32 index) -> (u32 outCount, buffer<nn::time::LocationName, 6>)
         public ResultCode LoadLocationNameList(ServiceCtx context)
         {
-            uint  index          = context.RequestData.ReadUInt32();
+            uint index = context.RequestData.ReadUInt32();
             ulong bufferPosition = context.Request.ReceiveBuff[0].Position;
-            ulong bufferSize     = context.Request.ReceiveBuff[0].Size;
+            ulong bufferSize = context.Request.ReceiveBuff[0].Size;
 
             ResultCode errorCode = _timeZoneContentManager.LoadLocationNameList(index, out string[] locationNameArray, (uint)bufferSize / 0x24);
 
@@ -91,7 +91,7 @@ namespace Ryujinx.HLE.HOS.Services.Time.StaticService
         public ResultCode LoadTimeZoneRule(ServiceCtx context)
         {
             ulong bufferPosition = context.Request.ReceiveBuff[0].Position;
-            ulong bufferSize     = context.Request.ReceiveBuff[0].Size;
+            ulong bufferSize = context.Request.ReceiveBuff[0].Size;
 
             if (bufferSize != 0x4000)
             {

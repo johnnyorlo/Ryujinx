@@ -327,7 +327,7 @@ namespace ARMeilleure.Instructions
             for (int index = 0; index < elems; index++)
             {
                 Operand ne = EmitVectorExtract32(context, op.Qn, op.In + index, op.Size + 1, signed);
-                Operand me = EmitVectorExtract32(context, op.Qm, op.Im + index, op.Size,     signed);
+                Operand me = EmitVectorExtract32(context, op.Qm, op.Im + index, op.Size, signed);
 
                 if (op.Size == 2)
                 {
@@ -380,8 +380,8 @@ namespace ARMeilleure.Instructions
             for (int index = 0; index < elems; index++)
             {
                 Operand de = EmitVectorExtract32(context, op.Qd, op.Id + index, op.Size + 1, signed);
-                Operand ne = EmitVectorExtract32(context, op.Qn, op.In + index, op.Size,     signed);
-                Operand me = EmitVectorExtract32(context, op.Qm, op.Im + index, op.Size,     signed);
+                Operand ne = EmitVectorExtract32(context, op.Qn, op.In + index, op.Size, signed);
+                Operand me = EmitVectorExtract32(context, op.Qm, op.Im + index, op.Size, signed);
 
                 if (op.Size == 2)
                 {
@@ -974,7 +974,7 @@ namespace ARMeilleure.Instructions
 
             Intrinsic inst = (op.Size & 1) != 0 ? inst64 : inst32;
 
-            EmitScalarBinaryOpSimd32(context, (n, m) =>  context.AddIntrinsic(inst, n, m));
+            EmitScalarBinaryOpSimd32(context, (n, m) => context.AddIntrinsic(inst, n, m));
         }
 
         public static void EmitScalarTernaryOpSimd32(ArmEmitterContext context, Func3I scalarFunc)

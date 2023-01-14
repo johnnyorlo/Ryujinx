@@ -10,8 +10,8 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrl
         public const int VBlank0SyncpointId = 26;
         public const int VBlank1SyncpointId = 27;
 
-        private int[]  _counterMin;
-        private int[]  _counterMax;
+        private int[] _counterMin;
+        private int[] _counterMax;
         private bool[] _clientManaged;
         private bool[] _assigned;
 
@@ -21,11 +21,11 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrl
 
         public NvHostSyncpt(Switch device)
         {
-            _device        = device;
-            _counterMin    = new int[SynchronizationManager.MaxHardwareSyncpoints];
-            _counterMax    = new int[SynchronizationManager.MaxHardwareSyncpoints];
+            _device = device;
+            _counterMin = new int[SynchronizationManager.MaxHardwareSyncpoints];
+            _counterMax = new int[SynchronizationManager.MaxHardwareSyncpoints];
             _clientManaged = new bool[SynchronizationManager.MaxHardwareSyncpoints];
-            _assigned      = new bool[SynchronizationManager.MaxHardwareSyncpoints];
+            _assigned = new bool[SynchronizationManager.MaxHardwareSyncpoints];
 
             // Reserve VBLANK syncpoints
             ReserveSyncpointLocked(VBlank0SyncpointId, true);
@@ -39,7 +39,7 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrl
                 throw new ArgumentOutOfRangeException(nameof(id));
             }
 
-            _assigned[id]      = true;
+            _assigned[id] = true;
             _clientManaged[id] = isClientManaged;
         }
 
@@ -76,7 +76,7 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrl
                     throw new ArgumentOutOfRangeException(nameof(id));
                 }
 
-                _assigned[id]      = false;
+                _assigned[id] = false;
                 _clientManaged[id] = false;
 
                 SetSyncpointMinEqualSyncpointMax(id);

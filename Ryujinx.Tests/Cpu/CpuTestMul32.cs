@@ -9,7 +9,7 @@ namespace Ryujinx.Tests.Cpu
     {
 #if Mul32
 
-#region "ValueSource (Opcodes)"
+        #region "ValueSource (Opcodes)"
         private static uint[] _Smlabb_Smlabt_Smlatb_Smlatt_()
         {
             return new uint[]
@@ -49,7 +49,7 @@ namespace Ryujinx.Tests.Cpu
                 0xe12000e0u, // SMULWT R0, R0, R0
             };
         }
-#endregion
+        #endregion
 
         private const int RndCnt = 2;
 

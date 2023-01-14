@@ -33,7 +33,7 @@ namespace ARMeilleure.Instructions
 
                 Operand arg0 = context.LoadArgument(OperandType.I64, 0);
 
-                Operand exAddrPtr  = context.Add(arg0, Const((long)NativeContext.GetExclusiveAddressOffset()));
+                Operand exAddrPtr = context.Add(arg0, Const((long)NativeContext.GetExclusiveAddressOffset()));
                 Operand exValuePtr = context.Add(arg0, Const((long)NativeContext.GetExclusiveValueOffset()));
 
                 context.Store(exAddrPtr, context.BitwiseAnd(address, Const(address.Type, GetExclusiveAddressMask())));
@@ -133,14 +133,14 @@ namespace ARMeilleure.Instructions
 
                 if (size == 4)
                 {
-                    Operand currValueLow  = context.VectorExtract(OperandType.I64, currValue, 0);
+                    Operand currValueLow = context.VectorExtract(OperandType.I64, currValue, 0);
                     Operand currValueHigh = context.VectorExtract(OperandType.I64, currValue, 1);
 
-                    Operand exValueLow  = context.VectorExtract(OperandType.I64, exValue, 0);
+                    Operand exValueLow = context.VectorExtract(OperandType.I64, exValue, 0);
                     Operand exValueHigh = context.VectorExtract(OperandType.I64, exValue, 1);
 
                     storeFailed = context.BitwiseOr(
-                        context.ICompareNotEqual(currValueLow,  exValueLow),
+                        context.ICompareNotEqual(currValueLow, exValueLow),
                         context.ICompareNotEqual(currValueHigh, exValueHigh));
                 }
                 else

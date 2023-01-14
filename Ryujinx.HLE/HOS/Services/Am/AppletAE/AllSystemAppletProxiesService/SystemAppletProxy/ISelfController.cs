@@ -12,25 +12,25 @@ namespace Ryujinx.HLE.HOS.Services.Am.AppletAE.AllSystemAppletProxiesService.Sys
         private readonly ulong _pid;
 
         private KEvent _libraryAppletLaunchableEvent;
-        private int    _libraryAppletLaunchableEventHandle;
+        private int _libraryAppletLaunchableEventHandle;
 
         private KEvent _accumulatedSuspendedTickChangedEvent;
-        private int    _accumulatedSuspendedTickChangedEventHandle;
+        private int _accumulatedSuspendedTickChangedEventHandle;
 
         private object _fatalSectionLock = new object();
-        private int    _fatalSectionCount;
+        private int _fatalSectionCount;
 
         // TODO: Set this when the game goes in suspension (go back to home menu ect), we currently don't support that so we can keep it set to 0.
         private ulong _accumulatedSuspendedTickValue = 0;
 
         // TODO: Determine where those fields are used.
-        private bool _screenShotPermission               = false;
-        private bool _operationModeChangedNotification   = false;
+        private bool _screenShotPermission = false;
+        private bool _operationModeChangedNotification = false;
         private bool _performanceModeChangedNotification = false;
-        private bool _restartMessageEnabled              = false;
-        private bool _outOfFocusSuspendingEnabled        = false;
-        private bool _handlesRequestToDisplay            = false;
-        private bool _autoSleepDisabled                  = false;
+        private bool _restartMessageEnabled = false;
+        private bool _outOfFocusSuspendingEnabled = false;
+        private bool _handlesRequestToDisplay = false;
+        private bool _autoSleepDisabled = false;
         private bool _albumImageTakenNotificationEnabled = false;
         private bool _recordVolumeMuted = false;
 
@@ -304,7 +304,7 @@ namespace Ryujinx.HLE.HOS.Services.Am.AppletAE.AllSystemAppletProxiesService.Sys
         {
             // NOTE: This should call IsAmbientLightSensorAvailable through to Lbl, but there's no situation where we'd want false.
             context.ResponseData.Write(true);
-            
+
             Logger.Stub?.PrintStub(LogClass.ServiceAm);
 
             return ResultCode.Success;

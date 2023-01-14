@@ -11,15 +11,15 @@ namespace Ryujinx.HLE.HOS.Services.Time.StaticService
     class ISystemClock : IpcService
     {
         private SystemClockCore _clockCore;
-        private bool            _writePermission;
-        private bool            _bypassUninitializedClock;
-        private int             _operationEventReadableHandle;
+        private bool _writePermission;
+        private bool _bypassUninitializedClock;
+        private int _operationEventReadableHandle;
 
         public ISystemClock(SystemClockCore clockCore, bool writePermission, bool bypassUninitializedClock)
         {
-            _clockCore                    = clockCore;
-            _writePermission              = writePermission;
-            _bypassUninitializedClock     = bypassUninitializedClock;
+            _clockCore = clockCore;
+            _writePermission = writePermission;
+            _bypassUninitializedClock = bypassUninitializedClock;
             _operationEventReadableHandle = 0;
         }
 

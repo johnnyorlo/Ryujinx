@@ -26,88 +26,88 @@ namespace Ryujinx.Ui.Windows
 {
     public class SettingsWindow : Window
     {
-        private readonly MainWindow             _parent;
-        private readonly ListStore              _gameDirsBoxStore;
-        private readonly ListStore              _audioBackendStore;
+        private readonly MainWindow _parent;
+        private readonly ListStore _gameDirsBoxStore;
+        private readonly ListStore _audioBackendStore;
         private readonly TimeZoneContentManager _timeZoneContentManager;
-        private readonly HashSet<string>        _validTzRegions;
+        private readonly HashSet<string> _validTzRegions;
 
-        private long  _systemTimeOffset;
+        private long _systemTimeOffset;
         private float _previousVolumeLevel;
         private bool _directoryChanged = false;
 
 #pragma warning disable CS0649, IDE0044
-        [GUI] CheckButton     _traceLogToggle;
-        [GUI] CheckButton     _errorLogToggle;
-        [GUI] CheckButton     _warningLogToggle;
-        [GUI] CheckButton     _infoLogToggle;
-        [GUI] CheckButton     _stubLogToggle;
-        [GUI] CheckButton     _debugLogToggle;
-        [GUI] CheckButton     _fileLogToggle;
-        [GUI] CheckButton     _guestLogToggle;
-        [GUI] CheckButton     _fsAccessLogToggle;
-        [GUI] Adjustment      _fsLogSpinAdjustment;
-        [GUI] ComboBoxText    _graphicsDebugLevel;
-        [GUI] CheckButton     _dockedModeToggle;
-        [GUI] CheckButton     _discordToggle;
-        [GUI] CheckButton     _checkUpdatesToggle;
-        [GUI] CheckButton     _showConfirmExitToggle;
-        [GUI] CheckButton     _hideCursorOnIdleToggle;
-        [GUI] CheckButton     _vSyncToggle;
-        [GUI] CheckButton     _shaderCacheToggle;
-        [GUI] CheckButton     _textureRecompressionToggle;
-        [GUI] CheckButton     _macroHLEToggle;
-        [GUI] CheckButton     _ptcToggle;
-        [GUI] CheckButton     _internetToggle;
-        [GUI] CheckButton     _fsicToggle;
-        [GUI] RadioButton     _mmSoftware;
-        [GUI] RadioButton     _mmHost;
-        [GUI] RadioButton     _mmHostUnsafe;
-        [GUI] CheckButton     _expandRamToggle;
-        [GUI] CheckButton     _ignoreToggle;
-        [GUI] CheckButton     _directKeyboardAccess;
-        [GUI] CheckButton     _directMouseAccess;
-        [GUI] ComboBoxText    _systemLanguageSelect;
-        [GUI] ComboBoxText    _systemRegionSelect;
-        [GUI] Entry           _systemTimeZoneEntry;
+        [GUI] CheckButton _traceLogToggle;
+        [GUI] CheckButton _errorLogToggle;
+        [GUI] CheckButton _warningLogToggle;
+        [GUI] CheckButton _infoLogToggle;
+        [GUI] CheckButton _stubLogToggle;
+        [GUI] CheckButton _debugLogToggle;
+        [GUI] CheckButton _fileLogToggle;
+        [GUI] CheckButton _guestLogToggle;
+        [GUI] CheckButton _fsAccessLogToggle;
+        [GUI] Adjustment _fsLogSpinAdjustment;
+        [GUI] ComboBoxText _graphicsDebugLevel;
+        [GUI] CheckButton _dockedModeToggle;
+        [GUI] CheckButton _discordToggle;
+        [GUI] CheckButton _checkUpdatesToggle;
+        [GUI] CheckButton _showConfirmExitToggle;
+        [GUI] CheckButton _hideCursorOnIdleToggle;
+        [GUI] CheckButton _vSyncToggle;
+        [GUI] CheckButton _shaderCacheToggle;
+        [GUI] CheckButton _textureRecompressionToggle;
+        [GUI] CheckButton _macroHLEToggle;
+        [GUI] CheckButton _ptcToggle;
+        [GUI] CheckButton _internetToggle;
+        [GUI] CheckButton _fsicToggle;
+        [GUI] RadioButton _mmSoftware;
+        [GUI] RadioButton _mmHost;
+        [GUI] RadioButton _mmHostUnsafe;
+        [GUI] CheckButton _expandRamToggle;
+        [GUI] CheckButton _ignoreToggle;
+        [GUI] CheckButton _directKeyboardAccess;
+        [GUI] CheckButton _directMouseAccess;
+        [GUI] ComboBoxText _systemLanguageSelect;
+        [GUI] ComboBoxText _systemRegionSelect;
+        [GUI] Entry _systemTimeZoneEntry;
         [GUI] EntryCompletion _systemTimeZoneCompletion;
-        [GUI] Box             _audioBackendBox;
-        [GUI] ComboBox        _audioBackendSelect;
-        [GUI] Label           _audioVolumeLabel;
-        [GUI] Scale           _audioVolumeSlider;
-        [GUI] SpinButton      _systemTimeYearSpin;
-        [GUI] SpinButton      _systemTimeMonthSpin;
-        [GUI] SpinButton      _systemTimeDaySpin;
-        [GUI] SpinButton      _systemTimeHourSpin;
-        [GUI] SpinButton      _systemTimeMinuteSpin;
-        [GUI] Adjustment      _systemTimeYearSpinAdjustment;
-        [GUI] Adjustment      _systemTimeMonthSpinAdjustment;
-        [GUI] Adjustment      _systemTimeDaySpinAdjustment;
-        [GUI] Adjustment      _systemTimeHourSpinAdjustment;
-        [GUI] Adjustment      _systemTimeMinuteSpinAdjustment;
-        [GUI] CheckButton     _custThemeToggle;
-        [GUI] Entry           _custThemePath;
-        [GUI] ToggleButton    _browseThemePath;
-        [GUI] Label           _custThemePathLabel;
-        [GUI] TreeView        _gameDirsBox;
-        [GUI] Entry           _addGameDirBox;
-        [GUI] ComboBoxText    _galThreading;
-        [GUI] Entry           _graphicsShadersDumpPath;
-        [GUI] ComboBoxText    _anisotropy;
-        [GUI] ComboBoxText    _aspectRatio;
-        [GUI] ComboBoxText    _graphicsBackend;
-        [GUI] ComboBoxText    _preferredGpu;
-        [GUI] ComboBoxText    _resScaleCombo;
-        [GUI] Entry           _resScaleText;
-        [GUI] ToggleButton    _configureController1;
-        [GUI] ToggleButton    _configureController2;
-        [GUI] ToggleButton    _configureController3;
-        [GUI] ToggleButton    _configureController4;
-        [GUI] ToggleButton    _configureController5;
-        [GUI] ToggleButton    _configureController6;
-        [GUI] ToggleButton    _configureController7;
-        [GUI] ToggleButton    _configureController8;
-        [GUI] ToggleButton    _configureControllerH;
+        [GUI] Box _audioBackendBox;
+        [GUI] ComboBox _audioBackendSelect;
+        [GUI] Label _audioVolumeLabel;
+        [GUI] Scale _audioVolumeSlider;
+        [GUI] SpinButton _systemTimeYearSpin;
+        [GUI] SpinButton _systemTimeMonthSpin;
+        [GUI] SpinButton _systemTimeDaySpin;
+        [GUI] SpinButton _systemTimeHourSpin;
+        [GUI] SpinButton _systemTimeMinuteSpin;
+        [GUI] Adjustment _systemTimeYearSpinAdjustment;
+        [GUI] Adjustment _systemTimeMonthSpinAdjustment;
+        [GUI] Adjustment _systemTimeDaySpinAdjustment;
+        [GUI] Adjustment _systemTimeHourSpinAdjustment;
+        [GUI] Adjustment _systemTimeMinuteSpinAdjustment;
+        [GUI] CheckButton _custThemeToggle;
+        [GUI] Entry _custThemePath;
+        [GUI] ToggleButton _browseThemePath;
+        [GUI] Label _custThemePathLabel;
+        [GUI] TreeView _gameDirsBox;
+        [GUI] Entry _addGameDirBox;
+        [GUI] ComboBoxText _galThreading;
+        [GUI] Entry _graphicsShadersDumpPath;
+        [GUI] ComboBoxText _anisotropy;
+        [GUI] ComboBoxText _aspectRatio;
+        [GUI] ComboBoxText _graphicsBackend;
+        [GUI] ComboBoxText _preferredGpu;
+        [GUI] ComboBoxText _resScaleCombo;
+        [GUI] Entry _resScaleText;
+        [GUI] ToggleButton _configureController1;
+        [GUI] ToggleButton _configureController2;
+        [GUI] ToggleButton _configureController3;
+        [GUI] ToggleButton _configureController4;
+        [GUI] ToggleButton _configureController5;
+        [GUI] ToggleButton _configureController6;
+        [GUI] ToggleButton _configureController7;
+        [GUI] ToggleButton _configureController8;
+        [GUI] ToggleButton _configureControllerH;
 
 #pragma warning restore CS0649, IDE0044
 
@@ -343,15 +343,15 @@ namespace Ryujinx.Ui.Windows
 
             _graphicsBackend.Changed += (sender, e) => UpdatePreferredGpuComboBox();
 
-            _custThemePath.Buffer.Text           = ConfigurationState.Instance.Ui.CustomThemePath;
-            _resScaleText.Buffer.Text            = ConfigurationState.Instance.Graphics.ResScaleCustom.Value.ToString();
-            _resScaleText.Visible                = _resScaleCombo.ActiveId == "-1";
+            _custThemePath.Buffer.Text = ConfigurationState.Instance.Ui.CustomThemePath;
+            _resScaleText.Buffer.Text = ConfigurationState.Instance.Graphics.ResScaleCustom.Value.ToString();
+            _resScaleText.Visible = _resScaleCombo.ActiveId == "-1";
             _graphicsShadersDumpPath.Buffer.Text = ConfigurationState.Instance.Graphics.ShadersDumpPath;
-            _fsLogSpinAdjustment.Value           = ConfigurationState.Instance.System.FsGlobalAccessLogMode;
-            _systemTimeOffset                    = ConfigurationState.Instance.System.SystemTimeOffset;
+            _fsLogSpinAdjustment.Value = ConfigurationState.Instance.System.FsGlobalAccessLogMode;
+            _systemTimeOffset = ConfigurationState.Instance.System.SystemTimeOffset;
 
             _gameDirsBox.AppendColumn("", new CellRendererText(), "text", 0);
-            _gameDirsBoxStore  = new ListStore(typeof(string));
+            _gameDirsBoxStore = new ListStore(typeof(string));
             _gameDirsBox.Model = _gameDirsBoxStore;
 
             foreach (string gameDir in ConfigurationState.Instance.Ui.GameDirs.Value)
@@ -361,9 +361,9 @@ namespace Ryujinx.Ui.Windows
 
             if (_custThemeToggle.Active == false)
             {
-                _custThemePath.Sensitive      = false;
+                _custThemePath.Sensitive = false;
                 _custThemePathLabel.Sensitive = false;
-                _browseThemePath.Sensitive    = false;
+                _browseThemePath.Sensitive = false;
             }
 
             // Setup system time spinners
@@ -371,10 +371,10 @@ namespace Ryujinx.Ui.Windows
 
             _audioBackendStore = new ListStore(typeof(string), typeof(AudioBackend));
 
-            TreeIter openAlIter  = _audioBackendStore.AppendValues("OpenAL", AudioBackend.OpenAl);
+            TreeIter openAlIter = _audioBackendStore.AppendValues("OpenAL", AudioBackend.OpenAl);
             TreeIter soundIoIter = _audioBackendStore.AppendValues("SoundIO", AudioBackend.SoundIo);
-            TreeIter sdl2Iter    = _audioBackendStore.AppendValues("SDL2", AudioBackend.SDL2);
-            TreeIter dummyIter   = _audioBackendStore.AppendValues("Dummy", AudioBackend.Dummy);
+            TreeIter sdl2Iter = _audioBackendStore.AppendValues("SDL2", AudioBackend.SDL2);
+            TreeIter dummyIter = _audioBackendStore.AppendValues("Dummy", AudioBackend.Dummy);
 
             _audioBackendSelect = ComboBox.NewWithModelAndEntry(_audioBackendStore);
             _audioBackendSelect.EntryTextColumn = 0;
@@ -401,29 +401,29 @@ namespace Ryujinx.Ui.Windows
             _audioBackendBox.Add(_audioBackendSelect);
             _audioBackendSelect.Show();
 
-            _previousVolumeLevel            = ConfigurationState.Instance.System.AudioVolume;
-            _audioVolumeLabel               = new Label("Volume: ");
-            _audioVolumeSlider              = new Scale(Orientation.Horizontal, 0, 100, 1);
-            _audioVolumeLabel.MarginStart   = 10;
-            _audioVolumeSlider.ValuePos     = PositionType.Right;
+            _previousVolumeLevel = ConfigurationState.Instance.System.AudioVolume;
+            _audioVolumeLabel = new Label("Volume: ");
+            _audioVolumeSlider = new Scale(Orientation.Horizontal, 0, 100, 1);
+            _audioVolumeLabel.MarginStart = 10;
+            _audioVolumeSlider.ValuePos = PositionType.Right;
             _audioVolumeSlider.WidthRequest = 200;
 
-            _audioVolumeSlider.Value        =  _previousVolumeLevel * 100;
+            _audioVolumeSlider.Value = _previousVolumeLevel * 100;
             _audioVolumeSlider.ValueChanged += VolumeSlider_OnChange;
             _audioBackendBox.Add(_audioVolumeLabel);
             _audioBackendBox.Add(_audioVolumeSlider);
             _audioVolumeLabel.Show();
             _audioVolumeSlider.Show();
 
-            bool openAlIsSupported  = false;
+            bool openAlIsSupported = false;
             bool soundIoIsSupported = false;
-            bool sdl2IsSupported    = false;
+            bool sdl2IsSupported = false;
 
             Task.Run(() =>
             {
-                openAlIsSupported  = OpenALHardwareDeviceDriver.IsSupported;
+                openAlIsSupported = OpenALHardwareDeviceDriver.IsSupported;
                 soundIoIsSupported = !OperatingSystem.IsMacOS() && SoundIoHardwareDeviceDriver.IsSupported;
-                sdl2IsSupported    = SDL2HardwareDeviceDriver.IsSupported;
+                sdl2IsSupported = SDL2HardwareDeviceDriver.IsSupported;
             });
 
             // This function runs whenever the dropdown is opened
@@ -431,10 +431,10 @@ namespace Ryujinx.Ui.Windows
             {
                 cell.Sensitive = ((AudioBackend)_audioBackendStore.GetValue(iter, 1)) switch
                 {
-                    AudioBackend.OpenAl  => openAlIsSupported,
+                    AudioBackend.OpenAl => openAlIsSupported,
                     AudioBackend.SoundIo => soundIoIsSupported,
-                    AudioBackend.SDL2    => sdl2IsSupported,
-                    AudioBackend.Dummy   => true,
+                    AudioBackend.SDL2 => sdl2IsSupported,
+                    AudioBackend.Dummy => true,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             });
@@ -442,7 +442,7 @@ namespace Ryujinx.Ui.Windows
             if (OperatingSystem.IsMacOS())
             {
                 var store = (_graphicsBackend.Model as ListStore);
-                store.GetIter(out TreeIter openglIter, new TreePath(new int[] {1}));
+                store.GetIter(out TreeIter openglIter, new TreePath(new int[] { 1 }));
                 store.Remove(ref openglIter);
 
                 _graphicsBackend.Model = store;
@@ -485,33 +485,33 @@ namespace Ryujinx.Ui.Windows
         private void UpdateSystemTimeSpinners()
         {
             //Bind system time events
-            _systemTimeYearSpin.ValueChanged   -= SystemTimeSpin_ValueChanged;
-            _systemTimeMonthSpin.ValueChanged  -= SystemTimeSpin_ValueChanged;
-            _systemTimeDaySpin.ValueChanged    -= SystemTimeSpin_ValueChanged;
-            _systemTimeHourSpin.ValueChanged   -= SystemTimeSpin_ValueChanged;
+            _systemTimeYearSpin.ValueChanged -= SystemTimeSpin_ValueChanged;
+            _systemTimeMonthSpin.ValueChanged -= SystemTimeSpin_ValueChanged;
+            _systemTimeDaySpin.ValueChanged -= SystemTimeSpin_ValueChanged;
+            _systemTimeHourSpin.ValueChanged -= SystemTimeSpin_ValueChanged;
             _systemTimeMinuteSpin.ValueChanged -= SystemTimeSpin_ValueChanged;
 
             //Apply actual system time + SystemTimeOffset to system time spin buttons
             DateTime systemTime = DateTime.Now.AddSeconds(_systemTimeOffset);
 
-            _systemTimeYearSpinAdjustment.Value   = systemTime.Year;
-            _systemTimeMonthSpinAdjustment.Value  = systemTime.Month;
-            _systemTimeDaySpinAdjustment.Value    = systemTime.Day;
-            _systemTimeHourSpinAdjustment.Value   = systemTime.Hour;
+            _systemTimeYearSpinAdjustment.Value = systemTime.Year;
+            _systemTimeMonthSpinAdjustment.Value = systemTime.Month;
+            _systemTimeDaySpinAdjustment.Value = systemTime.Day;
+            _systemTimeHourSpinAdjustment.Value = systemTime.Hour;
             _systemTimeMinuteSpinAdjustment.Value = systemTime.Minute;
 
             //Format spin buttons text to include leading zeros
-            _systemTimeYearSpin.Text   = systemTime.Year.ToString("0000");
-            _systemTimeMonthSpin.Text  = systemTime.Month.ToString("00");
-            _systemTimeDaySpin.Text    = systemTime.Day.ToString("00");
-            _systemTimeHourSpin.Text   = systemTime.Hour.ToString("00");
+            _systemTimeYearSpin.Text = systemTime.Year.ToString("0000");
+            _systemTimeMonthSpin.Text = systemTime.Month.ToString("00");
+            _systemTimeDaySpin.Text = systemTime.Day.ToString("00");
+            _systemTimeHourSpin.Text = systemTime.Hour.ToString("00");
             _systemTimeMinuteSpin.Text = systemTime.Minute.ToString("00");
 
             //Bind system time events
-            _systemTimeYearSpin.ValueChanged   += SystemTimeSpin_ValueChanged;
-            _systemTimeMonthSpin.ValueChanged  += SystemTimeSpin_ValueChanged;
-            _systemTimeDaySpin.ValueChanged    += SystemTimeSpin_ValueChanged;
-            _systemTimeHourSpin.ValueChanged   += SystemTimeSpin_ValueChanged;
+            _systemTimeYearSpin.ValueChanged += SystemTimeSpin_ValueChanged;
+            _systemTimeMonthSpin.ValueChanged += SystemTimeSpin_ValueChanged;
+            _systemTimeDaySpin.ValueChanged += SystemTimeSpin_ValueChanged;
+            _systemTimeHourSpin.ValueChanged += SystemTimeSpin_ValueChanged;
             _systemTimeMinuteSpin.ValueChanged += SystemTimeSpin_ValueChanged;
         }
 
@@ -563,48 +563,48 @@ namespace Ryujinx.Ui.Windows
                 DriverUtilities.ToggleOGLThreading(backendThreading == BackendThreading.Off);
             }
 
-            ConfigurationState.Instance.Logger.EnableError.Value                  = _errorLogToggle.Active;
-            ConfigurationState.Instance.Logger.EnableTrace.Value                  = _traceLogToggle.Active;
-            ConfigurationState.Instance.Logger.EnableWarn.Value                   = _warningLogToggle.Active;
-            ConfigurationState.Instance.Logger.EnableInfo.Value                   = _infoLogToggle.Active;
-            ConfigurationState.Instance.Logger.EnableStub.Value                   = _stubLogToggle.Active;
-            ConfigurationState.Instance.Logger.EnableDebug.Value                  = _debugLogToggle.Active;
-            ConfigurationState.Instance.Logger.EnableGuest.Value                  = _guestLogToggle.Active;
-            ConfigurationState.Instance.Logger.EnableFsAccessLog.Value            = _fsAccessLogToggle.Active;
-            ConfigurationState.Instance.Logger.EnableFileLog.Value                = _fileLogToggle.Active;
-            ConfigurationState.Instance.Logger.GraphicsDebugLevel.Value           = Enum.Parse<GraphicsDebugLevel>(_graphicsDebugLevel.ActiveId);
-            ConfigurationState.Instance.System.EnableDockedMode.Value             = _dockedModeToggle.Active;
-            ConfigurationState.Instance.EnableDiscordIntegration.Value            = _discordToggle.Active;
-            ConfigurationState.Instance.CheckUpdatesOnStart.Value                 = _checkUpdatesToggle.Active;
-            ConfigurationState.Instance.ShowConfirmExit.Value                     = _showConfirmExitToggle.Active;
-            ConfigurationState.Instance.HideCursorOnIdle.Value                    = _hideCursorOnIdleToggle.Active;
-            ConfigurationState.Instance.Graphics.EnableVsync.Value                = _vSyncToggle.Active;
-            ConfigurationState.Instance.Graphics.EnableShaderCache.Value          = _shaderCacheToggle.Active;
+            ConfigurationState.Instance.Logger.EnableError.Value = _errorLogToggle.Active;
+            ConfigurationState.Instance.Logger.EnableTrace.Value = _traceLogToggle.Active;
+            ConfigurationState.Instance.Logger.EnableWarn.Value = _warningLogToggle.Active;
+            ConfigurationState.Instance.Logger.EnableInfo.Value = _infoLogToggle.Active;
+            ConfigurationState.Instance.Logger.EnableStub.Value = _stubLogToggle.Active;
+            ConfigurationState.Instance.Logger.EnableDebug.Value = _debugLogToggle.Active;
+            ConfigurationState.Instance.Logger.EnableGuest.Value = _guestLogToggle.Active;
+            ConfigurationState.Instance.Logger.EnableFsAccessLog.Value = _fsAccessLogToggle.Active;
+            ConfigurationState.Instance.Logger.EnableFileLog.Value = _fileLogToggle.Active;
+            ConfigurationState.Instance.Logger.GraphicsDebugLevel.Value = Enum.Parse<GraphicsDebugLevel>(_graphicsDebugLevel.ActiveId);
+            ConfigurationState.Instance.System.EnableDockedMode.Value = _dockedModeToggle.Active;
+            ConfigurationState.Instance.EnableDiscordIntegration.Value = _discordToggle.Active;
+            ConfigurationState.Instance.CheckUpdatesOnStart.Value = _checkUpdatesToggle.Active;
+            ConfigurationState.Instance.ShowConfirmExit.Value = _showConfirmExitToggle.Active;
+            ConfigurationState.Instance.HideCursorOnIdle.Value = _hideCursorOnIdleToggle.Active;
+            ConfigurationState.Instance.Graphics.EnableVsync.Value = _vSyncToggle.Active;
+            ConfigurationState.Instance.Graphics.EnableShaderCache.Value = _shaderCacheToggle.Active;
             ConfigurationState.Instance.Graphics.EnableTextureRecompression.Value = _textureRecompressionToggle.Active;
-            ConfigurationState.Instance.Graphics.EnableMacroHLE.Value             = _macroHLEToggle.Active;
-            ConfigurationState.Instance.System.EnablePtc.Value                    = _ptcToggle.Active;
-            ConfigurationState.Instance.System.EnableInternetAccess.Value         = _internetToggle.Active;
-            ConfigurationState.Instance.System.EnableFsIntegrityChecks.Value      = _fsicToggle.Active;
-            ConfigurationState.Instance.System.MemoryManagerMode.Value            = memoryMode;
-            ConfigurationState.Instance.System.ExpandRam.Value                    = _expandRamToggle.Active;
-            ConfigurationState.Instance.System.IgnoreMissingServices.Value        = _ignoreToggle.Active;
-            ConfigurationState.Instance.Hid.EnableKeyboard.Value                  = _directKeyboardAccess.Active;
-            ConfigurationState.Instance.Hid.EnableMouse.Value                     = _directMouseAccess.Active;
-            ConfigurationState.Instance.Ui.EnableCustomTheme.Value                = _custThemeToggle.Active;
-            ConfigurationState.Instance.System.Language.Value                     = Enum.Parse<Language>(_systemLanguageSelect.ActiveId);
-            ConfigurationState.Instance.System.Region.Value                       = Enum.Parse<Common.Configuration.System.Region>(_systemRegionSelect.ActiveId);
-            ConfigurationState.Instance.System.SystemTimeOffset.Value             = _systemTimeOffset;
-            ConfigurationState.Instance.Ui.CustomThemePath.Value                  = _custThemePath.Buffer.Text;
-            ConfigurationState.Instance.Graphics.ShadersDumpPath.Value            = _graphicsShadersDumpPath.Buffer.Text;
-            ConfigurationState.Instance.System.FsGlobalAccessLogMode.Value        = (int)_fsLogSpinAdjustment.Value;
-            ConfigurationState.Instance.Graphics.MaxAnisotropy.Value              = float.Parse(_anisotropy.ActiveId, CultureInfo.InvariantCulture);
-            ConfigurationState.Instance.Graphics.AspectRatio.Value                = Enum.Parse<AspectRatio>(_aspectRatio.ActiveId);
-            ConfigurationState.Instance.Graphics.BackendThreading.Value           = backendThreading;
-            ConfigurationState.Instance.Graphics.GraphicsBackend.Value            = Enum.Parse<GraphicsBackend>(_graphicsBackend.ActiveId);
-            ConfigurationState.Instance.Graphics.PreferredGpu.Value               = _preferredGpu.ActiveId;
-            ConfigurationState.Instance.Graphics.ResScale.Value                   = int.Parse(_resScaleCombo.ActiveId);
-            ConfigurationState.Instance.Graphics.ResScaleCustom.Value             = resScaleCustom;
-            ConfigurationState.Instance.System.AudioVolume.Value                  = (float)_audioVolumeSlider.Value / 100.0f;
+            ConfigurationState.Instance.Graphics.EnableMacroHLE.Value = _macroHLEToggle.Active;
+            ConfigurationState.Instance.System.EnablePtc.Value = _ptcToggle.Active;
+            ConfigurationState.Instance.System.EnableInternetAccess.Value = _internetToggle.Active;
+            ConfigurationState.Instance.System.EnableFsIntegrityChecks.Value = _fsicToggle.Active;
+            ConfigurationState.Instance.System.MemoryManagerMode.Value = memoryMode;
+            ConfigurationState.Instance.System.ExpandRam.Value = _expandRamToggle.Active;
+            ConfigurationState.Instance.System.IgnoreMissingServices.Value = _ignoreToggle.Active;
+            ConfigurationState.Instance.Hid.EnableKeyboard.Value = _directKeyboardAccess.Active;
+            ConfigurationState.Instance.Hid.EnableMouse.Value = _directMouseAccess.Active;
+            ConfigurationState.Instance.Ui.EnableCustomTheme.Value = _custThemeToggle.Active;
+            ConfigurationState.Instance.System.Language.Value = Enum.Parse<Language>(_systemLanguageSelect.ActiveId);
+            ConfigurationState.Instance.System.Region.Value = Enum.Parse<Common.Configuration.System.Region>(_systemRegionSelect.ActiveId);
+            ConfigurationState.Instance.System.SystemTimeOffset.Value = _systemTimeOffset;
+            ConfigurationState.Instance.Ui.CustomThemePath.Value = _custThemePath.Buffer.Text;
+            ConfigurationState.Instance.Graphics.ShadersDumpPath.Value = _graphicsShadersDumpPath.Buffer.Text;
+            ConfigurationState.Instance.System.FsGlobalAccessLogMode.Value = (int)_fsLogSpinAdjustment.Value;
+            ConfigurationState.Instance.Graphics.MaxAnisotropy.Value = float.Parse(_anisotropy.ActiveId, CultureInfo.InvariantCulture);
+            ConfigurationState.Instance.Graphics.AspectRatio.Value = Enum.Parse<AspectRatio>(_aspectRatio.ActiveId);
+            ConfigurationState.Instance.Graphics.BackendThreading.Value = backendThreading;
+            ConfigurationState.Instance.Graphics.GraphicsBackend.Value = Enum.Parse<GraphicsBackend>(_graphicsBackend.ActiveId);
+            ConfigurationState.Instance.Graphics.PreferredGpu.Value = _preferredGpu.ActiveId;
+            ConfigurationState.Instance.Graphics.ResScale.Value = int.Parse(_resScaleCombo.ActiveId);
+            ConfigurationState.Instance.Graphics.ResScaleCustom.Value = resScaleCustom;
+            ConfigurationState.Instance.System.AudioVolume.Value = (float)_audioVolumeSlider.Value / 100.0f;
 
             _previousVolumeLevel = ConfigurationState.Instance.System.AudioVolume.Value;
 
@@ -640,10 +640,10 @@ namespace Ryujinx.Ui.Windows
 
         private void SystemTimeSpin_ValueChanged(object sender, EventArgs e)
         {
-            int year   = _systemTimeYearSpin.ValueAsInt;
-            int month  = _systemTimeMonthSpin.ValueAsInt;
-            int day    = _systemTimeDaySpin.ValueAsInt;
-            int hour   = _systemTimeHourSpin.ValueAsInt;
+            int year = _systemTimeYearSpin.ValueAsInt;
+            int month = _systemTimeMonthSpin.ValueAsInt;
+            int day = _systemTimeDaySpin.ValueAsInt;
+            int hour = _systemTimeHourSpin.ValueAsInt;
             int minute = _systemTimeMinuteSpin.ValueAsInt;
 
             if (!DateTime.TryParse(year + "-" + month + "-" + day + " " + hour + ":" + minute, out DateTime newTime))
@@ -690,7 +690,7 @@ namespace Ryujinx.Ui.Windows
                                 {
                                     break;
                                 }
-                            } while(_gameDirsBoxStore.IterNext(ref treeIter));
+                            } while (_gameDirsBoxStore.IterNext(ref treeIter));
                         }
 
                         if (!_directoryChanged)
@@ -726,9 +726,9 @@ namespace Ryujinx.Ui.Windows
 
         private void CustThemeToggle_Activated(object sender, EventArgs args)
         {
-            _custThemePath.Sensitive      = _custThemeToggle.Active;
+            _custThemePath.Sensitive = _custThemeToggle.Active;
             _custThemePathLabel.Sensitive = _custThemeToggle.Active;
-            _browseThemePath.Sensitive    = _custThemeToggle.Active;
+            _browseThemePath.Sensitive = _custThemeToggle.Active;
         }
 
         private void BrowseThemeDir_Pressed(object sender, EventArgs args)

@@ -278,7 +278,7 @@ namespace Ryujinx.Input.HLE
             if (motionConfig.MotionBackend != MotionInputBackendType.CemuHook)
             {
                 _leftMotionInput = new MotionInput();
-             }
+            }
             else
             {
                 _leftMotionInput = null;
@@ -391,12 +391,12 @@ namespace Ryujinx.Input.HLE
         private static JoystickPosition ApplyDeadzone(float x, float y, float deadzone)
         {
             float magnitudeClamped = Math.Min(MathF.Sqrt(x * x + y * y), 1f);
-            
+
             if (magnitudeClamped <= deadzone)
             {
-                return new JoystickPosition() {Dx = 0, Dy = 0};
+                return new JoystickPosition() { Dx = 0, Dy = 0 };
             }
-            
+
             return new JoystickPosition()
             {
                 Dx = ClampAxis((x / magnitudeClamped) * ((magnitudeClamped - deadzone) / (1 - deadzone))),
@@ -479,9 +479,9 @@ namespace Ryujinx.Input.HLE
             return new SixAxisInput()
             {
                 Accelerometer = accelerometer,
-                Gyroscope     = gyroscope,
-                Rotation      = rotation,
-                Orientation   = orientationForHLE
+                Gyroscope = gyroscope,
+                Rotation = rotation,
+                Orientation = orientationForHLE
             };
         }
 

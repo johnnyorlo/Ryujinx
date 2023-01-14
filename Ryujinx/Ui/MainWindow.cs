@@ -52,9 +52,9 @@ namespace Ryujinx.Ui
 {
     public class MainWindow : Window
     {
-        private readonly VirtualFileSystem    _virtualFileSystem;
-        private readonly ContentManager       _contentManager;
-        private readonly AccountManager       _accountManager;
+        private readonly VirtualFileSystem _virtualFileSystem;
+        private readonly ContentManager _contentManager;
+        private readonly AccountManager _accountManager;
         private readonly LibHacHorizonManager _libHacHorizonManager;
 
         private UserChannelPersistence _userChannelPersistence;
@@ -64,9 +64,9 @@ namespace Ryujinx.Ui
         private WindowsMultimediaTimerResolution _windowsMultimediaTimerResolution;
 
         private readonly ApplicationLibrary _applicationLibrary;
-        private readonly GtkHostUiHandler   _uiHandler;
-        private readonly AutoResetEvent     _deviceExitStatus;
-        private readonly ListStore          _tableStore;
+        private readonly GtkHostUiHandler _uiHandler;
+        private readonly AutoResetEvent _deviceExitStatus;
+        private readonly ListStore _tableStore;
 
         private bool _updatingGameTable;
         private bool _gameLoaded;
@@ -75,7 +75,7 @@ namespace Ryujinx.Ui
         private string _currentEmulatedGamePath = null;
 
         private string _lastScannedAmiiboId = "";
-        private bool   _lastScannedAmiiboShowAll = false;
+        private bool _lastScannedAmiiboShowAll = false;
 
         public RendererWidgetBase RendererWidget;
         public InputManager InputManager;
@@ -86,55 +86,55 @@ namespace Ryujinx.Ui
 
         [GUI] public MenuItem ExitMenuItem;
         [GUI] public MenuItem UpdateMenuItem;
-        [GUI] MenuBar         _menuBar;
-        [GUI] Box             _footerBox;
-        [GUI] Box             _statusBar;
-        [GUI] MenuItem        _optionMenu;
-        [GUI] MenuItem        _manageUserProfiles;
-        [GUI] MenuItem        _fileMenu;
-        [GUI] MenuItem        _loadApplicationFile;
-        [GUI] MenuItem        _loadApplicationFolder;
-        [GUI] MenuItem        _appletMenu;
-        [GUI] MenuItem        _actionMenu;
-        [GUI] MenuItem        _pauseEmulation;
-        [GUI] MenuItem        _resumeEmulation;
-        [GUI] MenuItem        _stopEmulation;
-        [GUI] MenuItem        _simulateWakeUpMessage;
-        [GUI] MenuItem        _scanAmiibo;
-        [GUI] MenuItem        _takeScreenshot;
-        [GUI] MenuItem        _hideUi;
-        [GUI] MenuItem        _fullScreen;
-        [GUI] CheckMenuItem   _startFullScreen;
-        [GUI] CheckMenuItem   _showConsole;
-        [GUI] CheckMenuItem   _favToggle;
-        [GUI] MenuItem        _firmwareInstallDirectory;
-        [GUI] MenuItem        _firmwareInstallFile;
-        [GUI] Label           _fifoStatus;
-        [GUI] CheckMenuItem   _iconToggle;
-        [GUI] CheckMenuItem   _developerToggle;
-        [GUI] CheckMenuItem   _appToggle;
-        [GUI] CheckMenuItem   _timePlayedToggle;
-        [GUI] CheckMenuItem   _versionToggle;
-        [GUI] CheckMenuItem   _lastPlayedToggle;
-        [GUI] CheckMenuItem   _fileExtToggle;
-        [GUI] CheckMenuItem   _pathToggle;
-        [GUI] CheckMenuItem   _fileSizeToggle;
-        [GUI] Label           _gpuBackend;
-        [GUI] Label           _dockedMode;
-        [GUI] Label           _aspectRatio;
-        [GUI] Label           _gameStatus;
-        [GUI] TreeView        _gameTable;
-        [GUI] TreeSelection   _gameTableSelection;
-        [GUI] ScrolledWindow  _gameTableWindow;
-        [GUI] Label           _gpuName;
-        [GUI] Label           _progressLabel;
-        [GUI] Label           _firmwareVersionLabel;
+        [GUI] MenuBar _menuBar;
+        [GUI] Box _footerBox;
+        [GUI] Box _statusBar;
+        [GUI] MenuItem _optionMenu;
+        [GUI] MenuItem _manageUserProfiles;
+        [GUI] MenuItem _fileMenu;
+        [GUI] MenuItem _loadApplicationFile;
+        [GUI] MenuItem _loadApplicationFolder;
+        [GUI] MenuItem _appletMenu;
+        [GUI] MenuItem _actionMenu;
+        [GUI] MenuItem _pauseEmulation;
+        [GUI] MenuItem _resumeEmulation;
+        [GUI] MenuItem _stopEmulation;
+        [GUI] MenuItem _simulateWakeUpMessage;
+        [GUI] MenuItem _scanAmiibo;
+        [GUI] MenuItem _takeScreenshot;
+        [GUI] MenuItem _hideUi;
+        [GUI] MenuItem _fullScreen;
+        [GUI] CheckMenuItem _startFullScreen;
+        [GUI] CheckMenuItem _showConsole;
+        [GUI] CheckMenuItem _favToggle;
+        [GUI] MenuItem _firmwareInstallDirectory;
+        [GUI] MenuItem _firmwareInstallFile;
+        [GUI] Label _fifoStatus;
+        [GUI] CheckMenuItem _iconToggle;
+        [GUI] CheckMenuItem _developerToggle;
+        [GUI] CheckMenuItem _appToggle;
+        [GUI] CheckMenuItem _timePlayedToggle;
+        [GUI] CheckMenuItem _versionToggle;
+        [GUI] CheckMenuItem _lastPlayedToggle;
+        [GUI] CheckMenuItem _fileExtToggle;
+        [GUI] CheckMenuItem _pathToggle;
+        [GUI] CheckMenuItem _fileSizeToggle;
+        [GUI] Label _gpuBackend;
+        [GUI] Label _dockedMode;
+        [GUI] Label _aspectRatio;
+        [GUI] Label _gameStatus;
+        [GUI] TreeView _gameTable;
+        [GUI] TreeSelection _gameTableSelection;
+        [GUI] ScrolledWindow _gameTableWindow;
+        [GUI] Label _gpuName;
+        [GUI] Label _progressLabel;
+        [GUI] Label _firmwareVersionLabel;
         [GUI] Gtk.ProgressBar _progressBar;
-        [GUI] Box             _viewBox;
-        [GUI] Label           _vSyncStatus;
-        [GUI] Label           _volumeStatus;
-        [GUI] Box             _listStatusBox;
-        [GUI] Label           _loadingStatusLabel;
+        [GUI] Box _viewBox;
+        [GUI] Label _vSyncStatus;
+        [GUI] Label _volumeStatus;
+        [GUI] Box _listStatusBox;
+        [GUI] Label _loadingStatusLabel;
         [GUI] Gtk.ProgressBar _loadingStatusBar;
 
 #pragma warning restore CS0649, IDE0044, CS0169
@@ -149,20 +149,20 @@ namespace Ryujinx.Ui
             ThemeHelper.ApplyTheme();
             Gdk.Monitor monitor = Display.GetMonitor(0);
             // Sets overridden fields.
-            int monitorWidth  = monitor.Geometry.Width  * monitor.ScaleFactor;
+            int monitorWidth = monitor.Geometry.Width * monitor.ScaleFactor;
             int monitorHeight = monitor.Geometry.Height * monitor.ScaleFactor;
 
-            DefaultWidth  = monitorWidth  < 1280 ? monitorWidth  : 1280;
-            DefaultHeight = monitorHeight < 760  ? monitorHeight : 760;
+            DefaultWidth = monitorWidth < 1280 ? monitorWidth : 1280;
+            DefaultHeight = monitorHeight < 760 ? monitorHeight : 760;
 
-            Icon  = new Gdk.Pixbuf(Assembly.GetAssembly(typeof(ConfigurationState)), "Ryujinx.Ui.Common.Resources.Logo_Ryujinx.png");
+            Icon = new Gdk.Pixbuf(Assembly.GetAssembly(typeof(ConfigurationState)), "Ryujinx.Ui.Common.Resources.Logo_Ryujinx.png");
             Title = $"Ryujinx {Program.Version}";
 
             // Hide emulation context status bar.
             _statusBar.Hide();
 
             // Instantiate HLE objects.
-            _virtualFileSystem    = VirtualFileSystem.CreateInstance();
+            _virtualFileSystem = VirtualFileSystem.CreateInstance();
             _libHacHorizonManager = new LibHacHorizonManager();
 
             _libHacHorizonManager.InitializeFsServer(_virtualFileSystem);
@@ -177,36 +177,36 @@ namespace Ryujinx.Ui
             // Consider removing this at some point in the future when we don't need to worry about old saves.
             VirtualFileSystem.FixExtraData(_libHacHorizonManager.RyujinxClient);
 
-            _contentManager         = new ContentManager(_virtualFileSystem);
-            _accountManager         = new AccountManager(_libHacHorizonManager.RyujinxClient, CommandLineState.Profile);
+            _contentManager = new ContentManager(_virtualFileSystem);
+            _accountManager = new AccountManager(_libHacHorizonManager.RyujinxClient, CommandLineState.Profile);
             _userChannelPersistence = new UserChannelPersistence();
 
             // Instantiate GUI objects.
             _applicationLibrary = new ApplicationLibrary(_virtualFileSystem);
-            _uiHandler          = new GtkHostUiHandler(this);
-            _deviceExitStatus   = new AutoResetEvent(false);
+            _uiHandler = new GtkHostUiHandler(this);
+            _deviceExitStatus = new AutoResetEvent(false);
 
             WindowStateEvent += WindowStateEvent_Changed;
-            DeleteEvent      += Window_Close;
-            FocusInEvent     += MainWindow_FocusInEvent;
-            FocusOutEvent    += MainWindow_FocusOutEvent;
+            DeleteEvent += Window_Close;
+            FocusInEvent += MainWindow_FocusInEvent;
+            FocusOutEvent += MainWindow_FocusOutEvent;
 
-            _applicationLibrary.ApplicationAdded        += Application_Added;
+            _applicationLibrary.ApplicationAdded += Application_Added;
             _applicationLibrary.ApplicationCountUpdated += ApplicationCount_Updated;
 
-            _fileMenu.StateChanged   += FileMenu_StateChanged;
+            _fileMenu.StateChanged += FileMenu_StateChanged;
             _actionMenu.StateChanged += ActionMenu_StateChanged;
             _optionMenu.StateChanged += OptionMenu_StateChanged;
 
             _gameTable.ButtonReleaseEvent += Row_Clicked;
-            _fullScreen.Activated         += FullScreen_Toggled;
+            _fullScreen.Activated += FullScreen_Toggled;
 
             RendererWidgetBase.StatusUpdatedEvent += Update_StatusBar;
 
             ConfigurationState.Instance.System.IgnoreMissingServices.Event += UpdateIgnoreMissingServicesState;
-            ConfigurationState.Instance.Graphics.AspectRatio.Event         += UpdateAspectRatioState;
-            ConfigurationState.Instance.System.EnableDockedMode.Event      += UpdateDockedModeState;
-            ConfigurationState.Instance.System.AudioVolume.Event           += UpdateAudioVolumeState;
+            ConfigurationState.Instance.Graphics.AspectRatio.Event += UpdateAspectRatioState;
+            ConfigurationState.Instance.System.EnableDockedMode.Event += UpdateDockedModeState;
+            ConfigurationState.Instance.System.AudioVolume.Event += UpdateAudioVolumeState;
 
             if (ConfigurationState.Instance.Ui.StartFullscreen)
             {
@@ -220,27 +220,27 @@ namespace Ryujinx.Ui
             _pauseEmulation.Sensitive = false;
             _resumeEmulation.Sensitive = false;
 
-            if (ConfigurationState.Instance.Ui.GuiColumns.FavColumn)        _favToggle.Active        = true;
-            if (ConfigurationState.Instance.Ui.GuiColumns.IconColumn)       _iconToggle.Active       = true;
-            if (ConfigurationState.Instance.Ui.GuiColumns.AppColumn)        _appToggle.Active        = true;
-            if (ConfigurationState.Instance.Ui.GuiColumns.DevColumn)        _developerToggle.Active  = true;
-            if (ConfigurationState.Instance.Ui.GuiColumns.VersionColumn)    _versionToggle.Active    = true;
+            if (ConfigurationState.Instance.Ui.GuiColumns.FavColumn) _favToggle.Active = true;
+            if (ConfigurationState.Instance.Ui.GuiColumns.IconColumn) _iconToggle.Active = true;
+            if (ConfigurationState.Instance.Ui.GuiColumns.AppColumn) _appToggle.Active = true;
+            if (ConfigurationState.Instance.Ui.GuiColumns.DevColumn) _developerToggle.Active = true;
+            if (ConfigurationState.Instance.Ui.GuiColumns.VersionColumn) _versionToggle.Active = true;
             if (ConfigurationState.Instance.Ui.GuiColumns.TimePlayedColumn) _timePlayedToggle.Active = true;
             if (ConfigurationState.Instance.Ui.GuiColumns.LastPlayedColumn) _lastPlayedToggle.Active = true;
-            if (ConfigurationState.Instance.Ui.GuiColumns.FileExtColumn)    _fileExtToggle.Active    = true;
-            if (ConfigurationState.Instance.Ui.GuiColumns.FileSizeColumn)   _fileSizeToggle.Active   = true;
-            if (ConfigurationState.Instance.Ui.GuiColumns.PathColumn)       _pathToggle.Active       = true;
+            if (ConfigurationState.Instance.Ui.GuiColumns.FileExtColumn) _fileExtToggle.Active = true;
+            if (ConfigurationState.Instance.Ui.GuiColumns.FileSizeColumn) _fileSizeToggle.Active = true;
+            if (ConfigurationState.Instance.Ui.GuiColumns.PathColumn) _pathToggle.Active = true;
 
-            _favToggle.Toggled        += Fav_Toggled;
-            _iconToggle.Toggled       += Icon_Toggled;
-            _appToggle.Toggled        += App_Toggled;
-            _developerToggle.Toggled  += Developer_Toggled;
-            _versionToggle.Toggled    += Version_Toggled;
+            _favToggle.Toggled += Fav_Toggled;
+            _iconToggle.Toggled += Icon_Toggled;
+            _appToggle.Toggled += App_Toggled;
+            _developerToggle.Toggled += Developer_Toggled;
+            _versionToggle.Toggled += Version_Toggled;
             _timePlayedToggle.Toggled += TimePlayed_Toggled;
             _lastPlayedToggle.Toggled += LastPlayed_Toggled;
-            _fileExtToggle.Toggled    += FileExt_Toggled;
-            _fileSizeToggle.Toggled   += FileSize_Toggled;
-            _pathToggle.Toggled       += Path_Toggled;
+            _fileExtToggle.Toggled += FileExt_Toggled;
+            _fileSizeToggle.Toggled += FileSize_Toggled;
+            _pathToggle.Toggled += Path_Toggled;
 
             _gameTable.Model = _tableStore = new ListStore(
                 typeof(bool),
@@ -259,7 +259,7 @@ namespace Ryujinx.Ui
             _tableStore.SetSortFunc(6, SortHelper.LastPlayedSort);
             _tableStore.SetSortFunc(8, SortHelper.FileSizeSort);
 
-            int  columnId  = ConfigurationState.Instance.Ui.ColumnSort.SortColumnId;
+            int columnId = ConfigurationState.Instance.Ui.ColumnSort.SortColumnId;
             bool ascending = ConfigurationState.Instance.Ui.ColumnSort.SortAscending;
 
             _tableStore.SetSortColumnId(columnId, ascending ? SortType.Ascending : SortType.Descending);
@@ -340,16 +340,16 @@ namespace Ryujinx.Ui
             CellRendererToggle favToggle = new CellRendererToggle();
             favToggle.Toggled += FavToggle_Toggled;
 
-            if (ConfigurationState.Instance.Ui.GuiColumns.FavColumn)        _gameTable.AppendColumn("Fav",         favToggle,                "active", 0);
-            if (ConfigurationState.Instance.Ui.GuiColumns.IconColumn)       _gameTable.AppendColumn("Icon",        new CellRendererPixbuf(), "pixbuf", 1);
-            if (ConfigurationState.Instance.Ui.GuiColumns.AppColumn)        _gameTable.AppendColumn("Application", new CellRendererText(),   "text",   2);
-            if (ConfigurationState.Instance.Ui.GuiColumns.DevColumn)        _gameTable.AppendColumn("Developer",   new CellRendererText(),   "text",   3);
-            if (ConfigurationState.Instance.Ui.GuiColumns.VersionColumn)    _gameTable.AppendColumn("Version",     new CellRendererText(),   "text",   4);
-            if (ConfigurationState.Instance.Ui.GuiColumns.TimePlayedColumn) _gameTable.AppendColumn("Time Played", new CellRendererText(),   "text",   5);
-            if (ConfigurationState.Instance.Ui.GuiColumns.LastPlayedColumn) _gameTable.AppendColumn("Last Played", new CellRendererText(),   "text",   6);
-            if (ConfigurationState.Instance.Ui.GuiColumns.FileExtColumn)    _gameTable.AppendColumn("File Ext",    new CellRendererText(),   "text",   7);
-            if (ConfigurationState.Instance.Ui.GuiColumns.FileSizeColumn)   _gameTable.AppendColumn("File Size",   new CellRendererText(),   "text",   8);
-            if (ConfigurationState.Instance.Ui.GuiColumns.PathColumn)       _gameTable.AppendColumn("Path",        new CellRendererText(),   "text",   9);
+            if (ConfigurationState.Instance.Ui.GuiColumns.FavColumn) _gameTable.AppendColumn("Fav", favToggle, "active", 0);
+            if (ConfigurationState.Instance.Ui.GuiColumns.IconColumn) _gameTable.AppendColumn("Icon", new CellRendererPixbuf(), "pixbuf", 1);
+            if (ConfigurationState.Instance.Ui.GuiColumns.AppColumn) _gameTable.AppendColumn("Application", new CellRendererText(), "text", 2);
+            if (ConfigurationState.Instance.Ui.GuiColumns.DevColumn) _gameTable.AppendColumn("Developer", new CellRendererText(), "text", 3);
+            if (ConfigurationState.Instance.Ui.GuiColumns.VersionColumn) _gameTable.AppendColumn("Version", new CellRendererText(), "text", 4);
+            if (ConfigurationState.Instance.Ui.GuiColumns.TimePlayedColumn) _gameTable.AppendColumn("Time Played", new CellRendererText(), "text", 5);
+            if (ConfigurationState.Instance.Ui.GuiColumns.LastPlayedColumn) _gameTable.AppendColumn("Last Played", new CellRendererText(), "text", 6);
+            if (ConfigurationState.Instance.Ui.GuiColumns.FileExtColumn) _gameTable.AppendColumn("File Ext", new CellRendererText(), "text", 7);
+            if (ConfigurationState.Instance.Ui.GuiColumns.FileSizeColumn) _gameTable.AppendColumn("File Size", new CellRendererText(), "text", 8);
+            if (ConfigurationState.Instance.Ui.GuiColumns.PathColumn) _gameTable.AppendColumn("Path", new CellRendererText(), "text", 9);
 
             foreach (TreeViewColumn column in _gameTable.Columns)
             {
@@ -642,7 +642,7 @@ namespace Ryujinx.Ui
 
                 _updatingGameTable = false;
             });
-            applicationLibraryThread.Name         = "GUI.ApplicationLibraryThread";
+            applicationLibraryThread.Name = "GUI.ApplicationLibraryThread";
             applicationLibraryThread.IsBackground = true;
             applicationLibraryThread.Start();
         }
@@ -654,8 +654,8 @@ namespace Ryujinx.Ui
             {
                 MessageDialog debugWarningDialog = new MessageDialog(this, DialogFlags.Modal, MessageType.Warning, ButtonsType.YesNo, null)
                 {
-                    Title         = "Ryujinx - Warning",
-                    Text          = "You have trace logging enabled, which is designed to be used by developers only.",
+                    Title = "Ryujinx - Warning",
+                    Text = "You have trace logging enabled, which is designed to be used by developers only.",
                     SecondaryText = "For optimal performance, it's recommended to disable trace logging. Would you like to disable trace logging now?"
                 };
 
@@ -672,8 +672,8 @@ namespace Ryujinx.Ui
             {
                 MessageDialog shadersDumpWarningDialog = new MessageDialog(this, DialogFlags.Modal, MessageType.Warning, ButtonsType.YesNo, null)
                 {
-                    Title         = "Ryujinx - Warning",
-                    Text          = "You have shader dumping enabled, which is designed to be used by developers only.",
+                    Title = "Ryujinx - Warning",
+                    Text = "You have shader dumping enabled, which is designed to be used by developers only.",
                     SecondaryText = "For optimal performance, it's recommended to disable shader dumping. Would you like to disable shader dumping now?"
                 };
 
@@ -709,7 +709,7 @@ namespace Ryujinx.Ui
 
                 SystemVersion firmwareVersion = _contentManager.GetCurrentFirmwareVersion();
 
-                bool isDirectory     = Directory.Exists(path);
+                bool isDirectory = Directory.Exists(path);
                 bool isFirmwareTitle = false;
 
                 if (path.StartsWith("@SystemContent"))
@@ -859,13 +859,13 @@ namespace Ryujinx.Ui
 
                 windowThread.Start();
 
-                _gameLoaded           = true;
+                _gameLoaded = true;
                 _actionMenu.Sensitive = true;
                 UpdateMenuItem.Sensitive = false;
 
                 _lastScannedAmiiboId = "";
 
-                _firmwareInstallFile.Sensitive      = false;
+                _firmwareInstallFile.Sensitive = false;
                 _firmwareInstallDirectory.Sensitive = false;
 
                 DiscordIntegrationModule.SwitchToPlayingState(_emulationContext.Application.TitleIdText, _emulationContext.Application.TitleName);
@@ -1016,7 +1016,7 @@ namespace Ryujinx.Ui
                 _applicationLibrary.LoadAndSaveMetaData(titleId, appMetadata =>
                 {
                     DateTime lastPlayedDateTime = DateTime.Parse(appMetadata.LastPlayed);
-                    double   sessionTimePlayed  = DateTime.UtcNow.Subtract(lastPlayedDateTime).TotalSeconds;
+                    double sessionTimePlayed = DateTime.UtcNow.Subtract(lastPlayedDateTime).TotalSeconds;
 
                     appMetadata.TimePlayed += Math.Round(sessionTimePlayed, MidpointRounding.AwayFromZero);
                 });
@@ -1025,15 +1025,15 @@ namespace Ryujinx.Ui
 
         public void UpdateGraphicsConfig()
         {
-            int   resScale       = ConfigurationState.Instance.Graphics.ResScale;
+            int resScale = ConfigurationState.Instance.Graphics.ResScale;
             float resScaleCustom = ConfigurationState.Instance.Graphics.ResScaleCustom;
 
-            Graphics.Gpu.GraphicsConfig.ResScale                   = (resScale == -1) ? resScaleCustom : resScale;
-            Graphics.Gpu.GraphicsConfig.MaxAnisotropy              = ConfigurationState.Instance.Graphics.MaxAnisotropy;
-            Graphics.Gpu.GraphicsConfig.ShadersDumpPath            = ConfigurationState.Instance.Graphics.ShadersDumpPath;
-            Graphics.Gpu.GraphicsConfig.EnableShaderCache          = ConfigurationState.Instance.Graphics.EnableShaderCache;
+            Graphics.Gpu.GraphicsConfig.ResScale = (resScale == -1) ? resScaleCustom : resScale;
+            Graphics.Gpu.GraphicsConfig.MaxAnisotropy = ConfigurationState.Instance.Graphics.MaxAnisotropy;
+            Graphics.Gpu.GraphicsConfig.ShadersDumpPath = ConfigurationState.Instance.Graphics.ShadersDumpPath;
+            Graphics.Gpu.GraphicsConfig.EnableShaderCache = ConfigurationState.Instance.Graphics.EnableShaderCache;
             Graphics.Gpu.GraphicsConfig.EnableTextureRecompression = ConfigurationState.Instance.Graphics.EnableTextureRecompression;
-            Graphics.Gpu.GraphicsConfig.EnableMacroHLE             = ConfigurationState.Instance.Graphics.EnableMacroHLE;
+            Graphics.Gpu.GraphicsConfig.EnableMacroHLE = ConfigurationState.Instance.Graphics.EnableMacroHLE;
         }
 
         public void SaveConfig()
@@ -1098,7 +1098,7 @@ namespace Ryujinx.Ui
             Application.Invoke(delegate
             {
                 _progressLabel.Text = $"{args.NumAppsLoaded}/{args.NumAppsFound} Games Loaded";
-                float barValue      = 0;
+                float barValue = 0;
 
                 if (args.NumAppsFound != 0)
                 {
@@ -1119,12 +1119,12 @@ namespace Ryujinx.Ui
         {
             Application.Invoke(delegate
             {
-                _gameStatus.Text   = args.GameStatus;
-                _fifoStatus.Text   = args.FifoStatus;
-                _gpuName.Text      = args.GpuName;
-                _dockedMode.Text   = args.DockedMode;
-                _aspectRatio.Text  = args.AspectRatio;
-                _gpuBackend.Text   = args.GpuBackend;
+                _gameStatus.Text = args.GameStatus;
+                _fifoStatus.Text = args.FifoStatus;
+                _gpuName.Text = args.GpuName;
+                _dockedMode.Text = args.DockedMode;
+                _aspectRatio.Text = args.AspectRatio;
+                _gpuBackend.Text = args.GpuBackend;
                 _volumeStatus.Text = GetVolumeLabelText(args.Volume);
 
                 if (args.VSyncEnabled)
@@ -1144,8 +1144,8 @@ namespace Ryujinx.Ui
         {
             _tableStore.GetIter(out TreeIter treeIter, new TreePath(args.Path));
 
-            string titleId        = _tableStore.GetValue(treeIter, 2).ToString().Split("\n")[1].ToLower();
-            bool   newToggleValue = !(bool)_tableStore.GetValue(treeIter, 0);
+            string titleId = _tableStore.GetValue(treeIter, 2).ToString().Split("\n")[1].ToLower();
+            bool newToggleValue = !(bool)_tableStore.GetValue(treeIter, 0);
 
             _tableStore.SetValue(treeIter, 0, newToggleValue);
 
@@ -1159,7 +1159,7 @@ namespace Ryujinx.Ui
         {
             TreeViewColumn column = (TreeViewColumn)sender;
 
-            ConfigurationState.Instance.Ui.ColumnSort.SortColumnId.Value  = column.SortColumnId;
+            ConfigurationState.Instance.Ui.ColumnSort.SortColumnId.Value = column.SortColumnId;
             ConfigurationState.Instance.Ui.ColumnSort.SortAscending.Value = column.SortOrder == SortType.Ascending;
 
             SaveConfig();
@@ -1230,8 +1230,8 @@ namespace Ryujinx.Ui
             }
 
             string titleFilePath = _tableStore.GetValue(treeIter, 9).ToString();
-            string titleName     = _tableStore.GetValue(treeIter, 2).ToString().Split("\n")[0];
-            string titleId       = _tableStore.GetValue(treeIter, 2).ToString().Split("\n")[1].ToLower();
+            string titleName = _tableStore.GetValue(treeIter, 2).ToString().Split("\n")[0];
+            string titleId = _tableStore.GetValue(treeIter, 2).ToString().Split("\n")[1].ToLower();
 
             BlitStruct<ApplicationControlProperty> controlData = (BlitStruct<ApplicationControlProperty>)_tableStore.GetValue(treeIter, 10);
 
@@ -1275,8 +1275,8 @@ namespace Ryujinx.Ui
 
         private void FileMenu_StateChanged(object o, StateChangedArgs args)
         {
-            _appletMenu.Sensitive            = _emulationContext == null && _contentManager.GetCurrentFirmwareVersion() != null && _contentManager.GetCurrentFirmwareVersion().Major > 3;
-            _loadApplicationFile.Sensitive   = _emulationContext == null;
+            _appletMenu.Sensitive = _emulationContext == null && _contentManager.GetCurrentFirmwareVersion() != null && _contentManager.GetCurrentFirmwareVersion().Major > 3;
+            _loadApplicationFile.Sensitive = _emulationContext == null;
             _loadApplicationFolder.Sensitive = _emulationContext == null;
         }
 
@@ -1511,7 +1511,7 @@ namespace Ryujinx.Ui
             else
             {
                 // otherwise, clear state.
-                _userChannelPersistence  = new UserChannelPersistence();
+                _userChannelPersistence = new UserChannelPersistence();
                 _currentEmulatedGamePath = null;
                 _actionMenu.Sensitive = false;
                 _firmwareInstallFile.Sensitive = true;
@@ -1569,7 +1569,7 @@ namespace Ryujinx.Ui
 
         private void ManageCheats_Pressed(object sender, EventArgs args)
         {
-           var window = new CheatWindow(_virtualFileSystem, _emulationContext.Application.TitleId, _emulationContext.Application.TitleName);
+            var window = new CheatWindow(_virtualFileSystem, _emulationContext.Application.TitleId, _emulationContext.Application.TitleName);
 
             window.Destroyed += CheatWindow_Destroyed;
             window.Show();
@@ -1599,7 +1599,7 @@ namespace Ryujinx.Ui
 
         private void ActionMenu_StateChanged(object o, StateChangedArgs args)
         {
-            _scanAmiibo.Sensitive     = _emulationContext != null && _emulationContext.System.SearchingForAmiibo(out int _);
+            _scanAmiibo.Sensitive = _emulationContext != null && _emulationContext.System.SearchingForAmiibo(out int _);
             _takeScreenshot.Sensitive = _emulationContext != null;
         }
 
@@ -1610,9 +1610,9 @@ namespace Ryujinx.Ui
                 AmiiboWindow amiiboWindow = new AmiiboWindow
                 {
                     LastScannedAmiiboShowAll = _lastScannedAmiiboShowAll,
-                    LastScannedAmiiboId      = _lastScannedAmiiboId,
-                    DeviceId                 = deviceId,
-                    TitleId                  = _emulationContext.Application.TitleIdText.ToUpper()
+                    LastScannedAmiiboId = _lastScannedAmiiboId,
+                    DeviceId = deviceId,
+                    TitleId = _emulationContext.Application.TitleIdText.ToUpper()
                 };
 
                 amiiboWindow.DeleteEvent += AmiiboWindow_DeleteEvent;
@@ -1637,7 +1637,7 @@ namespace Ryujinx.Ui
         {
             if (((AmiiboWindow)sender).AmiiboId != "" && ((AmiiboWindow)sender).Response == ResponseType.Ok)
             {
-                _lastScannedAmiiboId      = ((AmiiboWindow)sender).AmiiboId;
+                _lastScannedAmiiboId = ((AmiiboWindow)sender).AmiiboId;
                 _lastScannedAmiiboShowAll = ((AmiiboWindow)sender).LastScannedAmiiboShowAll;
 
                 _emulationContext.System.ScanAmiibo(((AmiiboWindow)sender).DeviceId, ((AmiiboWindow)sender).AmiiboId, ((AmiiboWindow)sender).UseRandomUuid);

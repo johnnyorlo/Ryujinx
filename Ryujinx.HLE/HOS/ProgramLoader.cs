@@ -60,8 +60,8 @@ namespace Ryujinx.HLE.HOS
         private const bool AslrEnabled = true;
 
         private const int ArgsHeaderSize = 8;
-        private const int ArgsDataSize   = 0x9000;
-        private const int ArgsTotalSize  = ArgsHeaderSize + ArgsDataSize;
+        private const int ArgsDataSize = 0x9000;
+        private const int ArgsTotalSize = ArgsHeaderSize + ArgsDataSize;
 
         public static bool LoadKip(KernelContext context, KipExecutable kip)
         {
@@ -194,9 +194,9 @@ namespace Ryujinx.HLE.HOS
             ref readonly var meta = ref npdm.Meta.Value;
 
             ulong argsStart = 0;
-            uint  argsSize  = 0;
+            uint argsSize = 0;
             ulong codeStart = (meta.Flags & 1) != 0 ? 0x8000000UL : 0x200000UL;
-            uint  codeSize  = 0;
+            uint codeSize = 0;
 
             var buildIds = executables.Select(e => (e switch
             {
@@ -212,7 +212,7 @@ namespace Ryujinx.HLE.HOS
                 IExecutable nso = executables[index];
 
                 uint textEnd = nso.TextOffset + (uint)nso.Text.Length;
-                uint roEnd   = nso.RoOffset   + (uint)nso.Ro.Length;
+                uint roEnd = nso.RoOffset + (uint)nso.Ro.Length;
                 uint dataEnd = nso.DataOffset + (uint)nso.Data.Length + nso.BssSize;
 
                 uint nsoSize = textEnd;
@@ -372,9 +372,9 @@ namespace Ryujinx.HLE.HOS
         private static Result LoadIntoMemory(KProcess process, IExecutable image, ulong baseAddress)
         {
             ulong textStart = baseAddress + image.TextOffset;
-            ulong roStart   = baseAddress + image.RoOffset;
+            ulong roStart = baseAddress + image.RoOffset;
             ulong dataStart = baseAddress + image.DataOffset;
-            ulong bssStart  = baseAddress + image.BssOffset;
+            ulong bssStart = baseAddress + image.BssOffset;
 
             ulong end = dataStart + (ulong)image.Data.Length;
 
@@ -384,7 +384,7 @@ namespace Ryujinx.HLE.HOS
             }
 
             process.CpuMemory.Write(textStart, image.Text);
-            process.CpuMemory.Write(roStart,   image.Ro);
+            process.CpuMemory.Write(roStart, image.Ro);
             process.CpuMemory.Write(dataStart, image.Data);
 
             process.CpuMemory.Fill(bssStart, image.BssSize, 0);

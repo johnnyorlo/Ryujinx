@@ -41,25 +41,26 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl.Instructions
                 }
             }
 
-            bool isArray   = (texOp.Type & SamplerType.Array)   != 0;
+            bool isArray = (texOp.Type & SamplerType.Array) != 0;
             bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
 
             string texCall;
 
             if (texOp.Inst == Instruction.ImageAtomic)
             {
-                texCall = (texOp.Flags & TextureFlags.AtomicMask) switch {
-                    TextureFlags.Add        => "imageAtomicAdd",
-                    TextureFlags.Minimum    => "imageAtomicMin",
-                    TextureFlags.Maximum    => "imageAtomicMax",
-                    TextureFlags.Increment  => "imageAtomicAdd", // TODO: Clamp value.
-                    TextureFlags.Decrement  => "imageAtomicAdd", // TODO: Clamp value.
+                texCall = (texOp.Flags & TextureFlags.AtomicMask) switch
+                {
+                    TextureFlags.Add => "imageAtomicAdd",
+                    TextureFlags.Minimum => "imageAtomicMin",
+                    TextureFlags.Maximum => "imageAtomicMax",
+                    TextureFlags.Increment => "imageAtomicAdd", // TODO: Clamp value.
+                    TextureFlags.Decrement => "imageAtomicAdd", // TODO: Clamp value.
                     TextureFlags.BitwiseAnd => "imageAtomicAnd",
-                    TextureFlags.BitwiseOr  => "imageAtomicOr",
+                    TextureFlags.BitwiseOr => "imageAtomicOr",
                     TextureFlags.BitwiseXor => "imageAtomicXor",
-                    TextureFlags.Swap       => "imageAtomicExchange",
-                    TextureFlags.CAS        => "imageAtomicCompSwap",
-                    _                       => "imageAtomicAdd",
+                    TextureFlags.Swap => "imageAtomicExchange",
+                    TextureFlags.CAS => "imageAtomicCompSwap",
+                    _ => "imageAtomicAdd",
                 };
             }
             else
@@ -152,7 +153,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl.Instructions
                         {
                             AggregateType.S32 => NumberFormatter.FormatInt(0),
                             AggregateType.U32 => NumberFormatter.FormatUint(0),
-                            _                => NumberFormatter.FormatFloat(0)
+                            _ => NumberFormatter.FormatFloat(0)
                         };
                     }
                 }
@@ -161,7 +162,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl.Instructions
                 {
                     AggregateType.S32 => "i",
                     AggregateType.U32 => "u",
-                    _                => string.Empty
+                    _ => string.Empty
                 };
 
                 Append(prefix + "vec4(" + string.Join(", ", cElems) + ")");
@@ -273,7 +274,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl.Instructions
             IAstNode src1 = operation.GetSource(0);
             IAstNode src2 = operation.GetSource(1);
 
-            string indexExpr  = GetSoureExpr(context, src1, GetSrcVarType(operation.Inst, 0));
+            string indexExpr = GetSoureExpr(context, src1, GetSrcVarType(operation.Inst, 0));
             string offsetExpr = GetSoureExpr(context, src2, GetSrcVarType(operation.Inst, 1));
 
             return GetStorageBufferAccessor(indexExpr, offsetExpr, context.Config.Stage);
@@ -414,7 +415,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl.Instructions
             IAstNode src2 = operation.GetSource(1);
             IAstNode src3 = operation.GetSource(2);
 
-            string indexExpr  = GetSoureExpr(context, src1, GetSrcVarType(operation.Inst, 0));
+            string indexExpr = GetSoureExpr(context, src1, GetSrcVarType(operation.Inst, 0));
             string offsetExpr = GetSoureExpr(context, src2, GetSrcVarType(operation.Inst, 1));
 
             AggregateType srcType = OperandManager.GetNodeDestType(context, src3);
@@ -432,7 +433,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl.Instructions
             IAstNode src2 = operation.GetSource(1);
             IAstNode src3 = operation.GetSource(2);
 
-            string indexExpr  = GetSoureExpr(context, src1, GetSrcVarType(operation.Inst, 0));
+            string indexExpr = GetSoureExpr(context, src1, GetSrcVarType(operation.Inst, 0));
             string offsetExpr = GetSoureExpr(context, src2, GetSrcVarType(operation.Inst, 1));
 
             AggregateType srcType = OperandManager.GetNodeDestType(context, src3);
@@ -450,7 +451,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl.Instructions
             IAstNode src2 = operation.GetSource(1);
             IAstNode src3 = operation.GetSource(2);
 
-            string indexExpr  = GetSoureExpr(context, src1, GetSrcVarType(operation.Inst, 0));
+            string indexExpr = GetSoureExpr(context, src1, GetSrcVarType(operation.Inst, 0));
             string offsetExpr = GetSoureExpr(context, src2, GetSrcVarType(operation.Inst, 1));
 
             AggregateType srcType = OperandManager.GetNodeDestType(context, src3);
@@ -466,25 +467,25 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl.Instructions
         {
             AstTextureOperation texOp = (AstTextureOperation)operation;
 
-            bool isBindless     = (texOp.Flags & TextureFlags.Bindless)    != 0;
-            bool isGather       = (texOp.Flags & TextureFlags.Gather)      != 0;
+            bool isBindless = (texOp.Flags & TextureFlags.Bindless) != 0;
+            bool isGather = (texOp.Flags & TextureFlags.Gather) != 0;
             bool hasDerivatives = (texOp.Flags & TextureFlags.Derivatives) != 0;
-            bool intCoords      = (texOp.Flags & TextureFlags.IntCoords)   != 0;
-            bool hasLodBias     = (texOp.Flags & TextureFlags.LodBias)     != 0;
-            bool hasLodLevel    = (texOp.Flags & TextureFlags.LodLevel)    != 0;
-            bool hasOffset      = (texOp.Flags & TextureFlags.Offset)      != 0;
-            bool hasOffsets     = (texOp.Flags & TextureFlags.Offsets)     != 0;
+            bool intCoords = (texOp.Flags & TextureFlags.IntCoords) != 0;
+            bool hasLodBias = (texOp.Flags & TextureFlags.LodBias) != 0;
+            bool hasLodLevel = (texOp.Flags & TextureFlags.LodLevel) != 0;
+            bool hasOffset = (texOp.Flags & TextureFlags.Offset) != 0;
+            bool hasOffsets = (texOp.Flags & TextureFlags.Offsets) != 0;
 
-            bool isArray       = (texOp.Type & SamplerType.Array)       != 0;
-            bool isIndexed     = (texOp.Type & SamplerType.Indexed)     != 0;
+            bool isArray = (texOp.Type & SamplerType.Array) != 0;
+            bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
             bool isMultisample = (texOp.Type & SamplerType.Multisample) != 0;
-            bool isShadow      = (texOp.Type & SamplerType.Shadow)      != 0;
+            bool isShadow = (texOp.Type & SamplerType.Shadow) != 0;
 
             bool colorIsVector = isGather || !isShadow;
 
             SamplerType type = texOp.Type & SamplerType.Mask;
 
-            bool is2D   = type == SamplerType.Texture2D;
+            bool is2D = type == SamplerType.Texture2D;
             bool isCube = type == SamplerType.TextureCube;
 
             // 2D Array and Cube shadow samplers with LOD level or bias requires an extension.
@@ -743,14 +744,14 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl.Instructions
 
             if (hasLodBias)
             {
-               Append(Src(AggregateType.FP32));
+                Append(Src(AggregateType.FP32));
             }
 
             // textureGather* optional extra component index,
             // not needed for shadow samplers.
             if (isGather && !isShadow)
             {
-               Append(Src(AggregateType.S32));
+                Append(Src(AggregateType.S32));
             }
 
             texCall += ")" + (colorIsVector ? GetMaskMultiDest(texOp.Index) : "");

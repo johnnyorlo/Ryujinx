@@ -11,22 +11,22 @@ namespace Ryujinx.HLE.HOS.Services.Time
 {
     class TimeSharedMemory
     {
-        private Switch              _device;
-        private KSharedMemory       _sharedMemory;
+        private Switch _device;
+        private KSharedMemory _sharedMemory;
         private SharedMemoryStorage _timeSharedMemoryStorage;
-        private int                 _timeSharedMemorySize;
+        private int _timeSharedMemorySize;
 
-        private const uint SteadyClockContextOffset         = 0x00;
-        private const uint LocalSystemClockContextOffset    = 0x38;
-        private const uint NetworkSystemClockContextOffset  = 0x80;
+        private const uint SteadyClockContextOffset = 0x00;
+        private const uint LocalSystemClockContextOffset = 0x38;
+        private const uint NetworkSystemClockContextOffset = 0x80;
         private const uint AutomaticCorrectionEnabledOffset = 0xC8;
 
         public void Initialize(Switch device, KSharedMemory sharedMemory, SharedMemoryStorage timeSharedMemoryStorage, int timeSharedMemorySize)
         {
-            _device                  = device;
-            _sharedMemory            = sharedMemory;
+            _device = device;
+            _sharedMemory = sharedMemory;
             _timeSharedMemoryStorage = timeSharedMemoryStorage;
-            _timeSharedMemorySize    = timeSharedMemorySize;
+            _timeSharedMemorySize = timeSharedMemorySize;
 
             // Clean the shared memory
             timeSharedMemoryStorage.ZeroFill();
@@ -44,7 +44,7 @@ namespace Ryujinx.HLE.HOS.Services.Time
             SteadyClockContext context = new SteadyClockContext
             {
                 InternalOffset = (ulong)(currentTimePoint.NanoSeconds - ticksTimeSpan.NanoSeconds),
-                ClockSourceId  = clockSourceId
+                ClockSourceId = clockSourceId
             };
 
             WriteObjectToSharedMemory(SteadyClockContextOffset, 4, context);
@@ -58,8 +58,8 @@ namespace Ryujinx.HLE.HOS.Services.Time
 
         public void SetSteadyClockRawTimePoint(ITickSource tickSource, TimeSpanType currentTimePoint)
         {
-            SteadyClockContext context       = ReadObjectFromSharedMemory<SteadyClockContext>(SteadyClockContextOffset, 4);
-            TimeSpanType       ticksTimeSpan = TimeSpanType.FromTicks(tickSource.Counter, tickSource.Frequency);
+            SteadyClockContext context = ReadObjectFromSharedMemory<SteadyClockContext>(SteadyClockContextOffset, 4);
+            TimeSpanType ticksTimeSpan = TimeSpanType.FromTicks(tickSource.Counter, tickSource.Frequency);
 
             context.InternalOffset = (ulong)(currentTimePoint.NanoSeconds - ticksTimeSpan.NanoSeconds);
 
@@ -78,7 +78,7 @@ namespace Ryujinx.HLE.HOS.Services.Time
 
         private T ReadObjectFromSharedMemory<T>(ulong offset, ulong padding) where T : unmanaged
         {
-            T    result;
+            T result;
             uint index;
             uint possiblyNewIndex;
 

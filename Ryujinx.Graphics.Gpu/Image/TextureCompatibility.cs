@@ -469,8 +469,8 @@ namespace Ryujinx.Graphics.Gpu.Image
         /// <returns>True if the size matches with the level, false otherwise</returns>
         public static bool SizeMatches(TextureInfo lhs, TextureInfo rhs, int level)
         {
-            return Math.Max(1, lhs.Width >> level)      == rhs.Width &&
-                   Math.Max(1, lhs.Height >> level)     == rhs.Height &&
+            return Math.Max(1, lhs.Width >> level) == rhs.Width &&
+                   Math.Max(1, lhs.Height >> level) == rhs.Height &&
                    Math.Max(1, lhs.GetDepth() >> level) == rhs.GetDepth();
         }
 
@@ -496,14 +496,14 @@ namespace Ryujinx.Graphics.Gpu.Image
                 Size size0 = GetLargestAlignedSize(lhs, lhsLevel);
                 Size size1 = GetLargestAlignedSize(rhs, lhsLevel);
 
-                return size0.Width  == size1.Width &&
+                return size0.Width == size1.Width &&
                        size0.Height == size1.Height &&
-                       size0.Depth  == size1.Depth;
+                       size0.Depth == size1.Depth;
             }
             else
             {
-                return lhs.Width      == rhs.Width &&
-                       lhs.Height     == rhs.Height &&
+                return lhs.Width == rhs.Width &&
+                       lhs.Height == rhs.Height &&
                        lhs.GetDepth() == rhs.GetDepth();
             }
         }

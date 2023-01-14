@@ -10,7 +10,7 @@ namespace Spv.Generator
         private int _initialSize;
         private int _poolSizeIncrement;
 
-        public GeneratorPool(): this(1000, 200) { }
+        public GeneratorPool() : this(1000, 200) { }
 
         public GeneratorPool(int chunkSizeLimit, int poolSizeIncrement)
         {

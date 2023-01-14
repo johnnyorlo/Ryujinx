@@ -11,7 +11,7 @@ namespace Ryujinx.Tests.Cpu
     {
 #if SimdRegElem
 
-#region "ValueSource (Types)"
+        #region "ValueSource (Types)"
         private static ulong[] _2S_()
         {
             return new ulong[] { 0x0000000000000000ul, 0x7FFFFFFF7FFFFFFFul,
@@ -23,9 +23,9 @@ namespace Ryujinx.Tests.Cpu
             return new ulong[] { 0x0000000000000000ul, 0x7FFF7FFF7FFF7FFFul,
                                  0x8000800080008000ul, 0xFFFFFFFFFFFFFFFFul };
         }
-#endregion
+        #endregion
 
-#region "ValueSource (Opcodes)"
+        #region "ValueSource (Opcodes)"
         private static uint[] _Mla_Mls_Mul_Sqdmulh_Sqrdmulh_Ve_4H_8H_()
         {
             return new uint[]
@@ -75,20 +75,20 @@ namespace Ryujinx.Tests.Cpu
                 0x2F80A000u  // UMULL V0.2D, V0.2S, V0.S[0]
             };
         }
-#endregion
+        #endregion
 
-        private const int RndCnt      = 2;
+        private const int RndCnt = 2;
         private const int RndCntIndex = 2;
 
         [Test, Pairwise]
         public void Mla_Mls_Mul_Sqdmulh_Sqrdmulh_Ve_4H_8H([ValueSource(nameof(_Mla_Mls_Mul_Sqdmulh_Sqrdmulh_Ve_4H_8H_))] uint opcodes,
-                                                          [Values(0u)]     uint rd,
+                                                          [Values(0u)] uint rd,
                                                           [Values(1u, 0u)] uint rn,
                                                           [Values(2u, 0u)] uint rm,
-                                                          [ValueSource(nameof(_4H_))] [Random(RndCnt)] ulong z,
-                                                          [ValueSource(nameof(_4H_))] [Random(RndCnt)] ulong a,
-                                                          [ValueSource(nameof(_4H_))] [Random(RndCnt)] ulong b,
-                                                          [Values(0u, 7u)] [Random(1u, 6u, RndCntIndex)] uint index,
+                                                          [ValueSource(nameof(_4H_))][Random(RndCnt)] ulong z,
+                                                          [ValueSource(nameof(_4H_))][Random(RndCnt)] ulong a,
+                                                          [ValueSource(nameof(_4H_))][Random(RndCnt)] ulong b,
+                                                          [Values(0u, 7u)][Random(1u, 6u, RndCntIndex)] uint index,
                                                           [Values(0b0u, 0b1u)] uint q) // <4H, 8H>
         {
             uint h = (index >> 2) & 1;
@@ -110,12 +110,12 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void Mla_Mls_Mul_Sqdmulh_Sqrdmulh_Ve_2S_4S([ValueSource(nameof(_Mla_Mls_Mul_Sqdmulh_Sqrdmulh_Ve_2S_4S_))] uint opcodes,
-                                                          [Values(0u)]     uint rd,
+                                                          [Values(0u)] uint rd,
                                                           [Values(1u, 0u)] uint rn,
                                                           [Values(2u, 0u)] uint rm,
-                                                          [ValueSource(nameof(_2S_))] [Random(RndCnt)] ulong z,
-                                                          [ValueSource(nameof(_2S_))] [Random(RndCnt)] ulong a,
-                                                          [ValueSource(nameof(_2S_))] [Random(RndCnt)] ulong b,
+                                                          [ValueSource(nameof(_2S_))][Random(RndCnt)] ulong z,
+                                                          [ValueSource(nameof(_2S_))][Random(RndCnt)] ulong a,
+                                                          [ValueSource(nameof(_2S_))][Random(RndCnt)] ulong b,
                                                           [Values(0u, 1u, 2u, 3u)] uint index,
                                                           [Values(0b0u, 0b1u)] uint q) // <2S, 4S>
         {
@@ -137,13 +137,13 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void SU_Mlal_Mlsl_Mull_Ve_4H4S_8H4S([ValueSource("_SU_Mlal_Mlsl_Mull_Ve_4H4S_8H4S_")] uint opcodes,
-                                                   [Values(0u)]     uint rd,
+                                                   [Values(0u)] uint rd,
                                                    [Values(1u, 0u)] uint rn,
                                                    [Values(2u, 0u)] uint rm,
-                                                   [ValueSource("_4H_")] [Random(RndCnt)] ulong z,
-                                                   [ValueSource("_4H_")] [Random(RndCnt)] ulong a,
-                                                   [ValueSource("_4H_")] [Random(RndCnt)] ulong b,
-                                                   [Values(0u, 7u)] [Random(1u, 6u, RndCntIndex)] uint index,
+                                                   [ValueSource("_4H_")][Random(RndCnt)] ulong z,
+                                                   [ValueSource("_4H_")][Random(RndCnt)] ulong a,
+                                                   [ValueSource("_4H_")][Random(RndCnt)] ulong b,
+                                                   [Values(0u, 7u)][Random(1u, 6u, RndCntIndex)] uint index,
                                                    [Values(0b0u, 0b1u)] uint q) // <4H4S, 8H4S>
         {
             uint h = (index >> 2) & 1;
@@ -165,12 +165,12 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void SU_Mlal_Mlsl_Mull_Ve_2S2D_4S2D([ValueSource("_SU_Mlal_Mlsl_Mull_Ve_2S2D_4S2D_")] uint opcodes,
-                                                   [Values(0u)]     uint rd,
+                                                   [Values(0u)] uint rd,
                                                    [Values(1u, 0u)] uint rn,
                                                    [Values(2u, 0u)] uint rm,
-                                                   [ValueSource("_2S_")] [Random(RndCnt)] ulong z,
-                                                   [ValueSource("_2S_")] [Random(RndCnt)] ulong a,
-                                                   [ValueSource("_2S_")] [Random(RndCnt)] ulong b,
+                                                   [ValueSource("_2S_")][Random(RndCnt)] ulong z,
+                                                   [ValueSource("_2S_")][Random(RndCnt)] ulong a,
+                                                   [ValueSource("_2S_")][Random(RndCnt)] ulong b,
                                                    [Values(0u, 1u, 2u, 3u)] uint index,
                                                    [Values(0b0u, 0b1u)] uint q) // <2S2D, 4S2D>
         {

@@ -9,7 +9,7 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
     struct GraphicBuffer : IFlattenable
     {
         public GraphicBufferHeader Header;
-        public NvGraphicBuffer     Buffer;
+        public NvGraphicBuffer Buffer;
 
         public int Width => Header.Width;
         public int Height => Header.Height;

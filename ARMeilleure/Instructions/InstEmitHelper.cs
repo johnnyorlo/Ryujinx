@@ -16,11 +16,11 @@ namespace ARMeilleure.Instructions
 
             switch (type)
             {
-                case IntType.UInt8:  value = context.ZeroExtend8 (value.Type, value); break;
+                case IntType.UInt8: value = context.ZeroExtend8(value.Type, value); break;
                 case IntType.UInt16: value = context.ZeroExtend16(value.Type, value); break;
                 case IntType.UInt32: value = context.ZeroExtend32(value.Type, value); break;
 
-                case IntType.Int8:  value = context.SignExtend8 (value.Type, value); break;
+                case IntType.Int8: value = context.SignExtend8(value.Type, value); break;
                 case IntType.Int16: value = context.SignExtend16(value.Type, value); break;
                 case IntType.Int32: value = context.SignExtend32(value.Type, value); break;
             }
@@ -102,23 +102,28 @@ namespace ARMeilleure.Instructions
         {
             switch (regIndex)
             {
-                case 8: return mode == Aarch32Mode.Fiq
+                case 8:
+                    return mode == Aarch32Mode.Fiq
                     ? RegisterAlias.R8Fiq
                     : RegisterAlias.R8Usr;
 
-                case 9: return mode == Aarch32Mode.Fiq
+                case 9:
+                    return mode == Aarch32Mode.Fiq
                     ? RegisterAlias.R9Fiq
                     : RegisterAlias.R9Usr;
 
-                case 10: return mode == Aarch32Mode.Fiq
+                case 10:
+                    return mode == Aarch32Mode.Fiq
                     ? RegisterAlias.R10Fiq
                     : RegisterAlias.R10Usr;
 
-                case 11: return mode == Aarch32Mode.Fiq
+                case 11:
+                    return mode == Aarch32Mode.Fiq
                     ? RegisterAlias.R11Fiq
                     : RegisterAlias.R11Usr;
 
-                case 12: return mode == Aarch32Mode.Fiq
+                case 12:
+                    return mode == Aarch32Mode.Fiq
                     ? RegisterAlias.R12Fiq
                     : RegisterAlias.R12Usr;
 
@@ -126,13 +131,13 @@ namespace ARMeilleure.Instructions
                     switch (mode)
                     {
                         case Aarch32Mode.User:
-                        case Aarch32Mode.System:     return RegisterAlias.SpUsr;
-                        case Aarch32Mode.Fiq:        return RegisterAlias.SpFiq;
-                        case Aarch32Mode.Irq:        return RegisterAlias.SpIrq;
+                        case Aarch32Mode.System: return RegisterAlias.SpUsr;
+                        case Aarch32Mode.Fiq: return RegisterAlias.SpFiq;
+                        case Aarch32Mode.Irq: return RegisterAlias.SpIrq;
                         case Aarch32Mode.Supervisor: return RegisterAlias.SpSvc;
-                        case Aarch32Mode.Abort:      return RegisterAlias.SpAbt;
+                        case Aarch32Mode.Abort: return RegisterAlias.SpAbt;
                         case Aarch32Mode.Hypervisor: return RegisterAlias.SpHyp;
-                        case Aarch32Mode.Undefined:  return RegisterAlias.SpUnd;
+                        case Aarch32Mode.Undefined: return RegisterAlias.SpUnd;
 
                         default: throw new ArgumentException(nameof(mode));
                     }
@@ -142,12 +147,12 @@ namespace ARMeilleure.Instructions
                     {
                         case Aarch32Mode.User:
                         case Aarch32Mode.Hypervisor:
-                        case Aarch32Mode.System:     return RegisterAlias.LrUsr;
-                        case Aarch32Mode.Fiq:        return RegisterAlias.LrFiq;
-                        case Aarch32Mode.Irq:        return RegisterAlias.LrIrq;
+                        case Aarch32Mode.System: return RegisterAlias.LrUsr;
+                        case Aarch32Mode.Fiq: return RegisterAlias.LrFiq;
+                        case Aarch32Mode.Irq: return RegisterAlias.LrIrq;
                         case Aarch32Mode.Supervisor: return RegisterAlias.LrSvc;
-                        case Aarch32Mode.Abort:      return RegisterAlias.LrAbt;
-                        case Aarch32Mode.Undefined:  return RegisterAlias.LrUnd;
+                        case Aarch32Mode.Abort: return RegisterAlias.LrAbt;
+                        case Aarch32Mode.Undefined: return RegisterAlias.LrUnd;
 
                         default: throw new ArgumentException(nameof(mode));
                     }

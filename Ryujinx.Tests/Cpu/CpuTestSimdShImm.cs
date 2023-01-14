@@ -14,7 +14,7 @@ namespace Ryujinx.Tests.Cpu
     {
 #if SimdShImm
 
-#region "ValueSource (Types)"
+        #region "ValueSource (Types)"
         private static ulong[] _1D_()
         {
             return new ulong[] { 0x0000000000000000ul, 0x7FFFFFFFFFFFFFFFul,
@@ -174,9 +174,9 @@ namespace Ryujinx.Tests.Cpu
                 yield return rnd4;
             }
         }
-#endregion
+        #endregion
 
-#region "ValueSource (Opcodes)"
+        #region "ValueSource (Opcodes)"
         private static uint[] _F_Cvt_Z_SU_V_Fixed_2S_4S_()
         {
             return new uint[]
@@ -487,23 +487,24 @@ namespace Ryujinx.Tests.Cpu
                 0x2F208400u  // SQSHRUN  V0.2S, V0.2D, #32
             };
         }
-#endregion
+        #endregion
 
-        private const int RndCnt      = 2;
+        private const int RndCnt = 2;
         private const int RndCntFBits = 2;
         private const int RndCntShift = 2;
 
         private static readonly bool NoZeros = false;
-        private static readonly bool NoInfs  = false;
-        private static readonly bool NoNaNs  = false;
+        private static readonly bool NoInfs = false;
+        private static readonly bool NoNaNs = false;
 
-        [Test, Pairwise] [Explicit]
+        [Test, Pairwise]
+        [Explicit]
         public void F_Cvt_Z_SU_V_Fixed_2S_4S([ValueSource("_F_Cvt_Z_SU_V_Fixed_2S_4S_")] uint opcodes,
-                                             [Values(0u)]     uint rd,
+                                             [Values(0u)] uint rd,
                                              [Values(1u, 0u)] uint rn,
                                              [ValueSource("_2S_F_W_")] ulong z,
                                              [ValueSource("_2S_F_W_")] ulong a,
-                                             [Values(1u, 32u)] [Random(2u, 31u, RndCntFBits)] uint fBits,
+                                             [Values(1u, 32u)][Random(2u, 31u, RndCntFBits)] uint fBits,
                                              [Values(0b0u, 0b1u)] uint q) // <2S, 4S>
         {
             uint immHb = (64 - fBits) & 0x7F;
@@ -520,13 +521,14 @@ namespace Ryujinx.Tests.Cpu
             CompareAgainstUnicorn();
         }
 
-        [Test, Pairwise] [Explicit]
+        [Test, Pairwise]
+        [Explicit]
         public void F_Cvt_Z_SU_V_Fixed_2D([ValueSource("_F_Cvt_Z_SU_V_Fixed_2D_")] uint opcodes,
-                                          [Values(0u)]     uint rd,
+                                          [Values(0u)] uint rd,
                                           [Values(1u, 0u)] uint rn,
                                           [ValueSource("_1D_F_X_")] ulong z,
                                           [ValueSource("_1D_F_X_")] ulong a,
-                                          [Values(1u, 64u)] [Random(2u, 63u, RndCntFBits)] uint fBits)
+                                          [Values(1u, 64u)][Random(2u, 63u, RndCntFBits)] uint fBits)
         {
             uint immHb = (128 - fBits) & 0x7F;
 
@@ -541,10 +543,11 @@ namespace Ryujinx.Tests.Cpu
             CompareAgainstUnicorn();
         }
 
-        [Test, Pairwise] [Explicit]
+        [Test, Pairwise]
+        [Explicit]
         public void SU_Cvt_F_S_Fixed_S([ValueSource("_SU_Cvt_F_S_Fixed_S_")] uint opcodes,
-                                       [ValueSource("_1S_")] [Random(RndCnt)] ulong a,
-                                       [Values(1u, 32u)] [Random(2u, 31u, RndCntFBits)] uint fBits)
+                                       [ValueSource("_1S_")][Random(RndCnt)] ulong a,
+                                       [Values(1u, 32u)][Random(2u, 31u, RndCntFBits)] uint fBits)
         {
             uint immHb = (64 - fBits) & 0x7F;
 
@@ -559,10 +562,11 @@ namespace Ryujinx.Tests.Cpu
             CompareAgainstUnicorn();
         }
 
-        [Test, Pairwise] [Explicit]
+        [Test, Pairwise]
+        [Explicit]
         public void SU_Cvt_F_S_Fixed_D([ValueSource("_SU_Cvt_F_S_Fixed_D_")] uint opcodes,
-                                       [ValueSource("_1D_")] [Random(RndCnt)] ulong a,
-                                       [Values(1u, 64u)] [Random(2u, 63u, RndCntFBits)] uint fBits)
+                                       [ValueSource("_1D_")][Random(RndCnt)] ulong a,
+                                       [Values(1u, 64u)][Random(2u, 63u, RndCntFBits)] uint fBits)
         {
             uint immHb = (128 - fBits) & 0x7F;
 
@@ -577,13 +581,14 @@ namespace Ryujinx.Tests.Cpu
             CompareAgainstUnicorn();
         }
 
-        [Test, Pairwise] [Explicit]
+        [Test, Pairwise]
+        [Explicit]
         public void SU_Cvt_F_V_Fixed_2S_4S([ValueSource("_SU_Cvt_F_V_Fixed_2S_4S_")] uint opcodes,
-                                           [Values(0u)]     uint rd,
+                                           [Values(0u)] uint rd,
                                            [Values(1u, 0u)] uint rn,
-                                           [ValueSource("_2S_")] [Random(RndCnt)] ulong z,
-                                           [ValueSource("_2S_")] [Random(RndCnt)] ulong a,
-                                           [Values(1u, 32u)] [Random(2u, 31u, RndCntFBits)] uint fBits,
+                                           [ValueSource("_2S_")][Random(RndCnt)] ulong z,
+                                           [ValueSource("_2S_")][Random(RndCnt)] ulong a,
+                                           [Values(1u, 32u)][Random(2u, 31u, RndCntFBits)] uint fBits,
                                            [Values(0b0u, 0b1u)] uint q) // <2S, 4S>
         {
             uint immHb = (64 - fBits) & 0x7F;
@@ -600,13 +605,14 @@ namespace Ryujinx.Tests.Cpu
             CompareAgainstUnicorn();
         }
 
-        [Test, Pairwise] [Explicit]
+        [Test, Pairwise]
+        [Explicit]
         public void SU_Cvt_F_V_Fixed_2D([ValueSource("_SU_Cvt_F_V_Fixed_2D_")] uint opcodes,
-                                        [Values(0u)]     uint rd,
+                                        [Values(0u)] uint rd,
                                         [Values(1u, 0u)] uint rn,
-                                        [ValueSource("_1D_")] [Random(RndCnt)] ulong z,
-                                        [ValueSource("_1D_")] [Random(RndCnt)] ulong a,
-                                        [Values(1u, 64u)] [Random(2u, 63u, RndCntFBits)] uint fBits)
+                                        [ValueSource("_1D_")][Random(RndCnt)] ulong z,
+                                        [ValueSource("_1D_")][Random(RndCnt)] ulong a,
+                                        [Values(1u, 64u)][Random(2u, 63u, RndCntFBits)] uint fBits)
         {
             uint immHb = (128 - fBits) & 0x7F;
 
@@ -623,11 +629,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void Shl_Sli_S_D([ValueSource("_Shl_Sli_S_D_")] uint opcodes,
-                                [Values(0u)]     uint rd,
+                                [Values(0u)] uint rd,
                                 [Values(1u, 0u)] uint rn,
-                                [ValueSource("_1D_")] [Random(RndCnt)] ulong z,
-                                [ValueSource("_1D_")] [Random(RndCnt)] ulong a,
-                                [Values(0u, 63u)] [Random(1u, 62u, RndCntShift)] uint shift)
+                                [ValueSource("_1D_")][Random(RndCnt)] ulong z,
+                                [ValueSource("_1D_")][Random(RndCnt)] ulong a,
+                                [Values(0u, 63u)][Random(1u, 62u, RndCntShift)] uint shift)
         {
             uint immHb = (64 + shift) & 0x7F;
 
@@ -644,11 +650,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void Shl_Sli_V_8B_16B([ValueSource("_Shl_Sli_V_8B_16B_")] uint opcodes,
-                                     [Values(0u)]     uint rd,
+                                     [Values(0u)] uint rd,
                                      [Values(1u, 0u)] uint rn,
-                                     [ValueSource("_8B_")] [Random(RndCnt)] ulong z,
-                                     [ValueSource("_8B_")] [Random(RndCnt)] ulong a,
-                                     [Values(0u, 7u)] [Random(1u, 6u, RndCntShift)] uint shift,
+                                     [ValueSource("_8B_")][Random(RndCnt)] ulong z,
+                                     [ValueSource("_8B_")][Random(RndCnt)] ulong a,
+                                     [Values(0u, 7u)][Random(1u, 6u, RndCntShift)] uint shift,
                                      [Values(0b0u, 0b1u)] uint q) // <8B, 16B>
         {
             uint immHb = (8 + shift) & 0x7F;
@@ -667,11 +673,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void Shl_Sli_V_4H_8H([ValueSource("_Shl_Sli_V_4H_8H_")] uint opcodes,
-                                    [Values(0u)]     uint rd,
+                                    [Values(0u)] uint rd,
                                     [Values(1u, 0u)] uint rn,
-                                    [ValueSource("_4H_")] [Random(RndCnt)] ulong z,
-                                    [ValueSource("_4H_")] [Random(RndCnt)] ulong a,
-                                    [Values(0u, 15u)] [Random(1u, 14u, RndCntShift)] uint shift,
+                                    [ValueSource("_4H_")][Random(RndCnt)] ulong z,
+                                    [ValueSource("_4H_")][Random(RndCnt)] ulong a,
+                                    [Values(0u, 15u)][Random(1u, 14u, RndCntShift)] uint shift,
                                     [Values(0b0u, 0b1u)] uint q) // <4H, 8H>
         {
             uint immHb = (16 + shift) & 0x7F;
@@ -690,11 +696,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void Shl_Sli_V_2S_4S([ValueSource("_Shl_Sli_V_2S_4S_")] uint opcodes,
-                                    [Values(0u)]     uint rd,
+                                    [Values(0u)] uint rd,
                                     [Values(1u, 0u)] uint rn,
-                                    [ValueSource("_2S_")] [Random(RndCnt)] ulong z,
-                                    [ValueSource("_2S_")] [Random(RndCnt)] ulong a,
-                                    [Values(0u, 31u)] [Random(1u, 30u, RndCntShift)] uint shift,
+                                    [ValueSource("_2S_")][Random(RndCnt)] ulong z,
+                                    [ValueSource("_2S_")][Random(RndCnt)] ulong a,
+                                    [Values(0u, 31u)][Random(1u, 30u, RndCntShift)] uint shift,
                                     [Values(0b0u, 0b1u)] uint q) // <2S, 4S>
         {
             uint immHb = (32 + shift) & 0x7F;
@@ -713,11 +719,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void Shl_Sli_V_2D([ValueSource("_Shl_Sli_V_2D_")] uint opcodes,
-                                 [Values(0u)]     uint rd,
+                                 [Values(0u)] uint rd,
                                  [Values(1u, 0u)] uint rn,
-                                 [ValueSource("_1D_")] [Random(RndCnt)] ulong z,
-                                 [ValueSource("_1D_")] [Random(RndCnt)] ulong a,
-                                 [Values(0u, 63u)] [Random(1u, 62u, RndCntShift)] uint shift)
+                                 [ValueSource("_1D_")][Random(RndCnt)] ulong z,
+                                 [ValueSource("_1D_")][Random(RndCnt)] ulong a,
+                                 [Values(0u, 63u)][Random(1u, 62u, RndCntShift)] uint shift)
         {
             uint immHb = (64 + shift) & 0x7F;
 
@@ -734,11 +740,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void SU_Shll_V_8B8H_16B8H([ValueSource("_SU_Shll_V_8B8H_16B8H_")] uint opcodes,
-                                         [Values(0u)]     uint rd,
+                                         [Values(0u)] uint rd,
                                          [Values(1u, 0u)] uint rn,
-                                         [ValueSource("_8B_")] [Random(RndCnt)] ulong z,
-                                         [ValueSource("_8B_")] [Random(RndCnt)] ulong a,
-                                         [Values(0u, 7u)] [Random(1u, 6u, RndCntShift)] uint shift,
+                                         [ValueSource("_8B_")][Random(RndCnt)] ulong z,
+                                         [ValueSource("_8B_")][Random(RndCnt)] ulong a,
+                                         [Values(0u, 7u)][Random(1u, 6u, RndCntShift)] uint shift,
                                          [Values(0b0u, 0b1u)] uint q) // <8B8H, 16B8H>
         {
             uint immHb = (8 + shift) & 0x7F;
@@ -757,11 +763,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void SU_Shll_V_4H4S_8H4S([ValueSource("_SU_Shll_V_4H4S_8H4S_")] uint opcodes,
-                                        [Values(0u)]     uint rd,
+                                        [Values(0u)] uint rd,
                                         [Values(1u, 0u)] uint rn,
-                                        [ValueSource("_4H_")] [Random(RndCnt)] ulong z,
-                                        [ValueSource("_4H_")] [Random(RndCnt)] ulong a,
-                                        [Values(0u, 15u)] [Random(1u, 14u, RndCntShift)] uint shift,
+                                        [ValueSource("_4H_")][Random(RndCnt)] ulong z,
+                                        [ValueSource("_4H_")][Random(RndCnt)] ulong a,
+                                        [Values(0u, 15u)][Random(1u, 14u, RndCntShift)] uint shift,
                                         [Values(0b0u, 0b1u)] uint q) // <4H4S, 8H4S>
         {
             uint immHb = (16 + shift) & 0x7F;
@@ -780,11 +786,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void SU_Shll_V_2S2D_4S2D([ValueSource("_SU_Shll_V_2S2D_4S2D_")] uint opcodes,
-                                        [Values(0u)]     uint rd,
+                                        [Values(0u)] uint rd,
                                         [Values(1u, 0u)] uint rn,
-                                        [ValueSource("_2S_")] [Random(RndCnt)] ulong z,
-                                        [ValueSource("_2S_")] [Random(RndCnt)] ulong a,
-                                        [Values(0u, 31u)] [Random(1u, 30u, RndCntShift)] uint shift,
+                                        [ValueSource("_2S_")][Random(RndCnt)] ulong z,
+                                        [ValueSource("_2S_")][Random(RndCnt)] ulong a,
+                                        [Values(0u, 31u)][Random(1u, 30u, RndCntShift)] uint shift,
                                         [Values(0b0u, 0b1u)] uint q) // <2S2D, 4S2D>
         {
             uint immHb = (32 + shift) & 0x7F;
@@ -803,11 +809,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImm_Sri_S_D([ValueSource("_ShrImm_Sri_S_D_")] uint opcodes,
-                                   [Values(0u)]     uint rd,
+                                   [Values(0u)] uint rd,
                                    [Values(1u, 0u)] uint rn,
-                                   [ValueSource("_1D_")] [Random(RndCnt)] ulong z,
-                                   [ValueSource("_1D_")] [Random(RndCnt)] ulong a,
-                                   [Values(1u, 64u)] [Random(2u, 63u, RndCntShift)] uint shift)
+                                   [ValueSource("_1D_")][Random(RndCnt)] ulong z,
+                                   [ValueSource("_1D_")][Random(RndCnt)] ulong a,
+                                   [Values(1u, 64u)][Random(2u, 63u, RndCntShift)] uint shift)
         {
             uint immHb = (128 - shift) & 0x7F;
 
@@ -824,11 +830,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImm_Sri_V_8B_16B([ValueSource("_ShrImm_Sri_V_8B_16B_")] uint opcodes,
-                                        [Values(0u)]     uint rd,
+                                        [Values(0u)] uint rd,
                                         [Values(1u, 0u)] uint rn,
-                                        [ValueSource("_8B_")] [Random(RndCnt)] ulong z,
-                                        [ValueSource("_8B_")] [Random(RndCnt)] ulong a,
-                                        [Values(1u, 8u)] [Random(2u, 7u, RndCntShift)] uint shift,
+                                        [ValueSource("_8B_")][Random(RndCnt)] ulong z,
+                                        [ValueSource("_8B_")][Random(RndCnt)] ulong a,
+                                        [Values(1u, 8u)][Random(2u, 7u, RndCntShift)] uint shift,
                                         [Values(0b0u, 0b1u)] uint q) // <8B, 16B>
         {
             uint immHb = (16 - shift) & 0x7F;
@@ -847,11 +853,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImm_Sri_V_4H_8H([ValueSource("_ShrImm_Sri_V_4H_8H_")] uint opcodes,
-                                       [Values(0u)]     uint rd,
+                                       [Values(0u)] uint rd,
                                        [Values(1u, 0u)] uint rn,
-                                       [ValueSource("_4H_")] [Random(RndCnt)] ulong z,
-                                       [ValueSource("_4H_")] [Random(RndCnt)] ulong a,
-                                       [Values(1u, 16u)] [Random(2u, 15u, RndCntShift)] uint shift,
+                                       [ValueSource("_4H_")][Random(RndCnt)] ulong z,
+                                       [ValueSource("_4H_")][Random(RndCnt)] ulong a,
+                                       [Values(1u, 16u)][Random(2u, 15u, RndCntShift)] uint shift,
                                        [Values(0b0u, 0b1u)] uint q) // <4H, 8H>
         {
             uint immHb = (32 - shift) & 0x7F;
@@ -870,11 +876,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImm_Sri_V_2S_4S([ValueSource("_ShrImm_Sri_V_2S_4S_")] uint opcodes,
-                                       [Values(0u)]     uint rd,
+                                       [Values(0u)] uint rd,
                                        [Values(1u, 0u)] uint rn,
-                                       [ValueSource("_2S_")] [Random(RndCnt)] ulong z,
-                                       [ValueSource("_2S_")] [Random(RndCnt)] ulong a,
-                                       [Values(1u, 32u)] [Random(2u, 31u, RndCntShift)] uint shift,
+                                       [ValueSource("_2S_")][Random(RndCnt)] ulong z,
+                                       [ValueSource("_2S_")][Random(RndCnt)] ulong a,
+                                       [Values(1u, 32u)][Random(2u, 31u, RndCntShift)] uint shift,
                                        [Values(0b0u, 0b1u)] uint q) // <2S, 4S>
         {
             uint immHb = (64 - shift) & 0x7F;
@@ -893,11 +899,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImm_Sri_V_2D([ValueSource("_ShrImm_Sri_V_2D_")] uint opcodes,
-                                    [Values(0u)]     uint rd,
+                                    [Values(0u)] uint rd,
                                     [Values(1u, 0u)] uint rn,
-                                    [ValueSource("_1D_")] [Random(RndCnt)] ulong z,
-                                    [ValueSource("_1D_")] [Random(RndCnt)] ulong a,
-                                    [Values(1u, 64u)] [Random(2u, 63u, RndCntShift)] uint shift)
+                                    [ValueSource("_1D_")][Random(RndCnt)] ulong z,
+                                    [ValueSource("_1D_")][Random(RndCnt)] ulong a,
+                                    [Values(1u, 64u)][Random(2u, 63u, RndCntShift)] uint shift)
         {
             uint immHb = (128 - shift) & 0x7F;
 
@@ -914,11 +920,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImmNarrow_V_8H8B_8H16B([ValueSource("_ShrImmNarrow_V_8H8B_8H16B_")] uint opcodes,
-                                              [Values(0u)]     uint rd,
+                                              [Values(0u)] uint rd,
                                               [Values(1u, 0u)] uint rn,
-                                              [ValueSource("_4H_")] [Random(RndCnt)] ulong z,
-                                              [ValueSource("_4H_")] [Random(RndCnt)] ulong a,
-                                              [Values(1u, 8u)] [Random(2u, 7u, RndCntShift)] uint shift,
+                                              [ValueSource("_4H_")][Random(RndCnt)] ulong z,
+                                              [ValueSource("_4H_")][Random(RndCnt)] ulong a,
+                                              [Values(1u, 8u)][Random(2u, 7u, RndCntShift)] uint shift,
                                               [Values(0b0u, 0b1u)] uint q) // <8H8B, 8H16B>
         {
             uint immHb = (16 - shift) & 0x7F;
@@ -937,11 +943,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImmNarrow_V_4S4H_4S8H([ValueSource("_ShrImmNarrow_V_4S4H_4S8H_")] uint opcodes,
-                                             [Values(0u)]     uint rd,
+                                             [Values(0u)] uint rd,
                                              [Values(1u, 0u)] uint rn,
-                                             [ValueSource("_2S_")] [Random(RndCnt)] ulong z,
-                                             [ValueSource("_2S_")] [Random(RndCnt)] ulong a,
-                                             [Values(1u, 16u)] [Random(2u, 15u, RndCntShift)] uint shift,
+                                             [ValueSource("_2S_")][Random(RndCnt)] ulong z,
+                                             [ValueSource("_2S_")][Random(RndCnt)] ulong a,
+                                             [Values(1u, 16u)][Random(2u, 15u, RndCntShift)] uint shift,
                                              [Values(0b0u, 0b1u)] uint q) // <4S4H, 4S8H>
         {
             uint immHb = (32 - shift) & 0x7F;
@@ -960,11 +966,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImmNarrow_V_2D2S_2D4S([ValueSource("_ShrImmNarrow_V_2D2S_2D4S_")] uint opcodes,
-                                             [Values(0u)]     uint rd,
+                                             [Values(0u)] uint rd,
                                              [Values(1u, 0u)] uint rn,
-                                             [ValueSource("_1D_")] [Random(RndCnt)] ulong z,
-                                             [ValueSource("_1D_")] [Random(RndCnt)] ulong a,
-                                             [Values(1u, 32u)] [Random(2u, 31u, RndCntShift)] uint shift,
+                                             [ValueSource("_1D_")][Random(RndCnt)] ulong z,
+                                             [ValueSource("_1D_")][Random(RndCnt)] ulong a,
+                                             [Values(1u, 32u)][Random(2u, 31u, RndCntShift)] uint shift,
                                              [Values(0b0u, 0b1u)] uint q) // <2D2S, 2D4S>
         {
             uint immHb = (64 - shift) & 0x7F;
@@ -983,11 +989,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImmSaturatingNarrow_S_HB([ValueSource("_ShrImmSaturatingNarrow_S_HB_")] uint opcodes,
-                                                [Values(0u)]     uint rd,
+                                                [Values(0u)] uint rd,
                                                 [Values(1u, 0u)] uint rn,
-                                                [ValueSource("_1H_")] [Random(RndCnt)] ulong z,
-                                                [ValueSource("_1H_")] [Random(RndCnt)] ulong a,
-                                                [Values(1u, 8u)] [Random(2u, 7u, RndCntShift)] uint shift)
+                                                [ValueSource("_1H_")][Random(RndCnt)] ulong z,
+                                                [ValueSource("_1H_")][Random(RndCnt)] ulong a,
+                                                [Values(1u, 8u)][Random(2u, 7u, RndCntShift)] uint shift)
         {
             uint immHb = (16 - shift) & 0x7F;
 
@@ -1004,11 +1010,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImmSaturatingNarrow_S_SH([ValueSource("_ShrImmSaturatingNarrow_S_SH_")] uint opcodes,
-                                                [Values(0u)]     uint rd,
+                                                [Values(0u)] uint rd,
                                                 [Values(1u, 0u)] uint rn,
-                                                [ValueSource("_1S_")] [Random(RndCnt)] ulong z,
-                                                [ValueSource("_1S_")] [Random(RndCnt)] ulong a,
-                                                [Values(1u, 16u)] [Random(2u, 15u, RndCntShift)] uint shift)
+                                                [ValueSource("_1S_")][Random(RndCnt)] ulong z,
+                                                [ValueSource("_1S_")][Random(RndCnt)] ulong a,
+                                                [Values(1u, 16u)][Random(2u, 15u, RndCntShift)] uint shift)
         {
             uint immHb = (32 - shift) & 0x7F;
 
@@ -1025,11 +1031,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImmSaturatingNarrow_S_DS([ValueSource("_ShrImmSaturatingNarrow_S_DS_")] uint opcodes,
-                                                [Values(0u)]     uint rd,
+                                                [Values(0u)] uint rd,
                                                 [Values(1u, 0u)] uint rn,
-                                                [ValueSource("_1D_")] [Random(RndCnt)] ulong z,
-                                                [ValueSource("_1D_")] [Random(RndCnt)] ulong a,
-                                                [Values(1u, 32u)] [Random(2u, 31u, RndCntShift)] uint shift)
+                                                [ValueSource("_1D_")][Random(RndCnt)] ulong z,
+                                                [ValueSource("_1D_")][Random(RndCnt)] ulong a,
+                                                [Values(1u, 32u)][Random(2u, 31u, RndCntShift)] uint shift)
         {
             uint immHb = (64 - shift) & 0x7F;
 
@@ -1046,11 +1052,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImmSaturatingNarrow_V_8H8B_8H16B([ValueSource("_ShrImmSaturatingNarrow_V_8H8B_8H16B_")] uint opcodes,
-                                                        [Values(0u)]     uint rd,
+                                                        [Values(0u)] uint rd,
                                                         [Values(1u, 0u)] uint rn,
-                                                        [ValueSource("_4H_")] [Random(RndCnt)] ulong z,
-                                                        [ValueSource("_4H_")] [Random(RndCnt)] ulong a,
-                                                        [Values(1u, 8u)] [Random(2u, 7u, RndCntShift)] uint shift,
+                                                        [ValueSource("_4H_")][Random(RndCnt)] ulong z,
+                                                        [ValueSource("_4H_")][Random(RndCnt)] ulong a,
+                                                        [Values(1u, 8u)][Random(2u, 7u, RndCntShift)] uint shift,
                                                         [Values(0b0u, 0b1u)] uint q) // <8H8B, 8H16B>
         {
             uint immHb = (16 - shift) & 0x7F;
@@ -1069,11 +1075,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImmSaturatingNarrow_V_4S4H_4S8H([ValueSource("_ShrImmSaturatingNarrow_V_4S4H_4S8H_")] uint opcodes,
-                                                       [Values(0u)]     uint rd,
+                                                       [Values(0u)] uint rd,
                                                        [Values(1u, 0u)] uint rn,
-                                                       [ValueSource("_2S_")] [Random(RndCnt)] ulong z,
-                                                       [ValueSource("_2S_")] [Random(RndCnt)] ulong a,
-                                                       [Values(1u, 16u)] [Random(2u, 15u, RndCntShift)] uint shift,
+                                                       [ValueSource("_2S_")][Random(RndCnt)] ulong z,
+                                                       [ValueSource("_2S_")][Random(RndCnt)] ulong a,
+                                                       [Values(1u, 16u)][Random(2u, 15u, RndCntShift)] uint shift,
                                                        [Values(0b0u, 0b1u)] uint q) // <4S4H, 4S8H>
         {
             uint immHb = (32 - shift) & 0x7F;
@@ -1092,11 +1098,11 @@ namespace Ryujinx.Tests.Cpu
 
         [Test, Pairwise]
         public void ShrImmSaturatingNarrow_V_2D2S_2D4S([ValueSource("_ShrImmSaturatingNarrow_V_2D2S_2D4S_")] uint opcodes,
-                                                       [Values(0u)]     uint rd,
+                                                       [Values(0u)] uint rd,
                                                        [Values(1u, 0u)] uint rn,
-                                                       [ValueSource("_1D_")] [Random(RndCnt)] ulong z,
-                                                       [ValueSource("_1D_")] [Random(RndCnt)] ulong a,
-                                                       [Values(1u, 32u)] [Random(2u, 31u, RndCntShift)] uint shift,
+                                                       [ValueSource("_1D_")][Random(RndCnt)] ulong z,
+                                                       [ValueSource("_1D_")][Random(RndCnt)] ulong a,
+                                                       [Values(1u, 32u)][Random(2u, 31u, RndCntShift)] uint shift,
                                                        [Values(0b0u, 0b1u)] uint q) // <2D2S, 2D4S>
         {
             uint immHb = (64 - shift) & 0x7F;

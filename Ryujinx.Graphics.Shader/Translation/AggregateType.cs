@@ -20,6 +20,6 @@
         Vector3 = 2 << ElementCountShift,
         Vector4 = 3 << ElementCountShift,
 
-        Array  = 1 << 10
+        Array = 1 << 10
     }
 }

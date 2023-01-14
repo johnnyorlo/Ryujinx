@@ -42,8 +42,8 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrlGpu.Types
     {
         public ZbcColorArray ColorDs;
         public ZbcColorArray ColorL2;
-        public uint          Depth;
-        public uint          Format;
-        public uint          Type;
+        public uint Depth;
+        public uint Format;
+        public uint Type;
     }
 }

@@ -9,11 +9,11 @@ namespace Ryujinx.HLE.Loaders.Npdm
 
         public ulong TitleId { get; set; }
 
-        public int   FsVersion            { get; private set; }
+        public int FsVersion { get; private set; }
         public ulong FsPermissionsBitmask { get; private set; }
 
         public ServiceAccessControl ServiceAccessControl { get; private set; }
-        public KernelAccessControl  KernelAccessControl  { get; private set; }
+        public KernelAccessControl KernelAccessControl { get; private set; }
 
         public Aci0(Stream stream, int offset)
         {
@@ -33,16 +33,16 @@ namespace Ryujinx.HLE.Loaders.Npdm
             // Reserved.
             stream.Seek(8, SeekOrigin.Current);
 
-            int fsAccessHeaderOffset       = reader.ReadInt32();
-            int fsAccessHeaderSize         = reader.ReadInt32();
+            int fsAccessHeaderOffset = reader.ReadInt32();
+            int fsAccessHeaderSize = reader.ReadInt32();
             int serviceAccessControlOffset = reader.ReadInt32();
-            int serviceAccessControlSize   = reader.ReadInt32();
-            int kernelAccessControlOffset  = reader.ReadInt32();
-            int kernelAccessControlSize    = reader.ReadInt32();
+            int serviceAccessControlSize = reader.ReadInt32();
+            int kernelAccessControlOffset = reader.ReadInt32();
+            int kernelAccessControlSize = reader.ReadInt32();
 
             FsAccessHeader fsAccessHeader = new FsAccessHeader(stream, offset + fsAccessHeaderOffset, fsAccessHeaderSize);
 
-            FsVersion            = fsAccessHeader.Version;
+            FsVersion = fsAccessHeader.Version;
             FsPermissionsBitmask = fsAccessHeader.PermissionsBitmask;
 
             ServiceAccessControl = new ServiceAccessControl(stream, offset + serviceAccessControlOffset, serviceAccessControlSize);

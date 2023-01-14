@@ -29,7 +29,7 @@ namespace ARMeilleure.Decoders
                 case 8: Size = 3; break;
             }
 
-            SrcIndex = imm4 >>  Size;
+            SrcIndex = imm4 >> Size;
             DstIndex = imm5 >> (Size + 1);
         }
     }

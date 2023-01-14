@@ -67,7 +67,7 @@ namespace Ryujinx.Graphics.Gpu.Image
             DescriptorCache = new T2[count];
 
             Address = address;
-            Size    = size;
+            Size = size;
 
             _memoryTracking = physicalMemory.BeginGranularTracking(address, size);
             _memoryTracking.RegisterPreciseAction(address, size, PreciseAction);

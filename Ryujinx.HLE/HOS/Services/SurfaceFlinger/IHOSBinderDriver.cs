@@ -15,13 +15,13 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
         {
             int binderId = context.RequestData.ReadInt32();
 
-            uint code  = context.RequestData.ReadUInt32();
+            uint code = context.RequestData.ReadUInt32();
             uint flags = context.RequestData.ReadUInt32();
 
-            ulong dataPos  = context.Request.SendBuff[0].Position;
+            ulong dataPos = context.Request.SendBuff[0].Position;
             ulong dataSize = context.Request.SendBuff[0].Size;
 
-            ulong replyPos  = context.Request.ReceiveBuff[0].Position;
+            ulong replyPos = context.Request.ReceiveBuff[0].Position;
             ulong replySize = context.Request.ReceiveBuff[0].Size;
 
             ReadOnlySpan<byte> inputParcel = context.Memory.GetSpan(dataPos, (int)dataSize);
@@ -43,8 +43,8 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
         public ResultCode AdjustRefcount(ServiceCtx context)
         {
             int binderId = context.RequestData.ReadInt32();
-            int addVal   = context.RequestData.ReadInt32();
-            int type     = context.RequestData.ReadInt32();
+            int addVal = context.RequestData.ReadInt32();
+            int type = context.RequestData.ReadInt32();
 
             return AdjustRefcount(binderId, addVal, type);
         }
@@ -75,10 +75,10 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
         {
             int binderId = context.RequestData.ReadInt32();
 
-            uint code  = context.RequestData.ReadUInt32();
+            uint code = context.RequestData.ReadUInt32();
             uint flags = context.RequestData.ReadUInt32();
 
-            (ulong dataPos, ulong dataSize)   = context.Request.GetBufferType0x21();
+            (ulong dataPos, ulong dataSize) = context.Request.GetBufferType0x21();
             (ulong replyPos, ulong replySize) = context.Request.GetBufferType0x22();
 
             ReadOnlySpan<byte> inputParcel = context.Memory.GetSpan(dataPos, (int)dataSize);

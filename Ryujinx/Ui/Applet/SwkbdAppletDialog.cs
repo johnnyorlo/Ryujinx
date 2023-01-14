@@ -12,8 +12,8 @@ namespace Ryujinx.Ui.Applet
 
         private readonly Label _validationInfo;
 
-        public Entry  InputEntry   { get; }
-        public Button OkButton     { get; }
+        public Entry InputEntry { get; }
+        public Button OkButton { get; }
         public Button CancelButton { get; }
 
         public SwkbdAppletDialog(Window parent) : base(parent, DialogFlags.Modal | DialogFlags.DestroyWithParent, MessageType.Question, ButtonsType.None, null)
@@ -31,13 +31,13 @@ namespace Ryujinx.Ui.Applet
             };
 
             InputEntry.Activated += OnInputActivated;
-            InputEntry.Changed   += OnInputChanged;
+            InputEntry.Changed += OnInputChanged;
 
-            OkButton     = (Button)AddButton("OK",     ResponseType.Ok);
+            OkButton = (Button)AddButton("OK", ResponseType.Ok);
             CancelButton = (Button)AddButton("Cancel", ResponseType.Cancel);
 
             ((Box)MessageArea).PackEnd(_validationInfo, true, true, 0);
-            ((Box)MessageArea).PackEnd(InputEntry,      true, true, 4);
+            ((Box)MessageArea).PackEnd(InputEntry, true, true, 4);
 
             SetInputLengthValidation(0, int.MaxValue); // Disable by default.
         }
@@ -58,14 +58,14 @@ namespace Ryujinx.Ui.Applet
             else if (_inputMin > 0 && _inputMax == int.MaxValue)
             {
                 _validationInfo.Visible = true;
-                _validationInfo.Markup  = $"<i>Must be at least {_inputMin} characters long</i>";
+                _validationInfo.Markup = $"<i>Must be at least {_inputMin} characters long</i>";
 
                 _checkLength = (length) => _inputMin <= length;
             }
             else
             {
                 _validationInfo.Visible = true;
-                _validationInfo.Markup  = $"<i>Must be {_inputMin}-{_inputMax} characters long</i>";
+                _validationInfo.Markup = $"<i>Must be {_inputMin}-{_inputMax} characters long</i>";
 
                 _checkLength = (length) => _inputMin <= length && length <= _inputMax;
             }

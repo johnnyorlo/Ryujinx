@@ -249,8 +249,8 @@ namespace Ryujinx.Graphics.Shader.Translation.Optimizations
 
         private static int GetBitfieldExtractValue(Operation operation)
         {
-            int value  = operation.GetSource(0).Value;
-            int lsb    = operation.GetSource(1).Value;
+            int value = operation.GetSource(0).Value;
+            int lsb = operation.GetSource(1).Value;
             int length = operation.GetSource(2).Value;
 
             return value.Extract(lsb, length);

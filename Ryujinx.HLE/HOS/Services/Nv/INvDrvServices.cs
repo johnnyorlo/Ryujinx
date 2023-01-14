@@ -91,13 +91,13 @@ namespace Ryujinx.HLE.HOS.Services.Nv
 
         private NvResult GetIoctlArgument(ServiceCtx context, NvIoctl ioctlCommand, out Span<byte> arguments)
         {
-            (ulong inputDataPosition,  ulong inputDataSize)  = context.Request.GetBufferType0x21(0);
+            (ulong inputDataPosition, ulong inputDataSize) = context.Request.GetBufferType0x21(0);
             (ulong outputDataPosition, ulong outputDataSize) = context.Request.GetBufferType0x22(0);
 
             NvIoctl.Direction ioctlDirection = ioctlCommand.DirectionValue;
-            uint              ioctlSize      = ioctlCommand.Size;
+            uint ioctlSize = ioctlCommand.Size;
 
-            bool isRead  = (ioctlDirection & NvIoctl.Direction.Read)  != 0;
+            bool isRead = (ioctlDirection & NvIoctl.Direction.Read) != 0;
             bool isWrite = (ioctlDirection & NvIoctl.Direction.Write) != 0;
 
             if ((isWrite && ioctlSize > outputDataSize) || (isRead && ioctlSize > inputDataSize))
@@ -240,7 +240,7 @@ namespace Ryujinx.HLE.HOS.Services.Nv
         public ResultCode Open(ServiceCtx context)
         {
             NvResult errorCode = EnsureInitialized();
-            int      fd        = -1;
+            int fd = -1;
 
             if (errorCode == NvResult.Success)
             {
@@ -266,7 +266,7 @@ namespace Ryujinx.HLE.HOS.Services.Nv
 
             if (errorCode == NvResult.Success)
             {
-                int     fd           = context.RequestData.ReadInt32();
+                int fd = context.RequestData.ReadInt32();
                 NvIoctl ioctlCommand = context.RequestData.ReadStruct<NvIoctl>();
 
                 errorCode = GetIoctlArgument(context, ioctlCommand, out Span<byte> arguments);
@@ -328,8 +328,8 @@ namespace Ryujinx.HLE.HOS.Services.Nv
         // Initialize(u32 transfer_memory_size, handle<copy, process> current_process, handle<copy, transfer_memory> transfer_memory) -> u32 error_code
         public ResultCode Initialize(ServiceCtx context)
         {
-            long transferMemSize   = context.RequestData.ReadInt64();
-            int  transferMemHandle = context.Request.HandleDesc.ToCopy[1];
+            long transferMemSize = context.RequestData.ReadInt64();
+            int transferMemHandle = context.Request.HandleDesc.ToCopy[1];
 
             // TODO: When transfer memory will be implemented, this could be removed.
             _transferMemInitialized = true;
@@ -357,7 +357,7 @@ namespace Ryujinx.HLE.HOS.Services.Nv
 
             if (errorCode == NvResult.Success)
             {
-                int  fd      = context.RequestData.ReadInt32();
+                int fd = context.RequestData.ReadInt32();
                 uint eventId = context.RequestData.ReadUInt32();
 
                 errorCode = GetDeviceFileFromFd(fd, out NvDeviceFile deviceFile);
@@ -393,9 +393,9 @@ namespace Ryujinx.HLE.HOS.Services.Nv
 
             if (errorCode == NvResult.Success)
             {
-                int  fd                 = context.RequestData.ReadInt32();
-                uint argument           = context.RequestData.ReadUInt32();
-                int  sharedMemoryHandle = context.Request.HandleDesc.ToCopy[0];
+                int fd = context.RequestData.ReadInt32();
+                uint argument = context.RequestData.ReadUInt32();
+                int sharedMemoryHandle = context.Request.HandleDesc.ToCopy[0];
 
                 errorCode = GetDeviceFileFromFd(fd, out NvDeviceFile deviceFile);
 
@@ -481,7 +481,7 @@ namespace Ryujinx.HLE.HOS.Services.Nv
 
             if (errorCode == NvResult.Success)
             {
-                int     fd           = context.RequestData.ReadInt32();
+                int fd = context.RequestData.ReadInt32();
                 NvIoctl ioctlCommand = context.RequestData.ReadStruct<NvIoctl>();
 
                 (ulong inlineInBufferPosition, ulong inlineInBufferSize) = context.Request.GetBufferType0x21(1);
@@ -530,7 +530,7 @@ namespace Ryujinx.HLE.HOS.Services.Nv
 
             if (errorCode == NvResult.Success)
             {
-                int     fd           = context.RequestData.ReadInt32();
+                int fd = context.RequestData.ReadInt32();
                 NvIoctl ioctlCommand = context.RequestData.ReadStruct<NvIoctl>();
 
                 (ulong inlineOutBufferPosition, ulong inlineOutBufferSize) = context.Request.GetBufferType0x22(1);

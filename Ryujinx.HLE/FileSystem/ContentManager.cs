@@ -25,12 +25,12 @@ namespace Ryujinx.HLE.FileSystem
     public class ContentManager
     {
         private const ulong SystemVersionTitleId = 0x0100000000000809;
-        private const ulong SystemUpdateTitleId  = 0x0100000000000816;
+        private const ulong SystemUpdateTitleId = 0x0100000000000816;
 
         private Dictionary<StorageId, LinkedList<LocationEntry>> _locationEntries;
 
-        private Dictionary<string, ulong>  _sharedFontTitleDictionary;
-        private Dictionary<ulong, string>  _systemTitlesNameDictionary;
+        private Dictionary<string, ulong> _sharedFontTitleDictionary;
+        private Dictionary<ulong, string> _systemTitlesNameDictionary;
         private Dictionary<string, string> _sharedFontFilenameDictionary;
 
         private SortedDictionary<(ulong titleId, NcaContentType type), string> _contentDictionary;
@@ -56,7 +56,7 @@ namespace Ryujinx.HLE.FileSystem
         public ContentManager(VirtualFileSystem virtualFileSystem)
         {
             _contentDictionary = new SortedDictionary<(ulong, NcaContentType), string>();
-            _locationEntries   = new Dictionary<StorageId, LinkedList<LocationEntry>>();
+            _locationEntries = new Dictionary<StorageId, LinkedList<LocationEntry>>();
 
             _sharedFontTitleDictionary = new Dictionary<string, ulong>
             {
@@ -98,18 +98,18 @@ namespace Ryujinx.HLE.FileSystem
             lock (_lock)
             {
                 _contentDictionary = new SortedDictionary<(ulong, NcaContentType), string>();
-                _locationEntries   = new Dictionary<StorageId, LinkedList<LocationEntry>>();
+                _locationEntries = new Dictionary<StorageId, LinkedList<LocationEntry>>();
 
                 foreach (StorageId storageId in Enum.GetValues<StorageId>())
                 {
-                    string contentDirectory    = null;
-                    string contentPathString   = null;
+                    string contentDirectory = null;
+                    string contentPathString = null;
                     string registeredDirectory = null;
 
                     try
                     {
-                        contentPathString   = ContentPath.GetContentPath(storageId);
-                        contentDirectory    = ContentPath.GetRealPath(_virtualFileSystem, contentPathString);
+                        contentPathString = ContentPath.GetContentPath(storageId);
+                        contentDirectory = ContentPath.GetRealPath(_virtualFileSystem, contentPathString);
                         registeredDirectory = Path.Combine(contentDirectory, "registered");
                     }
                     catch (NotSupportedException)
@@ -248,7 +248,7 @@ namespace Ryujinx.HLE.FileSystem
 
                 if (!mergedToContainer)
                 {
-                    using FileStream          fileStream          = File.OpenRead(containerPath);
+                    using FileStream fileStream = File.OpenRead(containerPath);
                     using PartitionFileSystem partitionFileSystem = new(fileStream.AsStorage());
 
                     _virtualFileSystem.ImportTickets(partitionFileSystem);
@@ -306,7 +306,7 @@ namespace Ryujinx.HLE.FileSystem
         {
             lock (_lock)
             {
-                LinkedList<LocationEntry> locationList      = _locationEntries[storageId];
+                LinkedList<LocationEntry> locationList = _locationEntries[storageId];
                 LinkedListNode<LocationEntry> locationEntry = locationList.First;
 
                 while (locationEntry != null)
@@ -486,10 +486,10 @@ namespace Ryujinx.HLE.FileSystem
 
         public void InstallFirmware(string firmwareSource)
         {
-            string contentPathString   = ContentPath.GetContentPath(StorageId.BuiltInSystem);
-            string contentDirectory    = ContentPath.GetRealPath(_virtualFileSystem, contentPathString);
+            string contentPathString = ContentPath.GetContentPath(StorageId.BuiltInSystem);
+            string contentDirectory = ContentPath.GetRealPath(_virtualFileSystem, contentPathString);
             string registeredDirectory = Path.Combine(contentDirectory, "registered");
-            string temporaryDirectory  = Path.Combine(contentDirectory, "temp");
+            string temporaryDirectory = Path.Combine(contentDirectory, "temp");
 
             if (Directory.Exists(temporaryDirectory))
             {
@@ -805,7 +805,7 @@ namespace Ryujinx.HLE.FileSystem
                                 continue;
                             }
 
-                            ZipArchiveEntry metaZipEntry    = archive.GetEntry(metaPath);
+                            ZipArchiveEntry metaZipEntry = archive.GetEntry(metaPath);
                             ZipArchiveEntry contentZipEntry = archive.GetEntry(contentPath);
 
                             using (Stream metaNcaStream = GetZipStream(metaZipEntry))
@@ -937,8 +937,8 @@ namespace Ryujinx.HLE.FileSystem
                 {
                     if (updateNcas.TryGetValue(metaEntry.TitleId, out var ncaEntry))
                     {
-                        var    metaNcaEntry = ncaEntry.Find(x => x.type == NcaContentType.Meta);
-                        string contentPath  = ncaEntry.Find(x => x.type != NcaContentType.Meta).path;
+                        var metaNcaEntry = ncaEntry.Find(x => x.type == NcaContentType.Meta);
+                        string contentPath = ncaEntry.Find(x => x.type != NcaContentType.Meta).path;
 
                         // Nintendo in 9.0.0, removed PPC and only kept the meta nca of it.
                         // This is a perfect valid case, so we should just ignore the missing content nca and continue.

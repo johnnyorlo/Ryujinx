@@ -36,10 +36,10 @@ namespace ARMeilleure.Instructions
         private enum MullFlags
         {
             Subtract = 0,
-            Add      = 1 << 0,
-            Signed   = 1 << 1,
+            Add = 1 << 0,
+            Signed = 1 << 1,
 
-            SignedAdd      = Signed | Add,
+            SignedAdd = Signed | Add,
             SignedSubtract = Signed | Subtract
         }
 

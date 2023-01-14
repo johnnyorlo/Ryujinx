@@ -46,7 +46,7 @@ namespace ARMeilleure.Instructions
             }
             else
             {
-                string name = (size, castagnoli) switch 
+                string name = (size, castagnoli) switch
                 {
                     (0, false) => nameof(SoftFallback.Crc32b),
                     (1, false) => nameof(SoftFallback.Crc32h),

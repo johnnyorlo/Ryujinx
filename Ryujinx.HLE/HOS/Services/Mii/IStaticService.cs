@@ -14,7 +14,7 @@ namespace Ryujinx.HLE.HOS.Services.Mii
 
         public IStaticService(ServiceCtx context, bool isSystem)
         {
-            _isSystem     = isSystem;
+            _isSystem = isSystem;
             _databaseImpl = DatabaseImpl.Instance;
         }
 

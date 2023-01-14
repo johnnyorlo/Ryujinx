@@ -29,12 +29,12 @@ namespace Ryujinx.Ava.UI.Windows
     public partial class DownloadableContentManagerWindow : StyleableWindow
     {
         private readonly List<DownloadableContentContainer> _downloadableContentContainerList;
-        private readonly string                             _downloadableContentJsonPath;
+        private readonly string _downloadableContentJsonPath;
 
-        private VirtualFileSystem                      _virtualFileSystem    { get; }
+        private VirtualFileSystem _virtualFileSystem { get; }
         private AvaloniaList<DownloadableContentModel> _downloadableContents { get; set; }
 
-        private ulong  _titleId   { get; }
+        private ulong _titleId { get; }
         private string _titleName { get; }
 
         public DownloadableContentManagerWindow()
@@ -48,10 +48,10 @@ namespace Ryujinx.Ava.UI.Windows
 
         public DownloadableContentManagerWindow(VirtualFileSystem virtualFileSystem, ulong titleId, string titleName)
         {
-            _virtualFileSystem    = virtualFileSystem;
+            _virtualFileSystem = virtualFileSystem;
             _downloadableContents = new AvaloniaList<DownloadableContentModel>();
 
-            _titleId   = titleId;
+            _titleId = titleId;
             _titleName = titleName;
 
             _downloadableContentJsonPath = Path.Combine(AppDataManager.GamesDirPath, titleId.ToString("x16"), "dlc.json");
@@ -149,8 +149,8 @@ namespace Ryujinx.Ava.UI.Windows
 
             using FileStream containerFile = File.OpenRead(path);
 
-            PartitionFileSystem partitionFileSystem         = new(containerFile.AsStorage());
-            bool                containsDownloadableContent = false;
+            PartitionFileSystem partitionFileSystem = new(containerFile.AsStorage());
+            bool containsDownloadableContent = false;
 
             _virtualFileSystem.ImportTickets(partitionFileSystem);
 
@@ -223,7 +223,7 @@ namespace Ryujinx.Ava.UI.Windows
 
         public void EnableAll()
         {
-            foreach(var item in _downloadableContents)
+            foreach (var item in _downloadableContents)
             {
                 item.Enabled = true;
             }
@@ -240,14 +240,14 @@ namespace Ryujinx.Ava.UI.Windows
         public async void Add()
         {
             OpenFileDialog dialog = new OpenFileDialog()
-            { 
-                Title         = LocaleManager.Instance[LocaleKeys.SelectDlcDialogTitle],
+            {
+                Title = LocaleManager.Instance[LocaleKeys.SelectDlcDialogTitle],
                 AllowMultiple = true
             };
 
             dialog.Filters.Add(new FileDialogFilter
             {
-                Name       = "NSP",
+                Name = "NSP",
                 Extensions = { "nsp" }
             });
 
@@ -257,7 +257,7 @@ namespace Ryujinx.Ava.UI.Windows
             {
                 foreach (string file in files)
                 {
-                   await AddDownloadableContent(file);
+                    await AddDownloadableContent(file);
                 }
             }
 
@@ -281,15 +281,15 @@ namespace Ryujinx.Ava.UI.Windows
 
                     container = new DownloadableContentContainer
                     {
-                        ContainerPath              = downloadableContent.ContainerPath,
+                        ContainerPath = downloadableContent.ContainerPath,
                         DownloadableContentNcaList = new List<DownloadableContentNca>()
                     };
                 }
 
                 container.DownloadableContentNcaList.Add(new DownloadableContentNca
                 {
-                    Enabled  = downloadableContent.Enabled,
-                    TitleId  = Convert.ToUInt64(downloadableContent.TitleId, 16),
+                    Enabled = downloadableContent.Enabled,
+                    TitleId = Convert.ToUInt64(downloadableContent.TitleId, 16),
                     FullPath = downloadableContent.FullPath
                 });
             }

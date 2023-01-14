@@ -2,8 +2,8 @@ namespace Ryujinx.Graphics.Shader
 {
     enum OutputTopology
     {
-        PointList     = 1,
-        LineStrip     = 6,
+        PointList = 1,
+        LineStrip = 6,
         TriangleStrip = 7
     }
 
@@ -13,8 +13,8 @@ namespace Ryujinx.Graphics.Shader
         {
             switch (topology)
             {
-                case OutputTopology.LineStrip:     return "line_strip";
-                case OutputTopology.PointList:     return "points";
+                case OutputTopology.LineStrip: return "line_strip";
+                case OutputTopology.PointList: return "points";
                 case OutputTopology.TriangleStrip: return "triangle_strip";
             }
 

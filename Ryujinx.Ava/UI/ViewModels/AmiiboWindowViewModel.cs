@@ -31,7 +31,7 @@ namespace Ryujinx.Ava.UI.ViewModels
         private readonly byte[] _amiiboLogoBytes;
         private readonly HttpClient _httpClient;
         private readonly StyleableWindow _owner;
-        
+
         private Bitmap _amiiboImage;
         private List<Amiibo.AmiiboApi> _amiiboList;
         private AvaloniaList<Amiibo.AmiiboApi> _amiibos;

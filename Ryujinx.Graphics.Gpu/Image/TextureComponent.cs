@@ -7,13 +7,13 @@ namespace Ryujinx.Graphics.Gpu.Image
     /// </summary>
     enum TextureComponent
     {
-        Zero  = 0,
-        Red   = 2,
+        Zero = 0,
+        Red = 2,
         Green = 3,
-        Blue  = 4,
+        Blue = 4,
         Alpha = 5,
         OneSI = 6,
-        OneF  = 7
+        OneF = 7
     }
 
     static class TextureComponentConverter
@@ -27,10 +27,10 @@ namespace Ryujinx.Graphics.Gpu.Image
         {
             switch (component)
             {
-                case TextureComponent.Zero:  return SwizzleComponent.Zero;
-                case TextureComponent.Red:   return SwizzleComponent.Red;
+                case TextureComponent.Zero: return SwizzleComponent.Zero;
+                case TextureComponent.Red: return SwizzleComponent.Red;
                 case TextureComponent.Green: return SwizzleComponent.Green;
-                case TextureComponent.Blue:  return SwizzleComponent.Blue;
+                case TextureComponent.Blue: return SwizzleComponent.Blue;
                 case TextureComponent.Alpha: return SwizzleComponent.Alpha;
                 case TextureComponent.OneSI:
                 case TextureComponent.OneF:

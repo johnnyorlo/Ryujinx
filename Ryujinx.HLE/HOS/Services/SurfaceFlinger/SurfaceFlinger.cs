@@ -43,17 +43,17 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
 
         private class Layer
         {
-            public int                    ProducerBinderId;
+            public int ProducerBinderId;
             public IGraphicBufferProducer Producer;
-            public BufferItemConsumer     Consumer;
-            public BufferQueueCore        Core;
-            public ulong                  Owner;
-            public LayerState             State;
+            public BufferItemConsumer Consumer;
+            public BufferQueueCore Core;
+            public ulong Owner;
+            public LayerState State;
         }
 
         private class TextureCallbackInformation
         {
-            public Layer      Layer;
+            public Layer Layer;
             public BufferItem Item;
         }
 
@@ -132,11 +132,11 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
                 _layers.Add(layerId, new Layer
                 {
                     ProducerBinderId = HOSBinderDriverServer.RegisterBinderObject(producer),
-                    Producer         = producer,
-                    Consumer         = new BufferItemConsumer(_device, consumer, 0, -1, false, this),
-                    Core             = core,
-                    Owner            = pid,
-                    State            = initialState
+                    Producer = producer,
+                    Consumer = new BufferItemConsumer(_device, consumer, 0, -1, false, this),
+                    Core = core,
+                    Owner = pid,
+                    State = initialState
                 });
             }
         }
@@ -403,7 +403,7 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
 
         private void PostFrameBuffer(Layer layer, BufferItem item)
         {
-            int frameBufferWidth  = item.GraphicBuffer.Object.Width;
+            int frameBufferWidth = item.GraphicBuffer.Object.Width;
             int frameBufferHeight = item.GraphicBuffer.Object.Height;
 
             int nvMapHandle = item.GraphicBuffer.Object.Buffer.Surfaces[0].NvMapHandle;
@@ -434,7 +434,7 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
             bool flipY = item.Transform.HasFlag(NativeWindowTransform.FlipY);
 
             AspectRatio aspectRatio = _device.Configuration.AspectRatio;
-            bool        isStretched = aspectRatio == AspectRatio.Stretched;
+            bool isStretched = aspectRatio == AspectRatio.Stretched;
 
             ImageCrop crop = new ImageCrop(
                 cropRect.Left,
@@ -450,7 +450,7 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
             TextureCallbackInformation textureCallbackInformation = new TextureCallbackInformation
             {
                 Layer = layer,
-                Item  = item
+                Item = item
             };
 
             if (_device.Gpu.Window.EnqueueFrameThreadSafe(
@@ -543,6 +543,6 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
             _device.Statistics.RecordGameFrameTime();
         }
 
-        public void OnBuffersReleased() {}
+        public void OnBuffersReleased() { }
     }
 }

@@ -9,20 +9,20 @@ namespace Ryujinx.Horizon.Sdk.Sf
     class CommandHandler
     {
         public delegate Result MethodInvoke(
-            ref ServiceDispatchContext   context,
-            HipcCommandProcessor         processor,
+            ref ServiceDispatchContext context,
+            HipcCommandProcessor processor,
             ServerMessageRuntimeMetadata runtimeMetadata,
-            ReadOnlySpan<byte>           inRawData,
-            ref Span<CmifOutHeader>      outHeader);
+            ReadOnlySpan<byte> inRawData,
+            ref Span<CmifOutHeader> outHeader);
 
-        private readonly MethodInvoke         _invoke;
+        private readonly MethodInvoke _invoke;
         private readonly HipcCommandProcessor _processor;
 
         public string MethodName => _invoke.Method.Name;
 
         public CommandHandler(MethodInvoke invoke, params CommandArg[] args)
         {
-            _invoke    = invoke;
+            _invoke = invoke;
             _processor = new HipcCommandProcessor(args);
         }
 
@@ -37,8 +37,8 @@ namespace Ryujinx.Horizon.Sdk.Sf
                 context.Processor.SetImplementationProcessor(_processor);
             }
 
-            var    runtimeMetadata = context.Processor.GetRuntimeMetadata();
-            Result result          = context.Processor.PrepareForProcess(ref context, runtimeMetadata);
+            var runtimeMetadata = context.Processor.GetRuntimeMetadata();
+            Result result = context.Processor.PrepareForProcess(ref context, runtimeMetadata);
 
             if (result.IsFailure)
             {
@@ -50,7 +50,7 @@ namespace Ryujinx.Horizon.Sdk.Sf
 
         public static void GetCmifOutHeaderPointer(ref Span<CmifOutHeader> outHeader, ref Span<byte> outRawData)
         {
-            outHeader  = MemoryMarshal.Cast<byte, CmifOutHeader>(outRawData)[..1];
+            outHeader = MemoryMarshal.Cast<byte, CmifOutHeader>(outRawData)[..1];
             outRawData = outRawData[Unsafe.SizeOf<CmifOutHeader>()..];
         }
     }

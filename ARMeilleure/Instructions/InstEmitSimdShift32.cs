@@ -303,10 +303,10 @@ namespace ARMeilleure.Instructions
         {
             OpCode32SimdShImm op = (OpCode32SimdShImm)context.CurrOp;
 
-            bool scalar    = (flags & ShrImmSaturatingNarrowFlags.Scalar)    != 0;
+            bool scalar = (flags & ShrImmSaturatingNarrowFlags.Scalar) != 0;
             bool signedSrc = (flags & ShrImmSaturatingNarrowFlags.SignedSrc) != 0;
             bool signedDst = (flags & ShrImmSaturatingNarrowFlags.SignedDst) != 0;
-            bool round     = (flags & ShrImmSaturatingNarrowFlags.Round)     != 0;
+            bool round = (flags & ShrImmSaturatingNarrowFlags.Round) != 0;
 
             if (scalar)
             {

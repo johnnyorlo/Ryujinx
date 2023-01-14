@@ -26,7 +26,7 @@ namespace ARMeilleure.Instructions
 
         public static void EmitNZFlagsCheck(ArmEmitterContext context, Operand d)
         {
-            SetFlag(context, PState.NFlag, context.ICompareLess (d, Const(d.Type, 0)));
+            SetFlag(context, PState.NFlag, context.ICompareLess(d, Const(d.Type, 0)));
             SetFlag(context, PState.ZFlag, context.ICompareEqual(d, Const(d.Type, 0)));
         }
 
@@ -196,14 +196,14 @@ namespace ARMeilleure.Instructions
             {
                 // ARM32.
                 case IOpCode32AluImm op:
-                {
-                    if (ShouldSetFlags(context) && op.IsRotated && setCarry)
                     {
-                        SetFlag(context, PState.CFlag, Const((uint)op.Immediate >> 31));
-                    }
+                        if (ShouldSetFlags(context) && op.IsRotated && setCarry)
+                        {
+                            SetFlag(context, PState.CFlag, Const((uint)op.Immediate >> 31));
+                        }
 
-                    return Const(op.Immediate);
-                }
+                        return Const(op.Immediate);
+                    }
 
                 case IOpCode32AluImm16 op: return Const(op.Immediate);
 
@@ -214,40 +214,40 @@ namespace ARMeilleure.Instructions
 
                 // ARM64.
                 case IOpCodeAluImm op:
-                {
-                    if (op.GetOperandType() == OperandType.I32)
                     {
-                        return Const((int)op.Immediate);
+                        if (op.GetOperandType() == OperandType.I32)
+                        {
+                            return Const((int)op.Immediate);
+                        }
+                        else
+                        {
+                            return Const(op.Immediate);
+                        }
                     }
-                    else
-                    {
-                        return Const(op.Immediate);
-                    }
-                }
 
                 case IOpCodeAluRs op:
-                {
-                    Operand value = GetIntOrZR(context, op.Rm);
-
-                    switch (op.ShiftType)
                     {
-                        case ShiftType.Lsl: value = context.ShiftLeft   (value, Const(op.Shift)); break;
-                        case ShiftType.Lsr: value = context.ShiftRightUI(value, Const(op.Shift)); break;
-                        case ShiftType.Asr: value = context.ShiftRightSI(value, Const(op.Shift)); break;
-                        case ShiftType.Ror: value = context.RotateRight (value, Const(op.Shift)); break;
+                        Operand value = GetIntOrZR(context, op.Rm);
+
+                        switch (op.ShiftType)
+                        {
+                            case ShiftType.Lsl: value = context.ShiftLeft(value, Const(op.Shift)); break;
+                            case ShiftType.Lsr: value = context.ShiftRightUI(value, Const(op.Shift)); break;
+                            case ShiftType.Asr: value = context.ShiftRightSI(value, Const(op.Shift)); break;
+                            case ShiftType.Ror: value = context.RotateRight(value, Const(op.Shift)); break;
+                        }
+
+                        return value;
                     }
 
-                    return value;
-                }
-
                 case IOpCodeAluRx op:
-                {
-                    Operand value = GetExtendedM(context, op.Rm, op.IntType);
+                    {
+                        Operand value = GetExtendedM(context, op.Rm, op.IntType);
 
-                    value = context.ShiftLeft(value, Const(op.Shift));
+                        value = context.ShiftLeft(value, Const(op.Shift));
 
-                    return value;
-                }
+                        return value;
+                    }
 
                 default: throw InvalidOpCodeType(context.CurrOp);
             }
@@ -271,7 +271,7 @@ namespace ARMeilleure.Instructions
                 {
                     case ShiftType.Lsr: shift = 32; break;
                     case ShiftType.Asr: shift = 32; break;
-                    case ShiftType.Ror: shift = 1;  break;
+                    case ShiftType.Ror: shift = 1; break;
                 }
             }
 
@@ -308,7 +308,7 @@ namespace ARMeilleure.Instructions
                 {
                     case ShiftType.Lsr: shift = 32; break;
                     case ShiftType.Asr: shift = 32; break;
-                    case ShiftType.Ror: shift = 1;  break;
+                    case ShiftType.Ror: shift = 1; break;
                 }
             }
 

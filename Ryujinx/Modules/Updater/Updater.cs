@@ -25,15 +25,15 @@ namespace Ryujinx.Modules
     {
         internal static bool Running;
 
-        private static readonly string HomeDir          = AppDomain.CurrentDomain.BaseDirectory;
-        private static readonly string UpdateDir        = Path.Combine(Path.GetTempPath(), "Ryujinx", "update");
+        private static readonly string HomeDir = AppDomain.CurrentDomain.BaseDirectory;
+        private static readonly string UpdateDir = Path.Combine(Path.GetTempPath(), "Ryujinx", "update");
         private static readonly string UpdatePublishDir = Path.Combine(UpdateDir, "publish");
-        private static readonly int    ConnectionCount  = 4;
+        private static readonly int ConnectionCount = 4;
 
         private static string _buildVer;
         private static string _platformExt;
         private static string _buildUrl;
-        private static long   _buildSize;
+        private static long _buildSize;
 
         private const string GitHubApiURL = "https://api.github.com";
 
@@ -62,17 +62,17 @@ namespace Ryujinx.Modules
             // Detect current platform
             if (OperatingSystem.IsMacOS())
             {
-                _platformExt  = "osx_x64.zip";
+                _platformExt = "osx_x64.zip";
                 artifactIndex = 1;
             }
             else if (OperatingSystem.IsWindows())
             {
-                _platformExt  = "win_x64.zip";
+                _platformExt = "win_x64.zip";
                 artifactIndex = 2;
             }
             else if (OperatingSystem.IsLinux())
             {
-                _platformExt  = "linux_x64.tar.gz";
+                _platformExt = "linux_x64.tar.gz";
                 artifactIndex = 0;
             }
 
@@ -106,9 +106,9 @@ namespace Ryujinx.Modules
                     string buildInfoURL = $"{GitHubApiURL}/repos/{ReleaseInformation.ReleaseChannelOwner}/{ReleaseInformation.ReleaseChannelRepo}/releases/latest";
 
                     // Fetch latest build information
-                    string  fetchedJson = await jsonClient.GetStringAsync(buildInfoURL);
-                    JObject jsonRoot    = JObject.Parse(fetchedJson);
-                    JToken  assets      = jsonRoot["assets"];
+                    string fetchedJson = await jsonClient.GetStringAsync(buildInfoURL);
+                    JObject jsonRoot = JObject.Parse(fetchedJson);
+                    JToken assets = jsonRoot["assets"];
 
                     _buildVer = (string)jsonRoot["name"];
 
@@ -218,8 +218,8 @@ namespace Ryujinx.Modules
             string updateFile = Path.Combine(UpdateDir, "update.bin");
 
             // Download the update .zip
-            updateDialog.MainText.Text        = "Downloading Update...";
-            updateDialog.ProgressBar.Value    = 0;
+            updateDialog.MainText.Text = "Downloading Update...";
+            updateDialog.ProgressBar.Value = 0;
             updateDialog.ProgressBar.MaxValue = 100;
 
             if (_buildSize >= 0)
@@ -406,14 +406,14 @@ namespace Ryujinx.Modules
         private static async void InstallUpdate(UpdateDialog updateDialog, string updateFile)
         {
             // Extract Update
-            updateDialog.MainText.Text     = "Extracting Update...";
+            updateDialog.MainText.Text = "Extracting Update...";
             updateDialog.ProgressBar.Value = 0;
 
             if (OperatingSystem.IsLinux())
             {
-                using (Stream         inStream   = File.OpenRead(updateFile))
-                using (Stream         gzipStream = new GZipInputStream(inStream))
-                using (TarInputStream tarStream  = new TarInputStream(gzipStream, Encoding.ASCII))
+                using (Stream inStream = File.OpenRead(updateFile))
+                using (Stream gzipStream = new GZipInputStream(inStream))
+                using (TarInputStream tarStream = new TarInputStream(gzipStream, Encoding.ASCII))
                 {
                     updateDialog.ProgressBar.MaxValue = inStream.Length;
 
@@ -449,8 +449,8 @@ namespace Ryujinx.Modules
             }
             else
             {
-                using (Stream  inStream = File.OpenRead(updateFile))
-                using (ZipFile zipFile  = new ZipFile(inStream))
+                using (Stream inStream = File.OpenRead(updateFile))
+                using (ZipFile zipFile = new ZipFile(inStream))
                 {
                     updateDialog.ProgressBar.MaxValue = zipFile.Count;
 
@@ -464,7 +464,7 @@ namespace Ryujinx.Modules
 
                             Directory.CreateDirectory(Path.GetDirectoryName(outPath));
 
-                            using (Stream     zipStream = zipFile.GetInputStream(zipEntry))
+                            using (Stream zipStream = zipFile.GetInputStream(zipEntry))
                             using (FileStream outStream = File.OpenWrite(outPath))
                             {
                                 zipStream.CopyTo(outStream);
@@ -486,8 +486,8 @@ namespace Ryujinx.Modules
 
             List<string> allFiles = EnumerateFilesToDelete().ToList();
 
-            updateDialog.MainText.Text        = "Renaming Old Files...";
-            updateDialog.ProgressBar.Value    = 0;
+            updateDialog.MainText.Text = "Renaming Old Files...";
+            updateDialog.ProgressBar.Value = 0;
             updateDialog.ProgressBar.MaxValue = allFiles.Count;
 
             // Replace old files
@@ -512,8 +512,8 @@ namespace Ryujinx.Modules
 
                 Application.Invoke(delegate
                 {
-                    updateDialog.MainText.Text        = "Adding New Files...";
-                    updateDialog.ProgressBar.Value    = 0;
+                    updateDialog.MainText.Text = "Adding New Files...";
+                    updateDialog.ProgressBar.Value = 0;
                     updateDialog.ProgressBar.MaxValue = Directory.GetFiles(UpdatePublishDir, "*", SearchOption.AllDirectories).Length;
                 });
 
@@ -524,9 +524,9 @@ namespace Ryujinx.Modules
 
             SetFileExecutable(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Ryujinx"));
 
-            updateDialog.MainText.Text      = "Update Complete!";
+            updateDialog.MainText.Text = "Update Complete!";
             updateDialog.SecondaryText.Text = "Do you want to restart Ryujinx now?";
-            updateDialog.Modal              = true;
+            updateDialog.Modal = true;
 
             updateDialog.ProgressBar.Hide();
             updateDialog.YesButton.Show();

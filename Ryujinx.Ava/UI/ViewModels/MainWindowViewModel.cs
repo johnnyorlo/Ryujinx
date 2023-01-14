@@ -151,7 +151,7 @@ namespace Ryujinx.Ava.UI.ViewModels
             TopLevel = topLevel;
         }
 
-#region Properties
+        #region Properties
 
         public string SearchText
         {
@@ -887,28 +887,28 @@ namespace Ryujinx.Ava.UI.ViewModels
         public bool IsGridLarge => ConfigurationState.Instance.Ui.GridSize == 3;
         public bool IsGridHuge => ConfigurationState.Instance.Ui.GridSize == 4;
 
-#endregion
+        #endregion
 
-#region PrivateMethods
+        #region PrivateMethods
 
         private IComparer<ApplicationData> GetComparer()
         {
             return SortMode switch
             {
-                ApplicationSort.LastPlayed      => new Models.Generic.LastPlayedSortComparer(IsAscending),
-                ApplicationSort.FileSize        => IsAscending  ? SortExpressionComparer<ApplicationData>.Ascending(app => app.FileSizeBytes)
+                ApplicationSort.LastPlayed => new Models.Generic.LastPlayedSortComparer(IsAscending),
+                ApplicationSort.FileSize => IsAscending ? SortExpressionComparer<ApplicationData>.Ascending(app => app.FileSizeBytes)
                                                                 : SortExpressionComparer<ApplicationData>.Descending(app => app.FileSizeBytes),
-                ApplicationSort.TotalTimePlayed => IsAscending  ? SortExpressionComparer<ApplicationData>.Ascending(app => app.TimePlayedNum)
+                ApplicationSort.TotalTimePlayed => IsAscending ? SortExpressionComparer<ApplicationData>.Ascending(app => app.TimePlayedNum)
                                                                 : SortExpressionComparer<ApplicationData>.Descending(app => app.TimePlayedNum),
-                ApplicationSort.Title           => IsAscending  ? SortExpressionComparer<ApplicationData>.Ascending(app => app.TitleName)
+                ApplicationSort.Title => IsAscending ? SortExpressionComparer<ApplicationData>.Ascending(app => app.TitleName)
                                                                 : SortExpressionComparer<ApplicationData>.Descending(app => app.TitleName),
-                ApplicationSort.Favorite        => !IsAscending ? SortExpressionComparer<ApplicationData>.Ascending(app => app.Favorite)
+                ApplicationSort.Favorite => !IsAscending ? SortExpressionComparer<ApplicationData>.Ascending(app => app.Favorite)
                                                                 : SortExpressionComparer<ApplicationData>.Descending(app => app.Favorite),
-                ApplicationSort.Developer       => IsAscending  ? SortExpressionComparer<ApplicationData>.Ascending(app => app.Developer)
+                ApplicationSort.Developer => IsAscending ? SortExpressionComparer<ApplicationData>.Ascending(app => app.Developer)
                                                                 : SortExpressionComparer<ApplicationData>.Descending(app => app.Developer),
-                ApplicationSort.FileType        => IsAscending  ? SortExpressionComparer<ApplicationData>.Ascending(app => app.FileExtension)
+                ApplicationSort.FileType => IsAscending ? SortExpressionComparer<ApplicationData>.Ascending(app => app.FileExtension)
                                                                 : SortExpressionComparer<ApplicationData>.Descending(app => app.FileExtension),
-                ApplicationSort.Path            => IsAscending  ? SortExpressionComparer<ApplicationData>.Ascending(app => app.Path)
+                ApplicationSort.Path => IsAscending ? SortExpressionComparer<ApplicationData>.Ascending(app => app.Path)
                                                                 : SortExpressionComparer<ApplicationData>.Descending(app => app.Path),
                 _ => null,
             };
@@ -1022,7 +1022,8 @@ namespace Ryujinx.Ava.UI.ViewModels
                         {
                             RefreshFirmwareStatus();
                         }
-                    }) { Name = "GUI.FirmwareInstallerThread" };
+                    })
+                    { Name = "GUI.FirmwareInstallerThread" };
 
                     thread.Start();
                 }
@@ -1210,9 +1211,9 @@ namespace Ryujinx.Ava.UI.ViewModels
             _rendererWaitEvent.Set();
         }
 
-#endregion
+        #endregion
 
-#region PublicMethods
+        #region PublicMethods
 
         public void SetUIProgressHandlers(Switch emulationContext)
         {
@@ -1270,8 +1271,8 @@ namespace Ryujinx.Ava.UI.ViewModels
             {
                 OpenFileDialog dialog = new() { AllowMultiple = false };
                 dialog.Filters.Add(new FileDialogFilter { Name = LocaleManager.Instance[LocaleKeys.FileDialogAllTypes], Extensions = { "xci", "zip" } });
-                dialog.Filters.Add(new FileDialogFilter { Name = "XCI",                                                 Extensions = { "xci" } });
-                dialog.Filters.Add(new FileDialogFilter { Name = "ZIP",                                                 Extensions = { "zip" } });
+                dialog.Filters.Add(new FileDialogFilter { Name = "XCI", Extensions = { "xci" } });
+                dialog.Filters.Add(new FileDialogFilter { Name = "ZIP", Extensions = { "zip" } });
 
                 string[] file = await dialog.ShowAsync(desktop.MainWindow);
 
@@ -1567,7 +1568,7 @@ namespace Ryujinx.Ava.UI.ViewModels
                         return;
                     }
 
-                    UserId         userId         = new((ulong)AccountManager.LastOpenedUser.UserId.High, (ulong)AccountManager.LastOpenedUser.UserId.Low);
+                    UserId userId = new((ulong)AccountManager.LastOpenedUser.UserId.High, (ulong)AccountManager.LastOpenedUser.UserId.Low);
                     SaveDataFilter saveDataFilter = SaveDataFilter.Make(titleIdNumber, saveType: default, userId, saveDataId: default, index: default);
                     OpenSaveDirectory(in saveDataFilter, selection, titleIdNumber);
                 });
@@ -1579,7 +1580,7 @@ namespace Ryujinx.Ava.UI.ViewModels
             ApplicationData selection = SelectedApplication;
             if (selection != null)
             {
-                string modsBasePath  = VirtualFileSystem.ModLoader.GetModsBasePath();
+                string modsBasePath = VirtualFileSystem.ModLoader.GetModsBasePath();
                 string titleModsPath = VirtualFileSystem.ModLoader.GetTitleDir(modsBasePath, selection.TitleId);
 
                 OpenHelper.OpenFolder(titleModsPath);
@@ -1593,7 +1594,7 @@ namespace Ryujinx.Ava.UI.ViewModels
             if (selection != null)
             {
                 string sdModsBasePath = VirtualFileSystem.ModLoader.GetSdModsBasePath();
-                string titleModsPath  = VirtualFileSystem.ModLoader.GetTitleDir(sdModsBasePath, selection.TitleId);
+                string titleModsPath = VirtualFileSystem.ModLoader.GetTitleDir(sdModsBasePath, selection.TitleId);
 
                 OpenHelper.OpenFolder(titleModsPath);
             }
@@ -1641,9 +1642,9 @@ namespace Ryujinx.Ava.UI.ViewModels
             {
                 Applications.Clear();
 
-                StatusBarVisible         = true;
+                StatusBarVisible = true;
                 StatusBarProgressMaximum = 0;
-                StatusBarProgressValue   = 0;
+                StatusBarProgressValue = 0;
 
                 LocaleManager.Instance.UpdateDynamicValue(LocaleKeys.StatusBarGamesLoaded, 0, 0);
             });
@@ -1674,12 +1675,12 @@ namespace Ryujinx.Ava.UI.ViewModels
                     }
                 });
 
-                dialog.Filters.Add(new FileDialogFilter { Name = "NSP",  Extensions = { "nsp" } });
+                dialog.Filters.Add(new FileDialogFilter { Name = "NSP", Extensions = { "nsp" } });
                 dialog.Filters.Add(new FileDialogFilter { Name = "PFS0", Extensions = { "pfs0" } });
-                dialog.Filters.Add(new FileDialogFilter { Name = "XCI",  Extensions = { "xci" } });
-                dialog.Filters.Add(new FileDialogFilter { Name = "NCA",  Extensions = { "nca" } });
-                dialog.Filters.Add(new FileDialogFilter { Name = "NRO",  Extensions = { "nro" } });
-                dialog.Filters.Add(new FileDialogFilter { Name = "NSO",  Extensions = { "nso" } });
+                dialog.Filters.Add(new FileDialogFilter { Name = "XCI", Extensions = { "xci" } });
+                dialog.Filters.Add(new FileDialogFilter { Name = "NCA", Extensions = { "nca" } });
+                dialog.Filters.Add(new FileDialogFilter { Name = "NRO", Extensions = { "nro" } });
+                dialog.Filters.Add(new FileDialogFilter { Name = "NSO", Extensions = { "nso" } });
 
                 string[] files = await dialog.ShowAsync(desktop.MainWindow);
 
@@ -1947,6 +1948,6 @@ namespace Ryujinx.Ava.UI.ViewModels
             }
         }
 
-#endregion
+        #endregion
     }
 }

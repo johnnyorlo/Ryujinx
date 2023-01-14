@@ -26,8 +26,8 @@ namespace ARMeilleure.IntermediateRepresentation
             {
                 case OperandType.FP32: return RegisterType.Vector;
                 case OperandType.FP64: return RegisterType.Vector;
-                case OperandType.I32:  return RegisterType.Integer;
-                case OperandType.I64:  return RegisterType.Integer;
+                case OperandType.I32: return RegisterType.Integer;
+                case OperandType.I64: return RegisterType.Integer;
                 case OperandType.V128: return RegisterType.Vector;
             }
 
@@ -40,8 +40,8 @@ namespace ARMeilleure.IntermediateRepresentation
             {
                 case OperandType.FP32: return 4;
                 case OperandType.FP64: return 8;
-                case OperandType.I32:  return 4;
-                case OperandType.I64:  return 8;
+                case OperandType.I32: return 4;
+                case OperandType.I64: return 8;
                 case OperandType.V128: return 16;
             }
 
@@ -54,8 +54,8 @@ namespace ARMeilleure.IntermediateRepresentation
             {
                 case OperandType.FP32: return 2;
                 case OperandType.FP64: return 3;
-                case OperandType.I32:  return 2;
-                case OperandType.I64:  return 3;
+                case OperandType.I32: return 2;
+                case OperandType.I64: return 3;
                 case OperandType.V128: return 4;
             }
 

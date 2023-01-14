@@ -6,9 +6,9 @@ namespace Ryujinx.HLE.HOS.Services.Mii.StaticService
 {
     class DatabaseServiceImpl : IDatabaseService
     {
-        private DatabaseImpl            _database;
+        private DatabaseImpl _database;
         private DatabaseSessionMetadata _metadata;
-        private bool                    _isSystem;
+        private bool _isSystem;
 
         public DatabaseServiceImpl(DatabaseImpl database, bool isSystem, SpecialMiiKeyCode miiKeyCode)
         {

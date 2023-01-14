@@ -9,7 +9,7 @@ namespace Ryujinx.Tests.Cpu
     {
 #if AluRs32
 
-#region "ValueSource (Opcodes)"
+        #region "ValueSource (Opcodes)"
         private static uint[] _Add_Adds_Rsb_Rsbs_()
         {
             return new uint[]
@@ -33,7 +33,7 @@ namespace Ryujinx.Tests.Cpu
                 0xe0d00000u  // SBCS R0, R0, R0
             };
         }
-#endregion
+        #endregion
 
         private const int RndCnt = 2;
         private const int RndCntAmount = 2;
@@ -68,7 +68,7 @@ namespace Ryujinx.Tests.Cpu
                                       [Values(0x00000000u, 0x7FFFFFFFu,
                                               0x80000000u, 0xFFFFFFFFu)] [Random(RndCnt)] uint wm,
                                       [Values(0b00u, 0b01u, 0b10u, 0b11u)] uint shift, // <LSL, LSR, ASR, ROR>
-                                      [Values(0u, 15u, 16u, 31u)] [Random(0u, 31u, RndCntAmount)] uint amount)
+                                      [Values(0u, 15u, 16u, 31u)][Random(0u, 31u, RndCntAmount)] uint amount)
         {
             opcode |= ((rm & 15) << 0) | ((rn & 15) << 16) | ((rd & 15) << 12);
             opcode |= ((shift & 3) << 5) | ((amount & 31) << 7);

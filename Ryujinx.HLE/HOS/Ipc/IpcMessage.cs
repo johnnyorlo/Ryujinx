@@ -10,10 +10,10 @@ namespace Ryujinx.HLE.HOS.Ipc
 
         public IpcHandleDesc HandleDesc { get; set; }
 
-        public List<IpcPtrBuffDesc>      PtrBuff      { get; private set; }
-        public List<IpcBuffDesc>         SendBuff     { get; private set; }
-        public List<IpcBuffDesc>         ReceiveBuff  { get; private set; }
-        public List<IpcBuffDesc>         ExchangeBuff { get; private set; }
+        public List<IpcPtrBuffDesc> PtrBuff { get; private set; }
+        public List<IpcBuffDesc> SendBuff { get; private set; }
+        public List<IpcBuffDesc> ReceiveBuff { get; private set; }
+        public List<IpcBuffDesc> ExchangeBuff { get; private set; }
         public List<IpcRecvListBuffDesc> RecvListBuff { get; private set; }
 
         public List<int> ObjectIds { get; private set; }
@@ -22,9 +22,9 @@ namespace Ryujinx.HLE.HOS.Ipc
 
         public IpcMessage()
         {
-            PtrBuff      = new List<IpcPtrBuffDesc>();
-            SendBuff     = new List<IpcBuffDesc>();
-            ReceiveBuff  = new List<IpcBuffDesc>();
+            PtrBuff = new List<IpcPtrBuffDesc>();
+            SendBuff = new List<IpcBuffDesc>();
+            ReceiveBuff = new List<IpcBuffDesc>();
             ExchangeBuff = new List<IpcBuffDesc>();
             RecvListBuff = new List<IpcRecvListBuffDesc>();
 
@@ -48,13 +48,13 @@ namespace Ryujinx.HLE.HOS.Ipc
 
             Type = (IpcMessageType)(word0 & 0xffff);
 
-            int  ptrBuffCount  = (word0 >> 16) & 0xf;
-            int  sendBuffCount = (word0 >> 20) & 0xf;
-            int  recvBuffCount = (word0 >> 24) & 0xf;
-            int  xchgBuffCount = (word0 >> 28) & 0xf;
+            int ptrBuffCount = (word0 >> 16) & 0xf;
+            int sendBuffCount = (word0 >> 20) & 0xf;
+            int recvBuffCount = (word0 >> 24) & 0xf;
+            int xchgBuffCount = (word0 >> 28) & 0xf;
 
-            int  rawDataSize   =  (word1 >>  0) & 0x3ff;
-            int  recvListFlags =  (word1 >> 10) & 0xf;
+            int rawDataSize = (word1 >> 0) & 0x3ff;
+            int recvListFlags = (word1 >> 10) & 0xf;
             bool hndDescEnable = ((word1 >> 31) & 0x1) != 0;
 
             if (hndDescEnable)
@@ -75,8 +75,8 @@ namespace Ryujinx.HLE.HOS.Ipc
                 }
             }
 
-            ReadBuff(SendBuff,     sendBuffCount);
-            ReadBuff(ReceiveBuff,  recvBuffCount);
+            ReadBuff(SendBuff, sendBuffCount);
+            ReadBuff(ReceiveBuff, recvBuffCount);
             ReadBuff(ExchangeBuff, xchgBuffCount);
 
             rawDataSize *= 4;
@@ -126,10 +126,10 @@ namespace Ryujinx.HLE.HOS.Ipc
                 int word0;
                 int word1;
 
-                word0  = (int)Type;
-                word0 |= (PtrBuff.Count      & 0xf) << 16;
-                word0 |= (SendBuff.Count     & 0xf) << 20;
-                word0 |= (ReceiveBuff.Count  & 0xf) << 24;
+                word0 = (int)Type;
+                word0 |= (PtrBuff.Count & 0xf) << 16;
+                word0 |= (SendBuff.Count & 0xf) << 20;
+                word0 |= (ReceiveBuff.Count & 0xf) << 24;
                 word0 |= (ExchangeBuff.Count & 0xf) << 28;
 
                 byte[] handleData = new byte[0];

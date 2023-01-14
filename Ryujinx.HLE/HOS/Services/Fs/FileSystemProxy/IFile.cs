@@ -26,7 +26,7 @@ namespace Ryujinx.HLE.HOS.Services.Fs.FileSystemProxy
             context.RequestData.BaseStream.Position += 4;
 
             long offset = context.RequestData.ReadInt64();
-            long size   = context.RequestData.ReadInt64();
+            long size = context.RequestData.ReadInt64();
 
             using (var region = context.Memory.GetWritableRegion(bufferAddress, (int)bufferLen, true))
             {
@@ -48,7 +48,7 @@ namespace Ryujinx.HLE.HOS.Services.Fs.FileSystemProxy
             context.RequestData.BaseStream.Position += 4;
 
             long offset = context.RequestData.ReadInt64();
-            long size   = context.RequestData.ReadInt64();
+            long size = context.RequestData.ReadInt64();
 
             byte[] data = new byte[context.Request.SendBuff[0].Size];
 

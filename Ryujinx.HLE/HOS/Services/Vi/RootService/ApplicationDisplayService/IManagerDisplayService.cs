@@ -29,8 +29,8 @@ namespace Ryujinx.HLE.HOS.Services.Vi.RootService.ApplicationDisplayService
         // CreateManagedLayer(u32, u64, nn::applet::AppletResourceUserId) -> u64
         public ResultCode CreateManagedLayer(ServiceCtx context)
         {
-            long layerFlags           = context.RequestData.ReadInt64();
-            long displayId            = context.RequestData.ReadInt64();
+            long layerFlags = context.RequestData.ReadInt64();
+            long displayId = context.RequestData.ReadInt64();
             long appletResourceUserId = context.RequestData.ReadInt64();
 
             ulong pid = context.Device.System.AppletState.AppletResourceUserIds.GetData<ulong>((int)appletResourceUserId);

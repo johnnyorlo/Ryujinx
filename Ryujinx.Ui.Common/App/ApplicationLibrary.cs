@@ -29,7 +29,7 @@ namespace Ryujinx.Ui.App.Common
 {
     public class ApplicationLibrary
     {
-        public event EventHandler<ApplicationAddedEventArgs>        ApplicationAdded;
+        public event EventHandler<ApplicationAddedEventArgs> ApplicationAdded;
         public event EventHandler<ApplicationCountUpdatedEventArgs> ApplicationCountUpdated;
 
         private readonly byte[] _nspIcon;
@@ -38,8 +38,8 @@ namespace Ryujinx.Ui.App.Common
         private readonly byte[] _nroIcon;
         private readonly byte[] _nsoIcon;
 
-        private VirtualFileSystem       _virtualFileSystem;
-        private Language                _desiredTitleLanguage;
+        private VirtualFileSystem _virtualFileSystem;
+        private Language _desiredTitleLanguage;
         private CancellationTokenSource _cancellationToken;
 
         public ApplicationLibrary(VirtualFileSystem virtualFileSystem)
@@ -55,7 +55,7 @@ namespace Ryujinx.Ui.App.Common
 
         private byte[] GetResourceBytes(string resourceName)
         {
-            Stream resourceStream    = Assembly.GetCallingAssembly().GetManifestResourceStream(resourceName);
+            Stream resourceStream = Assembly.GetCallingAssembly().GetManifestResourceStream(resourceName);
             byte[] resourceByteArray = new byte[resourceStream.Length];
 
             resourceStream.Read(resourceByteArray);
@@ -78,7 +78,7 @@ namespace Ryujinx.Ui.App.Common
 
         public void LoadApplications(List<string> appDirs, Language desiredTitleLanguage)
         {
-            int numApplicationsFound  = 0;
+            int numApplicationsFound = 0;
             int numApplicationsLoaded = 0;
 
             _desiredTitleLanguage = desiredTitleLanguage;
@@ -112,9 +112,9 @@ namespace Ryujinx.Ui.App.Common
                             {
                                 return;
                             }
-                        
+
                             string extension = Path.GetExtension(app).ToLower();
-                        
+
                             if (!File.GetAttributes(app).HasFlag(FileAttributes.Hidden) && extension is ".nsp" or ".pfs0" or ".xci" or ".nca" or ".nro" or ".nso")
                             {
                                 applications.Add(app);
@@ -472,13 +472,13 @@ namespace Ryujinx.Ui.App.Common
 
             // Return the ControlFS
             controlFs = controlNca?.OpenFileSystem(NcaSectionType.Data, IntegrityCheckLevel.None);
-            titleId   = controlNca?.Header.TitleId.ToString("x16");
+            titleId = controlNca?.Header.TitleId.ToString("x16");
         }
 
         public ApplicationMetadata LoadAndSaveMetaData(string titleId, Action<ApplicationMetadata> modifyFunction = null)
         {
             string metadataFolder = Path.Combine(AppDataManager.GamesDirPath, titleId, "gui");
-            string metadataFile   = Path.Combine(metadataFolder, "metadata.json");
+            string metadataFile = Path.Combine(metadataFolder, "metadata.json");
 
             ApplicationMetadata appMetadata;
 
@@ -680,7 +680,7 @@ namespace Ryujinx.Ui.App.Common
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Logger.Warning?.Print(LogClass.Application,
                     $"Could not retrieve a valid icon for the app. Default icon will be used. Errored File: {applicationPath}");
@@ -692,8 +692,8 @@ namespace Ryujinx.Ui.App.Common
         private string ConvertSecondsToReadableString(double seconds)
         {
             const int secondsPerMinute = 60;
-            const int secondsPerHour   = secondsPerMinute * 60;
-            const int secondsPerDay    = secondsPerHour   * 24;
+            const int secondsPerHour = secondsPerMinute * 60;
+            const int secondsPerDay = secondsPerHour * 24;
 
             string readableString;
 
@@ -781,7 +781,7 @@ namespace Ryujinx.Ui.App.Common
         private bool IsUpdateApplied(string titleId, out IFileSystem updatedControlFs)
         {
             updatedControlFs = null;
-            
+
             string updatePath = "(unknown)";
 
             try

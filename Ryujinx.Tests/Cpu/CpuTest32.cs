@@ -83,8 +83,8 @@ namespace Ryujinx.Tests.Cpu
             _context.Dispose();
             _ram.Dispose();
 
-            _memory     = null;
-            _context    = null;
+            _memory = null;
+            _context = null;
             _cpuContext = null;
             _unicornEmu = null;
 
@@ -301,7 +301,8 @@ namespace Ryujinx.Tests.Cpu
 
             SetWorkingMemory(0, testMem);
 
-            RunPrecomputedTestCase(new PrecomputedThumbTestCase(){
+            RunPrecomputedTestCase(new PrecomputedThumbTestCase()
+            {
                 Instructions = test.Instructions,
                 StartRegs = test.StartRegs,
                 FinalRegs = test.FinalRegs,

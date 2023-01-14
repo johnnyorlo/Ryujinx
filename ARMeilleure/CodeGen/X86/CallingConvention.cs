@@ -23,8 +23,8 @@ namespace ARMeilleure.CodeGen.X86
                 return (1 << (int)X86Register.Rax) |
                        (1 << (int)X86Register.Rcx) |
                        (1 << (int)X86Register.Rdx) |
-                       (1 << (int)X86Register.R8)  |
-                       (1 << (int)X86Register.R9)  |
+                       (1 << (int)X86Register.R8) |
+                       (1 << (int)X86Register.R9) |
                        (1 << (int)X86Register.R10) |
                        (1 << (int)X86Register.R11);
             }
@@ -35,8 +35,8 @@ namespace ARMeilleure.CodeGen.X86
                        (1 << (int)X86Register.Rdx) |
                        (1 << (int)X86Register.Rsi) |
                        (1 << (int)X86Register.Rdi) |
-                       (1 << (int)X86Register.R8)  |
-                       (1 << (int)X86Register.R9)  |
+                       (1 << (int)X86Register.R8) |
+                       (1 << (int)X86Register.R9) |
                        (1 << (int)X86Register.R10) |
                        (1 << (int)X86Register.R11);
             }

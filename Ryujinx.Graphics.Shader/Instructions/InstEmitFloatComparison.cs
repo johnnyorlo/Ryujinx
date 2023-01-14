@@ -484,8 +484,8 @@ namespace Ryujinx.Graphics.Shader.Instructions
             }
             else
             {
-                Operand low  = context.BitwiseAnd(res[0], Const(0xffff));
-                Operand high = context.ShiftLeft (res[1], Const(16));
+                Operand low = context.BitwiseAnd(res[0], Const(0xffff));
+                Operand high = context.ShiftLeft(res[1], Const(16));
 
                 Operand packed = context.BitwiseOr(low, high);
 

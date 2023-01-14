@@ -221,151 +221,151 @@ namespace ARMeilleure.CodeGen.X86
                 case Instruction.CompareAndSwap:
                 case Instruction.CompareAndSwap16:
                 case Instruction.CompareAndSwap8:
-                {
-                    OperandType type = node.GetSource(1).Type;
-
-                    if (type == OperandType.V128)
                     {
-                        // Handle the many restrictions of the compare and exchange (16 bytes) instruction:
-                        // - The expected value should be in RDX:RAX.
-                        // - The new value to be written should be in RCX:RBX.
-                        // - The value at the memory location is loaded to RDX:RAX.
-                        void SplitOperand(Operand source, Operand lr, Operand hr)
+                        OperandType type = node.GetSource(1).Type;
+
+                        if (type == OperandType.V128)
                         {
-                            nodes.AddBefore(node, Operation(Instruction.VectorExtract, lr, source, Const(0)));
-                            nodes.AddBefore(node, Operation(Instruction.VectorExtract, hr, source, Const(1)));
+                            // Handle the many restrictions of the compare and exchange (16 bytes) instruction:
+                            // - The expected value should be in RDX:RAX.
+                            // - The new value to be written should be in RCX:RBX.
+                            // - The value at the memory location is loaded to RDX:RAX.
+                            void SplitOperand(Operand source, Operand lr, Operand hr)
+                            {
+                                nodes.AddBefore(node, Operation(Instruction.VectorExtract, lr, source, Const(0)));
+                                nodes.AddBefore(node, Operation(Instruction.VectorExtract, hr, source, Const(1)));
+                            }
+
+                            Operand rax = Gpr(X86Register.Rax, OperandType.I64);
+                            Operand rbx = Gpr(X86Register.Rbx, OperandType.I64);
+                            Operand rcx = Gpr(X86Register.Rcx, OperandType.I64);
+                            Operand rdx = Gpr(X86Register.Rdx, OperandType.I64);
+
+                            SplitOperand(node.GetSource(1), rax, rdx);
+                            SplitOperand(node.GetSource(2), rbx, rcx);
+
+                            Operation operation = node;
+
+                            node = nodes.AddAfter(node, Operation(Instruction.VectorCreateScalar, dest, rax));
+                            nodes.AddAfter(node, Operation(Instruction.VectorInsert, dest, dest, rdx, Const(1)));
+
+                            operation.SetDestinations(new Operand[] { rdx, rax });
+                            operation.SetSources(new Operand[] { operation.GetSource(0), rdx, rax, rcx, rbx });
+                        }
+                        else
+                        {
+                            // Handle the many restrictions of the compare and exchange (32/64) instruction:
+                            // - The expected value should be in (E/R)AX.
+                            // - The value at the memory location is loaded to (E/R)AX.
+                            Operand expected = node.GetSource(1);
+                            Operand newValue = node.GetSource(2);
+
+                            Operand rax = Gpr(X86Register.Rax, expected.Type);
+
+                            nodes.AddBefore(node, Operation(Instruction.Copy, rax, expected));
+
+                            // We need to store the new value into a temp, since it may
+                            // be a constant, and this instruction does not support immediate operands.
+                            Operand temp = Local(newValue.Type);
+
+                            nodes.AddBefore(node, Operation(Instruction.Copy, temp, newValue));
+
+                            node.SetSources(new Operand[] { node.GetSource(0), rax, temp });
+
+                            nodes.AddAfter(node, Operation(Instruction.Copy, dest, rax));
+
+                            node.Destination = rax;
                         }
 
-                        Operand rax = Gpr(X86Register.Rax, OperandType.I64);
-                        Operand rbx = Gpr(X86Register.Rbx, OperandType.I64);
-                        Operand rcx = Gpr(X86Register.Rcx, OperandType.I64);
-                        Operand rdx = Gpr(X86Register.Rdx, OperandType.I64);
-
-                        SplitOperand(node.GetSource(1), rax, rdx);
-                        SplitOperand(node.GetSource(2), rbx, rcx);
-
-                        Operation operation = node;
-
-                        node = nodes.AddAfter(node, Operation(Instruction.VectorCreateScalar, dest, rax));
-                        nodes.AddAfter(node, Operation(Instruction.VectorInsert, dest, dest, rdx, Const(1)));
-
-                        operation.SetDestinations(new Operand[] { rdx, rax });
-                        operation.SetSources(new Operand[] { operation.GetSource(0), rdx, rax, rcx, rbx });
+                        break;
                     }
-                    else
-                    {
-                        // Handle the many restrictions of the compare and exchange (32/64) instruction:
-                        // - The expected value should be in (E/R)AX.
-                        // - The value at the memory location is loaded to (E/R)AX.
-                        Operand expected = node.GetSource(1);
-                        Operand newValue = node.GetSource(2);
-
-                        Operand rax = Gpr(X86Register.Rax, expected.Type);
-
-                        nodes.AddBefore(node, Operation(Instruction.Copy, rax, expected));
-
-                        // We need to store the new value into a temp, since it may
-                        // be a constant, and this instruction does not support immediate operands.
-                        Operand temp = Local(newValue.Type);
-
-                        nodes.AddBefore(node, Operation(Instruction.Copy, temp, newValue));
-
-                        node.SetSources(new Operand[] { node.GetSource(0), rax, temp });
-
-                        nodes.AddAfter(node, Operation(Instruction.Copy, dest, rax));
-
-                        node.Destination = rax;
-                    }
-
-                    break;
-                }
 
                 case Instruction.Divide:
                 case Instruction.DivideUI:
-                {
-                    // Handle the many restrictions of the division instructions:
-                    // - The dividend is always in RDX:RAX.
-                    // - The result is always in RAX.
-                    // - Additionally it also writes the remainder in RDX.
-                    if (dest.Type.IsInteger())
                     {
+                        // Handle the many restrictions of the division instructions:
+                        // - The dividend is always in RDX:RAX.
+                        // - The result is always in RAX.
+                        // - Additionally it also writes the remainder in RDX.
+                        if (dest.Type.IsInteger())
+                        {
+                            Operand src1 = node.GetSource(0);
+
+                            Operand rax = Gpr(X86Register.Rax, src1.Type);
+                            Operand rdx = Gpr(X86Register.Rdx, src1.Type);
+
+                            nodes.AddBefore(node, Operation(Instruction.Copy, rax, src1));
+                            nodes.AddBefore(node, Operation(Instruction.Clobber, rdx));
+
+                            nodes.AddAfter(node, Operation(Instruction.Copy, dest, rax));
+
+                            node.SetSources(new Operand[] { rdx, rax, node.GetSource(1) });
+                            node.Destination = rax;
+                        }
+
+                        break;
+                    }
+
+                case Instruction.Extended:
+                    {
+                        bool isBlend = node.Intrinsic == Intrinsic.X86Blendvpd ||
+                                       node.Intrinsic == Intrinsic.X86Blendvps ||
+                                       node.Intrinsic == Intrinsic.X86Pblendvb;
+
+                        // BLENDVPD, BLENDVPS, PBLENDVB last operand is always implied to be XMM0 when VEX is not supported.
+                        // SHA256RNDS2 always has an implied XMM0 as a last operand.
+                        if ((isBlend && !HardwareCapabilities.SupportsVexEncoding) || node.Intrinsic == Intrinsic.X86Sha256Rnds2)
+                        {
+                            Operand xmm0 = Xmm(X86Register.Xmm0, OperandType.V128);
+
+                            nodes.AddBefore(node, Operation(Instruction.Copy, xmm0, node.GetSource(2)));
+
+                            node.SetSource(2, xmm0);
+                        }
+
+                        break;
+                    }
+
+                case Instruction.Multiply64HighSI:
+                case Instruction.Multiply64HighUI:
+                    {
+                        // Handle the many restrictions of the i64 * i64 = i128 multiply instructions:
+                        // - The multiplicand is always in RAX.
+                        // - The lower 64-bits of the result is always in RAX.
+                        // - The higher 64-bits of the result is always in RDX.
                         Operand src1 = node.GetSource(0);
 
                         Operand rax = Gpr(X86Register.Rax, src1.Type);
                         Operand rdx = Gpr(X86Register.Rdx, src1.Type);
 
-                        nodes.AddBefore(node, Operation(Instruction.Copy,    rax, src1));
-                        nodes.AddBefore(node, Operation(Instruction.Clobber, rdx));
+                        nodes.AddBefore(node, Operation(Instruction.Copy, rax, src1));
 
-                        nodes.AddAfter(node, Operation(Instruction.Copy, dest, rax));
+                        node.SetSource(0, rax);
 
-                        node.SetSources(new Operand[] { rdx, rax, node.GetSource(1) });
-                        node.Destination = rax;
+                        nodes.AddAfter(node, Operation(Instruction.Copy, dest, rdx));
+
+                        node.SetDestinations(new Operand[] { rdx, rax });
+
+                        break;
                     }
-
-                    break;
-                }
-
-                case Instruction.Extended:
-                {
-                    bool isBlend = node.Intrinsic == Intrinsic.X86Blendvpd ||
-                                   node.Intrinsic == Intrinsic.X86Blendvps ||
-                                   node.Intrinsic == Intrinsic.X86Pblendvb;
-
-                    // BLENDVPD, BLENDVPS, PBLENDVB last operand is always implied to be XMM0 when VEX is not supported.
-                    // SHA256RNDS2 always has an implied XMM0 as a last operand.
-                    if ((isBlend && !HardwareCapabilities.SupportsVexEncoding) || node.Intrinsic == Intrinsic.X86Sha256Rnds2)
-                    {
-                        Operand xmm0 = Xmm(X86Register.Xmm0, OperandType.V128);
-
-                        nodes.AddBefore(node, Operation(Instruction.Copy, xmm0, node.GetSource(2)));
-
-                        node.SetSource(2, xmm0);
-                    }
-
-                    break;
-                }
-
-                case Instruction.Multiply64HighSI:
-                case Instruction.Multiply64HighUI:
-                {
-                    // Handle the many restrictions of the i64 * i64 = i128 multiply instructions:
-                    // - The multiplicand is always in RAX.
-                    // - The lower 64-bits of the result is always in RAX.
-                    // - The higher 64-bits of the result is always in RDX.
-                    Operand src1 = node.GetSource(0);
-
-                    Operand rax = Gpr(X86Register.Rax, src1.Type);
-                    Operand rdx = Gpr(X86Register.Rdx, src1.Type);
-
-                    nodes.AddBefore(node, Operation(Instruction.Copy, rax, src1));
-
-                    node.SetSource(0, rax);
-
-                    nodes.AddAfter(node, Operation(Instruction.Copy, dest, rdx));
-
-                    node.SetDestinations(new Operand[] { rdx, rax });
-
-                    break;
-                }
 
                 case Instruction.RotateRight:
                 case Instruction.ShiftLeft:
                 case Instruction.ShiftRightSI:
                 case Instruction.ShiftRightUI:
-                {
-                    // The shift register is always implied to be CL (low 8-bits of RCX or ECX).
-                    if (node.GetSource(1).Kind == OperandKind.LocalVariable)
                     {
-                        Operand rcx = Gpr(X86Register.Rcx, OperandType.I32);
+                        // The shift register is always implied to be CL (low 8-bits of RCX or ECX).
+                        if (node.GetSource(1).Kind == OperandKind.LocalVariable)
+                        {
+                            Operand rcx = Gpr(X86Register.Rcx, OperandType.I32);
 
-                        nodes.AddBefore(node, Operation(Instruction.Copy, rcx, node.GetSource(1)));
+                            nodes.AddBefore(node, Operation(Instruction.Copy, rcx, node.GetSource(1)));
 
-                        node.SetSource(1, rcx);
+                            node.SetSource(1, rcx);
+                        }
+
+                        break;
                     }
-
-                    break;
-                }
             }
         }
 
@@ -452,7 +452,7 @@ namespace ARMeilleure.CodeGen.X86
             // Unsigned integer to FP conversions are not supported on X86.
             // We need to turn them into signed integer to FP conversions, and
             // adjust the final result.
-            Operand dest   = node.Destination;
+            Operand dest = node.Destination;
             Operand source = node.GetSource(0);
 
             Debug.Assert(source.Type.IsInteger(), $"Invalid source type \"{source.Type}\".");
@@ -465,8 +465,8 @@ namespace ARMeilleure.CodeGen.X86
                 // and then use the 64-bits signed conversion instructions.
                 Operand zex = Local(OperandType.I64);
 
-                node = nodes.AddAfter(node, Operation(Instruction.ZeroExtend32, zex,  source));
-                node = nodes.AddAfter(node, Operation(Instruction.ConvertToFP,  dest, zex));
+                node = nodes.AddAfter(node, Operation(Instruction.ZeroExtend32, zex, source));
+                node = nodes.AddAfter(node, Operation(Instruction.ConvertToFP, dest, zex));
             }
             else /* if (source.Type == OperandType.I64) */
             {
@@ -480,15 +480,15 @@ namespace ARMeilleure.CodeGen.X86
                 // --- This can be done efficiently by adding the result to itself.
                 // -- Then, we need to add the least significant bit that was shifted out.
                 // --- We can convert the least significant bit to float, and add it to the result.
-                Operand lsb  = Local(OperandType.I64);
+                Operand lsb = Local(OperandType.I64);
                 Operand half = Local(OperandType.I64);
 
                 Operand lsbF = Local(dest.Type);
 
-                node = nodes.AddAfter(node, Operation(Instruction.Copy, lsb,  source));
+                node = nodes.AddAfter(node, Operation(Instruction.Copy, lsb, source));
                 node = nodes.AddAfter(node, Operation(Instruction.Copy, half, source));
 
-                node = nodes.AddAfter(node, Operation(Instruction.BitwiseAnd,   lsb,  lsb,  Const(1L)));
+                node = nodes.AddAfter(node, Operation(Instruction.BitwiseAnd, lsb, lsb, Const(1L)));
                 node = nodes.AddAfter(node, Operation(Instruction.ShiftRightUI, half, half, Const(1)));
 
                 node = nodes.AddAfter(node, Operation(Instruction.ConvertToFP, lsbF, lsb));
@@ -506,7 +506,7 @@ namespace ARMeilleure.CodeGen.X86
             // There's no SSE FP negate instruction, so we need to transform that into
             // a XOR of the value to be negated with a mask with the highest bit set.
             // This also produces -0 for a negation of the value 0.
-            Operand dest   = node.Destination;
+            Operand dest = node.Destination;
             Operand source = node.GetSource(0);
 
             Debug.Assert(dest.Type == OperandType.FP32 ||
@@ -562,14 +562,14 @@ namespace ARMeilleure.CodeGen.X86
             if ((index & 1) != 0)
             {
                 node = nodes.AddAfter(node, Operation(Instruction.ZeroExtend8, temp1, temp1));
-                node = nodes.AddAfter(node, Operation(Instruction.ShiftLeft,   temp2, temp2, Const(8)));
-                node = nodes.AddAfter(node, Operation(Instruction.BitwiseOr,   temp1, temp1, temp2));
+                node = nodes.AddAfter(node, Operation(Instruction.ShiftLeft, temp2, temp2, Const(8)));
+                node = nodes.AddAfter(node, Operation(Instruction.BitwiseOr, temp1, temp1, temp2));
             }
             else
             {
                 node = nodes.AddAfter(node, Operation(Instruction.ZeroExtend8, temp2, temp2));
-                node = nodes.AddAfter(node, Operation(Instruction.BitwiseAnd,  temp1, temp1, Const(0xff00)));
-                node = nodes.AddAfter(node, Operation(Instruction.BitwiseOr,   temp1, temp1, temp2));
+                node = nodes.AddAfter(node, Operation(Instruction.BitwiseAnd, temp1, temp1, Const(0xff00)));
+                node = nodes.AddAfter(node, Operation(Instruction.BitwiseOr, temp1, temp1, temp2));
             }
 
             Operation vinsOp = Operation(Instruction.VectorInsert16, dest, src1, temp1, Const(index >> 1));
@@ -765,10 +765,10 @@ namespace ARMeilleure.CodeGen.X86
                 if (source.Type == OperandType.V128 && passOnReg)
                 {
                     // V128 is a struct, we pass each half on a GPR if possible.
-                    Operand argReg  = Gpr(CallingConvention.GetIntArgumentRegister(intCount++), OperandType.I64);
+                    Operand argReg = Gpr(CallingConvention.GetIntArgumentRegister(intCount++), OperandType.I64);
                     Operand argReg2 = Gpr(CallingConvention.GetIntArgumentRegister(intCount++), OperandType.I64);
 
-                    nodes.AddBefore(node, Operation(Instruction.VectorExtract, argReg,  source, Const(0)));
+                    nodes.AddBefore(node, Operation(Instruction.VectorExtract, argReg, source, Const(0)));
                     nodes.AddBefore(node, Operation(Instruction.VectorExtract, argReg2, source, Const(1)));
 
                     continue;
@@ -804,7 +804,7 @@ namespace ARMeilleure.CodeGen.X86
             {
                 if (dest.Type == OperandType.V128)
                 {
-                    Operand retLReg = Gpr(CallingConvention.GetIntReturnRegister(),     OperandType.I64);
+                    Operand retLReg = Gpr(CallingConvention.GetIntReturnRegister(), OperandType.I64);
                     Operand retHReg = Gpr(CallingConvention.GetIntReturnRegisterHigh(), OperandType.I64);
 
                     Operation operation = node;
@@ -1066,11 +1066,11 @@ namespace ARMeilleure.CodeGen.X86
                         // V128 is a struct, we pass each half on a GPR if possible.
                         Operand pArg = Local(OperandType.V128);
 
-                        Operand argLReg = Gpr(CallingConvention.GetIntArgumentRegister(intCount),     OperandType.I64);
+                        Operand argLReg = Gpr(CallingConvention.GetIntArgumentRegister(intCount), OperandType.I64);
                         Operand argHReg = Gpr(CallingConvention.GetIntArgumentRegister(intCount + 1), OperandType.I64);
 
                         Operation copyL = Operation(Instruction.VectorCreateScalar, pArg, argLReg);
-                        Operation copyH = Operation(Instruction.VectorInsert,       pArg, pArg, argHReg, Const(1));
+                        Operation copyH = Operation(Instruction.VectorInsert, pArg, pArg, argHReg, Const(1));
 
                         cctx.Cfg.Entry.Operations.AddFirst(copyH);
                         cctx.Cfg.Entry.Operations.AddFirst(copyL);
@@ -1174,7 +1174,7 @@ namespace ARMeilleure.CodeGen.X86
 
             if (source.Type == OperandType.V128)
             {
-                Operand retLReg = Gpr(CallingConvention.GetIntReturnRegister(),     OperandType.I64);
+                Operand retLReg = Gpr(CallingConvention.GetIntReturnRegister(), OperandType.I64);
                 Operand retHReg = Gpr(CallingConvention.GetIntReturnRegisterHigh(), OperandType.I64);
 
                 nodes.AddBefore(node, Operation(Instruction.VectorExtract, retLReg, source, Const(0)));
@@ -1368,15 +1368,15 @@ namespace ARMeilleure.CodeGen.X86
 
                 case Instruction.BranchIf:
                 case Instruction.Compare:
-                {
-                    Operand comp = operation.GetSource(2);
+                    {
+                        Operand comp = operation.GetSource(2);
 
-                    Debug.Assert(comp.Kind == OperandKind.Constant);
+                        Debug.Assert(comp.Kind == OperandKind.Constant);
 
-                    var compType = (Comparison)comp.AsInt32();
+                        var compType = (Comparison)comp.AsInt32();
 
-                    return compType == Comparison.Equal || compType == Comparison.NotEqual;
-                }
+                        return compType == Comparison.Equal || compType == Comparison.NotEqual;
+                    }
             }
 
             return false;

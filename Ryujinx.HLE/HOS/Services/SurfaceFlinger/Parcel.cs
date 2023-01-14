@@ -26,10 +26,10 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
 
         public Parcel(byte[] rawData)
         {
-            _rawData  = rawData;
+            _rawData = rawData;
 
             _payloadPosition = 0;
-            _objectPosition  = 0;
+            _objectPosition = 0;
         }
 
         public Parcel(uint payloadSize, uint objectsSize)
@@ -38,10 +38,10 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
 
             _rawData = new byte[BitUtils.AlignUp<uint>(headerSize + payloadSize + objectsSize, 4)];
 
-            Header.PayloadSize   = payloadSize;
-            Header.ObjectsSize   = objectsSize;
+            Header.PayloadSize = payloadSize;
+            Header.ObjectsSize = objectsSize;
             Header.PayloadOffset = headerSize;
-            Header.ObjectOffset  = Header.PayloadOffset + Header.ObjectsSize;
+            Header.ObjectOffset = Header.PayloadOffset + Header.ObjectsSize;
         }
 
         public string ReadInterfaceToken()
@@ -86,7 +86,7 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
             return result;
         }
 
-        public T ReadUnmanagedType<T>() where T: unmanaged
+        public T ReadUnmanagedType<T>() where T : unmanaged
         {
             ReadOnlySpan<byte> data = ReadInPlace(Unsafe.SizeOf<T>());
 
@@ -105,8 +105,8 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
         [StructLayout(LayoutKind.Sequential, Size = 0x28)]
         private struct FlatBinderObject
         {
-            public int  Type;
-            public int  Flags;
+            public int Type;
+            public int Flags;
             public long BinderId;
             public long Cookie;
 
@@ -115,12 +115,12 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
             public Span<byte> ServiceName => MemoryMarshal.CreateSpan(ref _serviceNameStart, 0x8);
         }
 
-        public void WriteObject<T>(T obj, string serviceName) where T: IBinder
+        public void WriteObject<T>(T obj, string serviceName) where T : IBinder
         {
             FlatBinderObject flatBinderObject = new FlatBinderObject
             {
-                Type     = 2,
-                Flags    = 0,
+                Type = 2,
+                Flags = 0,
                 BinderId = HOSBinderDriverServer.GetBinderId(obj),
             };
 
@@ -149,7 +149,7 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
             }
         }
 
-        public void WriteStrongPointer<T>(ref AndroidStrongPointer<T> value) where T: unmanaged, IFlattenable
+        public void WriteStrongPointer<T>(ref AndroidStrongPointer<T> value) where T : unmanaged, IFlattenable
         {
             WriteBoolean(!value.IsNull);
 
@@ -205,10 +205,10 @@ namespace Ryujinx.HLE.HOS.Services.SurfaceFlinger
         {
             uint headerSize = (uint)Unsafe.SizeOf<ParcelHeader>();
 
-            Header.PayloadSize   = (uint)_payloadPosition;
-            Header.ObjectsSize   = (uint)_objectPosition;
+            Header.PayloadSize = (uint)_payloadPosition;
+            Header.ObjectsSize = (uint)_objectPosition;
             Header.PayloadOffset = headerSize;
-            Header.ObjectOffset  = Header.PayloadOffset + Header.PayloadSize;
+            Header.ObjectOffset = Header.PayloadOffset + Header.PayloadSize;
         }
 
         public ReadOnlySpan<byte> Finish()

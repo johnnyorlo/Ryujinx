@@ -105,10 +105,11 @@ namespace Ryujinx.Common.GraphicsDriver
 
             if (status != 0)
             {
-                NvdrsProfile profile = new NvdrsProfile { 
-                    Version = MakeVersion<NvdrsProfile>(1), 
-                    IsPredefined = 0, 
-                    GpuSupport = uint.MaxValue 
+                NvdrsProfile profile = new NvdrsProfile
+                {
+                    Version = MakeVersion<NvdrsProfile>(1),
+                    IsPredefined = 0,
+                    GpuSupport = uint.MaxValue
                 };
                 profile.ProfileName.Set(ProfileName);
                 Check(NvAPI_DRS_CreateProfile(handle, ref profile, out profileHandle));

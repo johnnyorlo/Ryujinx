@@ -23,7 +23,7 @@ namespace Ryujinx.Graphics.Gpu.Synchronization
 
         public Syncpoint(uint id)
         {
-            Id       = id;
+            Id = id;
             _waiters = new List<SyncpointWaiterHandle>();
         }
 
@@ -49,7 +49,7 @@ namespace Ryujinx.Graphics.Gpu.Synchronization
                     SyncpointWaiterHandle waiterInformation = new SyncpointWaiterHandle
                     {
                         Threshold = threshold,
-                        Callback  = callback
+                        Callback = callback
                     };
 
                     _waiters.Add(waiterInformation);

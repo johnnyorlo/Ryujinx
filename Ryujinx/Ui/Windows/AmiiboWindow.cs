@@ -74,10 +74,10 @@ namespace Ryujinx.Ui.Windows
 
         public string AmiiboId { get; private set; }
 
-        public int    DeviceId                 { get; set; }
-        public string TitleId                  { get; set; }
-        public string LastScannedAmiiboId      { get; set; }
-        public bool   LastScannedAmiiboShowAll { get; set; }
+        public int DeviceId { get; set; }
+        public string TitleId { get; set; }
+        public string LastScannedAmiiboId { get; set; }
+        public bool LastScannedAmiiboShowAll { get; set; }
 
         public ResponseType Response { get; private set; }
 
@@ -90,7 +90,7 @@ namespace Ryujinx.Ui.Windows
         }
 
         private readonly HttpClient _httpClient;
-        private readonly string     _amiiboJsonPath;
+        private readonly string _amiiboJsonPath;
 
         private readonly byte[] _amiiboLogoBytes;
 
@@ -110,12 +110,12 @@ namespace Ryujinx.Ui.Windows
             Directory.CreateDirectory(System.IO.Path.Join(AppDataManager.BaseDirPath, "system", "amiibo"));
 
             _amiiboJsonPath = System.IO.Path.Join(AppDataManager.BaseDirPath, "system", "amiibo", "Amiibo.json");
-            _amiiboList     = new List<AmiiboApi>();
+            _amiiboList = new List<AmiiboApi>();
 
-            _amiiboLogoBytes    = EmbeddedResources.Read("Ryujinx.Ui.Common/Resources/Logo_Amiibo.png");
+            _amiiboLogoBytes = EmbeddedResources.Read("Ryujinx.Ui.Common/Resources/Logo_Amiibo.png");
             _amiiboImage.Pixbuf = new Gdk.Pixbuf(_amiiboLogoBytes);
 
-            _scanButton.Sensitive         = false;
+            _scanButton.Sensitive = false;
             _randomUuidCheckBox.Sensitive = false;
 
             _ = LoadContentAsync();
@@ -194,7 +194,7 @@ namespace Ryujinx.Ui.Windows
             }
 
             _amiiboSeriesComboBox.Changed += SeriesComboBox_Changed;
-            _amiiboCharsComboBox.Changed  += CharacterComboBox_Changed;
+            _amiiboCharsComboBox.Changed += CharacterComboBox_Changed;
 
             if (LastScannedAmiiboId != "")
             {
@@ -269,14 +269,14 @@ namespace Ryujinx.Ui.Windows
 
             if (response.IsSuccessStatusCode)
             {
-                byte[]     amiiboPreviewBytes = await response.Content.ReadAsByteArrayAsync();
-                Gdk.Pixbuf amiiboPreview      = new Gdk.Pixbuf(amiiboPreviewBytes);
+                byte[] amiiboPreviewBytes = await response.Content.ReadAsByteArrayAsync();
+                Gdk.Pixbuf amiiboPreview = new Gdk.Pixbuf(amiiboPreviewBytes);
 
-                float ratio = Math.Min((float)_amiiboImage.AllocatedWidth  / amiiboPreview.Width,
+                float ratio = Math.Min((float)_amiiboImage.AllocatedWidth / amiiboPreview.Width,
                                        (float)_amiiboImage.AllocatedHeight / amiiboPreview.Height);
 
                 int resizeHeight = (int)(amiiboPreview.Height * ratio);
-                int resizeWidth  = (int)(amiiboPreview.Width  * ratio);
+                int resizeWidth = (int)(amiiboPreview.Width * ratio);
 
                 _amiiboImage.Pixbuf = amiiboPreview.ScaleSimple(resizeWidth, resizeHeight, Gdk.InterpType.Bilinear);
             }
@@ -332,7 +332,7 @@ namespace Ryujinx.Ui.Windows
 
             _amiiboCharsComboBox.Active = 0;
 
-            _scanButton.Sensitive         = true;
+            _scanButton.Sensitive = true;
             _randomUuidCheckBox.Sensitive = true;
         }
 
@@ -382,12 +382,12 @@ namespace Ryujinx.Ui.Windows
             _amiiboImage.Pixbuf = new Gdk.Pixbuf(_amiiboLogoBytes);
 
             _amiiboSeriesComboBox.Changed -= SeriesComboBox_Changed;
-            _amiiboCharsComboBox.Changed  -= CharacterComboBox_Changed;
+            _amiiboCharsComboBox.Changed -= CharacterComboBox_Changed;
 
             _amiiboSeriesComboBox.RemoveAll();
             _amiiboCharsComboBox.RemoveAll();
 
-            _scanButton.Sensitive         = false;
+            _scanButton.Sensitive = false;
             _randomUuidCheckBox.Sensitive = false;
 
             new Task(() => ParseAmiiboData()).Start();
@@ -404,8 +404,8 @@ namespace Ryujinx.Ui.Windows
 
         private void CancelButton_Pressed(object sender, EventArgs args)
         {
-            AmiiboId                 = "";
-            LastScannedAmiiboId      = "";
+            AmiiboId = "";
+            LastScannedAmiiboId = "";
             LastScannedAmiiboShowAll = false;
 
             Response = ResponseType.Cancel;

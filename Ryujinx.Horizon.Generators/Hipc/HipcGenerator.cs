@@ -604,7 +604,7 @@ namespace Ryujinx.Horizon.Generators.Hipc
             return type;
         }
 
-        private static bool IsArgument(Compilation compilation,ParameterSyntax parameter)
+        private static bool IsArgument(Compilation compilation, ParameterSyntax parameter)
         {
             return !IsBuffer(compilation, parameter) &&
                    !IsHandle(compilation, parameter) &&

@@ -14,8 +14,8 @@ namespace Ryujinx.HLE.HOS.Services.Nv.NvDrvServices.NvHostCtrl
     {
         public const int EventsCount = 64;
 
-        private bool          _isProductionMode;
-        private Switch        _device;
+        private bool _isProductionMode;
+        private Switch _device;
         private NvHostEvent[] _events;
 
         public NvHostCtrlDeviceFile(ServiceCtx context, IVirtualMemoryManager memory, ulong owner) : base(context, owner)

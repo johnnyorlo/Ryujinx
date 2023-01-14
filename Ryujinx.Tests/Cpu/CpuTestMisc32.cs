@@ -13,7 +13,7 @@ namespace Ryujinx.Tests.Cpu
     {
 #if Misc32
 
-#region "ValueSource (Types)"
+        #region "ValueSource (Types)"
         private static IEnumerable<ulong> _1S_F_()
         {
             yield return 0x00000000FF7FFFFFul; // -Max Normal    (float.MinValue)
@@ -55,13 +55,13 @@ namespace Ryujinx.Tests.Cpu
                 yield return (grbg << 32) | rnd2;
             }
         }
-#endregion
+        #endregion
 
         private const int RndCnt = 2;
 
         private static readonly bool NoZeros = false;
-        private static readonly bool NoInfs  = false;
-        private static readonly bool NoNaNs  = false;
+        private static readonly bool NoInfs = false;
+        private static readonly bool NoNaNs = false;
 
         [Test, Pairwise]
         public void Vmsr_Vcmp_Vmrs([ValueSource("_1S_F_")] ulong a,

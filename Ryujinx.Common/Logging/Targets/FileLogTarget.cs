@@ -6,9 +6,9 @@ namespace Ryujinx.Common.Logging
 {
     public class FileLogTarget : ILogTarget
     {
-        private readonly StreamWriter  _logWriter;
+        private readonly StreamWriter _logWriter;
         private readonly ILogFormatter _formatter;
-        private readonly string        _name;
+        private readonly string _name;
 
         string ILogTarget.Name { get => _name; }
 
@@ -34,7 +34,7 @@ namespace Ryujinx.Common.Logging
             // Get path for the current time
             path = Path.Combine(logDir.FullName, $"Ryujinx_{version}_{DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.log");
 
-            _name      = name;
+            _name = name;
             _logWriter = new StreamWriter(File.Open(path, fileMode, FileAccess.Write, fileShare));
             _formatter = new DefaultLogFormatter();
         }

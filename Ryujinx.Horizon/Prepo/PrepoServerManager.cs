@@ -17,13 +17,13 @@ namespace Ryujinx.Horizon.Prepo
         {
             return (PrepoPortIndex)portIndex switch
             {
-                PrepoPortIndex.Admin   => AcceptImpl(server, new PrepoService(PrepoServicePermissionLevel.Admin)),
-                PrepoPortIndex.Admin2  => AcceptImpl(server, new PrepoService(PrepoServicePermissionLevel.Admin)),
+                PrepoPortIndex.Admin => AcceptImpl(server, new PrepoService(PrepoServicePermissionLevel.Admin)),
+                PrepoPortIndex.Admin2 => AcceptImpl(server, new PrepoService(PrepoServicePermissionLevel.Admin)),
                 PrepoPortIndex.Manager => AcceptImpl(server, new PrepoService(PrepoServicePermissionLevel.Manager)),
-                PrepoPortIndex.User    => AcceptImpl(server, new PrepoService(PrepoServicePermissionLevel.User)),
-                PrepoPortIndex.System  => AcceptImpl(server, new PrepoService(PrepoServicePermissionLevel.System)),
-                PrepoPortIndex.Debug   => AcceptImpl(server, new PrepoService(PrepoServicePermissionLevel.Debug)),
-                _                      => throw new ArgumentOutOfRangeException(nameof(portIndex)),
+                PrepoPortIndex.User => AcceptImpl(server, new PrepoService(PrepoServicePermissionLevel.User)),
+                PrepoPortIndex.System => AcceptImpl(server, new PrepoService(PrepoServicePermissionLevel.System)),
+                PrepoPortIndex.Debug => AcceptImpl(server, new PrepoService(PrepoServicePermissionLevel.Debug)),
+                _ => throw new ArgumentOutOfRangeException(nameof(portIndex)),
             };
         }
     }

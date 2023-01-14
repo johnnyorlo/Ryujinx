@@ -8,7 +8,7 @@ namespace Ryujinx.Tests.Cpu
     public sealed class CpuTestCcmpReg : CpuTest
     {
 #if CcmpReg
-        private const int RndCnt     = 2;
+        private const int RndCnt = 2;
         private const int RndCntNzcv = 2;
 
         [Test, Pairwise, Description("CCMN <Xn>, <Xm>, #<nzcv>, <cond>")]

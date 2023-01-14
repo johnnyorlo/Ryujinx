@@ -188,7 +188,7 @@ namespace ARMeilleure.CodeGen.Arm64
 
             uint rmode = topHalf ? 1u << 19 : 0u;
             uint ftype = rd.Type == OperandType.FP64 || rn.Type == OperandType.FP64 ? 1u << 22 : 0u;
-            uint sf    = rd.Type == OperandType.I64  || rn.Type == OperandType.I64  ? SfFlag   : 0u;
+            uint sf = rd.Type == OperandType.I64 || rn.Type == OperandType.I64 ? SfFlag : 0u;
 
             WriteUInt32(0x1e260000u | (opcode << 16) | rmode | ftype | sf | EncodeReg(rd) | (EncodeReg(rn) << 5));
         }

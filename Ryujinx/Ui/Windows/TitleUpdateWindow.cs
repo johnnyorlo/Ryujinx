@@ -16,25 +16,25 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using GUI        = Gtk.Builder.ObjectAttribute;
+using GUI = Gtk.Builder.ObjectAttribute;
 using JsonHelper = Ryujinx.Common.Utilities.JsonHelper;
 
 namespace Ryujinx.Ui.Windows
 {
     public class TitleUpdateWindow : Window
     {
-        private readonly MainWindow        _parent;
+        private readonly MainWindow _parent;
         private readonly VirtualFileSystem _virtualFileSystem;
-        private readonly string            _titleId;
-        private readonly string            _updateJsonPath;
+        private readonly string _titleId;
+        private readonly string _updateJsonPath;
 
         private TitleUpdateMetadata _titleUpdateWindowData;
 
         private readonly Dictionary<RadioButton, string> _radioButtonToPathDictionary;
 
 #pragma warning disable CS0649, IDE0044
-        [GUI] Label       _baseTitleInfoLabel;
-        [GUI] Box         _availableUpdatesBox;
+        [GUI] Label _baseTitleInfoLabel;
+        [GUI] Box _availableUpdatesBox;
         [GUI] RadioButton _noUpdateRadioButton;
 #pragma warning restore CS0649, IDE0044
 
@@ -46,9 +46,9 @@ namespace Ryujinx.Ui.Windows
 
             builder.Autoconnect(this);
 
-            _titleId                     = titleId;
-            _virtualFileSystem           = virtualFileSystem;
-            _updateJsonPath              = System.IO.Path.Combine(AppDataManager.GamesDirPath, _titleId, "updates.json");
+            _titleId = titleId;
+            _virtualFileSystem = virtualFileSystem;
+            _updateJsonPath = System.IO.Path.Combine(AppDataManager.GamesDirPath, _titleId, "updates.json");
             _radioButtonToPathDictionary = new Dictionary<RadioButton, string>();
 
             try
@@ -60,12 +60,12 @@ namespace Ryujinx.Ui.Windows
                 _titleUpdateWindowData = new TitleUpdateMetadata
                 {
                     Selected = "",
-                    Paths    = new List<string>()
+                    Paths = new List<string>()
                 };
             }
 
             _baseTitleInfoLabel.Text = $"Updates Available for {titleName} [{titleId.ToUpper()}]";
-            
+
             foreach (string path in _titleUpdateWindowData.Paths)
             {
                 AddUpdate(path);

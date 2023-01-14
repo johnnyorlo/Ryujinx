@@ -28,13 +28,13 @@ namespace Ryujinx.Ava.UI.Windows
 {
     public partial class TitleUpdateWindow : StyleableWindow
     {
-        private readonly string     _titleUpdateJsonPath;
+        private readonly string _titleUpdateJsonPath;
         private TitleUpdateMetadata _titleUpdateWindowData;
 
-        private VirtualFileSystem              _virtualFileSystem { get; }
-        private AvaloniaList<TitleUpdateModel> _titleUpdates      { get; set; }
+        private VirtualFileSystem _virtualFileSystem { get; }
+        private AvaloniaList<TitleUpdateModel> _titleUpdates { get; set; }
 
-        private ulong  _titleId   { get; }
+        private ulong _titleId { get; }
         private string _titleName { get; }
 
         public TitleUpdateWindow()
@@ -42,16 +42,16 @@ namespace Ryujinx.Ava.UI.Windows
             DataContext = this;
 
             InitializeComponent();
-            
+
             Title = $"Ryujinx {Program.Version} - {LocaleManager.Instance[LocaleKeys.UpdateWindowTitle]} - {_titleName} ({_titleId:X16})";
         }
 
         public TitleUpdateWindow(VirtualFileSystem virtualFileSystem, ulong titleId, string titleName)
         {
             _virtualFileSystem = virtualFileSystem;
-            _titleUpdates      = new AvaloniaList<TitleUpdateModel>();
+            _titleUpdates = new AvaloniaList<TitleUpdateModel>();
 
-            _titleId   = titleId;
+            _titleId = titleId;
             _titleName = titleName;
 
             _titleUpdateJsonPath = Path.Combine(AppDataManager.GamesDirPath, titleId.ToString("x16"), "updates.json");
@@ -62,10 +62,10 @@ namespace Ryujinx.Ava.UI.Windows
             }
             catch
             {
-                _titleUpdateWindowData = new TitleUpdateMetadata 
+                _titleUpdateWindowData = new TitleUpdateMetadata
                 {
                     Selected = "",
-                    Paths    = new List<string>()
+                    Paths = new List<string>()
                 };
             }
 
@@ -99,8 +99,8 @@ namespace Ryujinx.Ava.UI.Windows
             }
             else
             {
-                TitleUpdateModel       selected = _titleUpdates.FirstOrDefault(x => x.Path == _titleUpdateWindowData.Selected);
-                List<TitleUpdateModel> enabled  = _titleUpdates.Where(x => x.IsEnabled).ToList();
+                TitleUpdateModel selected = _titleUpdates.FirstOrDefault(x => x.Path == _titleUpdateWindowData.Selected);
+                List<TitleUpdateModel> enabled = _titleUpdates.Where(x => x.IsEnabled).ToList();
 
                 foreach (TitleUpdateModel update in enabled)
                 {
@@ -193,13 +193,13 @@ namespace Ryujinx.Ava.UI.Windows
         {
             OpenFileDialog dialog = new()
             {
-                Title         = LocaleManager.Instance[LocaleKeys.SelectUpdateDialogTitle],
+                Title = LocaleManager.Instance[LocaleKeys.SelectUpdateDialogTitle],
                 AllowMultiple = true
             };
 
             dialog.Filters.Add(new FileDialogFilter
             {
-                Name       = "NSP", 
+                Name = "NSP",
                 Extensions = { "nsp" }
             });
 

@@ -21,7 +21,7 @@ namespace Ryujinx.HLE.HOS.Services.Nifm.StaticService
         {
             _generalServiceDetail = new GeneralServiceDetail
             {
-                ClientId                     = GeneralServiceManager.Count,
+                ClientId = GeneralServiceManager.Count,
                 IsAnyInternetRequestAccepted = true // NOTE: Why not accept any internet request?
             };
 
@@ -82,7 +82,7 @@ namespace Ryujinx.HLE.HOS.Services.Nifm.StaticService
             };
 
             networkProfile.IpSettingData.IpAddressSetting = new IpAddressSetting(interfaceProperties, unicastAddress);
-            networkProfile.IpSettingData.DnsSetting       = new DnsSetting(interfaceProperties);
+            networkProfile.IpSettingData.DnsSetting = new DnsSetting(interfaceProperties);
 
             "RyujinxNetwork"u8.CopyTo(networkProfile.Name.AsSpan());
 
@@ -139,9 +139,9 @@ namespace Ryujinx.HLE.HOS.Services.Nifm.StaticService
 
             InternetConnectionStatus internetConnectionStatus = new InternetConnectionStatus
             {
-                Type         = InternetConnectionType.WiFi,
+                Type = InternetConnectionType.WiFi,
                 WifiStrength = 3,
-                State        = InternetConnectionState.Connected,
+                State = InternetConnectionState.Connected,
             };
 
             context.ResponseData.WriteStruct(internetConnectionStatus);
@@ -154,7 +154,7 @@ namespace Ryujinx.HLE.HOS.Services.Nifm.StaticService
         public ResultCode IsAnyInternetRequestAccepted(ServiceCtx context)
         {
             ulong position = context.Request.PtrBuff[0].Position;
-            ulong size     = context.Request.PtrBuff[0].Size;
+            ulong size = context.Request.PtrBuff[0].Size;
 
             int clientId = context.Memory.Read<int>(position);
 
@@ -175,7 +175,7 @@ namespace Ryujinx.HLE.HOS.Services.Nifm.StaticService
                 return (_targetPropertiesCache, _targetAddressInfoCache);
             }
 
-            IPInterfaceProperties       targetProperties  = null;
+            IPInterfaceProperties targetProperties = null;
             UnicastIPAddressInformation targetAddressInfo = null;
 
             NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
@@ -194,7 +194,7 @@ namespace Ryujinx.HLE.HOS.Services.Nifm.StaticService
                             // Only accept an IPv4 address
                             if (info.Address.GetAddressBytes().Length == 4)
                             {
-                                targetProperties  = properties;
+                                targetProperties = properties;
                                 targetAddressInfo = info;
 
                                 break;
@@ -204,7 +204,7 @@ namespace Ryujinx.HLE.HOS.Services.Nifm.StaticService
                 }
             }
 
-            _targetPropertiesCache  = targetProperties;
+            _targetPropertiesCache = targetProperties;
             _targetAddressInfoCache = targetAddressInfo;
 
             return (targetProperties, targetAddressInfo);
@@ -214,7 +214,7 @@ namespace Ryujinx.HLE.HOS.Services.Nifm.StaticService
         {
             Logger.Info?.Print(LogClass.ServiceNifm, $"NetworkAddress changed, invalidating cached data.");
 
-            _targetPropertiesCache  = null;
+            _targetPropertiesCache = null;
             _targetAddressInfoCache = null;
         }
 

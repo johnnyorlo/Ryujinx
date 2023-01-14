@@ -217,8 +217,8 @@ namespace ARMeilleure.Instructions
             string name = nameof(Math.Round);
 
             MethodInfo info = (op.Size & 1) == 0
-                ? typeof(MathF).GetMethod(name, new Type[] { typeof(float),  typeof(MidpointRounding) })
-                : typeof(Math). GetMethod(name, new Type[] { typeof(double), typeof(MidpointRounding) });
+                ? typeof(MathF).GetMethod(name, new Type[] { typeof(float), typeof(MidpointRounding) })
+                : typeof(Math).GetMethod(name, new Type[] { typeof(double), typeof(MidpointRounding) });
 
             return context.Call(info, n, Const((int)roundMode));
         }
@@ -262,7 +262,8 @@ namespace ARMeilleure.Instructions
             {
                 if (unsigned)
                 {
-                    inst = rm switch {
+                    inst = rm switch
+                    {
                         0b00 => Intrinsic.Arm64FcvtauS,
                         0b01 => Intrinsic.Arm64FcvtnuS,
                         0b10 => Intrinsic.Arm64FcvtpuS,
@@ -272,7 +273,8 @@ namespace ARMeilleure.Instructions
                 }
                 else
                 {
-                    inst = rm switch {
+                    inst = rm switch
+                    {
                         0b00 => Intrinsic.Arm64FcvtasS,
                         0b01 => Intrinsic.Arm64FcvtnsS,
                         0b10 => Intrinsic.Arm64FcvtpsS,
@@ -392,7 +394,8 @@ namespace ARMeilleure.Instructions
 
             if (Optimizations.UseAdvSimd)
             {
-                Intrinsic inst = rm switch {
+                Intrinsic inst = rm switch
+                {
                     0b00 => Intrinsic.Arm64FrintaS,
                     0b01 => Intrinsic.Arm64FrintnS,
                     0b10 => Intrinsic.Arm64FrintpS,

@@ -103,7 +103,8 @@ namespace Ryujinx.Graphics.GAL.Multithreading
 
             _backendThread = Thread.CurrentThread;
 
-            _gpuThread = new Thread(() => {
+            _gpuThread = new Thread(() =>
+            {
                 gpuLoop();
                 _running = false;
                 _galWorkAvailable.Set();

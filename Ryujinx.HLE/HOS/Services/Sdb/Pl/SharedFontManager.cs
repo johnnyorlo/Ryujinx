@@ -18,10 +18,10 @@ namespace Ryujinx.HLE.HOS.Services.Sdb.Pl
 {
     class SharedFontManager
     {
-        private static readonly uint FontKey    = 0x06186249;
+        private static readonly uint FontKey = 0x06186249;
         private static readonly uint BFTTFMagic = 0x18029a7f;
 
-        private readonly Switch              _device;
+        private readonly Switch _device;
         private readonly SharedMemoryStorage _storage;
 
         private struct FontInfo
@@ -32,7 +32,7 @@ namespace Ryujinx.HLE.HOS.Services.Sdb.Pl
             public FontInfo(int offset, int size)
             {
                 Offset = offset;
-                Size   = size;
+                Size = size;
             }
         }
 
@@ -40,7 +40,7 @@ namespace Ryujinx.HLE.HOS.Services.Sdb.Pl
 
         public SharedFontManager(Switch device, SharedMemoryStorage storage)
         {
-            _device  = device;
+            _device = device;
             _storage = storage;
         }
 
@@ -64,7 +64,7 @@ namespace Ryujinx.HLE.HOS.Services.Sdb.Pl
                     if (contentManager.TryGetFontTitle(name, out ulong fontTitle) && contentManager.TryGetFontFilename(name, out string fontFilename))
                     {
                         string contentPath = contentManager.GetInstalledContentPath(fontTitle, StorageId.BuiltInSystem, NcaContentType.Data);
-                        string fontPath    = _device.FileSystem.SwitchPathToSystemPath(contentPath);
+                        string fontPath = _device.FileSystem.SwitchPathToSystemPath(contentPath);
 
                         if (!string.IsNullOrWhiteSpace(fontPath))
                         {
@@ -72,7 +72,7 @@ namespace Ryujinx.HLE.HOS.Services.Sdb.Pl
 
                             using (IStorage ncaFileStream = new LocalStorage(fontPath, FileAccess.Read, FileMode.Open))
                             {
-                                Nca         nca   = new Nca(_device.System.KeySet, ncaFileStream);
+                                Nca nca = new Nca(_device.System.KeySet, ncaFileStream);
                                 IFileSystem romfs = nca.OpenFileSystem(NcaSectionType.Data, _device.System.FsIntegrityCheckLevel);
 
                                 using var fontFile = new UniqueRef<IFile>();
@@ -159,9 +159,9 @@ namespace Ryujinx.HLE.HOS.Services.Sdb.Pl
         {
             static uint KXor(uint data) => data ^ FontKey;
 
-            using (BinaryReader reader    = new BinaryReader(bfttfStream))
+            using (BinaryReader reader = new BinaryReader(bfttfStream))
             using (MemoryStream ttfStream = new MemoryStream())
-            using (BinaryWriter output    = new BinaryWriter(ttfStream))
+            using (BinaryWriter output = new BinaryWriter(ttfStream))
             {
                 if (KXor(reader.ReadUInt32()) != BFTTFMagic)
                 {

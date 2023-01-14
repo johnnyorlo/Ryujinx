@@ -245,7 +245,7 @@ namespace ARMeilleure.Instructions
             OpCode32SimdRegS op = (OpCode32SimdRegS)context.CurrOp;
 
             inst |= ((op.Size & 1) != 0 ? Intrinsic.Arm64VDouble : Intrinsic.Arm64VFloat) | Intrinsic.Arm64V128;
-            EmitScalarBinaryOpSimd32(context, (n, m) =>  context.AddIntrinsic(inst, n, m));
+            EmitScalarBinaryOpSimd32(context, (n, m) => context.AddIntrinsic(inst, n, m));
         }
 
         public static void EmitScalarTernaryOpSimd32(ArmEmitterContext context, Func3I scalarFunc)
@@ -335,7 +335,8 @@ namespace ARMeilleure.Instructions
                     _ => throw new InvalidOperationException()
                 };
             }
-            else {
+            else
+            {
                 inst = cond switch
                 {
                     CmpCondition.Equal => Intrinsic.Arm64FcmeqV,

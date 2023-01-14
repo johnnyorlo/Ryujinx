@@ -48,16 +48,16 @@ namespace Ryujinx.Graphics.Texture
             int mipGobBlocksInY = gobBlocksInY;
             int mipGobBlocksInZ = gobBlocksInZ;
 
-            int gobWidth  = (GobStride / bytesPerPixel) * gobBlocksInTileX;
+            int gobWidth = (GobStride / bytesPerPixel) * gobBlocksInTileX;
             int gobHeight = gobBlocksInY * GobHeight;
 
             int depthLevelOffset = 0;
 
             for (int level = 0; level < levels; level++)
             {
-                int w = Math.Max(1, width  >> level);
+                int w = Math.Max(1, width >> level);
                 int h = Math.Max(1, height >> level);
-                int d = Math.Max(1, depth  >> level);
+                int d = Math.Max(1, depth >> level);
 
                 w = BitUtils.DivRoundUp(w, blockWidth);
                 h = BitUtils.DivRoundUp(h, blockHeight);
@@ -100,7 +100,7 @@ namespace Ryujinx.Graphics.Texture
 
                     for (int z = 0; z < d; z++)
                     {
-                        int zLow  = z &  mask;
+                        int zLow = z & mask;
                         int zHigh = z & ~mask;
 
                         allOffsets[z + depthLevelOffset] = baseOffset + zLow * gobSize + zHigh * sliceSize;
@@ -144,7 +144,7 @@ namespace Ryujinx.Graphics.Texture
             {
                 for (int layer = 0; layer < layers; layer++)
                 {
-                    int baseIndex  = layer * levels;
+                    int baseIndex = layer * levels;
                     int baseOffset = layer * layerSize;
 
                     for (int level = 0; level < levels; level++)
@@ -219,10 +219,10 @@ namespace Ryujinx.Graphics.Texture
             int gobBlocksInZ,
             int gobBlocksInTileX)
         {
-            width  = BitUtils.DivRoundUp(width,  blockWidth);
+            width = BitUtils.DivRoundUp(width, blockWidth);
             height = BitUtils.DivRoundUp(height, blockHeight);
 
-            int gobWidth  = (GobStride / bytesPerPixel) * gobBlocksInTileX;
+            int gobWidth = (GobStride / bytesPerPixel) * gobBlocksInTileX;
             int gobHeight = gobBlocksInY * GobHeight;
 
             int alignment = gobWidth;
@@ -236,11 +236,11 @@ namespace Ryujinx.Graphics.Texture
             (gobBlocksInY, gobBlocksInZ) = GetMipGobBlockSizes(height, depth, 1, gobBlocksInY, gobBlocksInZ);
 
             int blockOfGobsHeight = gobBlocksInY * GobHeight;
-            int blockOfGobsDepth  = gobBlocksInZ;
+            int blockOfGobsDepth = gobBlocksInZ;
 
-            width  = BitUtils.AlignUp(width,  alignment);
+            width = BitUtils.AlignUp(width, alignment);
             height = BitUtils.AlignUp(height, blockOfGobsHeight);
-            depth  = BitUtils.AlignUp(depth,  blockOfGobsDepth);
+            depth = BitUtils.AlignUp(depth, blockOfGobsDepth);
 
             return new Size(width, height, depth);
         }
@@ -252,7 +252,7 @@ namespace Ryujinx.Graphics.Texture
             int blockHeight,
             int bytesPerPixel)
         {
-            width  = BitUtils.DivRoundUp(width,  blockWidth);
+            width = BitUtils.DivRoundUp(width, blockWidth);
             height = BitUtils.DivRoundUp(height, blockHeight);
 
             int widthAlignment = StrideAlignment / bytesPerPixel;

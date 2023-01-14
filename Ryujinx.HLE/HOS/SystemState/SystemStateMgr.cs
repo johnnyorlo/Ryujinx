@@ -46,21 +46,21 @@ namespace Ryujinx.HLE.HOS.SystemState
         {
             // TODO: Let user specify fields.
             DesiredKeyboardLayout = (long)KeyboardLayout.Default;
-            DeviceNickName        = "Ryujinx's Switch";
+            DeviceNickName = "Ryujinx's Switch";
         }
 
         public void SetLanguage(SystemLanguage language)
         {
             DesiredSystemLanguage = language;
-            DesiredLanguageCode   = GetLanguageCode((int)DesiredSystemLanguage);
+            DesiredLanguageCode = GetLanguageCode((int)DesiredSystemLanguage);
 
             DesiredTitleLanguage = language switch
             {
                 SystemLanguage.Taiwanese or
                 SystemLanguage.TraditionalChinese => TitleLanguage.TraditionalChinese,
                 SystemLanguage.Chinese or
-                SystemLanguage.SimplifiedChinese  => TitleLanguage.SimplifiedChinese,
-                _                                 => Enum.Parse<TitleLanguage>(Enum.GetName<SystemLanguage>(language)),
+                SystemLanguage.SimplifiedChinese => TitleLanguage.SimplifiedChinese,
+                _ => Enum.Parse<TitleLanguage>(Enum.GetName<SystemLanguage>(language)),
             };
         }
 
@@ -76,8 +76,8 @@ namespace Ryujinx.HLE.HOS.SystemState
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            long code  = 0;
-            int  shift = 0;
+            long code = 0;
+            int shift = 0;
 
             foreach (char chr in LanguageCodes[index])
             {

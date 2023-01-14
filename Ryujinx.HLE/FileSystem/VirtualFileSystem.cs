@@ -27,15 +27,15 @@ namespace Ryujinx.HLE.FileSystem
 {
     public class VirtualFileSystem : IDisposable
     {
-        public static string SafeNandPath   = Path.Combine(AppDataManager.DefaultNandDir, "safe");
+        public static string SafeNandPath = Path.Combine(AppDataManager.DefaultNandDir, "safe");
         public static string SystemNandPath = Path.Combine(AppDataManager.DefaultNandDir, "system");
-        public static string UserNandPath   = Path.Combine(AppDataManager.DefaultNandDir, "user");
+        public static string UserNandPath = Path.Combine(AppDataManager.DefaultNandDir, "user");
 
-        public KeySet           KeySet    { get; private set; }
-        public EmulatedGameCard GameCard  { get; private set; }
-        public EmulatedSdCard   SdCard    { get; private set; }
-        public ModLoader        ModLoader { get; private set; }
-        public Stream           RomFs     { get; private set; }
+        public KeySet KeySet { get; private set; }
+        public EmulatedGameCard GameCard { get; private set; }
+        public EmulatedSdCard SdCard { get; private set; }
+        public ModLoader ModLoader { get; private set; }
+        public Stream RomFs { get; private set; }
 
         private static bool _isInitialized = false;
 

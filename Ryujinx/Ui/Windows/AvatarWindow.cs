@@ -25,23 +25,23 @@ namespace Ryujinx.Ui.Windows
     public class AvatarWindow : Window
     {
         public byte[] SelectedProfileImage;
-        public bool   NewUser;
+        public bool NewUser;
 
         private static Dictionary<string, byte[]> _avatarDict = new Dictionary<string, byte[]>();
 
         private ListStore _listStore;
-        private IconView  _iconView;
-        private Button    _setBackgroungColorButton;
-        private Gdk.RGBA  _backgroundColor;
+        private IconView _iconView;
+        private Button _setBackgroungColorButton;
+        private Gdk.RGBA _backgroundColor;
 
         public AvatarWindow() : base($"Ryujinx {Program.Version} - Manage Accounts - Avatar")
         {
             Icon = new Gdk.Pixbuf(Assembly.GetAssembly(typeof(ConfigurationState)), "Ryujinx.Ui.Common.Resources.Logo_Ryujinx.png");
 
-            CanFocus  = false;
+            CanFocus = false;
             Resizable = false;
-            Modal     = true;
-            TypeHint  = Gdk.WindowTypeHint.Dialog;
+            Modal = true;
+            TypeHint = Gdk.WindowTypeHint.Dialog;
 
             SetDefaultSize(740, 400);
             SetPosition(WindowPosition.Center);
@@ -59,43 +59,43 @@ namespace Ryujinx.Ui.Windows
 
             Button chooseButton = new Button()
             {
-                Label           = "Choose",
-                CanFocus        = true,
+                Label = "Choose",
+                CanFocus = true,
                 ReceivesDefault = true
             };
             chooseButton.Clicked += ChooseButton_Pressed;
 
             _setBackgroungColorButton = new Button()
             {
-                Label    = "Set Background Color",
+                Label = "Set Background Color",
                 CanFocus = true
             };
             _setBackgroungColorButton.Clicked += SetBackgroungColorButton_Pressed;
 
-            _backgroundColor.Red   = 1;
+            _backgroundColor.Red = 1;
             _backgroundColor.Green = 1;
-            _backgroundColor.Blue  = 1;
+            _backgroundColor.Blue = 1;
             _backgroundColor.Alpha = 1;
 
             Button closeButton = new Button()
             {
-                Label           = "Close",
-                CanFocus        = true
+                Label = "Close",
+                CanFocus = true
             };
             closeButton.Clicked += CloseButton_Pressed;
 
-            vbox.PackStart(scrolledWindow,            true,  true,  0);
-            hbox.PackStart(chooseButton,              true,  true,  0);
-            hbox.PackStart(_setBackgroungColorButton, true,  true,  0);
-            hbox.PackStart(closeButton,               true,  true,  0);
-            vbox.PackStart(hbox,                      false, false, 0);
+            vbox.PackStart(scrolledWindow, true, true, 0);
+            hbox.PackStart(chooseButton, true, true, 0);
+            hbox.PackStart(_setBackgroungColorButton, true, true, 0);
+            hbox.PackStart(closeButton, true, true, 0);
+            vbox.PackStart(hbox, false, false, 0);
 
             _listStore = new ListStore(typeof(string), typeof(Gdk.Pixbuf));
             _listStore.SetSortColumnId(0, SortType.Ascending);
 
-            _iconView              = new IconView(_listStore);
-            _iconView.ItemWidth    = 64;
-            _iconView.ItemPadding  = 10;
+            _iconView = new IconView(_listStore);
+            _iconView.ItemWidth = 64;
+            _iconView.ItemPadding = 10;
             _iconView.PixbufColumn = 1;
 
             _iconView.SelectionChanged += IconView_SelectionChanged;
@@ -117,13 +117,13 @@ namespace Ryujinx.Ui.Windows
             }
 
             string contentPath = contentManager.GetInstalledContentPath(0x010000000000080A, StorageId.BuiltInSystem, NcaContentType.Data);
-            string avatarPath  = virtualFileSystem.SwitchPathToSystemPath(contentPath);
+            string avatarPath = virtualFileSystem.SwitchPathToSystemPath(contentPath);
 
             if (!string.IsNullOrWhiteSpace(avatarPath))
             {
                 using (IStorage ncaFileStream = new LocalStorage(avatarPath, FileAccess.Read, FileMode.Open))
                 {
-                    Nca         nca   = new Nca(virtualFileSystem.KeySet, ncaFileStream);
+                    Nca nca = new Nca(virtualFileSystem.KeySet, ncaFileStream);
                     IFileSystem romfs = nca.OpenFileSystem(NcaSectionType.Data, IntegrityCheckLevel.ErrorOnInvalid);
 
                     foreach (var item in romfs.EnumerateEntries())
@@ -136,7 +136,7 @@ namespace Ryujinx.Ui.Windows
 
                             romfs.OpenFile(ref file.Ref(), ("/" + item.FullPath).ToU8Span(), OpenMode.Read).ThrowIfFailure();
 
-                            using (MemoryStream stream    = new MemoryStream())
+                            using (MemoryStream stream = new MemoryStream())
                             using (MemoryStream streamPng = new MemoryStream())
                             {
                                 file.Get.AsStream().CopyTo(stream);
@@ -173,9 +173,9 @@ namespace Ryujinx.Ui.Windows
             {
                 Image avatarImage = Image.Load(data, new PngDecoder());
 
-                avatarImage.Mutate(x => x.BackgroundColor(new Rgba32((byte)(_backgroundColor.Red   * 255),
+                avatarImage.Mutate(x => x.BackgroundColor(new Rgba32((byte)(_backgroundColor.Red * 255),
                                                                      (byte)(_backgroundColor.Green * 255),
-                                                                     (byte)(_backgroundColor.Blue  * 255),
+                                                                     (byte)(_backgroundColor.Blue * 255),
                                                                      (byte)(_backgroundColor.Alpha * 255))));
                 avatarImage.SaveAsJpeg(streamJpg);
 
@@ -205,8 +205,8 @@ namespace Ryujinx.Ui.Windows
             using (ColorChooserDialog colorChooserDialog = new ColorChooserDialog("Set Background Color", this))
             {
                 colorChooserDialog.UseAlpha = false;
-                colorChooserDialog.Rgba     = _backgroundColor;
-                
+                colorChooserDialog.Rgba = _backgroundColor;
+
                 if (colorChooserDialog.Run() == (int)ResponseType.Ok)
                 {
                     _backgroundColor = colorChooserDialog.Rgba;
@@ -228,7 +228,7 @@ namespace Ryujinx.Ui.Windows
             using (BinaryReader reader = new BinaryReader(stream))
             {
                 reader.ReadInt32(); // Magic
-                
+
                 uint decodedLength = BinaryPrimitives.ReverseEndianness(reader.ReadUInt32());
 
                 reader.ReadInt64(); // Padding
@@ -238,18 +238,18 @@ namespace Ryujinx.Ui.Windows
 
                 long inputOffset = 0;
 
-                byte[] output       = new byte[decodedLength];
-                long   outputOffset = 0;
+                byte[] output = new byte[decodedLength];
+                long outputOffset = 0;
 
-                ushort mask   = 0;
-                byte   header = 0;
+                ushort mask = 0;
+                byte header = 0;
 
                 while (outputOffset < decodedLength)
                 {
                     if ((mask >>= 1) == 0)
                     {
                         header = input[inputOffset++];
-                        mask   = 0x80;
+                        mask = 0x80;
                     }
 
                     if ((header & mask) > 0)
@@ -266,7 +266,7 @@ namespace Ryujinx.Ui.Windows
                         byte byte1 = input[inputOffset++];
                         byte byte2 = input[inputOffset++];
 
-                        int dist     = ((byte1 & 0xF) << 8) | byte2;
+                        int dist = ((byte1 & 0xF) << 8) | byte2;
                         int position = (int)outputOffset - (dist + 1);
 
                         int length = byte1 >> 4;

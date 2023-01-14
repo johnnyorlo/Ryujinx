@@ -12,16 +12,16 @@ namespace Ryujinx.HLE.HOS.Services.Mii
     class MiiDatabaseManager
     {
         private static bool IsTestModeEnabled = false;
-        private static uint MountCounter      = 0;
+        private static uint MountCounter = 0;
 
-        private const ulong  DatabaseTestSaveDataId = 0x8000000000000031;
-        private const ulong  DatabaseSaveDataId     = 0x8000000000000030;
+        private const ulong DatabaseTestSaveDataId = 0x8000000000000031;
+        private const ulong DatabaseSaveDataId = 0x8000000000000030;
 
         private static U8String DatabasePath = new U8String("mii:/MiiDatabase.dat");
-        private static U8String MountName    = new U8String("mii");
+        private static U8String MountName = new U8String("mii");
 
         private NintendoFigurineDatabase _database;
-        private bool                     _isDirty;
+        private bool _isDirty;
 
         private HorizonClient _horizonClient;
 
@@ -29,8 +29,8 @@ namespace Ryujinx.HLE.HOS.Services.Mii
 
         public MiiDatabaseManager()
         {
-            _database     = new NintendoFigurineDatabase();
-            _isDirty      = false;
+            _database = new NintendoFigurineDatabase();
+            _isDirty = false;
             UpdateCounter = 0;
         }
 

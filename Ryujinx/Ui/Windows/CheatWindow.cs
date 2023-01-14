@@ -16,9 +16,9 @@ namespace Ryujinx.Ui.Windows
         private readonly bool _noCheatsFound;
 
 #pragma warning disable CS0649, IDE0044
-        [GUI] Label    _baseTitleInfoLabel;
+        [GUI] Label _baseTitleInfoLabel;
         [GUI] TreeView _cheatTreeView;
-        [GUI] Button   _saveButton;
+        [GUI] Button _saveButton;
 #pragma warning restore CS0649, IDE0044
 
         public CheatWindow(VirtualFileSystem virtualFileSystem, ulong titleId, string titleName) : this(new Builder("Ryujinx.Ui.Windows.CheatWindow.glade"), virtualFileSystem, titleId, titleName) { }
@@ -28,7 +28,7 @@ namespace Ryujinx.Ui.Windows
             builder.Autoconnect(this);
             _baseTitleInfoLabel.Text = $"Cheats Available for {titleName} [{titleId:X16}]";
 
-            string modsBasePath  = virtualFileSystem.ModLoader.GetModsBasePath();
+            string modsBasePath = virtualFileSystem.ModLoader.GetModsBasePath();
             string titleModsPath = virtualFileSystem.ModLoader.GetTitleDir(modsBasePath, titleId.ToString("X16"));
 
             _enabledCheatsPath = System.IO.Path.Combine(titleModsPath, "cheats", "enabled.txt");

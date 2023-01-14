@@ -15,7 +15,7 @@ namespace Ryujinx.Graphics.Shader.StructuredIr
 
         public int Value { get; }
 
-        public int CbufSlot   { get; }
+        public int CbufSlot { get; }
         public int CbufOffset { get; }
 
         private AstOperand()
@@ -32,7 +32,7 @@ namespace Ryujinx.Graphics.Shader.StructuredIr
 
             if (Type == OperandType.ConstantBuffer)
             {
-                CbufSlot   = operand.GetCbufSlot();
+                CbufSlot = operand.GetCbufSlot();
                 CbufOffset = operand.GetCbufOffset();
             }
             else
@@ -41,9 +41,9 @@ namespace Ryujinx.Graphics.Shader.StructuredIr
             }
         }
 
-        public AstOperand(OperandType type, int value = 0)  : this()
+        public AstOperand(OperandType type, int value = 0) : this()
         {
-            Type  = type;
+            Type = type;
             Value = value;
         }
     }

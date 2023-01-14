@@ -137,7 +137,7 @@ namespace Ryujinx.HLE.HOS.Services.Account.Acc
 
             return resultCode;
         }
-        
+
         [CommandHipc(110)]
         // StoreSaveDataThumbnail(nn::account::Uid, buffer<bytes, 5>)
         public ResultCode StoreSaveDataThumbnail(ServiceCtx context)

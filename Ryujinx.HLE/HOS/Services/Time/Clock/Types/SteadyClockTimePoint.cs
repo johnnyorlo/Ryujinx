@@ -7,7 +7,7 @@ namespace Ryujinx.HLE.HOS.Services.Time.Clock
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     struct SteadyClockTimePoint
     {
-        public long    TimePoint;
+        public long TimePoint;
         public UInt128 ClockSourceId;
 
         public ResultCode GetSpanBetween(SteadyClockTimePoint other, out long outSpan)
@@ -35,7 +35,7 @@ namespace Ryujinx.HLE.HOS.Services.Time.Clock
         {
             return new SteadyClockTimePoint
             {
-                TimePoint     = 0,
+                TimePoint = 0,
                 ClockSourceId = UInt128Utils.CreateRandom()
             };
         }

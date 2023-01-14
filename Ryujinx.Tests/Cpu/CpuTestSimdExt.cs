@@ -11,25 +11,25 @@ namespace Ryujinx.Tests.Cpu
     {
 #if SimdExt
 
-#region "ValueSource"
+        #region "ValueSource"
         private static ulong[] _8B_()
         {
             return new ulong[] { 0x0000000000000000ul, 0x7F7F7F7F7F7F7F7Ful,
                                  0x8080808080808080ul, 0xFFFFFFFFFFFFFFFFul };
         }
-#endregion
+        #endregion
 
-        private const int RndCnt      = 2;
+        private const int RndCnt = 2;
         private const int RndCntIndex = 2;
 
         [Test, Pairwise, Description("EXT <Vd>.8B, <Vn>.8B, <Vm>.8B, #<index>")]
-        public void Ext_V_8B([Values(0u)]     uint rd,
+        public void Ext_V_8B([Values(0u)] uint rd,
                              [Values(1u, 0u)] uint rn,
                              [Values(2u, 0u)] uint rm,
-                             [ValueSource("_8B_")] [Random(RndCnt)] ulong z,
-                             [ValueSource("_8B_")] [Random(RndCnt)] ulong a,
-                             [ValueSource("_8B_")] [Random(RndCnt)] ulong b,
-                             [Values(0u, 7u)] [Random(1u, 6u, RndCntIndex)] uint index)
+                             [ValueSource("_8B_")][Random(RndCnt)] ulong z,
+                             [ValueSource("_8B_")][Random(RndCnt)] ulong a,
+                             [ValueSource("_8B_")][Random(RndCnt)] ulong b,
+                             [Values(0u, 7u)][Random(1u, 6u, RndCntIndex)] uint index)
         {
             uint imm4 = index & 0x7u;
 
@@ -47,13 +47,13 @@ namespace Ryujinx.Tests.Cpu
         }
 
         [Test, Pairwise, Description("EXT <Vd>.16B, <Vn>.16B, <Vm>.16B, #<index>")]
-        public void Ext_V_16B([Values(0u)]     uint rd,
+        public void Ext_V_16B([Values(0u)] uint rd,
                               [Values(1u, 0u)] uint rn,
                               [Values(2u, 0u)] uint rm,
-                              [ValueSource("_8B_")] [Random(RndCnt)] ulong z,
-                              [ValueSource("_8B_")] [Random(RndCnt)] ulong a,
-                              [ValueSource("_8B_")] [Random(RndCnt)] ulong b,
-                              [Values(0u, 15u)] [Random(1u, 14u, RndCntIndex)] uint index)
+                              [ValueSource("_8B_")][Random(RndCnt)] ulong z,
+                              [ValueSource("_8B_")][Random(RndCnt)] ulong a,
+                              [ValueSource("_8B_")][Random(RndCnt)] ulong b,
+                              [Values(0u, 15u)][Random(1u, 14u, RndCntIndex)] uint index)
         {
             uint imm4 = index & 0xFu;
 

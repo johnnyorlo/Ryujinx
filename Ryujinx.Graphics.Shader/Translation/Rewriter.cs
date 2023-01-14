@@ -100,11 +100,11 @@ namespace Ryujinx.Graphics.Shader.Translation
                 return local;
             }
 
-            Operand addrLow  = operation.GetSource(0);
+            Operand addrLow = operation.GetSource(0);
             Operand addrHigh = operation.GetSource(1);
 
             Operand sbBaseAddrLow = Const(0);
-            Operand sbSlot        = Const(0);
+            Operand sbSlot = Const(0);
 
             Operand alignMask = Const(-config.GpuAccessor.QueryHostStorageBufferOffsetAlignment());
 
@@ -141,13 +141,13 @@ namespace Ryujinx.Graphics.Shader.Translation
                 Operand inRange = BindingRangeCheck(cbOffset, out Operand baseAddrLow);
 
                 sbBaseAddrLow = PrependOperation(Instruction.ConditionalSelect, inRange, baseAddrLow, sbBaseAddrLow);
-                sbSlot        = PrependOperation(Instruction.ConditionalSelect, inRange, Const(slot), sbSlot);
+                sbSlot = PrependOperation(Instruction.ConditionalSelect, inRange, Const(slot), sbSlot);
             }
 
             if (config.AccessibleStorageBuffersMask != 0)
             {
                 Operand baseAddrTrunc = PrependOperation(Instruction.BitwiseAnd, sbBaseAddrLow, alignMask);
-                Operand byteOffset    = PrependOperation(Instruction.Subtract, addrLow, baseAddrTrunc);
+                Operand byteOffset = PrependOperation(Instruction.Subtract, addrLow, baseAddrTrunc);
 
                 Operand[] sources = new Operand[operation.SourcesCount];
 
@@ -260,7 +260,7 @@ namespace Ryujinx.Graphics.Shader.Translation
         {
             TextureOperation texOp = (TextureOperation)node.Value;
 
-            bool hasOffset  = (texOp.Flags & TextureFlags.Offset)  != 0;
+            bool hasOffset = (texOp.Flags & TextureFlags.Offset) != 0;
             bool hasOffsets = (texOp.Flags & TextureFlags.Offsets) != 0;
 
             bool hasInvalidOffset = (hasOffset || hasOffsets) && !config.GpuAccessor.QueryHostSupportsNonConstantTextureOffset();
@@ -274,16 +274,16 @@ namespace Ryujinx.Graphics.Shader.Translation
                 return node;
             }
 
-            bool isGather       = (texOp.Flags & TextureFlags.Gather)      != 0;
+            bool isGather = (texOp.Flags & TextureFlags.Gather) != 0;
             bool hasDerivatives = (texOp.Flags & TextureFlags.Derivatives) != 0;
-            bool intCoords      = (texOp.Flags & TextureFlags.IntCoords)   != 0;
-            bool hasLodBias     = (texOp.Flags & TextureFlags.LodBias)     != 0;
-            bool hasLodLevel    = (texOp.Flags & TextureFlags.LodLevel)    != 0;
+            bool intCoords = (texOp.Flags & TextureFlags.IntCoords) != 0;
+            bool hasLodBias = (texOp.Flags & TextureFlags.LodBias) != 0;
+            bool hasLodLevel = (texOp.Flags & TextureFlags.LodLevel) != 0;
 
-            bool isArray       = (texOp.Type & SamplerType.Array)       != 0;
-            bool isIndexed     = (texOp.Type & SamplerType.Indexed)     != 0;
+            bool isArray = (texOp.Type & SamplerType.Array) != 0;
+            bool isIndexed = (texOp.Type & SamplerType.Indexed) != 0;
             bool isMultisample = (texOp.Type & SamplerType.Multisample) != 0;
-            bool isShadow      = (texOp.Type & SamplerType.Shadow)      != 0;
+            bool isShadow = (texOp.Type & SamplerType.Shadow) != 0;
 
             int coordsCount = texOp.Type.GetDimensions();
 
@@ -373,12 +373,12 @@ namespace Ryujinx.Graphics.Shader.Translation
 
             if (hasLodBias)
             {
-               sources[dstIndex++] = texOp.GetSource(srcIndex++);
+                sources[dstIndex++] = texOp.GetSource(srcIndex++);
             }
 
             if (isGather && !isShadow)
             {
-               sources[dstIndex++] = texOp.GetSource(srcIndex++);
+                sources[dstIndex++] = texOp.GetSource(srcIndex++);
             }
 
             int coordsIndex = isBindless || isIndexed ? 1 : 0;
@@ -657,13 +657,13 @@ namespace Ryujinx.Graphics.Shader.Translation
 
             int maxPositive = format switch
             {
-                TextureFormat.R8Snorm           => sbyte.MaxValue,
-                TextureFormat.R8G8Snorm         => sbyte.MaxValue,
-                TextureFormat.R8G8B8A8Snorm     => sbyte.MaxValue,
-                TextureFormat.R16Snorm          => short.MaxValue,
-                TextureFormat.R16G16Snorm       => short.MaxValue,
+                TextureFormat.R8Snorm => sbyte.MaxValue,
+                TextureFormat.R8G8Snorm => sbyte.MaxValue,
+                TextureFormat.R8G8B8A8Snorm => sbyte.MaxValue,
+                TextureFormat.R16Snorm => short.MaxValue,
+                TextureFormat.R16G16Snorm => short.MaxValue,
                 TextureFormat.R16G16B16A16Snorm => short.MaxValue,
-                _                               => 0
+                _ => 0
             };
 
             // The value being 0 means that the format is not a SNORM format,

@@ -87,8 +87,8 @@ namespace Ryujinx.Tests.Cpu
             _context.Dispose();
             _ram.Dispose();
 
-            _memory     = null;
-            _context    = null;
+            _memory = null;
+            _context = null;
             _cpuContext = null;
             _unicornEmu = null;
 
@@ -115,38 +115,38 @@ namespace Ryujinx.Tests.Cpu
 
         protected ExecutionContext GetContext() => _context;
 
-        protected void SetContext(ulong x0       = 0,
-                                  ulong x1       = 0,
-                                  ulong x2       = 0,
-                                  ulong x3       = 0,
-                                  ulong x31      = 0,
-                                  V128  v0       = default,
-                                  V128  v1       = default,
-                                  V128  v2       = default,
-                                  V128  v3       = default,
-                                  V128  v4       = default,
-                                  V128  v5       = default,
-                                  V128  v30      = default,
-                                  V128  v31      = default,
-                                  bool  overflow = false,
-                                  bool  carry    = false,
-                                  bool  zero     = false,
-                                  bool  negative = false,
-                                  int   fpcr     = 0,
-                                  int   fpsr     = 0)
+        protected void SetContext(ulong x0 = 0,
+                                  ulong x1 = 0,
+                                  ulong x2 = 0,
+                                  ulong x3 = 0,
+                                  ulong x31 = 0,
+                                  V128 v0 = default,
+                                  V128 v1 = default,
+                                  V128 v2 = default,
+                                  V128 v3 = default,
+                                  V128 v4 = default,
+                                  V128 v5 = default,
+                                  V128 v30 = default,
+                                  V128 v31 = default,
+                                  bool overflow = false,
+                                  bool carry = false,
+                                  bool zero = false,
+                                  bool negative = false,
+                                  int fpcr = 0,
+                                  int fpsr = 0)
         {
-            _context.SetX(0,  x0);
-            _context.SetX(1,  x1);
-            _context.SetX(2,  x2);
-            _context.SetX(3,  x3);
+            _context.SetX(0, x0);
+            _context.SetX(1, x1);
+            _context.SetX(2, x2);
+            _context.SetX(3, x3);
             _context.SetX(31, x31);
 
-            _context.SetV(0,  v0);
-            _context.SetV(1,  v1);
-            _context.SetV(2,  v2);
-            _context.SetV(3,  v3);
-            _context.SetV(4,  v4);
-            _context.SetV(5,  v5);
+            _context.SetV(0, v0);
+            _context.SetV(1, v1);
+            _context.SetV(2, v2);
+            _context.SetV(3, v3);
+            _context.SetV(4, v4);
+            _context.SetV(5, v5);
             _context.SetV(30, v30);
             _context.SetV(31, v31);
 
@@ -164,20 +164,20 @@ namespace Ryujinx.Tests.Cpu
                 _unicornEmu.X[1] = x1;
                 _unicornEmu.X[2] = x2;
                 _unicornEmu.X[3] = x3;
-                _unicornEmu.SP   = x31;
+                _unicornEmu.SP = x31;
 
-                _unicornEmu.Q[0]  = V128ToSimdValue(v0);
-                _unicornEmu.Q[1]  = V128ToSimdValue(v1);
-                _unicornEmu.Q[2]  = V128ToSimdValue(v2);
-                _unicornEmu.Q[3]  = V128ToSimdValue(v3);
-                _unicornEmu.Q[4]  = V128ToSimdValue(v4);
-                _unicornEmu.Q[5]  = V128ToSimdValue(v5);
+                _unicornEmu.Q[0] = V128ToSimdValue(v0);
+                _unicornEmu.Q[1] = V128ToSimdValue(v1);
+                _unicornEmu.Q[2] = V128ToSimdValue(v2);
+                _unicornEmu.Q[3] = V128ToSimdValue(v3);
+                _unicornEmu.Q[4] = V128ToSimdValue(v4);
+                _unicornEmu.Q[5] = V128ToSimdValue(v5);
                 _unicornEmu.Q[30] = V128ToSimdValue(v30);
                 _unicornEmu.Q[31] = V128ToSimdValue(v31);
 
                 _unicornEmu.OverflowFlag = overflow;
-                _unicornEmu.CarryFlag    = carry;
-                _unicornEmu.ZeroFlag     = zero;
+                _unicornEmu.CarryFlag = carry;
+                _unicornEmu.ZeroFlag = zero;
                 _unicornEmu.NegativeFlag = negative;
 
                 _unicornEmu.Fpcr = fpcr;
@@ -195,27 +195,27 @@ namespace Ryujinx.Tests.Cpu
             }
         }
 
-        protected ExecutionContext SingleOpcode(uint  opcode,
-                                                ulong x0         = 0,
-                                                ulong x1         = 0,
-                                                ulong x2         = 0,
-                                                ulong x3         = 0,
-                                                ulong x31        = 0,
-                                                V128  v0         = default,
-                                                V128  v1         = default,
-                                                V128  v2         = default,
-                                                V128  v3         = default,
-                                                V128  v4         = default,
-                                                V128  v5         = default,
-                                                V128  v30        = default,
-                                                V128  v31        = default,
-                                                bool  overflow   = false,
-                                                bool  carry      = false,
-                                                bool  zero       = false,
-                                                bool  negative   = false,
-                                                int   fpcr       = 0,
-                                                int   fpsr       = 0,
-                                                bool  runUnicorn = true)
+        protected ExecutionContext SingleOpcode(uint opcode,
+                                                ulong x0 = 0,
+                                                ulong x1 = 0,
+                                                ulong x2 = 0,
+                                                ulong x3 = 0,
+                                                ulong x31 = 0,
+                                                V128 v0 = default,
+                                                V128 v1 = default,
+                                                V128 v2 = default,
+                                                V128 v3 = default,
+                                                V128 v4 = default,
+                                                V128 v5 = default,
+                                                V128 v30 = default,
+                                                V128 v31 = default,
+                                                bool overflow = false,
+                                                bool carry = false,
+                                                bool zero = false,
+                                                bool negative = false,
+                                                int fpcr = 0,
+                                                int fpsr = 0,
+                                                bool runUnicorn = true)
         {
             if (Ignore_FpcrFz)
             {
@@ -278,15 +278,16 @@ namespace Ryujinx.Tests.Cpu
             /// <summary>Rounding Mode control field.</summary>
             RMode = 22,
             /// <summary>Flush-to-zero mode control bit.</summary>
-            Fz    = 24,
+            Fz = 24,
             /// <summary>Default NaN mode control bit.</summary>
-            Dn    = 25,
+            Dn = 25,
             /// <summary>Alternative half-precision control bit.</summary>
-            Ahp   = 26
+            Ahp = 26
         }
 
         /// <summary>Floating-point Status Register.</summary>
-        [Flags] protected enum Fpsr
+        [Flags]
+        protected enum Fpsr
         {
             None = 0,
 
@@ -307,7 +308,8 @@ namespace Ryujinx.Tests.Cpu
             Qc = 1 << 27
         }
 
-        [Flags] protected enum FpSkips
+        [Flags]
+        protected enum FpSkips
         {
             None = 0,
 
@@ -315,7 +317,7 @@ namespace Ryujinx.Tests.Cpu
             IfNaND = 2,
 
             IfUnderflow = 4,
-            IfOverflow  = 8
+            IfOverflow = 8
         }
 
         protected enum FpTolerances
@@ -327,8 +329,8 @@ namespace Ryujinx.Tests.Cpu
         }
 
         protected void CompareAgainstUnicorn(
-            Fpsr         fpsrMask     = Fpsr.None,
-            FpSkips      fpSkips      = FpSkips.None,
+            Fpsr fpsrMask = Fpsr.None,
+            FpSkips fpSkips = FpSkips.None,
             FpTolerances fpTolerances = FpTolerances.None)
         {
             if (!_unicornAvailable)
@@ -346,16 +348,16 @@ namespace Ryujinx.Tests.Cpu
                 ManageFpSkips(fpSkips);
             }
 
-            Assert.That(_context.GetX(0),  Is.EqualTo(_unicornEmu.X[0]), "X0");
-            Assert.That(_context.GetX(1),  Is.EqualTo(_unicornEmu.X[1]), "X1");
-            Assert.That(_context.GetX(2),  Is.EqualTo(_unicornEmu.X[2]), "X2");
-            Assert.That(_context.GetX(3),  Is.EqualTo(_unicornEmu.X[3]), "X3");
-            Assert.That(_context.GetX(4),  Is.EqualTo(_unicornEmu.X[4]));
-            Assert.That(_context.GetX(5),  Is.EqualTo(_unicornEmu.X[5]));
-            Assert.That(_context.GetX(6),  Is.EqualTo(_unicornEmu.X[6]));
-            Assert.That(_context.GetX(7),  Is.EqualTo(_unicornEmu.X[7]));
-            Assert.That(_context.GetX(8),  Is.EqualTo(_unicornEmu.X[8]));
-            Assert.That(_context.GetX(9),  Is.EqualTo(_unicornEmu.X[9]));
+            Assert.That(_context.GetX(0), Is.EqualTo(_unicornEmu.X[0]), "X0");
+            Assert.That(_context.GetX(1), Is.EqualTo(_unicornEmu.X[1]), "X1");
+            Assert.That(_context.GetX(2), Is.EqualTo(_unicornEmu.X[2]), "X2");
+            Assert.That(_context.GetX(3), Is.EqualTo(_unicornEmu.X[3]), "X3");
+            Assert.That(_context.GetX(4), Is.EqualTo(_unicornEmu.X[4]));
+            Assert.That(_context.GetX(5), Is.EqualTo(_unicornEmu.X[5]));
+            Assert.That(_context.GetX(6), Is.EqualTo(_unicornEmu.X[6]));
+            Assert.That(_context.GetX(7), Is.EqualTo(_unicornEmu.X[7]));
+            Assert.That(_context.GetX(8), Is.EqualTo(_unicornEmu.X[8]));
+            Assert.That(_context.GetX(9), Is.EqualTo(_unicornEmu.X[9]));
             Assert.That(_context.GetX(10), Is.EqualTo(_unicornEmu.X[10]));
             Assert.That(_context.GetX(11), Is.EqualTo(_unicornEmu.X[11]));
             Assert.That(_context.GetX(12), Is.EqualTo(_unicornEmu.X[12]));
@@ -387,15 +389,15 @@ namespace Ryujinx.Tests.Cpu
             {
                 ManageFpTolerances(fpTolerances);
             }
-            Assert.That(V128ToSimdValue(_context.GetV(1)),  Is.EqualTo(_unicornEmu.Q[1]), "V1");
-            Assert.That(V128ToSimdValue(_context.GetV(2)),  Is.EqualTo(_unicornEmu.Q[2]), "V2");
-            Assert.That(V128ToSimdValue(_context.GetV(3)),  Is.EqualTo(_unicornEmu.Q[3]), "V3");
-            Assert.That(V128ToSimdValue(_context.GetV(4)),  Is.EqualTo(_unicornEmu.Q[4]), "V4");
-            Assert.That(V128ToSimdValue(_context.GetV(5)),  Is.EqualTo(_unicornEmu.Q[5]), "V5");
-            Assert.That(V128ToSimdValue(_context.GetV(6)),  Is.EqualTo(_unicornEmu.Q[6]));
-            Assert.That(V128ToSimdValue(_context.GetV(7)),  Is.EqualTo(_unicornEmu.Q[7]));
-            Assert.That(V128ToSimdValue(_context.GetV(8)),  Is.EqualTo(_unicornEmu.Q[8]));
-            Assert.That(V128ToSimdValue(_context.GetV(9)),  Is.EqualTo(_unicornEmu.Q[9]));
+            Assert.That(V128ToSimdValue(_context.GetV(1)), Is.EqualTo(_unicornEmu.Q[1]), "V1");
+            Assert.That(V128ToSimdValue(_context.GetV(2)), Is.EqualTo(_unicornEmu.Q[2]), "V2");
+            Assert.That(V128ToSimdValue(_context.GetV(3)), Is.EqualTo(_unicornEmu.Q[3]), "V3");
+            Assert.That(V128ToSimdValue(_context.GetV(4)), Is.EqualTo(_unicornEmu.Q[4]), "V4");
+            Assert.That(V128ToSimdValue(_context.GetV(5)), Is.EqualTo(_unicornEmu.Q[5]), "V5");
+            Assert.That(V128ToSimdValue(_context.GetV(6)), Is.EqualTo(_unicornEmu.Q[6]));
+            Assert.That(V128ToSimdValue(_context.GetV(7)), Is.EqualTo(_unicornEmu.Q[7]));
+            Assert.That(V128ToSimdValue(_context.GetV(8)), Is.EqualTo(_unicornEmu.Q[8]));
+            Assert.That(V128ToSimdValue(_context.GetV(9)), Is.EqualTo(_unicornEmu.Q[9]));
             Assert.That(V128ToSimdValue(_context.GetV(10)), Is.EqualTo(_unicornEmu.Q[10]));
             Assert.That(V128ToSimdValue(_context.GetV(11)), Is.EqualTo(_unicornEmu.Q[11]));
             Assert.That(V128ToSimdValue(_context.GetV(12)), Is.EqualTo(_unicornEmu.Q[12]));
@@ -422,12 +424,12 @@ namespace Ryujinx.Tests.Cpu
             Assert.Multiple(() =>
             {
                 Assert.That(_context.GetPstateFlag(PState.VFlag), Is.EqualTo(_unicornEmu.OverflowFlag), "VFlag");
-                Assert.That(_context.GetPstateFlag(PState.CFlag), Is.EqualTo(_unicornEmu.CarryFlag),    "CFlag");
-                Assert.That(_context.GetPstateFlag(PState.ZFlag), Is.EqualTo(_unicornEmu.ZeroFlag),     "ZFlag");
+                Assert.That(_context.GetPstateFlag(PState.CFlag), Is.EqualTo(_unicornEmu.CarryFlag), "CFlag");
+                Assert.That(_context.GetPstateFlag(PState.ZFlag), Is.EqualTo(_unicornEmu.ZeroFlag), "ZFlag");
                 Assert.That(_context.GetPstateFlag(PState.NFlag), Is.EqualTo(_unicornEmu.NegativeFlag), "NFlag");
             });
 
-            Assert.That((int)_context.Fpcr,                 Is.EqualTo(_unicornEmu.Fpcr),                 "Fpcr");
+            Assert.That((int)_context.Fpcr, Is.EqualTo(_unicornEmu.Fpcr), "Fpcr");
             Assert.That((int)_context.Fpsr & (int)fpsrMask, Is.EqualTo(_unicornEmu.Fpsr & (int)fpsrMask), "Fpsr");
 
             if (_usingMemory)
@@ -475,7 +477,7 @@ namespace Ryujinx.Tests.Cpu
 
         private void ManageFpTolerances(FpTolerances fpTolerances)
         {
-            bool IsNormalOrSubnormalS(float f)  => float.IsNormal(f)  || float.IsSubnormal(f);
+            bool IsNormalOrSubnormalS(float f) => float.IsNormal(f) || float.IsSubnormal(f);
             bool IsNormalOrSubnormalD(double d) => double.IsNormal(d) || double.IsSubnormal(d);
 
             if (!Is.EqualTo(_unicornEmu.Q[0]).ApplyTo(V128ToSimdValue(_context.GetV(0))).IsSuccess)
@@ -487,13 +489,13 @@ namespace Ryujinx.Tests.Cpu
                     {
                         Assert.Multiple(() =>
                         {
-                            Assert.That   (_context.GetV(0).Extract<float>(0),
+                            Assert.That(_context.GetV(0).Extract<float>(0),
                                 Is.EqualTo(_unicornEmu.Q[0].GetFloat(0)).Within(1).Ulps, "V0[0]");
-                            Assert.That   (_context.GetV(0).Extract<float>(1),
+                            Assert.That(_context.GetV(0).Extract<float>(1),
                                 Is.EqualTo(_unicornEmu.Q[0].GetFloat(1)).Within(1).Ulps, "V0[1]");
-                            Assert.That   (_context.GetV(0).Extract<float>(2),
+                            Assert.That(_context.GetV(0).Extract<float>(2),
                                 Is.EqualTo(_unicornEmu.Q[0].GetFloat(2)).Within(1).Ulps, "V0[2]");
-                            Assert.That   (_context.GetV(0).Extract<float>(3),
+                            Assert.That(_context.GetV(0).Extract<float>(3),
                                 Is.EqualTo(_unicornEmu.Q[0].GetFloat(3)).Within(1).Ulps, "V0[3]");
                         });
 
@@ -512,9 +514,9 @@ namespace Ryujinx.Tests.Cpu
                     {
                         Assert.Multiple(() =>
                         {
-                            Assert.That   (_context.GetV(0).Extract<double>(0),
+                            Assert.That(_context.GetV(0).Extract<double>(0),
                                 Is.EqualTo(_unicornEmu.Q[0].GetDouble(0)).Within(1).Ulps, "V0[0]");
-                            Assert.That   (_context.GetV(0).Extract<double>(1),
+                            Assert.That(_context.GetV(0).Extract<double>(1),
                                 Is.EqualTo(_unicornEmu.Q[0].GetDouble(1)).Within(1).Ulps, "V0[1]");
                         });
 
@@ -533,7 +535,7 @@ namespace Ryujinx.Tests.Cpu
             return new SimdValue(value.Extract<ulong>(0), value.Extract<ulong>(1));
         }
 
-        protected static V128 MakeVectorScalar(float value)  => new V128(value);
+        protected static V128 MakeVectorScalar(float value) => new V128(value);
         protected static V128 MakeVectorScalar(double value) => new V128(value);
 
         protected static V128 MakeVectorE0(ulong e0) => new V128(e0, 0);
@@ -548,8 +550,8 @@ namespace Ryujinx.Tests.Cpu
         {
             uint rnd;
 
-            do       rnd = TestContext.CurrentContext.Random.NextUShort();
-            while (( rnd & 0x7C00u) == 0u ||
+            do rnd = TestContext.CurrentContext.Random.NextUShort();
+            while ((rnd & 0x7C00u) == 0u ||
                    (~rnd & 0x7C00u) == 0u);
 
             return (ushort)rnd;
@@ -559,7 +561,7 @@ namespace Ryujinx.Tests.Cpu
         {
             uint rnd;
 
-            do      rnd = TestContext.CurrentContext.Random.NextUShort();
+            do rnd = TestContext.CurrentContext.Random.NextUShort();
             while ((rnd & 0x03FFu) == 0u);
 
             return (ushort)(rnd & 0x83FFu);
@@ -569,8 +571,8 @@ namespace Ryujinx.Tests.Cpu
         {
             uint rnd;
 
-            do       rnd = TestContext.CurrentContext.Random.NextUInt();
-            while (( rnd & 0x7F800000u) == 0u ||
+            do rnd = TestContext.CurrentContext.Random.NextUInt();
+            while ((rnd & 0x7F800000u) == 0u ||
                    (~rnd & 0x7F800000u) == 0u);
 
             return rnd;
@@ -580,7 +582,7 @@ namespace Ryujinx.Tests.Cpu
         {
             uint rnd;
 
-            do      rnd = TestContext.CurrentContext.Random.NextUInt();
+            do rnd = TestContext.CurrentContext.Random.NextUInt();
             while ((rnd & 0x007FFFFFu) == 0u);
 
             return rnd & 0x807FFFFFu;
@@ -590,8 +592,8 @@ namespace Ryujinx.Tests.Cpu
         {
             ulong rnd;
 
-            do       rnd = TestContext.CurrentContext.Random.NextULong();
-            while (( rnd & 0x7FF0000000000000ul) == 0ul ||
+            do rnd = TestContext.CurrentContext.Random.NextULong();
+            while ((rnd & 0x7FF0000000000000ul) == 0ul ||
                    (~rnd & 0x7FF0000000000000ul) == 0ul);
 
             return rnd;
@@ -601,7 +603,7 @@ namespace Ryujinx.Tests.Cpu
         {
             ulong rnd;
 
-            do      rnd = TestContext.CurrentContext.Random.NextULong();
+            do rnd = TestContext.CurrentContext.Random.NextULong();
             while ((rnd & 0x000FFFFFFFFFFFFFul) == 0ul);
 
             return rnd & 0x800FFFFFFFFFFFFFul;

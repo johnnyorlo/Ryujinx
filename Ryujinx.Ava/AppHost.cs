@@ -58,28 +58,28 @@ namespace Ryujinx.Ava
 {
     internal class AppHost
     {
-        private const int   CursorHideIdleTime = 8;    // Hide Cursor seconds.
+        private const int CursorHideIdleTime = 8;    // Hide Cursor seconds.
         private const float MaxResolutionScale = 4.0f; // Max resolution hotkeys can scale to before wrapping.
-        private const int   TargetFps          = 60;
-        private const float VolumeDelta        = 0.05f;
+        private const int TargetFps = 60;
+        private const float VolumeDelta = 0.05f;
 
         private static readonly Cursor InvisibleCursor = new(StandardCursorType.None);
 
-        private readonly long      _ticksPerFrame;
+        private readonly long _ticksPerFrame;
         private readonly Stopwatch _chrono;
-        private long               _ticks;
+        private long _ticks;
 
-        private readonly AccountManager         _accountManager;
+        private readonly AccountManager _accountManager;
         private readonly UserChannelPersistence _userChannelPersistence;
-        private readonly InputManager           _inputManager;
+        private readonly InputManager _inputManager;
 
         private readonly MainWindowViewModel _viewModel;
-        private readonly IKeyboard           _keyboardInterface;
-        private readonly TopLevel            _topLevel;
+        private readonly IKeyboard _keyboardInterface;
+        private readonly TopLevel _topLevel;
 
         private readonly GraphicsDebugLevel _glLogLevel;
-        private float                       _newVolume;
-        private KeyboardHotkeyState         _prevHotkeyState;
+        private float _newVolume;
+        private KeyboardHotkeyState _prevHotkeyState;
 
         private bool _hideCursorOnIdle;
         private long _lastCursorMoveTime;
@@ -89,12 +89,12 @@ namespace Ryujinx.Ava
         private bool _isActive;
         private bool _renderingStarted;
 
-        private IRenderer                        _renderer;
-        private readonly Thread                  _renderingThread;
+        private IRenderer _renderer;
+        private readonly Thread _renderingThread;
         private readonly CancellationTokenSource _gpuCancellationTokenSource;
         private WindowsMultimediaTimerResolution _windowsMultimediaTimerResolution;
 
-        private bool          _dialogShown;
+        private bool _dialogShown;
         private readonly bool _isFirmwareTitle;
 
         private readonly object _lockObject = new();
@@ -102,52 +102,52 @@ namespace Ryujinx.Ava
         public event EventHandler AppExit;
         public event EventHandler<StatusUpdatedEventArgs> StatusUpdatedEvent;
 
-        public RendererHost       Renderer           { get; }
-        public VirtualFileSystem  VirtualFileSystem  { get; }
-        public ContentManager     ContentManager     { get; }
-        public NpadManager        NpadManager        { get; }
+        public RendererHost Renderer { get; }
+        public VirtualFileSystem VirtualFileSystem { get; }
+        public ContentManager ContentManager { get; }
+        public NpadManager NpadManager { get; }
         public TouchScreenManager TouchScreenManager { get; }
-        public Switch             Device             { get; set; }
+        public Switch Device { get; set; }
 
-        public int    Width               { get; private set; }
-        public int    Height              { get; private set; }
-        public string ApplicationPath     { get; private set; }
-        public bool   ScreenshotRequested { get; set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+        public string ApplicationPath { get; private set; }
+        public bool ScreenshotRequested { get; set; }
 
 
         public AppHost(
-            RendererHost           renderer,
-            InputManager           inputManager,
-            string                 applicationPath,
-            VirtualFileSystem      virtualFileSystem,
-            ContentManager         contentManager,
-            AccountManager         accountManager,
+            RendererHost renderer,
+            InputManager inputManager,
+            string applicationPath,
+            VirtualFileSystem virtualFileSystem,
+            ContentManager contentManager,
+            AccountManager accountManager,
             UserChannelPersistence userChannelPersistence,
-            MainWindowViewModel    viewmodel,
-            TopLevel               topLevel)
+            MainWindowViewModel viewmodel,
+            TopLevel topLevel)
         {
-            _viewModel              = viewmodel;
-            _inputManager           = inputManager;
-            _accountManager         = accountManager;
+            _viewModel = viewmodel;
+            _inputManager = inputManager;
+            _accountManager = accountManager;
             _userChannelPersistence = userChannelPersistence;
-            _renderingThread        = new Thread(RenderLoop, 1 * 1024 * 1024) { Name = "GUI.RenderThread" };
-            _hideCursorOnIdle       = ConfigurationState.Instance.HideCursorOnIdle;
-            _lastCursorMoveTime     = Stopwatch.GetTimestamp();
-            _glLogLevel             = ConfigurationState.Instance.Logger.GraphicsDebugLevel;
-            _topLevel               = topLevel;
+            _renderingThread = new Thread(RenderLoop, 1 * 1024 * 1024) { Name = "GUI.RenderThread" };
+            _hideCursorOnIdle = ConfigurationState.Instance.HideCursorOnIdle;
+            _lastCursorMoveTime = Stopwatch.GetTimestamp();
+            _glLogLevel = ConfigurationState.Instance.Logger.GraphicsDebugLevel;
+            _topLevel = topLevel;
 
             _inputManager.SetMouseDriver(new AvaloniaMouseDriver(_topLevel, renderer));
 
             _keyboardInterface = (IKeyboard)_inputManager.KeyboardDriver.GetGamepad("0");
 
-            NpadManager        = _inputManager.CreateNpadManager();
+            NpadManager = _inputManager.CreateNpadManager();
             TouchScreenManager = _inputManager.CreateTouchScreenManager();
-            Renderer           = renderer;
-            ApplicationPath    = applicationPath;
-            VirtualFileSystem  = virtualFileSystem;
-            ContentManager     = contentManager;
+            Renderer = renderer;
+            ApplicationPath = applicationPath;
+            VirtualFileSystem = virtualFileSystem;
+            ContentManager = contentManager;
 
-            _chrono        = new Stopwatch();
+            _chrono = new Stopwatch();
             _ticksPerFrame = Stopwatch.Frequency / TargetFps;
 
             if (ApplicationPath.StartsWith("@SystemContent"))
@@ -163,9 +163,9 @@ namespace Ryujinx.Ava
             _topLevel.PointerMoved += TopLevel_PointerMoved;
 
             ConfigurationState.Instance.System.IgnoreMissingServices.Event += UpdateIgnoreMissingServicesState;
-            ConfigurationState.Instance.Graphics.AspectRatio.Event         += UpdateAspectRatioState;
-            ConfigurationState.Instance.System.EnableDockedMode.Event      += UpdateDockedModeState;
-            ConfigurationState.Instance.System.AudioVolume.Event           += UpdateAudioVolumeState;
+            ConfigurationState.Instance.Graphics.AspectRatio.Event += UpdateAspectRatioState;
+            ConfigurationState.Instance.System.EnableDockedMode.Event += UpdateDockedModeState;
+            ConfigurationState.Instance.System.AudioVolume.Event += UpdateAudioVolumeState;
 
             _gpuCancellationTokenSource = new CancellationTokenSource();
         }
@@ -185,7 +185,7 @@ namespace Ryujinx.Ava
         private void TopLevel_PointerLeave(object sender, PointerEventArgs e)
         {
             _isCursorInRenderer = false;
-            _viewModel.Cursor   = Cursor.Default;
+            _viewModel.Cursor = Cursor.Default;
         }
 
         private void SetRendererWindowSize(Size size)
@@ -207,12 +207,12 @@ namespace Ryujinx.Ava
                     lock (_lockObject)
                     {
                         DateTime currentTime = DateTime.Now;
-                        string   filename    = $"ryujinx_capture_{currentTime}-{currentTime:D2}-{currentTime:D2}_{currentTime:D2}-{currentTime:D2}-{currentTime:D2}.png";
-                        
+                        string filename = $"ryujinx_capture_{currentTime}-{currentTime:D2}-{currentTime:D2}_{currentTime:D2}-{currentTime:D2}-{currentTime:D2}.png";
+
                         string directory = AppDataManager.Mode switch
                         {
                             AppDataManager.LaunchMode.Portable => Path.Combine(AppDataManager.BaseDirPath, "screenshots"),
-                            _                                  => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "Ryujinx")
+                            _ => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "Ryujinx")
                         };
 
                         string path = Path.Combine(directory, filename);
@@ -272,10 +272,10 @@ namespace Ryujinx.Ava
 
             _viewModel.IsGameRunning = true;
 
-            string titleNameSection    = string.IsNullOrWhiteSpace(Device.Application.TitleName)      ? string.Empty : $" - {Device.Application.TitleName}";
+            string titleNameSection = string.IsNullOrWhiteSpace(Device.Application.TitleName) ? string.Empty : $" - {Device.Application.TitleName}";
             string titleVersionSection = string.IsNullOrWhiteSpace(Device.Application.DisplayVersion) ? string.Empty : $" v{Device.Application.DisplayVersion}";
-            string titleIdSection      = string.IsNullOrWhiteSpace(Device.Application.TitleIdText)    ? string.Empty : $" ({Device.Application.TitleIdText.ToUpper()})";
-            string titleArchSection    = Device.Application.TitleIs64Bit                              ? " (64-bit)"  : " (32-bit)";
+            string titleIdSection = string.IsNullOrWhiteSpace(Device.Application.TitleIdText) ? string.Empty : $" ({Device.Application.TitleIdText.ToUpper()})";
+            string titleArchSection = Device.Application.TitleIs64Bit ? " (64-bit)" : " (32-bit)";
 
             Dispatcher.UIThread.InvokeAsync(() =>
             {
@@ -343,7 +343,7 @@ namespace Ryujinx.Ava
             }
 
             _isStopped = true;
-            _isActive  = false;
+            _isActive = false;
         }
 
         public void DisposeContext()
@@ -376,9 +376,9 @@ namespace Ryujinx.Ava
             }
 
             ConfigurationState.Instance.System.IgnoreMissingServices.Event -= UpdateIgnoreMissingServicesState;
-            ConfigurationState.Instance.Graphics.AspectRatio.Event         -= UpdateAspectRatioState;
-            ConfigurationState.Instance.System.EnableDockedMode.Event      -= UpdateDockedModeState;
-            ConfigurationState.Instance.System.AudioVolume.Event           -= UpdateAudioVolumeState;
+            ConfigurationState.Instance.Graphics.AspectRatio.Event -= UpdateAspectRatioState;
+            ConfigurationState.Instance.System.EnableDockedMode.Event -= UpdateDockedModeState;
+            ConfigurationState.Instance.System.AudioVolume.Event -= UpdateAudioVolumeState;
 
             _topLevel.PointerLeave -= TopLevel_PointerLeave;
             _topLevel.PointerMoved -= TopLevel_PointerMoved;
@@ -703,14 +703,14 @@ namespace Ryujinx.Ava
             for (int i = 0; i < availableBackends.Count; i++)
             {
                 AudioBackend currentBackend = availableBackends[i];
-                AudioBackend nextBackend    = i + 1 < availableBackends.Count ? availableBackends[i + 1] : AudioBackend.Dummy;
+                AudioBackend nextBackend = i + 1 < availableBackends.Count ? availableBackends[i + 1] : AudioBackend.Dummy;
 
                 deviceDriver = currentBackend switch
                 {
-                    AudioBackend.SDL2    => InitializeAudioBackend<SDL2HardwareDeviceDriver>(AudioBackend.SDL2, nextBackend),
+                    AudioBackend.SDL2 => InitializeAudioBackend<SDL2HardwareDeviceDriver>(AudioBackend.SDL2, nextBackend),
                     AudioBackend.SoundIo => InitializeAudioBackend<SoundIoHardwareDeviceDriver>(AudioBackend.SoundIo, nextBackend),
-                    AudioBackend.OpenAl  => InitializeAudioBackend<OpenALHardwareDeviceDriver>(AudioBackend.OpenAl, nextBackend),
-                    _                    => new DummyHardwareDeviceDriver()
+                    AudioBackend.OpenAl => InitializeAudioBackend<OpenALHardwareDeviceDriver>(AudioBackend.OpenAl, nextBackend),
+                    _ => new DummyHardwareDeviceDriver()
                 };
 
                 if (deviceDriver != null)
@@ -727,7 +727,7 @@ namespace Ryujinx.Ava
 
         private void Window_SizeChanged(object sender, Size e)
         {
-            Width  = (int)e.Width;
+            Width = (int)e.Width;
             Height = (int)e.Height;
 
             SetRendererWindowSize(e);
@@ -820,7 +820,7 @@ namespace Ryujinx.Ava
         {
             // Run a status update only when a frame is to be drawn. This prevents from updating the ui and wasting a render when no frame is queued.
             string dockedMode = ConfigurationState.Instance.System.EnableDockedMode ? LocaleManager.Instance[LocaleKeys.Docked] : LocaleManager.Instance[LocaleKeys.Handheld];
-            
+
             if (GraphicsConfig.ResScale != 1)
             {
                 dockedMode += $" ({GraphicsConfig.ResScale}x)";

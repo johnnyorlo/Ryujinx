@@ -14,7 +14,7 @@ namespace ARMeilleure.CodeGen.X86
 
         private const int OpModRMBits = 24;
 
-        private const byte RexPrefix  = 0x40;
+        private const byte RexPrefix = 0x40;
         private const byte RexWPrefix = 0x48;
         private const byte LockPrefix = 0xf0;
 
@@ -958,7 +958,7 @@ namespace ARMeilleure.CodeGen.X86
                 }
             }
 
-            bool needsSibByte      = false;
+            bool needsSibByte = false;
             bool needsDisplacement = false;
 
             int sib = 0;
@@ -970,7 +970,7 @@ namespace ARMeilleure.CodeGen.X86
 
                 X86Register baseRegLow = (X86Register)(baseReg.Index & 0b111);
 
-                needsSibByte      = memOp.Index != default  || baseRegLow == X86Register.Rsp;
+                needsSibByte = memOp.Index != default || baseRegLow == X86Register.Rsp;
                 needsDisplacement = memOp.Displacement != 0 || baseRegLow == X86Register.Rbp;
 
                 if (needsDisplacement)
@@ -1074,7 +1074,7 @@ namespace ARMeilleure.CodeGen.X86
 
                     switch (opCodeHigh)
                     {
-                        case 0xf:   vexByte1 |= 1; break;
+                        case 0xf: vexByte1 |= 1; break;
                         case 0xf38: vexByte1 |= 2; break;
                         case 0xf3a: vexByte1 |= 3; break;
 

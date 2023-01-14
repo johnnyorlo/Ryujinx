@@ -20,7 +20,7 @@ namespace ARMeilleure.Instructions
             OpCodeCcmp op = (OpCodeCcmp)context.CurrOp;
 
             Operand lblTrue = Label();
-            Operand lblEnd  = Label();
+            Operand lblEnd = Label();
 
             EmitCondBranch(context, lblTrue, op.Cond);
 

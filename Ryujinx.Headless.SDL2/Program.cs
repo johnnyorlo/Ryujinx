@@ -137,52 +137,52 @@ namespace Ryujinx.Headless.SDL2
                 {
                     config = new StandardKeyboardInputConfig
                     {
-                        Version          = InputConfig.CurrentVersion,
-                        Backend          = InputBackendType.WindowKeyboard,
-                        Id               = null,
-                        ControllerType   = ControllerType.JoyconPair,
-                        LeftJoycon       = new LeftJoyconCommonConfig<Key>
+                        Version = InputConfig.CurrentVersion,
+                        Backend = InputBackendType.WindowKeyboard,
+                        Id = null,
+                        ControllerType = ControllerType.JoyconPair,
+                        LeftJoycon = new LeftJoyconCommonConfig<Key>
                         {
-                            DpadUp       = Key.Up,
-                            DpadDown     = Key.Down,
-                            DpadLeft     = Key.Left,
-                            DpadRight    = Key.Right,
-                            ButtonMinus  = Key.Minus,
-                            ButtonL      = Key.E,
-                            ButtonZl     = Key.Q,
-                            ButtonSl     = Key.Unbound,
-                            ButtonSr     = Key.Unbound
+                            DpadUp = Key.Up,
+                            DpadDown = Key.Down,
+                            DpadLeft = Key.Left,
+                            DpadRight = Key.Right,
+                            ButtonMinus = Key.Minus,
+                            ButtonL = Key.E,
+                            ButtonZl = Key.Q,
+                            ButtonSl = Key.Unbound,
+                            ButtonSr = Key.Unbound
                         },
 
-                        LeftJoyconStick  = new JoyconConfigKeyboardStick<Key>
+                        LeftJoyconStick = new JoyconConfigKeyboardStick<Key>
                         {
-                            StickUp      = Key.W,
-                            StickDown    = Key.S,
-                            StickLeft    = Key.A,
-                            StickRight   = Key.D,
-                            StickButton  = Key.F,
+                            StickUp = Key.W,
+                            StickDown = Key.S,
+                            StickLeft = Key.A,
+                            StickRight = Key.D,
+                            StickButton = Key.F,
                         },
 
-                        RightJoycon      = new RightJoyconCommonConfig<Key>
+                        RightJoycon = new RightJoyconCommonConfig<Key>
                         {
-                            ButtonA      = Key.Z,
-                            ButtonB      = Key.X,
-                            ButtonX      = Key.C,
-                            ButtonY      = Key.V,
-                            ButtonPlus   = Key.Plus,
-                            ButtonR      = Key.U,
-                            ButtonZr     = Key.O,
-                            ButtonSl     = Key.Unbound,
-                            ButtonSr     = Key.Unbound
+                            ButtonA = Key.Z,
+                            ButtonB = Key.X,
+                            ButtonX = Key.C,
+                            ButtonY = Key.V,
+                            ButtonPlus = Key.Plus,
+                            ButtonR = Key.U,
+                            ButtonZr = Key.O,
+                            ButtonSl = Key.Unbound,
+                            ButtonSr = Key.Unbound
                         },
 
                         RightJoyconStick = new JoyconConfigKeyboardStick<Key>
                         {
-                            StickUp      = Key.I,
-                            StickDown    = Key.K,
-                            StickLeft    = Key.J,
-                            StickRight   = Key.L,
-                            StickButton  = Key.H,
+                            StickUp = Key.I,
+                            StickDown = Key.K,
+                            StickLeft = Key.J,
+                            StickRight = Key.L,
+                            StickButton = Key.H,
                         }
                     };
                 }
@@ -192,64 +192,64 @@ namespace Ryujinx.Headless.SDL2
 
                     config = new StandardControllerInputConfig
                     {
-                        Version          = InputConfig.CurrentVersion,
-                        Backend          = InputBackendType.GamepadSDL2,
-                        Id               = null,
-                        ControllerType   = ControllerType.JoyconPair,
-                        DeadzoneLeft     = 0.1f,
-                        DeadzoneRight    = 0.1f,
-                        RangeLeft        = 1.0f,
-                        RangeRight       = 1.0f,
+                        Version = InputConfig.CurrentVersion,
+                        Backend = InputBackendType.GamepadSDL2,
+                        Id = null,
+                        ControllerType = ControllerType.JoyconPair,
+                        DeadzoneLeft = 0.1f,
+                        DeadzoneRight = 0.1f,
+                        RangeLeft = 1.0f,
+                        RangeRight = 1.0f,
                         TriggerThreshold = 0.5f,
                         LeftJoycon = new LeftJoyconCommonConfig<ConfigGamepadInputId>
                         {
-                            DpadUp       = ConfigGamepadInputId.DpadUp,
-                            DpadDown     = ConfigGamepadInputId.DpadDown,
-                            DpadLeft     = ConfigGamepadInputId.DpadLeft,
-                            DpadRight    = ConfigGamepadInputId.DpadRight,
-                            ButtonMinus  = ConfigGamepadInputId.Minus,
-                            ButtonL      = ConfigGamepadInputId.LeftShoulder,
-                            ButtonZl     = ConfigGamepadInputId.LeftTrigger,
-                            ButtonSl     = ConfigGamepadInputId.Unbound,
-                            ButtonSr     = ConfigGamepadInputId.Unbound,
+                            DpadUp = ConfigGamepadInputId.DpadUp,
+                            DpadDown = ConfigGamepadInputId.DpadDown,
+                            DpadLeft = ConfigGamepadInputId.DpadLeft,
+                            DpadRight = ConfigGamepadInputId.DpadRight,
+                            ButtonMinus = ConfigGamepadInputId.Minus,
+                            ButtonL = ConfigGamepadInputId.LeftShoulder,
+                            ButtonZl = ConfigGamepadInputId.LeftTrigger,
+                            ButtonSl = ConfigGamepadInputId.Unbound,
+                            ButtonSr = ConfigGamepadInputId.Unbound,
                         },
 
                         LeftJoyconStick = new JoyconConfigControllerStick<ConfigGamepadInputId, ConfigStickInputId>
                         {
-                            Joystick     = ConfigStickInputId.Left,
-                            StickButton  = ConfigGamepadInputId.LeftStick,
+                            Joystick = ConfigStickInputId.Left,
+                            StickButton = ConfigGamepadInputId.LeftStick,
                             InvertStickX = false,
                             InvertStickY = false,
-                            Rotate90CW   = false,
+                            Rotate90CW = false,
                         },
 
                         RightJoycon = new RightJoyconCommonConfig<ConfigGamepadInputId>
                         {
-                            ButtonA      = isNintendoStyle ? ConfigGamepadInputId.A : ConfigGamepadInputId.B,
-                            ButtonB      = isNintendoStyle ? ConfigGamepadInputId.B : ConfigGamepadInputId.A,
-                            ButtonX      = isNintendoStyle ? ConfigGamepadInputId.X : ConfigGamepadInputId.Y,
-                            ButtonY      = isNintendoStyle ? ConfigGamepadInputId.Y : ConfigGamepadInputId.X,
-                            ButtonPlus   = ConfigGamepadInputId.Plus,
-                            ButtonR      = ConfigGamepadInputId.RightShoulder,
-                            ButtonZr     = ConfigGamepadInputId.RightTrigger,
-                            ButtonSl     = ConfigGamepadInputId.Unbound,
-                            ButtonSr     = ConfigGamepadInputId.Unbound,
+                            ButtonA = isNintendoStyle ? ConfigGamepadInputId.A : ConfigGamepadInputId.B,
+                            ButtonB = isNintendoStyle ? ConfigGamepadInputId.B : ConfigGamepadInputId.A,
+                            ButtonX = isNintendoStyle ? ConfigGamepadInputId.X : ConfigGamepadInputId.Y,
+                            ButtonY = isNintendoStyle ? ConfigGamepadInputId.Y : ConfigGamepadInputId.X,
+                            ButtonPlus = ConfigGamepadInputId.Plus,
+                            ButtonR = ConfigGamepadInputId.RightShoulder,
+                            ButtonZr = ConfigGamepadInputId.RightTrigger,
+                            ButtonSl = ConfigGamepadInputId.Unbound,
+                            ButtonSr = ConfigGamepadInputId.Unbound,
                         },
 
                         RightJoyconStick = new JoyconConfigControllerStick<ConfigGamepadInputId, ConfigStickInputId>
                         {
-                            Joystick     = ConfigStickInputId.Right,
-                            StickButton  = ConfigGamepadInputId.RightStick,
+                            Joystick = ConfigStickInputId.Right,
+                            StickButton = ConfigGamepadInputId.RightStick,
                             InvertStickX = false,
                             InvertStickY = false,
-                            Rotate90CW   = false,
+                            Rotate90CW = false,
                         },
 
                         Motion = new StandardMotionConfigController
                         {
                             MotionBackend = MotionInputBackendType.GamepadDriver,
                             EnableMotion = true,
-                            Sensitivity  = 100,
+                            Sensitivity = 100,
                             GyroDeadzone = 1,
                         },
                         Rumble = new RumbleConfigController
@@ -310,7 +310,7 @@ namespace Ryujinx.Headless.SDL2
             {
                 if (controllerConfig.RangeLeft <= 0.0f && controllerConfig.RangeRight <= 0.0f)
                 {
-                    controllerConfig.RangeLeft  = 1.0f;
+                    controllerConfig.RangeLeft = 1.0f;
                     controllerConfig.RangeRight = 1.0f;
 
                     Logger.Info?.Print(LogClass.Application, $"{config.PlayerIndex} stick range reset. Save the profile now to update your configuration");

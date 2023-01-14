@@ -14,7 +14,7 @@ namespace Ryujinx.HLE.HOS.Services.Am.AppletAE.AllSystemAppletProxiesService.Lib
                 // Create MiiEdit data.
                 _appletStandalone = new AppletStandalone()
                 {
-                    AppletId          = AppletId.MiiEdit,
+                    AppletId = AppletId.MiiEdit,
                     LibraryAppletMode = LibraryAppletMode.AllForeground
                 };
 
@@ -51,7 +51,7 @@ namespace Ryujinx.HLE.HOS.Services.Am.AppletAE.AllSystemAppletProxiesService.Lib
         {
             LibraryAppletInfo libraryAppletInfo = new LibraryAppletInfo()
             {
-                AppletId          = _appletStandalone.AppletId,
+                AppletId = _appletStandalone.AppletId,
                 LibraryAppletMode = _appletStandalone.LibraryAppletMode
             };
 
@@ -67,7 +67,7 @@ namespace Ryujinx.HLE.HOS.Services.Am.AppletAE.AllSystemAppletProxiesService.Lib
             AppletIdentifyInfo appletIdentifyInfo = new AppletIdentifyInfo()
             {
                 AppletId = AppletId.QLaunch,
-                TitleId  = 0x0100000000001000
+                TitleId = 0x0100000000001000
             };
 
             context.ResponseData.WriteStruct(appletIdentifyInfo);

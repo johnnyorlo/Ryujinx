@@ -156,8 +156,8 @@ namespace Ryujinx.Memory.Tests
 
         [Test]
         public void PageAlignment(
-            [Values(1ul, 512ul, 2048ul, 4096ul, 65536ul)] [Random(1ul, 65536ul, RndCnt)] ulong address,
-            [Values(1ul, 4ul, 1024ul, 4096ul, 65536ul)] [Random(1ul, 65536ul, RndCnt)] ulong size)
+            [Values(1ul, 512ul, 2048ul, 4096ul, 65536ul)][Random(1ul, 65536ul, RndCnt)] ulong address,
+            [Values(1ul, 4ul, 1024ul, 4096ul, 65536ul)][Random(1ul, 65536ul, RndCnt)] ulong size)
         {
             ulong alignedStart = (address / PageSize) * PageSize;
             ulong alignedEnd = ((address + size + PageSize - 1) / PageSize) * PageSize;

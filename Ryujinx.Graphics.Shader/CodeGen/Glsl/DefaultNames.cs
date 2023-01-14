@@ -5,7 +5,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl
         public const string LocalNamePrefix = "temp";
 
         public const string SamplerNamePrefix = "tex";
-        public const string ImageNamePrefix   = "img";
+        public const string ImageNamePrefix = "img";
 
         public const string PerPatchAttributePrefix = "patch_attr_";
         public const string IAttributePrefix = "in_attr";
@@ -27,7 +27,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl
         public const string UniformNamePrefix = "c";
         public const string UniformNameSuffix = "data";
 
-        public const string LocalMemoryName  = "local_mem";
+        public const string LocalMemoryName = "local_mem";
         public const string SharedMemoryName = "shared_mem";
 
         public const string ArgumentNamePrefix = "a";

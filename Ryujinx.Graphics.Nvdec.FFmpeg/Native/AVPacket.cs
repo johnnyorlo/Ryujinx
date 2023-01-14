@@ -7,7 +7,7 @@ namespace Ryujinx.Graphics.Nvdec.FFmpeg.Native
     struct AVPacket
     {
 #pragma warning disable CS0649
-        public unsafe AVBufferRef *Buf;
+        public unsafe AVBufferRef* Buf;
         public long Pts;
         public long Dts;
         public unsafe byte* Data;
@@ -19,7 +19,7 @@ namespace Ryujinx.Graphics.Nvdec.FFmpeg.Native
         public long Duration;
         public long Position;
         public IntPtr Opaque;
-        public unsafe AVBufferRef *OpaqueRef;
+        public unsafe AVBufferRef* OpaqueRef;
         public AVRational TimeBase;
 #pragma warning restore CS0649
     }

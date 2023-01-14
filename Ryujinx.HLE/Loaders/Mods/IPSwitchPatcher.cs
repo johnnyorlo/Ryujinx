@@ -56,24 +56,24 @@ namespace Ryujinx.HLE.Loaders.Mods
                     case Token.String:
                         state = c switch
                         {
-                            '"'  => Token.Normal,
+                            '"' => Token.Normal,
                             '\\' => Token.EscapeChar,
-                            _    => Token.String
+                            _ => Token.String
                         };
                         break;
                     case Token.EscapeChar:
                         state = Token.String;
                         c = c switch
                         {
-                            'a'  => '\a',
-                            'b'  => '\b',
-                            'f'  => '\f',
-                            'n'  => '\n',
-                            'r'  => '\r',
-                            't'  => '\t',
-                            'v'  => '\v',
+                            'a' => '\a',
+                            'b' => '\b',
+                            'f' => '\f',
+                            'n' => '\n',
+                            'r' => '\r',
+                            't' => '\t',
+                            'v' => '\v',
                             '\\' => '\\',
-                            _    => '?'
+                            _ => '?'
                         };
                         break;
                 }
@@ -119,7 +119,7 @@ namespace Ryujinx.HLE.Loaders.Mods
             for (int i = 0; i < hexstr.Length; i += 2)
             {
                 int high = ParseHexByte((byte)hexstr[i]);
-                int low  = ParseHexByte((byte)hexstr[i + 1]);
+                int low = ParseHexByte((byte)hexstr[i + 1]);
 
                 bytes[i >> 1] = (byte)((high << 4) | low);
             }
@@ -149,7 +149,7 @@ namespace Ryujinx.HLE.Loaders.Mods
 
             MemPatch patches = new MemPatch();
 
-            bool enabled     = false;
+            bool enabled = false;
             bool printValues = false;
             int offset_shift = 0;
 

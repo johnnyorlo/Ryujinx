@@ -12,7 +12,7 @@ namespace Ryujinx.HLE.HOS.Services.Bcat.ServiceCreator.Types
         }
 
         public Status State;
-        public uint   Result;
+        public uint Result;
         // TODO: reverse the rest of the structure
     }
 }

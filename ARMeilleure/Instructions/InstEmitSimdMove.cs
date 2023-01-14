@@ -12,7 +12,7 @@ namespace ARMeilleure.Instructions
 {
     static partial class InstEmit
     {
-#region "Masks"
+        #region "Masks"
         private static readonly long[] _masksE0_Uzp = new long[]
         {
             13L << 56 | 09L << 48 | 05L << 40 | 01L << 32 | 12L << 24 | 08L << 16 | 04L << 8 | 00L << 0,
@@ -24,7 +24,7 @@ namespace ARMeilleure.Instructions
             15L << 56 | 11L << 48 | 07L << 40 | 03L << 32 | 14L << 24 | 10L << 16 | 06L << 8 | 02L << 0,
             15L << 56 | 14L << 48 | 07L << 40 | 06L << 32 | 13L << 24 | 12L << 16 | 05L << 8 | 04L << 0
         };
-#endregion
+        #endregion
 
         public static void Dup_Gp(ArmEmitterContext context)
         {
@@ -36,7 +36,7 @@ namespace ARMeilleure.Instructions
             {
                 switch (op.Size)
                 {
-                    case 0: n = context.ZeroExtend8 (n.Type, n); n = context.Multiply(n, Const(n.Type, 0x01010101)); break;
+                    case 0: n = context.ZeroExtend8(n.Type, n); n = context.Multiply(n, Const(n.Type, 0x01010101)); break;
                     case 1: n = context.ZeroExtend16(n.Type, n); n = context.Multiply(n, Const(n.Type, 0x00010001)); break;
                     case 2: n = context.ZeroExtend32(n.Type, n); break;
                 }
@@ -209,7 +209,7 @@ namespace ARMeilleure.Instructions
             OpCodeSimdFcond op = (OpCodeSimdFcond)context.CurrOp;
 
             Operand lblTrue = Label();
-            Operand lblEnd  = Label();
+            Operand lblEnd = Label();
 
             Operand isTrue = InstEmitFlowHelper.GetCondTrue(context, op.Cond);
 
@@ -353,7 +353,7 @@ namespace ARMeilleure.Instructions
         {
             OpCodeSimdIns op = (OpCodeSimdIns)context.CurrOp;
 
-            Operand d  = GetVec(op.Rd);
+            Operand d = GetVec(op.Rd);
             Operand ne = EmitVectorExtractZx(context, op.Rn, op.SrcIndex, op.Size);
 
             context.Copy(d, EmitVectorInsert(context, d, ne, op.DstIndex, op.Size));
@@ -543,7 +543,7 @@ namespace ARMeilleure.Instructions
                     Operand n = GetVec(op.Rn);
 
                     Operand mMask = context.AddIntrinsic(Intrinsic.X86Pcmpgtb, m, mask);
-                            mMask = context.AddIntrinsic(Intrinsic.X86Por, mMask, m);
+                    mMask = context.AddIntrinsic(Intrinsic.X86Por, mMask, m);
 
                     res = context.AddIntrinsic(Intrinsic.X86Pshufb, n, mMask);
                 }
@@ -557,7 +557,7 @@ namespace ARMeilleure.Instructions
                     Operand mSubMask = context.AddIntrinsic(Intrinsic.X86Psubb, m, idxMask);
 
                     Operand mMask = context.AddIntrinsic(Intrinsic.X86Pcmpgtb, mSubMask, mask);
-                            mMask = context.AddIntrinsic(Intrinsic.X86Por, mMask, mSubMask);
+                    mMask = context.AddIntrinsic(Intrinsic.X86Por, mMask, mSubMask);
 
                     Operand res2 = context.AddIntrinsic(Intrinsic.X86Pshufb, ni, mMask);
 
@@ -566,7 +566,7 @@ namespace ARMeilleure.Instructions
 
                 if (!isTbl)
                 {
-                    Operand idxMask  = X86GetAllElements(context, (0x1010101010101010L * op.Size) - 0x0101010101010101L);
+                    Operand idxMask = X86GetAllElements(context, (0x1010101010101010L * op.Size) - 0x0101010101010101L);
                     Operand zeroMask = context.VectorZero();
 
                     Operand mPosMask = context.AddIntrinsic(Intrinsic.X86Pcmpgtb, m, idxMask);
@@ -644,7 +644,7 @@ namespace ARMeilleure.Instructions
                 if (op.Size < 3)
                 {
                     long maskE0 = EvenMasks[op.Size];
-                    long maskE1 = OddMasks [op.Size];
+                    long maskE1 = OddMasks[op.Size];
 
                     mask = X86GetScalar(context, maskE0);
 
@@ -691,7 +691,7 @@ namespace ARMeilleure.Instructions
                     Operand ne = EmitVectorExtractZx(context, op.Rn, pairIndex + part, op.Size);
                     Operand me = EmitVectorExtractZx(context, op.Rm, pairIndex + part, op.Size);
 
-                    res = EmitVectorInsert(context, res, ne, pairIndex,     op.Size);
+                    res = EmitVectorInsert(context, res, ne, pairIndex, op.Size);
                     res = EmitVectorInsert(context, res, me, pairIndex + 1, op.Size);
                 }
 
@@ -712,7 +712,7 @@ namespace ARMeilleure.Instructions
                     if (op.Size < 3)
                     {
                         long maskE0 = EvenMasks[op.Size];
-                        long maskE1 = OddMasks [op.Size];
+                        long maskE1 = OddMasks[op.Size];
 
                         mask = X86GetScalar(context, maskE0);
 
@@ -784,7 +784,7 @@ namespace ARMeilleure.Instructions
                     Operand ne = EmitVectorExtractZx(context, op.Rn, idx + part, op.Size);
                     Operand me = EmitVectorExtractZx(context, op.Rm, idx + part, op.Size);
 
-                    res = EmitVectorInsert(context, res, ne,         index, op.Size);
+                    res = EmitVectorInsert(context, res, ne, index, op.Size);
                     res = EmitVectorInsert(context, res, me, pairs + index, op.Size);
                 }
 
@@ -839,7 +839,7 @@ namespace ARMeilleure.Instructions
                     Operand ne = EmitVectorExtractZx(context, op.Rn, baseIndex + index, op.Size);
                     Operand me = EmitVectorExtractZx(context, op.Rm, baseIndex + index, op.Size);
 
-                    res = EmitVectorInsert(context, res, ne, pairIndex,     op.Size);
+                    res = EmitVectorInsert(context, res, ne, pairIndex, op.Size);
                     res = EmitVectorInsert(context, res, me, pairIndex + 1, op.Size);
                 }
 

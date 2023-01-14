@@ -26,7 +26,7 @@ namespace Ryujinx.Tests.Cpu
             }
         }
 
-#region "ValueSource (CRC32)"
+        #region "ValueSource (CRC32)"
         private static CrcTest[] _CRC32_Test_Values_()
         {
             // Created with http://www.sunshine2k.de/coding/javascript/crc/crc_js.html, with:
@@ -51,7 +51,7 @@ namespace Ryujinx.Tests.Cpu
                 new CrcTest(0xffffffffu, 0xa0_02_f1_ca_52_78_8c_1cu, false, 0x39fc4c3d, 0xbc5f7f56, 0x4ed8e906, 0x12cb419c)
             };
         }
-#endregion
+        #endregion
 
         private const int RndCnt = 2;
 
@@ -85,7 +85,7 @@ namespace Ryujinx.Tests.Cpu
         public void Crc32x([Values(0u, 31u)] uint rd,
                            [Values(1u, 31u)] uint rn,
                            [Values(2u, 31u)] uint rm,
-                           [Values(0x00000000u, 0xFFFFFFFFu)] [Random(RndCnt)] uint wn,
+                           [Values(0x00000000u, 0xFFFFFFFFu)][Random(RndCnt)] uint wn,
                            [Values((ulong)0x00_00_00_00_00_00_00_00,
                                    (ulong)0x7F_FF_FF_FF_FF_FF_FF_FF,
                                    (ulong)0x80_00_00_00_00_00_00_00,
@@ -105,7 +105,7 @@ namespace Ryujinx.Tests.Cpu
         public void Crc32w([Values(0u, 31u)] uint rd,
                            [Values(1u, 31u)] uint rn,
                            [Values(2u, 31u)] uint rm,
-                           [Values(0x00000000u, 0xFFFFFFFFu)] [Random(RndCnt)] uint wn,
+                           [Values(0x00000000u, 0xFFFFFFFFu)][Random(RndCnt)] uint wn,
                            [Values((uint)0x00_00_00_00, (uint)0x7F_FF_FF_FF,
                                    (uint)0x80_00_00_00, (uint)0xFF_FF_FF_FF)] [Random(RndCnt)] uint wm)
         {
@@ -123,7 +123,7 @@ namespace Ryujinx.Tests.Cpu
         public void Crc32h([Values(0u, 31u)] uint rd,
                            [Values(1u, 31u)] uint rn,
                            [Values(2u, 31u)] uint rm,
-                           [Values(0x00000000u, 0xFFFFFFFFu)] [Random(RndCnt)] uint wn,
+                           [Values(0x00000000u, 0xFFFFFFFFu)][Random(RndCnt)] uint wn,
                            [Values((ushort)0x00_00, (ushort)0x7F_FF,
                                    (ushort)0x80_00, (ushort)0xFF_FF)] [Random(RndCnt)] ushort wm)
         {
@@ -141,7 +141,7 @@ namespace Ryujinx.Tests.Cpu
         public void Crc32b([Values(0u, 31u)] uint rd,
                            [Values(1u, 31u)] uint rn,
                            [Values(2u, 31u)] uint rm,
-                           [Values(0x00000000u, 0xFFFFFFFFu)] [Random(RndCnt)] uint wn,
+                           [Values(0x00000000u, 0xFFFFFFFFu)][Random(RndCnt)] uint wn,
                            [Values((byte)0x00, (byte)0x7F,
                                    (byte)0x80, (byte)0xFF)] [Random(RndCnt)] byte wm)
         {
@@ -159,7 +159,7 @@ namespace Ryujinx.Tests.Cpu
         public void Crc32cx([Values(0u, 31u)] uint rd,
                             [Values(1u, 31u)] uint rn,
                             [Values(2u, 31u)] uint rm,
-                            [Values(0x00000000u, 0xFFFFFFFFu)] [Random(RndCnt)] uint wn,
+                            [Values(0x00000000u, 0xFFFFFFFFu)][Random(RndCnt)] uint wn,
                             [Values((ulong)0x00_00_00_00_00_00_00_00,
                                     (ulong)0x7F_FF_FF_FF_FF_FF_FF_FF,
                                     (ulong)0x80_00_00_00_00_00_00_00,
@@ -179,7 +179,7 @@ namespace Ryujinx.Tests.Cpu
         public void Crc32cw([Values(0u, 31u)] uint rd,
                             [Values(1u, 31u)] uint rn,
                             [Values(2u, 31u)] uint rm,
-                            [Values(0x00000000u, 0xFFFFFFFFu)] [Random(RndCnt)] uint wn,
+                            [Values(0x00000000u, 0xFFFFFFFFu)][Random(RndCnt)] uint wn,
                             [Values((uint)0x00_00_00_00, (uint)0x7F_FF_FF_FF,
                                     (uint)0x80_00_00_00, (uint)0xFF_FF_FF_FF)] [Random(RndCnt)] uint wm)
         {
@@ -197,7 +197,7 @@ namespace Ryujinx.Tests.Cpu
         public void Crc32ch([Values(0u, 31u)] uint rd,
                             [Values(1u, 31u)] uint rn,
                             [Values(2u, 31u)] uint rm,
-                            [Values(0x00000000u, 0xFFFFFFFFu)] [Random(RndCnt)] uint wn,
+                            [Values(0x00000000u, 0xFFFFFFFFu)][Random(RndCnt)] uint wn,
                             [Values((ushort)0x00_00, (ushort)0x7F_FF,
                                     (ushort)0x80_00, (ushort)0xFF_FF)] [Random(RndCnt)] ushort wm)
         {
@@ -215,7 +215,7 @@ namespace Ryujinx.Tests.Cpu
         public void Crc32cb([Values(0u, 31u)] uint rd,
                             [Values(1u, 31u)] uint rn,
                             [Values(2u, 31u)] uint rm,
-                            [Values(0x00000000u, 0xFFFFFFFFu)] [Random(RndCnt)] uint wn,
+                            [Values(0x00000000u, 0xFFFFFFFFu)][Random(RndCnt)] uint wn,
                             [Values((byte)0x00, (byte)0x7F,
                                     (byte)0x80, (byte)0xFF)] [Random(RndCnt)] byte wm)
         {

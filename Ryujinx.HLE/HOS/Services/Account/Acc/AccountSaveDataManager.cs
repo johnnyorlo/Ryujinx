@@ -64,7 +64,7 @@ namespace Ryujinx.HLE.HOS.Services.Account.Acc
         {
             ProfilesJson profilesJson = new ProfilesJson()
             {
-                Profiles   = new List<UserProfileJson>(),
+                Profiles = new List<UserProfileJson>(),
                 LastOpened = LastOpened.ToString()
             };
 
@@ -72,12 +72,12 @@ namespace Ryujinx.HLE.HOS.Services.Account.Acc
             {
                 profilesJson.Profiles.Add(new UserProfileJson()
                 {
-                    UserId                = profile.Value.UserId.ToString(),
-                    Name                  = profile.Value.Name,
-                    AccountState          = profile.Value.AccountState,
-                    OnlinePlayState       = profile.Value.OnlinePlayState,
+                    UserId = profile.Value.UserId.ToString(),
+                    Name = profile.Value.Name,
+                    AccountState = profile.Value.AccountState,
+                    OnlinePlayState = profile.Value.OnlinePlayState,
                     LastModifiedTimestamp = profile.Value.LastModifiedTimestamp,
-                    Image                 = profile.Value.Image,
+                    Image = profile.Value.Image,
                 });
             }
 

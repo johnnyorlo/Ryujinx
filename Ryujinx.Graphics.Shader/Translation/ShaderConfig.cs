@@ -97,18 +97,18 @@ namespace Ryujinx.Graphics.Shader.Translation
 
         public ShaderConfig(IGpuAccessor gpuAccessor, TranslationOptions options)
         {
-            Stage       = ShaderStage.Compute;
+            Stage = ShaderStage.Compute;
             GpuAccessor = gpuAccessor;
-            Options     = options;
+            Options = options;
 
-            AccessibleStorageBuffersMask  = (1 << GlobalMemory.StorageMaxCount) - 1;
+            AccessibleStorageBuffersMask = (1 << GlobalMemory.StorageMaxCount) - 1;
             AccessibleConstantBuffersMask = (1 << GlobalMemory.UbeMaxCount) - 1;
 
-            UsedInputAttributesPerPatch  = new HashSet<int>();
+            UsedInputAttributesPerPatch = new HashSet<int>();
             UsedOutputAttributesPerPatch = new HashSet<int>();
 
             _usedTextures = new Dictionary<TextureInfo, TextureMeta>();
-            _usedImages   = new Dictionary<TextureInfo, TextureMeta>();
+            _usedImages = new Dictionary<TextureInfo, TextureMeta>();
         }
 
         public ShaderConfig(
@@ -118,10 +118,10 @@ namespace Ryujinx.Graphics.Shader.Translation
             IGpuAccessor gpuAccessor,
             TranslationOptions options) : this(gpuAccessor, options)
         {
-            Stage                    = stage;
+            Stage = stage;
             ThreadsPerInputPrimitive = 1;
-            OutputTopology           = outputTopology;
-            MaxOutputVertices        = maxOutputVertices;
+            OutputTopology = outputTopology;
+            MaxOutputVertices = maxOutputVertices;
             TransformFeedbackEnabled = gpuAccessor.QueryTransformFeedbackEnabled();
 
             if (Stage != ShaderStage.Compute)
@@ -132,19 +132,19 @@ namespace Ryujinx.Graphics.Shader.Translation
 
         public ShaderConfig(ShaderHeader header, IGpuAccessor gpuAccessor, TranslationOptions options) : this(gpuAccessor, options)
         {
-            Stage                    = header.Stage;
-            GpPassthrough            = header.Stage == ShaderStage.Geometry && header.GpPassthrough;
+            Stage = header.Stage;
+            GpPassthrough = header.Stage == ShaderStage.Geometry && header.GpPassthrough;
             ThreadsPerInputPrimitive = header.ThreadsPerInputPrimitive;
-            OutputTopology           = header.OutputTopology;
-            MaxOutputVertices        = header.MaxOutputVertexCount;
-            LocalMemorySize          = header.ShaderLocalMemoryLowSize + header.ShaderLocalMemoryHighSize + (header.ShaderLocalMemoryCrsSize / ThreadsPerWarp);
-            ImapTypes                = header.ImapTypes;
-            OmapTargets              = header.OmapTargets;
-            OmapSampleMask           = header.OmapSampleMask;
-            OmapDepth                = header.OmapDepth;
+            OutputTopology = header.OutputTopology;
+            MaxOutputVertices = header.MaxOutputVertexCount;
+            LocalMemorySize = header.ShaderLocalMemoryLowSize + header.ShaderLocalMemoryHighSize + (header.ShaderLocalMemoryCrsSize / ThreadsPerWarp);
+            ImapTypes = header.ImapTypes;
+            OmapTargets = header.OmapTargets;
+            OmapSampleMask = header.OmapSampleMask;
+            OmapDepth = header.OmapDepth;
             TransformFeedbackEnabled = gpuAccessor.QueryTransformFeedbackEnabled();
-            LastInPipeline           = true;
-            LastInVertexPipeline     = header.Stage < ShaderStage.Fragment;
+            LastInPipeline = true;
+            LastInVertexPipeline = header.Stage < ShaderStage.Fragment;
         }
 
         public int GetDepthRegister()

@@ -34,7 +34,7 @@ namespace Ryujinx.Graphics.Gpu.Image
         /// <returns>The swizzle component</returns>
         public TextureComponent UnpackSwizzleR()
         {
-            return(TextureComponent)((Word0 >> 19) & 7);
+            return (TextureComponent)((Word0 >> 19) & 7);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Ryujinx.Graphics.Gpu.Image
         /// <returns>The swizzle component</returns>
         public TextureComponent UnpackSwizzleG()
         {
-            return(TextureComponent)((Word0 >> 22) & 7);
+            return (TextureComponent)((Word0 >> 22) & 7);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Ryujinx.Graphics.Gpu.Image
         /// <returns>The swizzle component</returns>
         public TextureComponent UnpackSwizzleB()
         {
-            return(TextureComponent)((Word0 >> 25) & 7);
+            return (TextureComponent)((Word0 >> 25) & 7);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Ryujinx.Graphics.Gpu.Image
         /// <returns>The swizzle component</returns>
         public TextureComponent UnpackSwizzleA()
         {
-            return(TextureComponent)((Word0 >> 28) & 7);
+            return (TextureComponent)((Word0 >> 28) & 7);
         }
 
         /// <summary>

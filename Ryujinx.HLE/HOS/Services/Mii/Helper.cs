@@ -40,9 +40,9 @@ namespace Ryujinx.HLE.HOS.Services.Mii
         }
 
         public static ReadOnlySpan<byte> Ver3FacelineColorTable => new byte[] { 0, 1, 2, 3, 4, 5 };
-        public static ReadOnlySpan<byte> Ver3HairColorTable     => new byte[] { 8, 1, 2, 3, 4, 5, 6, 7 };
-        public static ReadOnlySpan<byte> Ver3EyeColorTable      => new byte[] { 8, 9, 10, 11, 12, 13 };
-        public static ReadOnlySpan<byte> Ver3MouthColorTable    => new byte[] { 19, 20, 21, 22, 23 };
-        public static ReadOnlySpan<byte> Ver3GlassColorTable    => new byte[] { 8, 14, 15, 16, 17, 18, 0 };
+        public static ReadOnlySpan<byte> Ver3HairColorTable => new byte[] { 8, 1, 2, 3, 4, 5, 6, 7 };
+        public static ReadOnlySpan<byte> Ver3EyeColorTable => new byte[] { 8, 9, 10, 11, 12, 13 };
+        public static ReadOnlySpan<byte> Ver3MouthColorTable => new byte[] { 19, 20, 21, 22, 23 };
+        public static ReadOnlySpan<byte> Ver3GlassColorTable => new byte[] { 8, 14, 15, 16, 17, 18, 0 };
     }
 }

@@ -43,7 +43,7 @@ namespace Ryujinx.SDL2.Common
 
         private object _lock = new object();
 
-        private SDL2Driver() {}
+        private SDL2Driver() { }
 
         private const string SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS = "SDL_JOYSTICK_HIDAPI_COMBINE_JOY_CONS";
 

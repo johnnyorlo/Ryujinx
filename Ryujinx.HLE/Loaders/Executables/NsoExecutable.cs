@@ -13,20 +13,20 @@ namespace Ryujinx.HLE.Loaders.Executables
     {
         public byte[] Program { get; }
         public Span<byte> Text => Program.AsSpan((int)TextOffset, (int)TextSize);
-        public Span<byte> Ro   => Program.AsSpan((int)RoOffset,   (int)RoSize);
+        public Span<byte> Ro => Program.AsSpan((int)RoOffset, (int)RoSize);
         public Span<byte> Data => Program.AsSpan((int)DataOffset, (int)DataSize);
 
         public uint TextOffset { get; }
-        public uint RoOffset   { get; }
+        public uint RoOffset { get; }
         public uint DataOffset { get; }
         public uint BssOffset => DataOffset + (uint)Data.Length;
 
         public uint TextSize { get; }
-        public uint RoSize   { get; }
+        public uint RoSize { get; }
         public uint DataSize { get; }
-        public uint BssSize  { get; }
+        public uint BssSize { get; }
 
-        public string        Name;
+        public string Name;
         public Array32<byte> BuildId;
 
         [GeneratedRegex(@"[a-z]:[\\/][ -~]{5,}\.nss", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
@@ -43,19 +43,19 @@ namespace Ryujinx.HLE.Loaders.Executables
             reader.Initialize(inStorage.AsFile(OpenMode.Read)).ThrowIfFailure();
 
             TextOffset = reader.Header.Segments[0].MemoryOffset;
-            RoOffset   = reader.Header.Segments[1].MemoryOffset;
+            RoOffset = reader.Header.Segments[1].MemoryOffset;
             DataOffset = reader.Header.Segments[2].MemoryOffset;
-            BssSize    = reader.Header.BssSize;
+            BssSize = reader.Header.BssSize;
 
             reader.GetSegmentSize(NsoReader.SegmentType.Data, out uint uncompressedSize).ThrowIfFailure();
 
             Program = new byte[DataOffset + uncompressedSize];
 
             TextSize = DecompressSection(reader, NsoReader.SegmentType.Text, TextOffset);
-            RoSize   = DecompressSection(reader, NsoReader.SegmentType.Ro,   RoOffset);
+            RoSize = DecompressSection(reader, NsoReader.SegmentType.Ro, RoOffset);
             DataSize = DecompressSection(reader, NsoReader.SegmentType.Data, DataOffset);
 
-            Name    = name;
+            Name = name;
             BuildId = reader.Header.ModuleId;
 
             PrintRoSectionInfo();
@@ -74,7 +74,7 @@ namespace Ryujinx.HLE.Loaders.Executables
 
         private void PrintRoSectionInfo()
         {
-            string        rawTextBuffer = Encoding.ASCII.GetString(Ro);
+            string rawTextBuffer = Encoding.ASCII.GetString(Ro);
             StringBuilder stringBuilder = new StringBuilder();
 
             string modulePath = null;
@@ -108,7 +108,7 @@ namespace Ryujinx.HLE.Loaders.Executables
             MatchCollection sdkMwMatches = SdkMwRegex().Matches(rawTextBuffer);
             if (sdkMwMatches.Count != 0)
             {
-                string libHeader  = "    SDK Libraries: ";
+                string libHeader = "    SDK Libraries: ";
                 string libContent = string.Join($"\n{new string(' ', libHeader.Length)}", sdkMwMatches);
 
                 stringBuilder.AppendLine($"{libHeader}{libContent}");

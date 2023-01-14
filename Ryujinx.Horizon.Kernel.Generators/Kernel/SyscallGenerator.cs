@@ -377,7 +377,7 @@ namespace Ryujinx.Horizon.Generators.Kernel
                 {
                     generator.AppendLine($"context.SetX({returnRegisterIndex++}, (ulong){ResultVariableName});");
                 }
-  
+
                 result = GetFormattedLogValue(ResultVariableName, canonicalReturnTypeName);
             }
             else

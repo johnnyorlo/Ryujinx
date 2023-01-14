@@ -622,7 +622,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             }
             else if (srcType == AggregateType.Bool)
             {
-                var intTrue  = Constant(TypeS32(), IrConsts.True);
+                var intTrue = Constant(TypeS32(), IrConsts.True);
                 var intFalse = Constant(TypeS32(), IrConsts.False);
 
                 return BitcastIfNeeded(dstType, AggregateType.S32, Select(TypeS32(), value, intTrue, intFalse));

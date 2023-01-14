@@ -68,9 +68,9 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
 
         private ResultCode SocketInternal(ServiceCtx context, bool exempt)
         {
-            BsdAddressFamily domain   = (BsdAddressFamily)context.RequestData.ReadInt32();
-            BsdSocketType    type     = (BsdSocketType)context.RequestData.ReadInt32();
-            ProtocolType     protocol = (ProtocolType)context.RequestData.ReadInt32();
+            BsdAddressFamily domain = (BsdAddressFamily)context.RequestData.ReadInt32();
+            BsdSocketType type = (BsdSocketType)context.RequestData.ReadInt32();
+            ProtocolType protocol = (ProtocolType)context.RequestData.ReadInt32();
 
             BsdSocketCreationFlags creationFlags = (BsdSocketCreationFlags)((int)type >> (int)BsdSocketCreationFlags.FlagsShift);
             type &= BsdSocketType.TypeMask;
@@ -210,7 +210,7 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         public ResultCode Select(ServiceCtx context)
         {
             int fdsCount = context.RequestData.ReadInt32();
-            int timeout  = context.RequestData.ReadInt32();
+            int timeout = context.RequestData.ReadInt32();
 
             (ulong readFdsInBufferPosition, ulong readFdsInBufferSize) = context.Request.GetBufferType0x21(0);
             (ulong writeFdsInBufferPosition, ulong writeFdsInBufferSize) = context.Request.GetBufferType0x21(1);
@@ -220,7 +220,7 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
             (ulong writeFdsOutBufferPosition, ulong writeFdsOutBufferSize) = context.Request.GetBufferType0x22(1);
             (ulong errorFdsOutBufferPosition, ulong errorFdsOutBufferSize) = context.Request.GetBufferType0x22(2);
 
-            List<IFileDescriptor> readFds  = _context.RetrieveFileDescriptorsFromMask(context.Memory.GetSpan(readFdsInBufferPosition, (int)readFdsInBufferSize));
+            List<IFileDescriptor> readFds = _context.RetrieveFileDescriptorsFromMask(context.Memory.GetSpan(readFdsInBufferPosition, (int)readFdsInBufferSize));
             List<IFileDescriptor> writeFds = _context.RetrieveFileDescriptorsFromMask(context.Memory.GetSpan(writeFdsInBufferPosition, (int)writeFdsInBufferSize));
             List<IFileDescriptor> errorFds = _context.RetrieveFileDescriptorsFromMask(context.Memory.GetSpan(errorFdsInBufferPosition, (int)errorFdsInBufferSize));
 
@@ -312,7 +312,7 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
                 }
             }
 
-            using var readFdsOut  = context.Memory.GetWritableRegion(readFdsOutBufferPosition, (int)readFdsOutBufferSize);
+            using var readFdsOut = context.Memory.GetWritableRegion(readFdsOutBufferPosition, (int)readFdsOutBufferSize);
             using var writeFdsOut = context.Memory.GetWritableRegion(writeFdsOutBufferPosition, (int)writeFdsOutBufferSize);
             using var errorFdsOut = context.Memory.GetWritableRegion(errorFdsOutBufferPosition, (int)errorFdsOutBufferSize);
 
@@ -330,7 +330,7 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         public ResultCode Poll(ServiceCtx context)
         {
             int fdsCount = context.RequestData.ReadInt32();
-            int timeout  = context.RequestData.ReadInt32();
+            int timeout = context.RequestData.ReadInt32();
 
             (ulong inputBufferPosition, ulong inputBufferSize) = context.Request.GetBufferType0x21();
             (ulong outputBufferPosition, ulong outputBufferSize) = context.Request.GetBufferType0x22();
@@ -478,16 +478,16 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         // Recv(u32 socket, u32 flags) -> (i32 ret, u32 bsd_errno, array<i8, 0x22> message)
         public ResultCode Recv(ServiceCtx context)
         {
-            int            socketFd    = context.RequestData.ReadInt32();
+            int socketFd = context.RequestData.ReadInt32();
             BsdSocketFlags socketFlags = (BsdSocketFlags)context.RequestData.ReadInt32();
 
             (ulong receivePosition, ulong receiveLength) = context.Request.GetBufferType0x22();
 
             WritableRegion receiveRegion = context.Memory.GetWritableRegion(receivePosition, (int)receiveLength);
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
-            int        result = -1;
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
+            int result = -1;
 
             if (socket != null)
             {
@@ -508,17 +508,17 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         // RecvFrom(u32 sock, u32 flags) -> (i32 ret, u32 bsd_errno, u32 addrlen, buffer<i8, 0x22, 0> message, buffer<nn::socket::sockaddr_in, 0x22, 0x10>)
         public ResultCode RecvFrom(ServiceCtx context)
         {
-            int            socketFd    = context.RequestData.ReadInt32();
+            int socketFd = context.RequestData.ReadInt32();
             BsdSocketFlags socketFlags = (BsdSocketFlags)context.RequestData.ReadInt32();
 
-            (ulong receivePosition,     ulong receiveLength)   = context.Request.GetBufferType0x22(0);
+            (ulong receivePosition, ulong receiveLength) = context.Request.GetBufferType0x22(0);
             (ulong sockAddrOutPosition, ulong sockAddrOutSize) = context.Request.GetBufferType0x22(1);
 
             WritableRegion receiveRegion = context.Memory.GetWritableRegion(receivePosition, (int)receiveLength);
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
-            int        result = -1;
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
+            int result = -1;
 
             if (socket != null)
             {
@@ -530,7 +530,7 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
 
                     receiveRegion.Dispose();
 
-                    if (sockAddrOutSize != 0 && sockAddrOutSize >= (ulong) Unsafe.SizeOf<BsdSockAddr>())
+                    if (sockAddrOutSize != 0 && sockAddrOutSize >= (ulong)Unsafe.SizeOf<BsdSockAddr>())
                     {
                         context.Memory.Write(sockAddrOutPosition, BsdSockAddr.FromIPEndPoint(endPoint));
                     }
@@ -548,16 +548,16 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         // Send(u32 socket, u32 flags, buffer<i8, 0x21, 0>) -> (i32 ret, u32 bsd_errno)
         public ResultCode Send(ServiceCtx context)
         {
-            int            socketFd    = context.RequestData.ReadInt32();
+            int socketFd = context.RequestData.ReadInt32();
             BsdSocketFlags socketFlags = (BsdSocketFlags)context.RequestData.ReadInt32();
 
             (ulong sendPosition, ulong sendSize) = context.Request.GetBufferType0x21();
 
             ReadOnlySpan<byte> sendBuffer = context.Memory.GetSpan(sendPosition, (int)sendSize);
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
-            int        result = -1;
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
+            int result = -1;
 
             if (socket != null)
             {
@@ -576,17 +576,17 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         // SendTo(u32 socket, u32 flags, buffer<i8, 0x21, 0>, buffer<nn::socket::sockaddr_in, 0x21, 0x10>) -> (i32 ret, u32 bsd_errno)
         public ResultCode SendTo(ServiceCtx context)
         {
-            int            socketFd    = context.RequestData.ReadInt32();
+            int socketFd = context.RequestData.ReadInt32();
             BsdSocketFlags socketFlags = (BsdSocketFlags)context.RequestData.ReadInt32();
 
-            (ulong sendPosition,   ulong sendSize)   = context.Request.GetBufferType0x21(0);
+            (ulong sendPosition, ulong sendSize) = context.Request.GetBufferType0x21(0);
             (ulong bufferPosition, ulong bufferSize) = context.Request.GetBufferType0x21(1);
 
             ReadOnlySpan<byte> sendBuffer = context.Memory.GetSpan(sendPosition, (int)sendSize);
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
-            int        result = -1;
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
+            int result = -1;
 
             if (socket != null)
             {
@@ -611,8 +611,8 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
 
             (ulong bufferPos, ulong bufferSize) = context.Request.GetBufferType0x22();
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
 
             if (socket != null)
             {
@@ -654,8 +654,8 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
 
             (ulong bufferPosition, ulong bufferSize) = context.Request.GetBufferType0x21();
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
 
             if (socket != null)
             {
@@ -675,8 +675,8 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
 
             (ulong bufferPosition, ulong bufferSize) = context.Request.GetBufferType0x21();
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
 
             if (socket != null)
             {
@@ -696,8 +696,8 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
 
             (ulong bufferPosition, ulong bufferSize) = context.Request.GetBufferType0x22();
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
             if (socket != null)
             {
                 errno = LinuxError.ENOTCONN;
@@ -723,8 +723,8 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
 
             (ulong bufferPos, ulong bufferSize) = context.Request.GetBufferType0x22();
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
 
             if (socket != null)
             {
@@ -742,15 +742,15 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         // GetSockOpt(u32 socket, u32 level, u32 option_name) -> (i32 ret, u32 bsd_errno, u32, buffer<unknown, 0x22, 0>)
         public ResultCode GetSockOpt(ServiceCtx context)
         {
-            int               socketFd = context.RequestData.ReadInt32();
-            SocketOptionLevel level    = (SocketOptionLevel)context.RequestData.ReadInt32();
-            BsdSocketOption   option   = (BsdSocketOption)context.RequestData.ReadInt32();
+            int socketFd = context.RequestData.ReadInt32();
+            SocketOptionLevel level = (SocketOptionLevel)context.RequestData.ReadInt32();
+            BsdSocketOption option = (BsdSocketOption)context.RequestData.ReadInt32();
 
             (ulong bufferPosition, ulong bufferSize) = context.Request.GetBufferType0x22();
             WritableRegion optionValue = context.Memory.GetWritableRegion(bufferPosition, (int)bufferSize);
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
 
             if (socket != null)
             {
@@ -770,10 +770,10 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         public ResultCode Listen(ServiceCtx context)
         {
             int socketFd = context.RequestData.ReadInt32();
-            int backlog  = context.RequestData.ReadInt32();
+            int backlog = context.RequestData.ReadInt32();
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
 
             if (socket != null)
             {
@@ -787,12 +787,12 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         // Ioctl(u32 fd, u32 request, u32 bufcount, buffer<unknown, 0x21, 0>, buffer<unknown, 0x21, 0>, buffer<unknown, 0x21, 0>, buffer<unknown, 0x21, 0>) -> (i32 ret, u32 bsd_errno, buffer<unknown, 0x22, 0>, buffer<unknown, 0x22, 0>, buffer<unknown, 0x22, 0>, buffer<unknown, 0x22, 0>)
         public ResultCode Ioctl(ServiceCtx context)
         {
-            int      socketFd    = context.RequestData.ReadInt32();
-            BsdIoctl cmd         = (BsdIoctl)context.RequestData.ReadInt32();
-            int      bufferCount = context.RequestData.ReadInt32();
+            int socketFd = context.RequestData.ReadInt32();
+            BsdIoctl cmd = (BsdIoctl)context.RequestData.ReadInt32();
+            int bufferCount = context.RequestData.ReadInt32();
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
 
             if (socket != null)
             {
@@ -823,12 +823,12 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         public ResultCode Fcntl(ServiceCtx context)
         {
             int socketFd = context.RequestData.ReadInt32();
-            int cmd      = context.RequestData.ReadInt32();
-            int arg      = context.RequestData.ReadInt32();
+            int cmd = context.RequestData.ReadInt32();
+            int arg = context.RequestData.ReadInt32();
 
-            int        result = 0;
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
+            int result = 0;
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
 
             if (socket != null)
             {
@@ -856,16 +856,16 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         // SetSockOpt(u32 socket, u32 level, u32 option_name, buffer<unknown, 0x21, 0> option_value) -> (i32 ret, u32 bsd_errno)
         public ResultCode SetSockOpt(ServiceCtx context)
         {
-            int               socketFd = context.RequestData.ReadInt32();
-            SocketOptionLevel level    = (SocketOptionLevel)context.RequestData.ReadInt32();
-            BsdSocketOption   option   = (BsdSocketOption)context.RequestData.ReadInt32();
+            int socketFd = context.RequestData.ReadInt32();
+            SocketOptionLevel level = (SocketOptionLevel)context.RequestData.ReadInt32();
+            BsdSocketOption option = (BsdSocketOption)context.RequestData.ReadInt32();
 
             (ulong bufferPos, ulong bufferSize) = context.Request.GetBufferType0x21();
 
             ReadOnlySpan<byte> optionValue = context.Memory.GetSpan(bufferPos, (int)bufferSize);
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
 
             if (socket != null)
             {
@@ -880,10 +880,10 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         public ResultCode Shutdown(ServiceCtx context)
         {
             int socketFd = context.RequestData.ReadInt32();
-            int how      = context.RequestData.ReadInt32();
+            int how = context.RequestData.ReadInt32();
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
 
             if (socket != null)
             {
@@ -924,9 +924,9 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
 
             ReadOnlySpan<byte> sendBuffer = context.Memory.GetSpan(sendPosition, (int)sendSize);
 
-            LinuxError      errno  = LinuxError.EBADF;
-            IFileDescriptor file   = _context.RetrieveFileDescriptor(fd);
-            int             result = -1;
+            LinuxError errno = LinuxError.EBADF;
+            IFileDescriptor file = _context.RetrieveFileDescriptor(fd);
+            int result = -1;
 
             if (file != null)
             {
@@ -951,9 +951,9 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
 
             WritableRegion receiveRegion = context.Memory.GetWritableRegion(receivePosition, (int)receiveLength);
 
-            LinuxError      errno  = LinuxError.EBADF;
-            IFileDescriptor file   = _context.RetrieveFileDescriptor(fd);
-            int             result = -1;
+            LinuxError errno = LinuxError.EBADF;
+            IFileDescriptor file = _context.RetrieveFileDescriptor(fd);
+            int result = -1;
 
             if (file != null)
             {
@@ -990,7 +990,7 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         // DuplicateSocket(u32 fd, u64 reserved) -> (i32 ret, u32 bsd_errno)
         public ResultCode DuplicateSocket(ServiceCtx context)
         {
-            int   fd       = context.RequestData.ReadInt32();
+            int fd = context.RequestData.ReadInt32();
             ulong reserved = context.RequestData.ReadUInt64();
 
             LinuxError errno = LinuxError.ENOENT;
@@ -1016,20 +1016,20 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         // RecvMMsg(u32 fd, u32 vlen, u32 flags, u32 reserved, nn::socket::TimeVal timeout) -> (i32 ret, u32 bsd_errno, buffer<bytes, 6> message);
         public ResultCode RecvMMsg(ServiceCtx context)
         {
-            int            socketFd    = context.RequestData.ReadInt32();
-            int            vlen        = context.RequestData.ReadInt32();
+            int socketFd = context.RequestData.ReadInt32();
+            int vlen = context.RequestData.ReadInt32();
             BsdSocketFlags socketFlags = (BsdSocketFlags)context.RequestData.ReadInt32();
-            uint           reserved    = context.RequestData.ReadUInt32();
-            TimeVal        timeout     = context.RequestData.ReadStruct<TimeVal>();
+            uint reserved = context.RequestData.ReadUInt32();
+            TimeVal timeout = context.RequestData.ReadStruct<TimeVal>();
 
             ulong receivePosition = context.Request.ReceiveBuff[0].Position;
             ulong receiveLength = context.Request.ReceiveBuff[0].Size;
 
             WritableRegion receiveRegion = context.Memory.GetWritableRegion(receivePosition, (int)receiveLength);
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
-            int        result = -1;
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
+            int result = -1;
 
             if (socket != null)
             {
@@ -1059,8 +1059,8 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
         // SendMMsg(u32 fd, u32 vlen, u32 flags) -> (i32 ret, u32 bsd_errno, buffer<bytes, 6> message);
         public ResultCode SendMMsg(ServiceCtx context)
         {
-            int            socketFd    = context.RequestData.ReadInt32();
-            int            vlen        = context.RequestData.ReadInt32();
+            int socketFd = context.RequestData.ReadInt32();
+            int vlen = context.RequestData.ReadInt32();
             BsdSocketFlags socketFlags = (BsdSocketFlags)context.RequestData.ReadInt32();
 
             ulong receivePosition = context.Request.ReceiveBuff[0].Position;
@@ -1068,9 +1068,9 @@ namespace Ryujinx.HLE.HOS.Services.Sockets.Bsd
 
             WritableRegion receiveRegion = context.Memory.GetWritableRegion(receivePosition, (int)receiveLength);
 
-            LinuxError errno  = LinuxError.EBADF;
-            ISocket    socket = _context.RetrieveSocket(socketFd);
-            int        result = -1;
+            LinuxError errno = LinuxError.EBADF;
+            ISocket socket = _context.RetrieveSocket(socketFd);
+            int result = -1;
 
             if (socket != null)
             {

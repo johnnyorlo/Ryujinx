@@ -369,7 +369,7 @@ namespace Ryujinx.Ava.UI.ViewModels
 
             // Network
             EnableInternetAccess = config.System.EnableInternetAccess;
-            
+
             // Logging
             EnableFileLog = config.Logger.EnableFileLog;
             EnableStub = config.Logger.EnableStub;

@@ -17,7 +17,7 @@ namespace Ryujinx.HLE.HOS.Kernel.Common
 
             public WaitingObject(IKFutureSchedulerObject schedulerObj, long timePoint)
             {
-                Object    = schedulerObj;
+                Object = schedulerObj;
                 TimePoint = timePoint;
             }
         }

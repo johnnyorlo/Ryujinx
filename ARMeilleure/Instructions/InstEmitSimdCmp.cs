@@ -493,7 +493,7 @@ namespace ARMeilleure.Instructions
             OpCodeSimdFcond op = (OpCodeSimdFcond)context.CurrOp;
 
             Operand lblTrue = Label();
-            Operand lblEnd  = Label();
+            Operand lblEnd = Label();
 
             context.BranchIfTrue(lblTrue, InstEmitFlowHelper.GetCondTrue(context, op.Cond));
 

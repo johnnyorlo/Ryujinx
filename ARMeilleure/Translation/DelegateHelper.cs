@@ -28,7 +28,7 @@ namespace ARMeilleure.Translation
             ArgumentNullException.ThrowIfNull(info);
 
             Type[] parameters = info.GetParameters().Select(pI => pI.ParameterType).ToArray();
-            Type   returnType = info.ReturnType;
+            Type returnType = info.ReturnType;
 
             Type delegateType = GetDelegateType(parameters, returnType);
 
@@ -68,13 +68,13 @@ namespace ARMeilleure.Translation
 
         private const MethodAttributes CtorAttributes =
             MethodAttributes.RTSpecialName |
-            MethodAttributes.HideBySig     |
+            MethodAttributes.HideBySig |
             MethodAttributes.Public;
 
         private const TypeAttributes DelegateTypeAttributes =
-            TypeAttributes.Class     |
-            TypeAttributes.Public    |
-            TypeAttributes.Sealed    |
+            TypeAttributes.Class |
+            TypeAttributes.Public |
+            TypeAttributes.Sealed |
             TypeAttributes.AnsiClass |
             TypeAttributes.AutoClass;
 
@@ -83,9 +83,9 @@ namespace ARMeilleure.Translation
             MethodImplAttributes.Managed;
 
         private const MethodAttributes InvokeAttributes =
-            MethodAttributes.Public    |
+            MethodAttributes.Public |
             MethodAttributes.HideBySig |
-            MethodAttributes.NewSlot   |
+            MethodAttributes.NewSlot |
             MethodAttributes.Virtual;
 
         private static readonly Type[] _delegateCtorSignature = { typeof(object), typeof(IntPtr) };

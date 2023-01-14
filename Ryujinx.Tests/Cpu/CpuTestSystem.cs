@@ -13,7 +13,7 @@ namespace Ryujinx.Tests.Cpu
     {
 #if System
 
-#region "ValueSource (Types)"
+        #region "ValueSource (Types)"
         private static IEnumerable<ulong> _GenNzcv_()
         {
             yield return 0x0000000000000000ul;
@@ -35,9 +35,9 @@ namespace Ryujinx.Tests.Cpu
 
             yield return rnd;
         }
-#endregion
+        #endregion
 
-#region "ValueSource (Opcodes)"
+        #region "ValueSource (Opcodes)"
         private static uint[] _MrsMsr_Nzcv_()
         {
             return new uint[]
@@ -46,14 +46,14 @@ namespace Ryujinx.Tests.Cpu
                 0xD51B4200u  // MSR NZCV, X0
             };
         }
-#endregion
+        #endregion
 
         private const int RndCnt = 2;
 
         [Test, Pairwise]
         public void MrsMsr_Nzcv([ValueSource("_MrsMsr_Nzcv_")] uint opcodes,
                                 [Values(0u, 1u, 31u)] uint rt,
-                                [ValueSource("_GenNzcv_")] [Random(RndCnt)] ulong xt)
+                                [ValueSource("_GenNzcv_")][Random(RndCnt)] ulong xt)
         {
             opcodes |= (rt & 31) << 0;
 

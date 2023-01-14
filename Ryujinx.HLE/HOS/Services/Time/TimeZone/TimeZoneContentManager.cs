@@ -26,9 +26,9 @@ namespace Ryujinx.HLE.HOS.Services.Time.TimeZone
 
         private readonly string TimeZoneSystemTitleMissingErrorMessage = "TimeZoneBinary system title not found! TimeZone conversions will not work, provide the system archive to fix this error. (See https://github.com/Ryujinx/Ryujinx/wiki/Ryujinx-Setup-&-Configuration-Guide#initial-setup-continued---installation-of-firmware for more information)";
 
-        private VirtualFileSystem   _virtualFileSystem;
+        private VirtualFileSystem _virtualFileSystem;
         private IntegrityCheckLevel _fsIntegrityCheckLevel;
-        private ContentManager      _contentManager;
+        private ContentManager _contentManager;
 
         public string[] LocationNameCache { get; private set; }
 
@@ -41,8 +41,8 @@ namespace Ryujinx.HLE.HOS.Services.Time.TimeZone
 
         public void InitializeInstance(VirtualFileSystem virtualFileSystem, ContentManager contentManager, IntegrityCheckLevel fsIntegrityCheckLevel)
         {
-            _virtualFileSystem     = virtualFileSystem;
-            _contentManager        = contentManager;
+            _virtualFileSystem = virtualFileSystem;
+            _contentManager = contentManager;
             _fsIntegrityCheckLevel = fsIntegrityCheckLevel;
 
             InitializeLocationNameCache();
@@ -92,8 +92,8 @@ namespace Ryujinx.HLE.HOS.Services.Time.TimeZone
             {
                 using (IStorage ncaFileStream = new LocalStorage(_virtualFileSystem.SwitchPathToSystemPath(GetTimeZoneBinaryTitleContentPath()), FileAccess.Read, FileMode.Open))
                 {
-                    Nca         nca              = new Nca(_virtualFileSystem.KeySet, ncaFileStream);
-                    IFileSystem romfs            = nca.OpenFileSystem(NcaSectionType.Data, _fsIntegrityCheckLevel);
+                    Nca nca = new Nca(_virtualFileSystem.KeySet, ncaFileStream);
+                    IFileSystem romfs = nca.OpenFileSystem(NcaSectionType.Data, _fsIntegrityCheckLevel);
 
                     using var binaryListFile = new UniqueRef<IFile>();
 
@@ -259,7 +259,7 @@ namespace Ryujinx.HLE.HOS.Services.Time.TimeZone
         internal ResultCode GetTimeZoneBinary(string locationName, out Stream timeZoneBinaryStream, out LocalStorage ncaFile)
         {
             timeZoneBinaryStream = null;
-            ncaFile              = null;
+            ncaFile = null;
 
             if (!HasTimeZoneBinaryTitle() || !IsLocationNameValid(locationName))
             {
@@ -268,7 +268,7 @@ namespace Ryujinx.HLE.HOS.Services.Time.TimeZone
 
             ncaFile = new LocalStorage(_virtualFileSystem.SwitchPathToSystemPath(GetTimeZoneBinaryTitleContentPath()), FileAccess.Read, FileMode.Open);
 
-            Nca         nca   = new Nca(_virtualFileSystem.KeySet, ncaFile);
+            Nca nca = new Nca(_virtualFileSystem.KeySet, ncaFile);
             IFileSystem romfs = nca.OpenFileSystem(NcaSectionType.Data, _fsIntegrityCheckLevel);
 
             using var timeZoneBinaryFile = new UniqueRef<IFile>();

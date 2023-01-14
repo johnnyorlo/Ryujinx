@@ -24,7 +24,8 @@ namespace Ryujinx.Ava.UI.Windows
 
             _viewmodel = new InputConfiguration<GamepadInputId, StickInputId>()
             {
-                StrongRumble = config.StrongRumble, WeakRumble = config.WeakRumble
+                StrongRumble = config.StrongRumble,
+                WeakRumble = config.WeakRumble
             };
 
             InitializeComponent();
@@ -43,14 +44,14 @@ namespace Ryujinx.Ava.UI.Windows
                 CloseButtonText = LocaleManager.Instance[LocaleKeys.ControllerSettingsClose],
                 Content = content,
             };
-            
+
             contentDialog.PrimaryButtonClick += (sender, args) =>
             {
                 var config = viewmodel.Configuration as InputConfiguration<GamepadInputId, StickInputId>;
                 config.StrongRumble = content._viewmodel.StrongRumble;
                 config.WeakRumble = content._viewmodel.WeakRumble;
             };
-            
+
             await contentDialog.ShowAsync();
         }
     }

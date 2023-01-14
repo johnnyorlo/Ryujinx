@@ -9,7 +9,7 @@ namespace Ryujinx.Tests.Cpu
     {
 #if AluRs32
 
-#region "ValueSource (Opcodes)"
+        #region "ValueSource (Opcodes)"
         private static uint[] _opcodes()
         {
             return new uint[]
@@ -30,7 +30,7 @@ namespace Ryujinx.Tests.Cpu
                 0xe2500000u, // SUBS R0, R0, #0
             };
         }
-#endregion
+        #endregion
 
         private const int RndCnt = 2;
         private const int RndCntAmount = 2;

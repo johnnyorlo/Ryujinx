@@ -9,7 +9,7 @@ namespace Ryujinx.Tests.Cpu
     {
 #if Alu32
 
-#region "ValueSource (Opcodes)"
+        #region "ValueSource (Opcodes)"
         private static uint[] _SU_H_AddSub_8_()
         {
             return new uint[]
@@ -55,7 +55,7 @@ namespace Ryujinx.Tests.Cpu
                 0xe1b00070u  // RORS R0, R0, R0
             };
         }
-#endregion
+        #endregion
 
         private const int RndCnt = 2;
 
@@ -79,7 +79,7 @@ namespace Ryujinx.Tests.Cpu
         public void Lsr_Lsl_Asr_Ror([ValueSource("_Lsr_Lsl_Asr_Ror_")] uint opcode,
                                     [Values(0x00000000u, 0x7FFFFFFFu,
                                             0x80000000u, 0xFFFFFFFFu)] [Random(RndCnt)] uint shiftValue,
-                                    [Range(0, 31)] [Values(32, 256, 768, -1, -23)] int shiftAmount)
+                                    [Range(0, 31)][Values(32, 256, 768, -1, -23)] int shiftAmount)
         {
             uint rd = 0;
             uint rm = 1;
@@ -191,9 +191,9 @@ namespace Ryujinx.Tests.Cpu
                               [Random(RndCnt)] uint w2)
         {
             uint opUadd8 = 0xE6500F90; // UADD8 R0, R0, R0
-            uint opSel   = 0xE6800FB0; // SEL R0, R0, R0
+            uint opSel = 0xE6800FB0; // SEL R0, R0, R0
 
-            opUadd8  |= ((rm & 15) << 0) | ((rd & 15) << 12) | ((rn & 15) << 16);
+            opUadd8 |= ((rm & 15) << 0) | ((rd & 15) << 12) | ((rn & 15) << 16);
             opSel |= ((rm & 15) << 0) | ((rd & 15) << 12) | ((rn & 15) << 16);
 
             SetContext(r0: w0, r1: w1, r2: w2);

@@ -2,7 +2,7 @@
 
 namespace Ryujinx.HLE.HOS.Services.Hid.Types.SharedMemory.Common
 {
-    struct AtomicStorage<T> where T: unmanaged
+    struct AtomicStorage<T> where T : unmanaged
     {
         public ulong SamplingNumber;
         public T Object;

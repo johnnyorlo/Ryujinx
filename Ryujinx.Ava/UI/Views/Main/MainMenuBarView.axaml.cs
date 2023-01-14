@@ -30,7 +30,7 @@ namespace Ryujinx.Ava.UI.Views.Main
             List<MenuItem> menuItems = new();
 
             string localePath = "Ryujinx.Ava/Assets/Locales";
-            string localeExt  = ".json";
+            string localeExt = ".json";
 
             string[] localesPath = EmbeddedResources.GetAllAvailableResources(localePath, localeExt);
 
@@ -40,7 +40,7 @@ namespace Ryujinx.Ava.UI.Views.Main
             {
                 string languageCode = Path.GetFileNameWithoutExtension(locale).Split('.').Last();
                 string languageJson = EmbeddedResources.ReadAllText($"{localePath}/{languageCode}{localeExt}");
-                var    strings      = JsonHelper.Deserialize<Dictionary<string, string>>(languageJson);
+                var strings = JsonHelper.Deserialize<Dictionary<string, string>>(languageJson);
 
                 if (!strings.TryGetValue("Language", out string languageName))
                 {
@@ -49,7 +49,7 @@ namespace Ryujinx.Ava.UI.Views.Main
 
                 MenuItem menuItem = new()
                 {
-                    Header  = languageName,
+                    Header = languageName,
                     Command = MiniCommand.Create(() =>
                     {
                         ViewModel.ChangeLanguage(languageCode);

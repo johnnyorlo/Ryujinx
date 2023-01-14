@@ -18,7 +18,7 @@ namespace Ryujinx.Input.Motion.CemuHook
 {
     public class Client : IDisposable
     {
-        public const uint   Magic   = 0x43555344; // DSUC
+        public const uint Magic = 0x43555344; // DSUC
         public const ushort Version = 1001;
 
         private bool _active;
@@ -28,15 +28,15 @@ namespace Ryujinx.Input.Motion.CemuHook
         private readonly Dictionary<int, UdpClient> _clients;
 
         private readonly bool[] _clientErrorStatus = new bool[Enum.GetValues<PlayerIndex>().Length];
-        private readonly long[] _clientRetryTimer  = new long[Enum.GetValues<PlayerIndex>().Length];
+        private readonly long[] _clientRetryTimer = new long[Enum.GetValues<PlayerIndex>().Length];
         private NpadManager _npadManager;
 
         public Client(NpadManager npadManager)
         {
             _npadManager = npadManager;
-            _hosts       = new Dictionary<int, IPEndPoint>();
-            _motionData  = new Dictionary<int, Dictionary<int, MotionInput>>();
-            _clients     = new Dictionary<int, UdpClient>();
+            _hosts = new Dictionary<int, IPEndPoint>();
+            _motionData = new Dictionary<int, Dictionary<int, MotionInput>>();
+            _clients = new Dictionary<int, UdpClient>();
 
             CloseClients();
         }
@@ -388,7 +388,7 @@ namespace Ryujinx.Input.Motion.CemuHook
 
                 ControllerInfoRequest request = new ControllerInfoRequest()
                 {
-                    Type       = MessageType.Info,
+                    Type = MessageType.Info,
                     PortsCount = 4
                 };
 
@@ -428,8 +428,8 @@ namespace Ryujinx.Input.Motion.CemuHook
 
                 ControllerDataRequest request = new ControllerDataRequest()
                 {
-                    Type           = MessageType.Data,
-                    Slot           = (byte)slot,
+                    Type = MessageType.Data,
+                    Slot = (byte)slot,
                     SubscriberType = SubscriberType.Slot
                 };
 
@@ -455,11 +455,11 @@ namespace Ryujinx.Input.Motion.CemuHook
         {
             Header header = new Header()
             {
-                Id          = (uint)clientId,
+                Id = (uint)clientId,
                 MagicString = Magic,
-                Version     = Version,
-                Length      = 0,
-                Crc32       = 0
+                Version = Version,
+                Length = 0,
+                Crc32 = 0
             };
 
             return header;

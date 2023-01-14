@@ -14,21 +14,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using GUI        = Gtk.Builder.ObjectAttribute;
+using GUI = Gtk.Builder.ObjectAttribute;
 using JsonHelper = Ryujinx.Common.Utilities.JsonHelper;
 
 namespace Ryujinx.Ui.Windows
 {
     public class DlcWindow : Window
     {
-        private readonly VirtualFileSystem                  _virtualFileSystem;
-        private readonly string                             _titleId;
-        private readonly string                             _dlcJsonPath;
+        private readonly VirtualFileSystem _virtualFileSystem;
+        private readonly string _titleId;
+        private readonly string _dlcJsonPath;
         private readonly List<DownloadableContentContainer> _dlcContainerList;
 
 #pragma warning disable CS0649, IDE0044
-        [GUI] Label         _baseTitleInfoLabel;
-        [GUI] TreeView      _dlcTreeView;
+        [GUI] Label _baseTitleInfoLabel;
+        [GUI] TreeView _dlcTreeView;
         [GUI] TreeSelection _dlcTreeSelection;
 #pragma warning restore CS0649, IDE0044
 
@@ -38,9 +38,9 @@ namespace Ryujinx.Ui.Windows
         {
             builder.Autoconnect(this);
 
-            _titleId                 = titleId;
-            _virtualFileSystem       = virtualFileSystem;
-            _dlcJsonPath             = System.IO.Path.Combine(AppDataManager.GamesDirPath, _titleId, "dlc.json");
+            _titleId = titleId;
+            _virtualFileSystem = virtualFileSystem;
+            _dlcJsonPath = System.IO.Path.Combine(AppDataManager.GamesDirPath, _titleId, "dlc.json");
             _baseTitleInfoLabel.Text = $"DLC Available for {titleName} [{titleId.ToUpper()}]";
 
             try
@@ -51,7 +51,7 @@ namespace Ryujinx.Ui.Windows
             {
                 _dlcContainerList = new List<DownloadableContentContainer>();
             }
-            
+
             _dlcTreeView.Model = new TreeStore(typeof(bool), typeof(string), typeof(string));
 
             CellRendererToggle enableToggle = new CellRendererToggle();
@@ -71,9 +71,9 @@ namespace Ryujinx.Ui.Windows
                 }
             };
 
-            _dlcTreeView.AppendColumn("Enabled", enableToggle,           "active", 0);
-            _dlcTreeView.AppendColumn("TitleId", new CellRendererText(), "text",   1);
-            _dlcTreeView.AppendColumn("Path",    new CellRendererText(), "text",   2);
+            _dlcTreeView.AppendColumn("Enabled", enableToggle, "active", 0);
+            _dlcTreeView.AppendColumn("TitleId", new CellRendererText(), "text", 1);
+            _dlcTreeView.AppendColumn("Path", new CellRendererText(), "text", 2);
 
             foreach (DownloadableContentContainer dlcContainer in _dlcContainerList)
             {
@@ -206,7 +206,7 @@ namespace Ryujinx.Ui.Windows
                 }
             }
         }
-        
+
         private void RemoveAllButton_Clicked(object sender, EventArgs args)
         {
             List<TreeIter> toRemove = new List<TreeIter>();
@@ -216,7 +216,7 @@ namespace Ryujinx.Ui.Windows
                 do
                 {
                     toRemove.Add(iter);
-                } 
+                }
                 while (_dlcTreeView.Model.IterNext(ref iter));
             }
 
@@ -239,7 +239,7 @@ namespace Ryujinx.Ui.Windows
                     {
                         DownloadableContentContainer dlcContainer = new DownloadableContentContainer
                         {
-                            ContainerPath              = (string)_dlcTreeView.Model.GetValue(parentIter, 2),
+                            ContainerPath = (string)_dlcTreeView.Model.GetValue(parentIter, 2),
                             DownloadableContentNcaList = new List<DownloadableContentNca>()
                         };
 
@@ -247,8 +247,8 @@ namespace Ryujinx.Ui.Windows
                         {
                             dlcContainer.DownloadableContentNcaList.Add(new DownloadableContentNca
                             {
-                                Enabled  = (bool)_dlcTreeView.Model.GetValue(childIter, 0),
-                                TitleId  = Convert.ToUInt64(_dlcTreeView.Model.GetValue(childIter, 1).ToString(), 16),
+                                Enabled = (bool)_dlcTreeView.Model.GetValue(childIter, 0),
+                                TitleId = Convert.ToUInt64(_dlcTreeView.Model.GetValue(childIter, 1).ToString(), 16),
                                 FullPath = (string)_dlcTreeView.Model.GetValue(childIter, 2)
                             });
                         }
