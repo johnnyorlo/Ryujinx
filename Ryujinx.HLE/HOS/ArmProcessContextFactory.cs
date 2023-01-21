@@ -54,14 +54,15 @@ namespace Ryujinx.HLE.HOS
             {
                 case MemoryManagerMode.SoftwarePageTable:
                     var memoryManager = new MemoryManager(context.Memory, addressSpaceSize, invalidAccessHandler);
-                    processContext = new ArmProcessContext<MemoryManager>(pid, _cpuEngine, _gpu, memoryManager, for64Bit);
+                    processContext = new ArmProcessContext<MemoryManager>(pid, _cpuEngine, _gpu, memoryManager, addressSpaceSize, for64Bit);
                     break;
 
                 case MemoryManagerMode.HostMapped:
                 case MemoryManagerMode.HostMappedUnsafe:
                     bool unsafeMode = mode == MemoryManagerMode.HostMappedUnsafe;
+                    addressSpaceSize = 1UL << 37; // TODO: Dynamically check how much we can allocate, on some platforms we can reserve 39 bits just fine.
                     var memoryManagerHostMapped = new MemoryManagerHostMapped(context.Memory, addressSpaceSize, unsafeMode, invalidAccessHandler);
-                    processContext = new ArmProcessContext<MemoryManagerHostMapped>(pid, _cpuEngine, _gpu, memoryManagerHostMapped, for64Bit);
+                    processContext = new ArmProcessContext<MemoryManagerHostMapped>(pid, _cpuEngine, _gpu, memoryManagerHostMapped, addressSpaceSize, for64Bit);
                     break;
 
                 default:
