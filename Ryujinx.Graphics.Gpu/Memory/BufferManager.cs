@@ -537,22 +537,25 @@ namespace Ryujinx.Graphics.Gpu.Memory
             {
                 _transformFeedbackBuffersDirty = false;
 
-                Span<BufferRange> tfbs = stackalloc BufferRange[Constants.TotalTransformFeedbackBuffers];
-
-                for (int index = 0; index < Constants.TotalTransformFeedbackBuffers; index++)
+                if (_context.Capabilities.SupportsTransformFeedback)
                 {
-                    BufferBounds tfb = _transformFeedbackBuffers[index];
+                    Span<BufferRange> tfbs = stackalloc BufferRange[Constants.TotalTransformFeedbackBuffers];
 
-                    if (tfb.Address == 0)
+                    for (int index = 0; index < Constants.TotalTransformFeedbackBuffers; index++)
                     {
-                        tfbs[index] = BufferRange.Empty;
-                        continue;
+                        BufferBounds tfb = _transformFeedbackBuffers[index];
+
+                        if (tfb.Address == 0)
+                        {
+                            tfbs[index] = BufferRange.Empty;
+                            continue;
+                        }
+
+                        tfbs[index] = bufferCache.GetBufferRange(tfb.Address, tfb.Size, write: true);
                     }
 
-                    tfbs[index] = bufferCache.GetBufferRange(tfb.Address, tfb.Size, write: true);
+                    _context.Renderer.Pipeline.SetTransformFeedbackBuffers(tfbs);
                 }
-
-                _context.Renderer.Pipeline.SetTransformFeedbackBuffers(tfbs);
             }
             else
             {
