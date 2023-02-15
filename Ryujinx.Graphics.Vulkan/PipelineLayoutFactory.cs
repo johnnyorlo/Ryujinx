@@ -56,7 +56,7 @@ namespace Ryujinx.Graphics.Vulkan
             {
                 Binding = 1,
                 DescriptorType = DescriptorType.SampledImage,
-                DescriptorCount = 16384,
+                DescriptorCount = 32768,
                 StageFlags = AllStages
             };
 
@@ -64,7 +64,7 @@ namespace Ryujinx.Graphics.Vulkan
             {
                 Binding = 0,
                 DescriptorType = DescriptorType.Sampler,
-                DescriptorCount = 16384,
+                DescriptorCount = 32768,
                 StageFlags = AllStages
             };
 
@@ -72,7 +72,23 @@ namespace Ryujinx.Graphics.Vulkan
             {
                 Binding = 0,
                 DescriptorType = DescriptorType.StorageImage,
-                DescriptorCount = 16384,
+                DescriptorCount = 32768,
+                StageFlags = AllStages
+            };
+
+            DescriptorSetLayoutBinding bbtLayoutBinding = new DescriptorSetLayoutBinding()
+            {
+                Binding = 0,
+                DescriptorType = DescriptorType.UniformTexelBuffer,
+                DescriptorCount = 32768,
+                StageFlags = AllStages
+            };
+
+            DescriptorSetLayoutBinding bbiLayoutBinding = new DescriptorSetLayoutBinding()
+            {
+                Binding = 0,
+                DescriptorType = DescriptorType.StorageTexelBuffer,
+                DescriptorCount = 32768,
                 StageFlags = AllStages
             };
 
@@ -205,6 +221,24 @@ namespace Ryujinx.Graphics.Vulkan
                 BindingCount = 1
             };
 
+            var bbtDescriptorSetLayoutCreateInfo = new DescriptorSetLayoutCreateInfo()
+            {
+                SType = StructureType.DescriptorSetLayoutCreateInfo,
+                PNext = &bsDescriptorSetLayoutFlagsCreateInfo,
+                Flags = DescriptorSetLayoutCreateFlags.UpdateAfterBindPoolBit,
+                PBindings = &bbtLayoutBinding,
+                BindingCount = 1
+            };
+
+            var bbiDescriptorSetLayoutCreateInfo = new DescriptorSetLayoutCreateInfo()
+            {
+                SType = StructureType.DescriptorSetLayoutCreateInfo,
+                PNext = &bsDescriptorSetLayoutFlagsCreateInfo,
+                Flags = DescriptorSetLayoutCreateFlags.UpdateAfterBindPoolBit,
+                PBindings = &bbiLayoutBinding,
+                BindingCount = 1
+            };
+
             gd.Api.CreateDescriptorSetLayout(device, uDescriptorSetLayoutCreateInfo, null, out layouts[PipelineBase.UniformSetIndex]).ThrowOnError();
             gd.Api.CreateDescriptorSetLayout(device, sDescriptorSetLayoutCreateInfo, null, out layouts[PipelineBase.StorageSetIndex]).ThrowOnError();
             gd.Api.CreateDescriptorSetLayout(device, tDescriptorSetLayoutCreateInfo, null, out layouts[PipelineBase.TextureSetIndex]).ThrowOnError();
@@ -212,6 +246,8 @@ namespace Ryujinx.Graphics.Vulkan
             gd.Api.CreateDescriptorSetLayout(device, btDescriptorSetLayoutCreateInfo, null, out layouts[PipelineBase.BindlessTexturesSetIndex]).ThrowOnError();
             gd.Api.CreateDescriptorSetLayout(device, bsDescriptorSetLayoutCreateInfo, null, out layouts[PipelineBase.BindlessSamplersSetIndex]).ThrowOnError();
             gd.Api.CreateDescriptorSetLayout(device, biDescriptorSetLayoutCreateInfo, null, out layouts[PipelineBase.BindlessImagesSetIndex]).ThrowOnError();
+            gd.Api.CreateDescriptorSetLayout(device, bbtDescriptorSetLayoutCreateInfo, null, out layouts[PipelineBase.BindlessBufferTextureSetIndex]).ThrowOnError();
+            gd.Api.CreateDescriptorSetLayout(device, bbiDescriptorSetLayoutCreateInfo, null, out layouts[PipelineBase.BindlessBufferImageSetIndex]).ThrowOnError();
 
             fixed (DescriptorSetLayout* pLayouts = layouts)
             {

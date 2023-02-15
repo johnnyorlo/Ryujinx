@@ -192,7 +192,7 @@ namespace Ryujinx.Graphics.Vulkan
             }
         }
 
-        public unsafe void UpdateBufferImage(int setIndex, int bindingIndex, BufferView texelBufferView, DescriptorType type)
+        public unsafe void UpdateBufferImage(int setIndex, int bindingIndex, int elementIndex, BufferView texelBufferView, DescriptorType type)
         {
             if (texelBufferView.Handle != 0UL)
             {
@@ -201,6 +201,7 @@ namespace Ryujinx.Graphics.Vulkan
                     SType = StructureType.WriteDescriptorSet,
                     DstSet = _descriptorSets[setIndex],
                     DstBinding = (uint)bindingIndex,
+                    DstArrayElement = (uint)elementIndex,
                     DescriptorType = type,
                     DescriptorCount = 1,
                     PTexelBufferView = &texelBufferView

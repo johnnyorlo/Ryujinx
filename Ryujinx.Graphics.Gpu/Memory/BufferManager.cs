@@ -456,20 +456,17 @@ namespace Ryujinx.Graphics.Gpu.Memory
 
                     // The texture must be rebound to use the new storage if it was updated.
 
-                    if (binding.IsImage)
+                    if (binding.AsBindless)
+                    {
+                        _context.Renderer.Pipeline.SetBindlessTexture(binding.TextureId, binding.Texture, 0, null);
+                    }
+                    else if (binding.IsImage)
                     {
                         _context.Renderer.Pipeline.SetImage(binding.BindingInfo.Binding, binding.Texture, binding.Format);
                     }
                     else
                     {
-                        if (binding.AsBindless)
-                        {
-                            _context.Renderer.Pipeline.SetBindlessTexture(binding.TextureId, binding.Texture, 0, null);
-                        }
-                        else
-                        {
-                            _context.Renderer.Pipeline.SetTextureAndSampler(binding.Stage, binding.BindingInfo.Binding, binding.Texture, null);
-                        }
+                        _context.Renderer.Pipeline.SetTextureAndSampler(binding.Stage, binding.BindingInfo.Binding, binding.Texture, null);
                     }
                 }
 

@@ -148,6 +148,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             DeclareBindlessTextureArray(context, SamplerType.Texture2D | SamplerType.Multisample);
             DeclareBindlessTextureArray(context, SamplerType.Texture2D | SamplerType.Multisample | SamplerType.Array);
             DeclareBindlessTextureArray(context, SamplerType.TextureCube | SamplerType.Array);
+            DeclareBindlessTextureArray(context, SamplerType.TextureBuffer);
 
             var samplerType = context.TypeSampler();
             var samplerArrayType = context.TypeRuntimeArray(samplerType);
@@ -173,6 +174,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             DeclareBindlessImageArray(context, SamplerType.Texture2D | SamplerType.Multisample);
             DeclareBindlessImageArray(context, SamplerType.Texture2D | SamplerType.Multisample | SamplerType.Array);
             DeclareBindlessImageArray(context, SamplerType.TextureCube | SamplerType.Array);
+            DeclareBindlessImageArray(context, SamplerType.TextureBuffer);
 
             var vector2UintType = context.TypeVector(context.TypeU32(), 2);
             var arrayVector2UintType = context.TypeArray(vector2UintType, context.Constant(context.TypeU32(), 4096));
@@ -211,8 +213,16 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             var imageVariable = context.Variable(imageArrayPointerType, StorageClass.UniformConstant);
             var imagePointerType = context.TypePointer(StorageClass.UniformConstant, imageType);
 
-            context.Decorate(imageVariable, Decoration.DescriptorSet, (LiteralInteger)4);
-            context.Decorate(imageVariable, Decoration.Binding, (LiteralInteger)1);
+            if (samplerType == SamplerType.TextureBuffer)
+            {
+                context.Decorate(imageVariable, Decoration.DescriptorSet, (LiteralInteger)7);
+                context.Decorate(imageVariable, Decoration.Binding, (LiteralInteger)0);
+            }
+            else
+            {
+                context.Decorate(imageVariable, Decoration.DescriptorSet, (LiteralInteger)4);
+                context.Decorate(imageVariable, Decoration.Binding, (LiteralInteger)1);
+            }
 
             context.AddGlobalVariable(imageVariable);
 
@@ -237,8 +247,16 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             var imageVariable = context.Variable(imageArrayPointerType, StorageClass.UniformConstant);
             var imagePointerType = context.TypePointer(StorageClass.UniformConstant, imageType);
 
-            context.Decorate(imageVariable, Decoration.DescriptorSet, (LiteralInteger)6);
-            context.Decorate(imageVariable, Decoration.Binding, (LiteralInteger)0);
+            if (samplerType == SamplerType.TextureBuffer)
+            {
+                context.Decorate(imageVariable, Decoration.DescriptorSet, (LiteralInteger)8);
+                context.Decorate(imageVariable, Decoration.Binding, (LiteralInteger)0);
+            }
+            else
+            {
+                context.Decorate(imageVariable, Decoration.DescriptorSet, (LiteralInteger)6);
+                context.Decorate(imageVariable, Decoration.Binding, (LiteralInteger)0);
+            }
 
             context.AddGlobalVariable(imageVariable);
 

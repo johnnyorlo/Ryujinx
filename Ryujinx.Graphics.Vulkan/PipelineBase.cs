@@ -13,7 +13,7 @@ namespace Ryujinx.Graphics.Vulkan
     class PipelineBase : IDisposable
     {
         public const int DescriptorSetLayouts = 4;
-        public const int DescriptorSetLayoutsBindless = 7;
+        public const int DescriptorSetLayoutsBindless = 9;
 
         public const int UniformSetIndex = 0;
         public const int StorageSetIndex = 1;
@@ -22,6 +22,8 @@ namespace Ryujinx.Graphics.Vulkan
         public const int BindlessTexturesSetIndex = 4;
         public const int BindlessSamplersSetIndex = 5;
         public const int BindlessImagesSetIndex = 6;
+        public const int BindlessBufferTextureSetIndex = 7;
+        public const int BindlessBufferImageSetIndex = 8;
 
         protected readonly VulkanRenderer Gd;
         protected readonly Device Device;

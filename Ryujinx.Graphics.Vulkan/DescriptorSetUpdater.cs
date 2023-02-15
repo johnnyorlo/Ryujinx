@@ -288,12 +288,7 @@ namespace Ryujinx.Graphics.Vulkan
 
         public void SetBindlessTexture(int textureId, ITexture texture)
         {
-            if (texture is TextureBuffer)
-            {
-                return;
-            }
-
-            _bindlessManager.SetBindlessTexture(textureId, (TextureView)texture);
+            _bindlessManager.SetBindlessTexture(textureId, texture);
 
             SignalDirty(DirtyFlags.Bindless);
         }

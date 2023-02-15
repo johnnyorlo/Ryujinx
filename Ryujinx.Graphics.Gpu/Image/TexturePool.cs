@@ -255,13 +255,13 @@ namespace Ryujinx.Graphics.Gpu.Image
 
             // If the total amount of textures and samplers combination would be higher
             // than the maximum number of handles we can create, then disable bindless emulation.
-            if (activeSamplerPool.Samplers.Count * list.Count > 0x80000)
+            /* if (activeSamplerPool.Samplers.Count * list.Count > 0x80000)
             {
                 _bindlessDisable = true;
                 list.Clear();
                 Logger.Warning?.Print(LogClass.Gpu, "Too many textures, full bindless texture emulation has been disabled.");
                 return;
-            }
+            } */
 
             for (int i = 0; i < list.Count; i++)
             {
@@ -272,7 +272,21 @@ namespace Ryujinx.Graphics.Gpu.Image
                     Sampler sampler = kv.Key;
                     int samplerId = kv.Value;
 
-                    renderer.Pipeline.SetBindlessTexture(id, texture.HostTexture, samplerId, sampler.GetHostSampler(texture));
+                    if (texture.Target == Target.TextureBuffer)
+                    {
+                        _channel.BufferManager.SetBufferTextureStorage(
+                            texture.HostTexture,
+                            texture.Range.GetSubRange(0).Address,
+                            texture.Size,
+                            default,
+                            0,
+                            false,
+                            id);
+                    }
+                    else
+                    {
+                        renderer.Pipeline.SetBindlessTexture(id, texture.HostTexture, samplerId, sampler.GetHostSampler(texture));
+                    }
                 }
             }
 
@@ -299,10 +313,10 @@ namespace Ryujinx.Graphics.Gpu.Image
 
             // For bindless, we exclude 3D textures due to the current method used for 2D to 3D
             // slice copies, that only happens when the 3D texture is created for the first time.
-            if (forBindless && info.Target == Target.Texture3D)
+            /* if (forBindless && info.Target == Target.Texture3D)
             {
                 return null;
-            }
+            }*/
 
             TextureValidationResult validationResult = TextureValidation.Validate(ref info);
 
