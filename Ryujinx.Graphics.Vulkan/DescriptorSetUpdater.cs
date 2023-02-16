@@ -32,6 +32,9 @@ namespace Ryujinx.Graphics.Vulkan
 
         private readonly BindlessManager _bindlessManager;
 
+        public uint BindlessTexturesCount => _bindlessManager.TexturesCount;
+        public uint BindlessSamplersCount => _bindlessManager.SamplersCount;
+
         private bool[] _uniformSet;
         private bool[] _storageSet;
         private Silk.NET.Vulkan.Buffer _cachedSupportBuffer;
@@ -530,9 +533,10 @@ namespace Ryujinx.Graphics.Vulkan
                 }
             }
 
+            var pipelineLayout = _program.GetPipelineLayout(_gd, BindlessTexturesCount, BindlessSamplersCount);
             var sets = dsc.GetSets();
 
-            _gd.Api.CmdBindDescriptorSets(cbs.CommandBuffer, pbp, _program.PipelineLayout, (uint)setIndex, 1, sets, 0, ReadOnlySpan<uint>.Empty);
+            _gd.Api.CmdBindDescriptorSets(cbs.CommandBuffer, pbp, pipelineLayout, (uint)setIndex, 1, sets, 0, ReadOnlySpan<uint>.Empty);
         }
 
         private unsafe void UpdateBuffers(
@@ -547,6 +551,8 @@ namespace Ryujinx.Graphics.Vulkan
                 return;
             }
 
+            var pipelineLayout = _program.GetPipelineLayout(_gd, BindlessTexturesCount, BindlessSamplersCount);
+
             fixed (DescriptorBufferInfo* pBufferInfo = bufferInfo)
             {
                 var writeDescriptorSet = new WriteDescriptorSet
@@ -558,7 +564,7 @@ namespace Ryujinx.Graphics.Vulkan
                     PBufferInfo = pBufferInfo
                 };
 
-                _gd.PushDescriptorApi.CmdPushDescriptorSet(cbs.CommandBuffer, pbp, _program.PipelineLayout, 0, 1, &writeDescriptorSet);
+                _gd.PushDescriptorApi.CmdPushDescriptorSet(cbs.CommandBuffer, pbp, pipelineLayout, 0, 1, &writeDescriptorSet);
             }
         }
 

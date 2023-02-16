@@ -20,9 +20,9 @@ namespace Ryujinx.Graphics.Vulkan
         public const int TextureSetIndex = 2;
         public const int ImageSetIndex = 3;
         public const int BindlessTexturesSetIndex = 4;
-        public const int BindlessSamplersSetIndex = 5;
-        public const int BindlessImagesSetIndex = 6;
-        public const int BindlessBufferTextureSetIndex = 7;
+        public const int BindlessBufferTextureSetIndex = 5;
+        public const int BindlessSamplersSetIndex = 6;
+        public const int BindlessImagesSetIndex = 7;
         public const int BindlessBufferImageSetIndex = 8;
 
         protected readonly VulkanRenderer Gd;
@@ -763,6 +763,17 @@ namespace Ryujinx.Graphics.Vulkan
         {
             _descriptorSetUpdater.SetBindlessTexture(textureId, texture);
             _descriptorSetUpdater.SetBindlessSampler(samplerId, sampler);
+
+            uint bindlessTexturesCount = _descriptorSetUpdater.BindlessTexturesCount;
+            uint bindlessSamplersCount = _descriptorSetUpdater.BindlessSamplersCount;
+
+            if (_newState.BindlessTexturesCount != bindlessTexturesCount || _newState.BindlessSamplersCount != bindlessSamplersCount)
+            {
+                _newState.BindlessTexturesCount = bindlessTexturesCount;
+                _newState.BindlessSamplersCount = bindlessSamplersCount;
+
+                SignalStateChange();
+            }
         }
 
         public void SetBlendState(int index, BlendDescriptor blend)
@@ -940,7 +951,6 @@ namespace Ryujinx.Graphics.Vulkan
 
             _descriptorSetUpdater.SetProgram(internalProgram);
 
-            _newState.PipelineLayout = internalProgram.PipelineLayout;
             _newState.StagesCount = (uint)stages.Length;
 
             stages.CopyTo(_newState.Stages.AsSpan().Slice(0, stages.Length));

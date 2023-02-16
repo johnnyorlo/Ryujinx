@@ -36,9 +36,9 @@ namespace Ryujinx.Graphics.Vulkan
             _dsCacheCursor = new int[PipelineBase.DescriptorSetLayoutsBindless];
         }
 
-        public PipelineLayoutCacheEntry(VulkanRenderer gd, Device device, uint stages, bool usePd) : this(gd, device)
+        public PipelineLayoutCacheEntry(VulkanRenderer gd, Device device, PipelineLayoutUsageInfo usageInfo) : this(gd, device)
         {
-            DescriptorSetLayouts = PipelineLayoutFactory.Create(gd, device, stages, usePd, out var pipelineLayout);
+            DescriptorSetLayouts = PipelineLayoutFactory.Create(gd, device, usageInfo, out var pipelineLayout);
             PipelineLayout = pipelineLayout;
         }
 

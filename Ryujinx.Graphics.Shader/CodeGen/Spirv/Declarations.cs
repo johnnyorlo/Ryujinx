@@ -156,7 +156,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             var samplerVariable = context.Variable(samplerArrayPointerType, StorageClass.UniformConstant);
             var samplerPointerType = context.TypePointer(StorageClass.UniformConstant, samplerType);
 
-            context.Decorate(samplerVariable, Decoration.DescriptorSet, (LiteralInteger)5);
+            context.Decorate(samplerVariable, Decoration.DescriptorSet, (LiteralInteger)6);
             context.Decorate(samplerVariable, Decoration.Binding, (LiteralInteger)0);
 
             context.AddGlobalVariable(samplerVariable);
@@ -215,7 +215,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             if (samplerType == SamplerType.TextureBuffer)
             {
-                context.Decorate(imageVariable, Decoration.DescriptorSet, (LiteralInteger)7);
+                context.Decorate(imageVariable, Decoration.DescriptorSet, (LiteralInteger)5);
                 context.Decorate(imageVariable, Decoration.Binding, (LiteralInteger)0);
             }
             else
@@ -254,7 +254,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             }
             else
             {
-                context.Decorate(imageVariable, Decoration.DescriptorSet, (LiteralInteger)6);
+                context.Decorate(imageVariable, Decoration.DescriptorSet, (LiteralInteger)7);
                 context.Decorate(imageVariable, Decoration.Binding, (LiteralInteger)0);
             }
 
