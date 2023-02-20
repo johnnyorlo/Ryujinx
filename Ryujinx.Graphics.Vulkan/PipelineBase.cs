@@ -704,6 +704,40 @@ namespace Ryujinx.Graphics.Vulkan
             return 1;
         }
 
+        public void RegisterBindlessSampler(int samplerId, ISampler sampler)
+        {
+            _descriptorSetUpdater.SetBindlessSampler(samplerId, sampler);
+
+            uint bindlessSamplersCount = _descriptorSetUpdater.BindlessSamplersCount;
+
+            if (_newState.BindlessSamplersCount != bindlessSamplersCount)
+            {
+                _newState.BindlessSamplersCount = bindlessSamplersCount;
+
+                SignalStateChange();
+            }
+        }
+
+        public void RegisterBindlessTexture(int textureId, ITexture texture)
+        {
+            _descriptorSetUpdater.SetBindlessTexture(textureId, texture);
+
+            uint bindlessTexturesCount = _descriptorSetUpdater.BindlessTexturesCount;
+
+            if (_newState.BindlessTexturesCount != bindlessTexturesCount)
+            {
+                _newState.BindlessTexturesCount = bindlessTexturesCount;
+
+                SignalStateChange();
+            }
+        }
+
+        public void RegisterBindlessTextureAndSampler(int textureId, ITexture texture, int samplerId, ISampler sampler)
+        {
+            RegisterBindlessSampler(samplerId, sampler);
+            RegisterBindlessTexture(textureId, texture);
+        }
+
         public bool IsCommandBufferActive(CommandBuffer cb)
         {
             return CommandBuffer.Handle == cb.Handle;
@@ -757,23 +791,6 @@ namespace Ryujinx.Graphics.Vulkan
             }
 
             SignalStateChange();
-        }
-
-        public void SetBindlessTexture(int textureId, ITexture texture, int samplerId, ISampler sampler)
-        {
-            _descriptorSetUpdater.SetBindlessTexture(textureId, texture);
-            _descriptorSetUpdater.SetBindlessSampler(samplerId, sampler);
-
-            uint bindlessTexturesCount = _descriptorSetUpdater.BindlessTexturesCount;
-            uint bindlessSamplersCount = _descriptorSetUpdater.BindlessSamplersCount;
-
-            if (_newState.BindlessTexturesCount != bindlessTexturesCount || _newState.BindlessSamplersCount != bindlessSamplersCount)
-            {
-                _newState.BindlessTexturesCount = bindlessTexturesCount;
-                _newState.BindlessSamplersCount = bindlessSamplersCount;
-
-                SignalStateChange();
-            }
         }
 
         public void SetBlendState(int index, BlendDescriptor blend)

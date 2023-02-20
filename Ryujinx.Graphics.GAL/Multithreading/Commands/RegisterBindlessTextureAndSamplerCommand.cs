@@ -3,9 +3,9 @@ using Ryujinx.Graphics.GAL.Multithreading.Resources;
 
 namespace Ryujinx.Graphics.GAL.Multithreading.Commands
 {
-    struct SetBindlessTextureCommand : IGALCommand, IGALCommand<SetBindlessTextureCommand>
+    struct RegisterBindlessTextureAndSamplerCommand : IGALCommand, IGALCommand<RegisterBindlessTextureAndSamplerCommand>
     {
-        public CommandType CommandType => CommandType.SetBindlessTexture;
+        public CommandType CommandType => CommandType.RegisterBindlessTextureAndSampler;
         private int _textureId;
         private int _samplerId;
         private TableRef<ITexture> _texture;
@@ -19,9 +19,9 @@ namespace Ryujinx.Graphics.GAL.Multithreading.Commands
             _sampler = sampler;
         }
 
-        public static void Run(ref SetBindlessTextureCommand command, ThreadedRenderer threaded, IRenderer renderer)
+        public static void Run(ref RegisterBindlessTextureAndSamplerCommand command, ThreadedRenderer threaded, IRenderer renderer)
         {
-            renderer.Pipeline.SetBindlessTexture(
+            renderer.Pipeline.RegisterBindlessTextureAndSampler(
                 command._textureId,
                 command._texture.GetAs<ThreadedTexture>(threaded)?.Base,
                 command._samplerId,

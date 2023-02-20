@@ -458,7 +458,7 @@ namespace Ryujinx.Graphics.Gpu.Memory
 
                     if (binding.AsBindless)
                     {
-                        _context.Renderer.Pipeline.SetBindlessTexture(binding.TextureId, binding.Texture, 0, null);
+                        _context.Renderer.Pipeline.RegisterBindlessTexture(binding.TextureId, binding.Texture);
                     }
                     else if (binding.IsImage)
                     {

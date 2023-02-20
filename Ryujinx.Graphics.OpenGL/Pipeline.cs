@@ -786,6 +786,21 @@ namespace Ryujinx.Graphics.OpenGL
             return 1;
         }
 
+        public void RegisterBindlessSampler(int samplerId, ISampler sampler)
+        {
+            _bindlessManager.AddSeparateSampler(samplerId, sampler);
+        }
+
+        public void RegisterBindlessTexture(int textureId, ITexture texture)
+        {
+            _bindlessManager.AddSeparateTexture(textureId, texture);
+        }
+
+        public void RegisterBindlessTextureAndSampler(int textureId, ITexture texture, int samplerId, ISampler sampler)
+        {
+            _bindlessManager.Add(textureId, texture, samplerId, sampler);
+        }
+
         public void SetAlphaTest(bool enable, float reference, CompareOp op)
         {
             if (!enable)
@@ -808,11 +823,6 @@ namespace Ryujinx.Graphics.OpenGL
                 GL.Enable(EnableCap.Blend);
                 _advancedBlendEnable = true;
             }
-        }
-
-        public void SetBindlessTexture(int textureId, ITexture texture, int samplerId, ISampler sampler)
-        {
-            _bindlessManager.Add(textureId, texture, samplerId, sampler);
         }
 
         public void SetBlendState(int index, BlendDescriptor blend)

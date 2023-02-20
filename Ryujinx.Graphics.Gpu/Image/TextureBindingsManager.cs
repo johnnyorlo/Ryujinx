@@ -601,7 +601,7 @@ namespace Ryujinx.Graphics.Gpu.Image
 
                         if (asBindless)
                         {
-                            _context.Renderer.Pipeline.SetBindlessTexture(textureId, hostTexture, samplerId, hostSampler);
+                            _context.Renderer.Pipeline.RegisterBindlessTextureAndSampler(textureId, hostTexture, samplerId, hostSampler);
                         }
                         else
                         {
@@ -827,7 +827,7 @@ namespace Ryujinx.Graphics.Gpu.Image
                         continue;
                     }
 
-                    _context.Renderer.Pipeline.SetBindlessTexture(textureId, texture.HostTexture, samplerId, sampler.GetHostSampler(texture));
+                    _context.Renderer.Pipeline.RegisterBindlessTextureAndSampler(textureId, texture.HostTexture, samplerId, sampler.GetHostSampler(texture));
                 }
             }
         }

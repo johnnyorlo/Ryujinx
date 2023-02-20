@@ -9,7 +9,6 @@ namespace Ryujinx.Graphics.Gpu.Image
     class SamplerPool : Pool<Sampler, SamplerDescriptor>, IPool<SamplerPool>
     {
         private float _forcedAnisotropy;
-        public Dictionary<Sampler, int> Samplers { get; }
 
         /// <summary>
         /// Linked list node used on the sampler pool cache.
@@ -31,7 +30,6 @@ namespace Ryujinx.Graphics.Gpu.Image
         public SamplerPool(GpuContext context, PhysicalMemory physicalMemory, ulong address, int maximumId) : base(context, physicalMemory, address, maximumId)
         {
             _forcedAnisotropy = GraphicsConfig.MaxAnisotropy;
-            Samplers = new Dictionary<Sampler, int>();
         }
 
         /// <summary>
@@ -142,7 +140,7 @@ namespace Ryujinx.Graphics.Gpu.Image
 
                 if (sampler != null)
                 {
-                    Samplers.Add(sampler, id);
+                    Context.Renderer.Pipeline.RegisterBindlessSampler(id, sampler.GetHostSampler(null));
                 }
             }
         }
@@ -191,7 +189,6 @@ namespace Ryujinx.Graphics.Gpu.Image
                     }
 
                     sampler.Dispose();
-                    Samplers.Remove(sampler);
 
                     Items[id] = null;
                 }

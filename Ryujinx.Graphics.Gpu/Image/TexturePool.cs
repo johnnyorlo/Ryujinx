@@ -74,8 +74,6 @@ namespace Ryujinx.Graphics.Gpu.Image
         private readonly ConcurrentQueue<DereferenceRequest> _dereferenceQueue = new ConcurrentQueue<DereferenceRequest>();
 
         private TextureDescriptor _defaultDescriptor;
-        private readonly List<(int, Texture)> _bindlessList = new List<(int, Texture)>();
-        private bool _bindlessDisable;
 
         /// <summary>
         /// Linked list node used on the texture pool cache.
@@ -223,12 +221,7 @@ namespace Ryujinx.Graphics.Gpu.Image
         /// <param name="activeSamplerPool">The currently active sampler pool</param>
         public void LoadAll(IRenderer renderer, SamplerPool activeSamplerPool)
         {
-            if (activeSamplerPool == null || _bindlessDisable)
-            {
-                return;
-            }
-
-            activeSamplerPool.LoadAll();
+            activeSamplerPool?.LoadAll();
 
             if (SequenceNumber != Context.SequenceNumber)
             {
@@ -236,8 +229,6 @@ namespace Ryujinx.Graphics.Gpu.Image
 
                 SynchronizeMemory();
             }
-
-            var list = _bindlessList;
 
             ModifiedEntries.BeginIterating();
 
@@ -249,29 +240,6 @@ namespace Ryujinx.Graphics.Gpu.Image
 
                 if (texture != null)
                 {
-                    list.Add((id, texture));
-                }
-            }
-
-            // If the total amount of textures and samplers combination would be higher
-            // than the maximum number of handles we can create, then disable bindless emulation.
-            /* if (activeSamplerPool.Samplers.Count * list.Count > 0x80000)
-            {
-                _bindlessDisable = true;
-                list.Clear();
-                Logger.Warning?.Print(LogClass.Gpu, "Too many textures, full bindless texture emulation has been disabled.");
-                return;
-            } */
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                (id, Texture texture) = list[i];
-
-                foreach (var kv in activeSamplerPool.Samplers)
-                {
-                    Sampler sampler = kv.Key;
-                    int samplerId = kv.Value;
-
                     if (texture.Target == Target.TextureBuffer)
                     {
                         _channel.BufferManager.SetBufferTextureStorage(
@@ -285,12 +253,10 @@ namespace Ryujinx.Graphics.Gpu.Image
                     }
                     else
                     {
-                        renderer.Pipeline.SetBindlessTexture(id, texture.HostTexture, samplerId, sampler.GetHostSampler(texture));
+                        renderer.Pipeline.RegisterBindlessTexture(id, texture.HostTexture);
                     }
                 }
             }
-
-            list.Clear();
         }
 
         /// <summary>

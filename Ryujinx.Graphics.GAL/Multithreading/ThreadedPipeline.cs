@@ -125,6 +125,24 @@ namespace Ryujinx.Graphics.GAL.Multithreading
             _renderer.QueueCommand();
         }
 
+        public void RegisterBindlessSampler(int samplerId, ISampler sampler)
+        {
+            _renderer.New<RegisterBindlessSamplerCommand>().Set(samplerId, Ref(sampler));
+            _renderer.QueueCommand();
+        }
+
+        public void RegisterBindlessTexture(int textureId, ITexture texture)
+        {
+            _renderer.New<RegisterBindlessTextureCommand>().Set(textureId, Ref(texture));
+            _renderer.QueueCommand();
+        }
+
+        public void RegisterBindlessTextureAndSampler(int textureId, ITexture texture, int samplerId, ISampler sampler)
+        {
+            _renderer.New<RegisterBindlessTextureAndSamplerCommand>().Set(textureId, Ref(texture), samplerId, Ref(sampler));
+            _renderer.QueueCommand();
+        }
+
         public void SetAlphaTest(bool enable, float reference, CompareOp op)
         {
             _renderer.New<SetAlphaTestCommand>().Set(enable, reference, op);
@@ -134,12 +152,6 @@ namespace Ryujinx.Graphics.GAL.Multithreading
         public void SetBlendState(AdvancedBlendDescriptor blend)
         {
             _renderer.New<SetBlendStateAdvancedCommand>().Set(blend);
-        }
-
-        public void SetBindlessTexture(int textureId, ITexture texture, int samplerId, ISampler sampler)
-        {
-            _renderer.New<SetBindlessTextureCommand>().Set(textureId, Ref(texture), samplerId, Ref(sampler));
-            _renderer.QueueCommand();
         }
 
         public void SetBlendState(int index, BlendDescriptor blend)

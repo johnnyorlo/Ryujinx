@@ -97,9 +97,11 @@ namespace Ryujinx.Graphics.GAL.Multithreading
             Register<DrawTextureCommand>(CommandType.DrawTexture);
             Register<EndHostConditionalRenderingCommand>(CommandType.EndHostConditionalRendering);
             Register<EndTransformFeedbackCommand>(CommandType.EndTransformFeedback);
+            Register<RegisterBindlessSamplerCommand>(CommandType.RegisterBindlessSampler);
+            Register<RegisterBindlessTextureCommand>(CommandType.RegisterBindlessTexture);
+            Register<RegisterBindlessTextureAndSamplerCommand>(CommandType.RegisterBindlessTextureAndSampler);
             Register<SetAlphaTestCommand>(CommandType.SetAlphaTest);
             Register<SetBlendStateAdvancedCommand>(CommandType.SetBlendStateAdvanced);
-            Register<SetBindlessTextureCommand>(CommandType.SetBindlessTexture);
             Register<SetBlendStateCommand>(CommandType.SetBlendState);
             Register<SetDepthBiasCommand>(CommandType.SetDepthBias);
             Register<SetDepthClampCommand>(CommandType.SetDepthClamp);
