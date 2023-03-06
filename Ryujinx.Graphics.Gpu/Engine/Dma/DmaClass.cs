@@ -336,8 +336,6 @@ namespace Ryujinx.Graphics.Gpu.Engine.Dma
             }
             else
             {
-                var bufferCache = memoryManager.GetBackingMemory(dstGpuVa).BufferCache;
-
                 if (remap &&
                     _state.State.SetRemapComponentsDstX == SetRemapComponentsDst.ConstA &&
                     _state.State.SetRemapComponentsDstY == SetRemapComponentsDst.ConstA &&

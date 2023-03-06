@@ -83,7 +83,7 @@ namespace Ryujinx.Graphics.Gpu.Memory
         }
 
         /// <summary>
-        /// Attaches the memory manager to a new GPU channel.
+        /// Detaches the memory manager from a GPU channel.
         /// </summary>
         /// <param name="rebind">Action that was performed when the buffer cache changed</param>
         internal void DetachFromChannel(Action rebind)
