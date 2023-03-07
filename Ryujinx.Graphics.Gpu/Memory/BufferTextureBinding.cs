@@ -37,7 +37,7 @@ namespace Ryujinx.Graphics.Gpu.Memory
         /// <summary>
         /// The size of the buffer binding in bytes.
         /// </summary>
-        public ulong Size  => Texture.Size;
+        public ulong Size => Texture.Size;
 
         /// <summary>
         /// The image or sampler binding info for the buffer texture.
