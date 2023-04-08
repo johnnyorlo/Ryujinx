@@ -13,14 +13,36 @@ namespace Ryujinx.Graphics.Shader.Translation.Optimizations
 
             int sbUseMask = 0;
             int ubeUseMask = 0;
+            bool fullBindlessAllowed = true;
 
             // Those passes are looking for specific patterns and only needs to run once.
             for (int blkIndex = 0; blkIndex < blocks.Length; blkIndex++)
             {
+                BasicBlock block = blocks[blkIndex];
+
+                for (LinkedListNode<INode> node = block.Operations.First; node != null; node = node.Next)
+                {
+                    for (int index = 0; index < node.Value.SourcesCount; index++)
+                    {
+                        Operand src = node.Value.GetSource(index);
+
+                        // The shader accessing constant buffer 2 is an indication that
+                        // the bindless access is for separate texture/sampler combinations.
+                        // Bindless elimination should be able to take care of that, but if it doesn't,
+                        // we still don't want to use full bindless for those cases
+                        if (src.Type == OperandType.ConstantBuffer && src.GetCbufSlot() == TextureHandle.NvnTextureBufferIndex)
+                        {
+                            fullBindlessAllowed = false;
+                            break;
+                        }
+                    }
+                }
+
                 GlobalToStorage.RunPass(blocks[blkIndex], config, ref sbUseMask, ref ubeUseMask);
                 BindlessElimination.RunPass(blocks[blkIndex], config);
             }
 
+            config.SetFullBindlessAllowed(fullBindlessAllowed);
             config.SetAccessibleBufferMasks(sbUseMask, ubeUseMask);
 
             // Run optimizations one last time to remove any code that is now optimizable after above passes.

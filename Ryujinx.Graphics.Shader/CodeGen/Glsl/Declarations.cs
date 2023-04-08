@@ -453,7 +453,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl
 
         private static void DeclareSamplers(CodeGenContext context, TextureDescriptor[] descriptors)
         {
-            int count = Math.Min(descriptors.Length, TextureHandle.MaxTexturesPerStage);
+            int count = Math.Min(descriptors.Length, TextureHandle.GetMaxTexturesPerStage(context.Config.Options.TargetApi));
 
             for (int index = 0; index < count; index++)
             {

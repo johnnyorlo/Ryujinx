@@ -387,8 +387,12 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
         private static void DeclareSamplers(CodeGenContext context, TextureDescriptor[] descriptors)
         {
-            foreach (var descriptor in descriptors)
+            int count = Math.Min(descriptors.Length, TextureHandle.GetMaxTexturesPerStage(context.Config.Options.TargetApi));
+
+            for (int index = 0; index < count; index++)
             {
+                TextureDescriptor descriptor = descriptors[index];
+
                 var meta = new TextureMeta(descriptor.CbufSlot, descriptor.HandleIndex, descriptor.Format);
 
                 if (context.Samplers.ContainsKey(meta))

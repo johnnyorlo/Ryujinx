@@ -502,9 +502,11 @@ namespace Ryujinx.Graphics.Gpu.Image
             ReadOnlySpan<int> cachedTextureBuffer = Span<int>.Empty;
             ReadOnlySpan<int> cachedSamplerBuffer = Span<int>.Empty;
 
+            int maxTexturesPerStage = TextureHandle.GetMaxTexturesPerStage(_context.Capabilities.Api);
+
             for (int index = 0; index < textureCount; index++)
             {
-                bool asBindless = index >= TextureHandle.MaxTexturesPerStage;
+                bool asBindless = index >= maxTexturesPerStage;
 
                 TextureBindingInfo bindingInfo = _textureBindings[stageIndex][index];
                 TextureUsageFlags usageFlags = bindingInfo.Flags;

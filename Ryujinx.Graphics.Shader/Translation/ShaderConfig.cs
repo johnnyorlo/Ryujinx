@@ -66,6 +66,7 @@ namespace Ryujinx.Graphics.Shader.Translation
         public UInt128 NextInputAttributesComponents { get; private set; }
         public UInt128 ThisInputAttributesComponents { get; private set; }
 
+        public bool FullBindlessAllowed { get; private set; }
         public int AccessibleStorageBuffersMask { get; private set; }
         public int AccessibleConstantBuffersMask { get; private set; }
 
@@ -427,6 +428,11 @@ namespace Ryujinx.Graphics.Shader.Translation
         public void SetUsedFeature(FeatureFlags flags)
         {
             UsedFeatures |= flags;
+        }
+
+        public void SetFullBindlessAllowed(bool fullBindlessAllowed)
+        {
+            FullBindlessAllowed = fullBindlessAllowed;
         }
 
         public void SetAccessibleBufferMasks(int sbMask, int ubeMask)

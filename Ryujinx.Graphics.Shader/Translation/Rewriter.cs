@@ -1,7 +1,5 @@
-using Ryujinx.Graphics.Shader.Decoders;
 using Ryujinx.Graphics.Shader.IntermediateRepresentation;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 
@@ -59,7 +57,7 @@ namespace Ryujinx.Graphics.Shader.Translation
                             }
                         }
 
-                        TurnIntoBindlessIfExceeding(node, config);
+                        node = TurnIntoBindlessIfExceeding(node, config);
 
                         nextNode = node.Next;
                     }
@@ -761,11 +759,11 @@ namespace Ryujinx.Graphics.Shader.Translation
             return false;
         }
 
-        private static void TurnIntoBindlessIfExceeding(LinkedListNode<INode> node, ShaderConfig config)
+        private static LinkedListNode<INode> TurnIntoBindlessIfExceeding(LinkedListNode<INode> node, ShaderConfig config)
         {
             if (!(node.Value is TextureOperation texOp))
             {
-                return;
+                return node;
             }
 
             // If it's already bindless, then we have nothing to do.
@@ -774,18 +772,38 @@ namespace Ryujinx.Graphics.Shader.Translation
                 if (IsIndexedAccess(texOp))
                 {
                     config.BindlessTextureFlags |= BindlessTextureFlags.BindlessNvn;
-                    return;
+                    return node;
                 }
 
-                config.BindlessTextureFlags |= BindlessTextureFlags.BindlessFull;
-                return;
+                if (config.FullBindlessAllowed)
+                {
+                    config.BindlessTextureFlags |= BindlessTextureFlags.BindlessFull;
+                    return node;
+                }
+                else
+                {
+                    // Set any destination operand to zero and remove the texture access.
+                    // This is a case where bindless elimination failed, and we assume
+                    // it's too risky to try using full bindless emulation.
+
+                    for (int destIndex = 0; destIndex < texOp.DestsCount; destIndex++)
+                    {
+                        Operand dest = texOp.GetDest(destIndex);
+                        node.List.AddBefore(node, new Operation(Instruction.Copy, dest, Const(0)));
+                    }
+
+                    LinkedListNode<INode> prevNode = node.Previous;
+                    node.List.Remove(node);
+
+                    return prevNode;
+                }
             }
 
             // If the index is within the host API limits, then we don't need to make it bindless.
             int index = FindDescriptorIndex(config.GetTextureDescriptors(), texOp);
-            if (index < TextureHandle.MaxTexturesPerStage)
+            if (index < TextureHandle.GetMaxTexturesPerStage(config.Options.TargetApi))
             {
-                return;
+                return node;
             }
 
             (int textureWordOffset, int samplerWordOffset, TextureHandleType handleType) = TextureHandle.UnpackOffsets(texOp.Handle);
@@ -811,6 +829,8 @@ namespace Ryujinx.Graphics.Shader.Translation
 
             texOp.TurnIntoBindless(handle);
             config.BindlessTextureFlags |= BindlessTextureFlags.BindlessConverted;
+
+            return node;
         }
 
         private static bool IsIndexedAccess(TextureOperation texOp)
@@ -831,6 +851,11 @@ namespace Ryujinx.Graphics.Shader.Translation
             Operand ldcSrc0 = handleAsgOp.GetSource(0);
 
             return ldcSrc0.Type == OperandType.Constant && ldcSrc0.Value == TextureHandle.NvnTextureBufferIndex;
+        }
+
+        private static void RemoveBindlessTextureAccess(LinkedListNode<INode> node)
+        {
+
         }
 
         private static int FindDescriptorIndex(TextureDescriptor[] array, TextureOperation texOp)
