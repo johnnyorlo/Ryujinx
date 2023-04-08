@@ -40,6 +40,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
         public Instruction SamplerPointerType { get; set; }
         public Instruction BindlessSamplersArray { get; set; }
         public Instruction BindlessTable { get; set; }
+        public Instruction BindlessScales { get; set; }
         public Dictionary<int, Instruction> Inputs { get; } = new Dictionary<int, Instruction>();
         public Dictionary<int, Instruction> Outputs { get; } = new Dictionary<int, Instruction>();
         public Dictionary<int, Instruction> InputsPerPatch { get; } = new Dictionary<int, Instruction>();

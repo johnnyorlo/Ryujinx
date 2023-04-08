@@ -18,13 +18,18 @@ namespace Ryujinx.Graphics.Vulkan
         private const int TextureIdBlockShift = 8;
         private const int TextureIdBlockMask = 0xfff;
 
+        // Note that each entry must be aligned to 16 bytes, this is a constant buffer layout restriction.
+        private const int IdMapElements = 4;
+
         private readonly Dictionary<int, int> _textureIdMap;
         private readonly Dictionary<int, int> _samplerIdMap;
         private readonly ulong[] _textureBlockBitmap;
         private readonly ulong[] _samplerBlockBitmap;
 
         private ITexture[] _textureRefs;
+        private float[] _textureScales;
         private Auto<DisposableSampler>[] _samplerRefs;
+        private bool _textureScalesDirty;
 
         public uint TexturesCount => CalculateTexturesCount();
         public uint SamplersCount => CalculateSamplersCount();
@@ -33,6 +38,7 @@ namespace Ryujinx.Graphics.Vulkan
         private bool _idMapDataDirty;
 
         private BufferHolder _idMapBuffer;
+        private BufferHolder _textureScalesBuffer;
 
         private bool _dirty;
         private bool _hasDescriptors;
@@ -52,11 +58,12 @@ namespace Ryujinx.Graphics.Vulkan
             _samplerBlockBitmap = new ulong[((SamplerCapacity >> TextureIdBlockShift) + 63) / 64];
 
             _textureRefs = Array.Empty<TextureView>();
+            _textureScales = Array.Empty<float>();
             _samplerRefs = Array.Empty<Auto<DisposableSampler>>();
 
-            // This is actually a structure with 4 elements,
-            // texture index (X), sampler index (Y), scale (Z) and W is currently unused.
-            _idMap = new int[(TextureCapacity >> TextureIdBlockShift) * 4];
+            // This is actually a structure with 2 elements,
+            // texture index (X) and sampler index (Y).
+            _idMap = new int[(TextureCapacity >> TextureIdBlockShift) * IdMapElements];
         }
 
         private uint CalculateTexturesCount()
@@ -74,6 +81,20 @@ namespace Ryujinx.Graphics.Vulkan
             int textureIndex = GetTextureBlockId(textureId);
 
             _textureRefs[textureIndex] = texture;
+
+            if (_textureRefs.Length != _textureScales.Length)
+            {
+                Array.Resize(ref _textureScales, _textureRefs.Length);
+            }
+
+            float scale = texture.ScaleFactor;
+
+            if (_textureScales[textureIndex] != scale)
+            {
+                _textureScales[textureIndex] = scale;
+                _textureScalesDirty = true;
+            }
+
             _dirty = true;
         }
 
@@ -110,7 +131,7 @@ namespace Ryujinx.Graphics.Vulkan
                     Array.Resize(ref resourceRefs, minLength);
                 }
 
-                _idMap[blockIndex * 4 + idMapOffset] = mappedIndex << TextureIdBlockShift;
+                _idMap[blockIndex * IdMapElements + idMapOffset] = mappedIndex << TextureIdBlockShift;
                 _idMapDataDirty = true;
 
                 idMap.Add(blockIndex, mappedIndex);
@@ -161,11 +182,11 @@ namespace Ryujinx.Graphics.Vulkan
             var biDsc = plce.GetNewDescriptorSetCollection(gd, cbs.CommandBufferIndex, PipelineBase.BindlessImagesSetIndex, out _).Get(cbs);
             var bbiDsc = plce.GetNewDescriptorSetCollection(gd, cbs.CommandBufferIndex, PipelineBase.BindlessBufferImageSetIndex, out _).Get(cbs);
 
-            int bufferSizeInBytes = _idMap.Length * sizeof(int);
+            int idMapBufferSizeInBytes = _idMap.Length * sizeof(int);
 
             if (_idMapBuffer == null)
             {
-                _idMapBuffer = gd.BufferManager.Create(gd, bufferSizeInBytes);
+                _idMapBuffer = gd.BufferManager.Create(gd, idMapBufferSizeInBytes);
             }
 
             if (_idMapDataDirty)
@@ -174,16 +195,44 @@ namespace Ryujinx.Graphics.Vulkan
                 _idMapDataDirty = false;
             }
 
+            int textureScalesBufferSizeInBytes = _textureScales.Length * sizeof(float);
+
+            if (_textureScalesDirty)
+            {
+                if (_textureScalesBuffer == null || _textureScalesBuffer.Size != textureScalesBufferSizeInBytes)
+                {
+                    _textureScalesBuffer?.Dispose();
+                    _textureScalesBuffer = gd.BufferManager.Create(gd, textureScalesBufferSizeInBytes);
+                }
+
+                _textureScalesBuffer.SetDataUnchecked(0, MemoryMarshal.Cast<float, byte>(_textureScales));
+                _textureScalesDirty = false;
+            }
+
             Span<DescriptorBufferInfo> uniformBuffer = stackalloc DescriptorBufferInfo[1];
 
             uniformBuffer[0] = new DescriptorBufferInfo()
             {
                 Offset = 0,
-                Range = (ulong)bufferSizeInBytes,
-                Buffer = _idMapBuffer.GetBuffer().Get(cbs, 0, bufferSizeInBytes).Value
+                Range = (ulong)idMapBufferSizeInBytes,
+                Buffer = _idMapBuffer.GetBuffer().Get(cbs, 0, idMapBufferSizeInBytes).Value
             };
 
             btDsc.UpdateBuffers(0, 0, uniformBuffer, DescriptorType.UniformBuffer);
+
+            if (_textureScalesBuffer != null)
+            {
+                Span<DescriptorBufferInfo> storageBuffer = stackalloc DescriptorBufferInfo[1];
+
+                storageBuffer[0] = new DescriptorBufferInfo()
+                {
+                    Offset = 0,
+                    Range = (ulong)textureScalesBufferSizeInBytes,
+                    Buffer = _textureScalesBuffer.GetBuffer().Get(cbs, 0, textureScalesBufferSizeInBytes).Value
+                };
+
+                btDsc.UpdateBuffers(0, 1, storageBuffer, DescriptorType.StorageBuffer);
+            }
 
             for (int i = 0; i < _textureRefs.Length; i++)
             {
@@ -196,7 +245,7 @@ namespace Ryujinx.Graphics.Vulkan
                         ImageView = view.GetImageView().Get(cbs).Value
                     };
 
-                    btDsc.UpdateImage(0, 1, i, td, DescriptorType.SampledImage);
+                    btDsc.UpdateImage(0, 2, i, td, DescriptorType.SampledImage);
 
                     if (view.Info.Format.IsImageCompatible())
                     {

@@ -463,6 +463,15 @@ namespace Ryujinx.Graphics.Gpu.Image
         }
 
         /// <summary>
+        /// Forces a entry as modified, to be updated if any shader uses bindless textures.
+        /// </summary>
+        /// <param name="id">ID of the entry to be updated</param>
+        public void ForceModifiedEntry(int id)
+        {
+            ModifiedEntries.Set(id);
+        }
+
+        /// <summary>
         /// Gets texture information from a texture descriptor.
         /// </summary>
         /// <param name="descriptor">The texture descriptor</param>

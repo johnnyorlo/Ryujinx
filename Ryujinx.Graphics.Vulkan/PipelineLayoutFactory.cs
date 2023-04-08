@@ -163,7 +163,7 @@ namespace Ryujinx.Graphics.Vulkan
             uint texturesCount,
             uint samplersCount)
         {
-            DescriptorSetLayoutBinding* btLayoutBindings = stackalloc DescriptorSetLayoutBinding[2];
+            DescriptorSetLayoutBinding* btLayoutBindings = stackalloc DescriptorSetLayoutBinding[3];
 
             btLayoutBindings[0] = new DescriptorSetLayoutBinding()
             {
@@ -176,6 +176,14 @@ namespace Ryujinx.Graphics.Vulkan
             btLayoutBindings[1] = new DescriptorSetLayoutBinding()
             {
                 Binding = 1,
+                DescriptorType = DescriptorType.StorageBuffer,
+                DescriptorCount = 1,
+                StageFlags = AllStages
+            };
+
+            btLayoutBindings[2] = new DescriptorSetLayoutBinding()
+            {
+                Binding = 2,
                 DescriptorType = DescriptorType.SampledImage,
                 DescriptorCount = texturesCount,
                 StageFlags = AllStages
@@ -213,13 +221,13 @@ namespace Ryujinx.Graphics.Vulkan
                 StageFlags = AllStages
             };
 
-            var btBindingsFlags = stackalloc DescriptorBindingFlags[] { 0, DescriptorBindingFlags.UpdateAfterBindBit };
+            var btBindingsFlags = stackalloc DescriptorBindingFlags[] { 0, 0, DescriptorBindingFlags.UpdateAfterBindBit };
 
             var btDescriptorSetLayoutFlagsCreateInfo = new DescriptorSetLayoutBindingFlagsCreateInfo()
             {
                 SType = StructureType.DescriptorSetLayoutBindingFlagsCreateInfo,
                 PBindingFlags = btBindingsFlags,
-                BindingCount = 2
+                BindingCount = 3
             };
 
             var btDescriptorSetLayoutCreateInfo = new DescriptorSetLayoutCreateInfo()
@@ -228,7 +236,7 @@ namespace Ryujinx.Graphics.Vulkan
                 PNext = &btDescriptorSetLayoutFlagsCreateInfo,
                 Flags = DescriptorSetLayoutCreateFlags.UpdateAfterBindPoolBit,
                 PBindings = btLayoutBindings,
-                BindingCount = 2
+                BindingCount = 3
             };
 
             var bsBindingFlag = DescriptorBindingFlags.UpdateAfterBindBit;

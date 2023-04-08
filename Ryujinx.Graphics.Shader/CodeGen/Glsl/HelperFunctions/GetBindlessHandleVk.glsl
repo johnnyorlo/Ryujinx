@@ -5,15 +5,20 @@ layout (set = 4, binding = 0, std140) uniform u_bindless_table
     uvec2 bindless_table[0x1000];
 };
 
-layout (set = 4, binding = 1) uniform texture1D bindless_textures1D[];
-layout (set = 4, binding = 1) uniform texture2D bindless_textures2D[];
-layout (set = 4, binding = 1) uniform texture3D bindless_textures3D[];
-layout (set = 4, binding = 1) uniform textureCube bindless_texturesCube[];
-layout (set = 4, binding = 1) uniform texture1DArray bindless_textures1DArray[];
-layout (set = 4, binding = 1) uniform texture2DArray bindless_textures2DArray[];
-layout (set = 4, binding = 1) uniform texture2DMS bindless_textures2DMS[];
-layout (set = 4, binding = 1) uniform texture2DMSArray bindless_textures2DMSArray[];
-layout (set = 4, binding = 1) uniform textureCubeArray bindless_texturesCubeArray[];
+layout (set = 4, binding = 1, std430) buffer s_bindless_scales
+{
+    float bindless_scales[];
+};
+
+layout (set = 4, binding = 2) uniform texture1D bindless_textures1D[];
+layout (set = 4, binding = 2) uniform texture2D bindless_textures2D[];
+layout (set = 4, binding = 2) uniform texture3D bindless_textures3D[];
+layout (set = 4, binding = 2) uniform textureCube bindless_texturesCube[];
+layout (set = 4, binding = 2) uniform texture1DArray bindless_textures1DArray[];
+layout (set = 4, binding = 2) uniform texture2DArray bindless_textures2DArray[];
+layout (set = 4, binding = 2) uniform texture2DMS bindless_textures2DMS[];
+layout (set = 4, binding = 2) uniform texture2DMSArray bindless_textures2DMSArray[];
+layout (set = 4, binding = 2) uniform textureCubeArray bindless_texturesCubeArray[];
 layout (set = 6, binding = 0) uniform sampler bindless_samplers[];
 layout (set = 7, binding = 0) uniform image1D bindless_images1D[];
 layout (set = 7, binding = 0) uniform image2D bindless_images2D[];
@@ -39,5 +44,5 @@ uint Helper_GetBindlessSamplerIndex(int nvHandle)
 
 float Helper_GetBindlessScale(int nvHandle)
 {
-    return 1.0;
+    return bindless_scales[Helper_GetBindlessTextureIndex(nvHandle)];
 }

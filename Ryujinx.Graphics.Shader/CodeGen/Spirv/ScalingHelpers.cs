@@ -13,26 +13,22 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             CodeGenContext context,
             AstTextureOperation texOp,
             SpvInstruction vector,
+            SpvInstruction bindlessIndex,
             bool intCoords,
-            bool isBindless,
             bool isArray,
             int pCount)
         {
             if (intCoords)
             {
-                if (context.Config.Stage.SupportsRenderScale() && !isBindless)
+                if (context.Config.Stage.SupportsRenderScale() || bindlessIndex != null)
                 {
-                    int index = texOp.Inst == Instruction.ImageLoad
-                        ? context.Config.GetTextureDescriptors().Length + context.Config.FindImageDescriptorIndex(texOp)
-                        : context.Config.FindTextureDescriptorIndex(texOp);
-
                     if (pCount == 3 && isArray)
                     {
-                        return ApplyScaling2DArray(context, vector, index);
+                        return ApplyScaling2DArray(context, texOp, vector, bindlessIndex);
                     }
                     else if (pCount == 2 && !isArray)
                     {
-                        return ApplyScaling2D(context, vector, index);
+                        return ApplyScaling2D(context, texOp, vector, bindlessIndex);
                     }
                 }
             }
@@ -40,36 +36,64 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             return vector;
         }
 
-        private static SpvInstruction ApplyScaling2DArray(CodeGenContext context, SpvInstruction vector, int index)
+        private static SpvInstruction ApplyScaling2DArray(
+            CodeGenContext context,
+            AstTextureOperation texOp,
+            SpvInstruction vector,
+            SpvInstruction bindlessIndex)
         {
             // The array index is not scaled, just x and y.
             var vectorXY = context.VectorShuffle(context.TypeVector(context.TypeS32(), 2), vector, vector, 0, 1);
             var vectorZ = context.CompositeExtract(context.TypeS32(), vector, 2);
-            var vectorXYScaled = ApplyScaling2D(context, vectorXY, index);
+            var vectorXYScaled = ApplyScaling2D(context, texOp, vectorXY, bindlessIndex);
             var vectorScaled = context.CompositeConstruct(context.TypeVector(context.TypeS32(), 3), vectorXYScaled, vectorZ);
 
             return vectorScaled;
         }
 
-        private static SpvInstruction ApplyScaling2D(CodeGenContext context, SpvInstruction vector, int index)
+        private static SpvInstruction ApplyScaling2D(
+            CodeGenContext context,
+            AstTextureOperation texOp,
+            SpvInstruction vector,
+            SpvInstruction bindlessIndex)
         {
+            SpvInstruction scale;
+
             var pointerType = context.TypePointer(StorageClass.Uniform, context.TypeFP32());
-            var fieldIndex = context.Constant(context.TypeU32(), 4);
-            var scaleIndex = context.Constant(context.TypeU32(), index);
 
-            if (context.Config.Stage == ShaderStage.Vertex)
+            if (bindlessIndex != null)
             {
-                var scaleCountPointerType = context.TypePointer(StorageClass.Uniform, context.TypeS32());
-                var scaleCountElemPointer = context.AccessChain(scaleCountPointerType, context.SupportBuffer, context.Constant(context.TypeU32(), 3));
-                var scaleCount = context.Load(context.TypeS32(), scaleCountElemPointer);
+                var scaleElemPointer = context.AccessChain(
+                    pointerType,
+                    context.BindlessScales,
+                    context.Constant(context.TypeS32(), 0),
+                    bindlessIndex);
 
-                scaleIndex = context.IAdd(context.TypeU32(), scaleIndex, scaleCount);
+                scale = context.Load(context.TypeFP32(), scaleElemPointer);
             }
+            else
+            {
+                int index = texOp.Inst == Instruction.ImageLoad
+                    ? context.Config.GetTextureDescriptors().Length + context.Config.FindImageDescriptorIndex(texOp)
+                    : context.Config.FindTextureDescriptorIndex(texOp);
 
-            scaleIndex = context.IAdd(context.TypeU32(), scaleIndex, context.Constant(context.TypeU32(), 1));
+                var fieldIndex = context.Constant(context.TypeU32(), 4);
+                var scaleIndex = context.Constant(context.TypeU32(), index);
 
-            var scaleElemPointer = context.AccessChain(pointerType, context.SupportBuffer, fieldIndex, scaleIndex);
-            var scale = context.Load(context.TypeFP32(), scaleElemPointer);
+                if (context.Config.Stage == ShaderStage.Vertex)
+                {
+                    var scaleCountPointerType = context.TypePointer(StorageClass.Uniform, context.TypeS32());
+                    var scaleCountElemPointer = context.AccessChain(scaleCountPointerType, context.SupportBuffer, context.Constant(context.TypeU32(), 3));
+                    var scaleCount = context.Load(context.TypeS32(), scaleCountElemPointer);
+
+                    scaleIndex = context.IAdd(context.TypeU32(), scaleIndex, scaleCount);
+                }
+
+                scaleIndex = context.IAdd(context.TypeU32(), scaleIndex, context.Constant(context.TypeU32(), 1));
+
+                var scaleElemPointer = context.AccessChain(pointerType, context.SupportBuffer, fieldIndex, scaleIndex);
+                scale = context.Load(context.TypeFP32(), scaleElemPointer);
+            }
 
             var ivector2Type = context.TypeVector(context.TypeS32(), 2);
             var localVector = context.CoordTemp;
@@ -182,29 +206,45 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             CodeGenContext context,
             AstTextureOperation texOp,
             SpvInstruction size,
-            bool isBindless)
+            SpvInstruction bindlessIndex)
         {
-            if (context.Config.Stage.SupportsRenderScale() && !isBindless)
+            if (context.Config.Stage.SupportsRenderScale() || bindlessIndex != null)
             {
-                int index = context.Config.FindTextureDescriptorIndex(texOp);
-
                 var pointerType = context.TypePointer(StorageClass.Uniform, context.TypeFP32());
-                var fieldIndex = context.Constant(context.TypeU32(), 4);
-                var scaleIndex = context.Constant(context.TypeU32(), index);
 
-                if (context.Config.Stage == ShaderStage.Vertex)
+                SpvInstruction scale;
+
+                if (bindlessIndex != null)
                 {
-                    var scaleCountPointerType = context.TypePointer(StorageClass.Uniform, context.TypeS32());
-                    var scaleCountElemPointer = context.AccessChain(scaleCountPointerType, context.SupportBuffer, context.Constant(context.TypeU32(), 3));
-                    var scaleCount = context.Load(context.TypeS32(), scaleCountElemPointer);
+                    var scaleElemPointer = context.AccessChain(
+                        pointerType,
+                        context.BindlessScales,
+                        context.Constant(context.TypeS32(), 0),
+                        bindlessIndex);
 
-                    scaleIndex = context.IAdd(context.TypeU32(), scaleIndex, scaleCount);
+                    scale = context.Load(context.TypeFP32(), scaleElemPointer);
                 }
+                else
+                {
+                    int index = context.Config.FindTextureDescriptorIndex(texOp);
 
-                scaleIndex = context.IAdd(context.TypeU32(), scaleIndex, context.Constant(context.TypeU32(), 1));
+                    var fieldIndex = context.Constant(context.TypeU32(), 4);
+                    var scaleIndex = context.Constant(context.TypeU32(), index);
 
-                var scaleElemPointer = context.AccessChain(pointerType, context.SupportBuffer, fieldIndex, scaleIndex);
-                var scale = context.GlslFAbs(context.TypeFP32(), context.Load(context.TypeFP32(), scaleElemPointer));
+                    if (context.Config.Stage == ShaderStage.Vertex)
+                    {
+                        var scaleCountPointerType = context.TypePointer(StorageClass.Uniform, context.TypeS32());
+                        var scaleCountElemPointer = context.AccessChain(scaleCountPointerType, context.SupportBuffer, context.Constant(context.TypeU32(), 3));
+                        var scaleCount = context.Load(context.TypeS32(), scaleCountElemPointer);
+
+                        scaleIndex = context.IAdd(context.TypeU32(), scaleIndex, scaleCount);
+                    }
+
+                    scaleIndex = context.IAdd(context.TypeU32(), scaleIndex, context.Constant(context.TypeU32(), 1));
+
+                    var scaleElemPointer = context.AccessChain(pointerType, context.SupportBuffer, fieldIndex, scaleIndex);
+                    scale = context.GlslFAbs(context.TypeFP32(), context.Load(context.TypeFP32(), scaleElemPointer));
+                }
 
                 var passthrough = context.FOrdEqual(context.TypeBool(), scale, context.Constant(context.TypeFP32(), 1f));
 

@@ -191,6 +191,20 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             context.AddGlobalVariable(bindlessTableVariable);
 
             context.BindlessTable = bindlessTableVariable;
+
+            var arrayFloatType = context.TypeRuntimeArray(context.TypeFP32());
+            context.Decorate(arrayFloatType, Decoration.ArrayStride, (LiteralInteger)4);
+            var bindlessScalesStruct = context.TypeStruct(true, arrayFloatType);
+            context.Decorate(bindlessScalesStruct, Decoration.BufferBlock);
+            context.MemberDecorate(bindlessScalesStruct, 0, Decoration.Offset, (LiteralInteger)0);
+            var bindlessScalesStructPointer = context.TypePointer(StorageClass.Uniform, bindlessScalesStruct);
+            var bindlessScalesVariable = context.Variable(bindlessScalesStructPointer, StorageClass.Uniform);
+
+            context.Decorate(bindlessScalesVariable, Decoration.DescriptorSet, (LiteralInteger)4);
+            context.Decorate(bindlessScalesVariable, Decoration.Binding, (LiteralInteger)1);
+            context.AddGlobalVariable(bindlessScalesVariable);
+
+            context.BindlessScales = bindlessScalesVariable;
         }
 
         private static void DeclareBindlessTextureArray(CodeGenContext context, SamplerType samplerType)
@@ -221,7 +235,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
             else
             {
                 context.Decorate(imageVariable, Decoration.DescriptorSet, (LiteralInteger)4);
-                context.Decorate(imageVariable, Decoration.Binding, (LiteralInteger)1);
+                context.Decorate(imageVariable, Decoration.Binding, (LiteralInteger)2);
             }
 
             context.AddGlobalVariable(imageVariable);

@@ -724,8 +724,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 pCoords = Src(AggregateType.S32);
             }
 
-            pCoords = ScalingHelpers.ApplyScaling(context, texOp, pCoords, intCoords: true, isBindless, isArray, pCount);
-
+            SpvInstruction bindlessIndex;
             SpvInstruction image;
 
             if (isBindless)
@@ -735,14 +734,18 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 var imageIndex = GenerateBindlessTextureHandleToIndex(context, bindlessHandle);
                 var imagePointer = context.AccessChain(imagePointerType, imageVariable, imageIndex);
 
+                bindlessIndex = imageIndex;
                 image = context.Load(imageType, imagePointer);
             }
             else
             {
                 (var imageType, var imageVariable) = context.Images[new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format)];
 
+                bindlessIndex = null;
                 image = context.Load(imageType, imageVariable);
             }
+
+            pCoords = ScalingHelpers.ApplyScaling(context, texOp, pCoords, bindlessIndex, intCoords: true, isArray, pCount);
 
             var imageComponentType = context.GetType(componentType);
             var swizzledResultType = texOp.GetVectorType(componentType);
@@ -1543,8 +1546,11 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 }
             }
 
+
+
             SpvInstruction pCoords = AssemblePVector(pCount);
-            pCoords = ScalingHelpers.ApplyScaling(context, texOp, pCoords, intCoords, isBindless, isArray, pCount);
+            SpvInstruction bindlessIndex = isBindless ? GenerateBindlessTextureHandleToIndex(context, bindlessHandle) : null;
+            pCoords = ScalingHelpers.ApplyScaling(context, texOp, pCoords, bindlessIndex, intCoords, isArray, pCount);
 
             SpvInstruction AssembleDerivativesVector(int count)
             {
@@ -1784,6 +1790,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
             var meta = new TextureMeta(texOp.CbufSlot, texOp.Handle, texOp.Format);
 
+            SpvInstruction bindlessIndex;
             SpvInstruction imageType;
             SpvInstruction image;
 
@@ -1796,12 +1803,14 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                 var imageIndex = GenerateBindlessTextureHandleToIndex(context, bindlessHandle);
                 var imagePointer = context.AccessChain(imagePointerType, imageVariable, imageIndex);
 
+                bindlessIndex = imageIndex;
                 image = context.Load(imageType, imagePointer);
             }
             else
             {
                 (imageType, var sampledImageType, var sampledImageVariable) = context.Samplers[meta];
 
+                bindlessIndex = null;
                 image = context.Load(sampledImageType, sampledImageVariable);
             }
 
@@ -1845,7 +1854,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
 
                 if (texOp.Index < 2 || (type & SamplerType.Mask) == SamplerType.Texture3D)
                 {
-                    result = ScalingHelpers.ApplyUnscaling(context, texOp.WithType(type), result, isBindless);
+                    result = ScalingHelpers.ApplyUnscaling(context, texOp.WithType(type), result, bindlessIndex);
                 }
 
                 return new OperationResult(AggregateType.S32, result);
