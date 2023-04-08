@@ -528,7 +528,6 @@ namespace Ryujinx.Graphics.Gpu.Image
                 Logger.Debug?.Print(LogClass.Gpu, $"  Copy performed: {HostTexture.Width}x{HostTexture.Height} to {newStorage.Width}x{newStorage.Height}");
 
                 ReplaceStorage(newStorage);
-                ForceTexturePoolUpdate();
 
                 // All views must be recreated against the new storage.
 
@@ -541,7 +540,6 @@ namespace Ryujinx.Graphics.Gpu.Image
                     ITexture newView = HostTexture.CreateView(viewCreateInfo, view.FirstLayer - FirstLayer, view.FirstLevel - FirstLevel);
 
                     view.ReplaceStorage(newView);
-                    view.ForceTexturePoolUpdate();
                     view.ScaleMode = newScaleMode;
                 }
             }
@@ -554,17 +552,6 @@ namespace Ryujinx.Graphics.Gpu.Image
                 {
                     view.ScaleMode = newScaleMode;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Forces the entries on all texture pool where this texture is present to be updated.
-        /// </summary>
-        private void ForceTexturePoolUpdate()
-        {
-            foreach (TexturePoolOwner poolOwner in _poolOwners)
-            {
-                poolOwner.Pool.ForceModifiedEntry(poolOwner.ID);
             }
         }
 
@@ -1464,6 +1451,19 @@ namespace Ryujinx.Graphics.Gpu.Image
             DisposeTextures();
 
             HostTexture = hostTexture;
+
+            ForceTexturePoolUpdate();
+        }
+
+        /// <summary>
+        /// Forces the entries on all texture pool where this texture is present to be updated.
+        /// </summary>
+        private void ForceTexturePoolUpdate()
+        {
+            foreach (TexturePoolOwner poolOwner in _poolOwners)
+            {
+                poolOwner.Pool.ForceModifiedEntry(poolOwner.ID);
+            }
         }
 
         /// <summary>
