@@ -19,6 +19,7 @@ layout (set = 4, binding = 2) uniform texture2DArray bindless_textures2DArray[];
 layout (set = 4, binding = 2) uniform texture2DMS bindless_textures2DMS[];
 layout (set = 4, binding = 2) uniform texture2DMSArray bindless_textures2DMSArray[];
 layout (set = 4, binding = 2) uniform textureCubeArray bindless_texturesCubeArray[];
+layout (set = 5, binding = 0) uniform textureBuffer bindless_texturesBuffer[];
 layout (set = 6, binding = 0) uniform sampler bindless_samplers[];
 layout (set = 7, binding = 0) uniform image1D bindless_images1D[];
 layout (set = 7, binding = 0) uniform image2D bindless_images2D[];
@@ -29,6 +30,7 @@ layout (set = 7, binding = 0) uniform image2DArray bindless_images2DArray[];
 layout (set = 7, binding = 0) uniform image2DMS bindless_images2DMS[];
 layout (set = 7, binding = 0) uniform image2DMSArray bindless_images2DMSArray[];
 layout (set = 7, binding = 0) uniform imageCubeArray bindless_imagesCubeArray[];
+layout (set = 8, binding = 0) uniform imageBuffer bindless_imagesBuffer[];
 
 uint Helper_GetBindlessTextureIndex(int nvHandle)
 {

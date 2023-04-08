@@ -803,10 +803,12 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl.Instructions
                     SamplerType.Texture2D => DefaultNames.BindlessTextureArray2DName,
                     SamplerType.Texture3D => DefaultNames.BindlessTextureArray3DName,
                     SamplerType.TextureCube => DefaultNames.BindlessTextureArrayCubeName,
+                    SamplerType.TextureCube | SamplerType.Array => DefaultNames.BindlessTextureArrayCubeArrayName,
                     SamplerType.Texture1D | SamplerType.Array => DefaultNames.BindlessTextureArray1DArrayName,
                     SamplerType.Texture2D | SamplerType.Array => DefaultNames.BindlessTextureArray2DArrayName,
                     SamplerType.Texture2D | SamplerType.Multisample => DefaultNames.BindlessTextureArray2DMSName,
                     SamplerType.Texture2D | SamplerType.Multisample | SamplerType.Array => DefaultNames.BindlessTextureArray2DMSArrayName,
+                    SamplerType.TextureBuffer => DefaultNames.BindlessTextureArrayBufferName,
                     _ => DefaultNames.BindlessTextureArray2DName
                 };
 
@@ -832,10 +834,12 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl.Instructions
                     SamplerType.Texture2D => DefaultNames.BindlessImageArray2DName,
                     SamplerType.Texture3D => DefaultNames.BindlessImageArray3DName,
                     SamplerType.TextureCube => DefaultNames.BindlessImageArrayCubeName,
+                    SamplerType.TextureCube | SamplerType.Array => DefaultNames.BindlessImageArrayCubeArrayName,
                     SamplerType.Texture1D | SamplerType.Array => DefaultNames.BindlessImageArray1DArrayName,
                     SamplerType.Texture2D | SamplerType.Array => DefaultNames.BindlessImageArray2DArrayName,
                     SamplerType.Texture2D | SamplerType.Multisample => DefaultNames.BindlessImageArray2DMSName,
                     SamplerType.Texture2D | SamplerType.Multisample | SamplerType.Array => DefaultNames.BindlessImageArray2DMSArrayName,
+                    SamplerType.TextureBuffer => DefaultNames.BindlessImageArrayBufferName,
                     _ => DefaultNames.BindlessImageArray2DName
                 };
 

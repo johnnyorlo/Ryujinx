@@ -16,6 +16,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl
         public const string BindlessTextureArray2DMSName = "bindless_textures2DMS";
         public const string BindlessTextureArray2DMSArrayName = "bindless_textures2DMSArray";
         public const string BindlessTextureArrayCubeArrayName = "bindless_texturesCubeArray";
+        public const string BindlessTextureArrayBufferName = "bindless_texturesBuffer";
         public const string BindlessSamplerArrayName = "bindless_samplers";
         public const string BindlessImageArray1DName = "bindless_images1D";
         public const string BindlessImageArray2DName = "bindless_images2D";
@@ -26,6 +27,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Glsl
         public const string BindlessImageArray2DMSName = "bindless_images2DMS";
         public const string BindlessImageArray2DMSArrayName = "bindless_images2DMSArray";
         public const string BindlessImageArrayCubeArrayName = "bindless_imagesCubeArray";
+        public const string BindlessImageArrayBufferName = "bindless_imagesBuffer";
 
         public const string PerPatchAttributePrefix = "patch_attr_";
         public const string IAttributePrefix = "in_attr";
