@@ -15,6 +15,7 @@ namespace Ryujinx.Graphics.Shader.Translation
             bool isVertexShader = config.Stage == ShaderStage.Vertex;
             bool hasConstantBufferDrawParameters = config.GpuAccessor.QueryHasConstantBufferDrawParameters();
             bool supportsSnormBufferTextureFormat = config.GpuAccessor.QueryHostSupportsSnormBufferTextureFormat();
+            int textureBufferIndex = config.GpuAccessor.QueryTextureBufferIndex();
 
             for (int blkIndex = 0; blkIndex < blocks.Length; blkIndex++)
             {
@@ -57,7 +58,7 @@ namespace Ryujinx.Graphics.Shader.Translation
                             }
                         }
 
-                        node = TurnIntoBindlessIfExceeding(node, config);
+                        node = TurnIntoBindlessIfExceeding(node, config, textureBufferIndex);
 
                         nextNode = node.Next;
                     }
@@ -759,7 +760,7 @@ namespace Ryujinx.Graphics.Shader.Translation
             return false;
         }
 
-        private static LinkedListNode<INode> TurnIntoBindlessIfExceeding(LinkedListNode<INode> node, ShaderConfig config)
+        private static LinkedListNode<INode> TurnIntoBindlessIfExceeding(LinkedListNode<INode> node, ShaderConfig config, int textureBufferIndex)
         {
             if (!(node.Value is TextureOperation texOp))
             {
@@ -769,7 +770,7 @@ namespace Ryujinx.Graphics.Shader.Translation
             // If it's already bindless, then we have nothing to do.
             if (texOp.Flags.HasFlag(TextureFlags.Bindless))
             {
-                if (IsIndexedAccess(texOp))
+                if (IsIndexedAccess(texOp, textureBufferIndex))
                 {
                     config.BindlessTextureFlags |= BindlessTextureFlags.BindlessNvn;
                     return node;
@@ -807,7 +808,7 @@ namespace Ryujinx.Graphics.Shader.Translation
             }
 
             (int textureWordOffset, int samplerWordOffset, TextureHandleType handleType) = TextureHandle.UnpackOffsets(texOp.Handle);
-            (int textureCbufSlot, int samplerCbufSlot) = TextureHandle.UnpackSlots(texOp.CbufSlot, TextureHandle.NvnTextureBufferIndex);
+            (int textureCbufSlot, int samplerCbufSlot) = TextureHandle.UnpackSlots(texOp.CbufSlot, textureBufferIndex);
 
             Operand handle = Cbuf(textureCbufSlot, textureWordOffset);
 
@@ -833,7 +834,7 @@ namespace Ryujinx.Graphics.Shader.Translation
             return node;
         }
 
-        private static bool IsIndexedAccess(TextureOperation texOp)
+        private static bool IsIndexedAccess(TextureOperation texOp, int textureBufferIndex)
         {
             // Try to detect a indexed access.
             // The access is considered indexed if the handle is loaded with a LDC instruction
@@ -850,7 +851,7 @@ namespace Ryujinx.Graphics.Shader.Translation
 
             Operand ldcSrc0 = handleAsgOp.GetSource(0);
 
-            return ldcSrc0.Type == OperandType.Constant && ldcSrc0.Value == TextureHandle.NvnTextureBufferIndex;
+            return ldcSrc0.Type == OperandType.Constant && ldcSrc0.Value == textureBufferIndex;
         }
 
         private static void RemoveBindlessTextureAccess(LinkedListNode<INode> node)

@@ -14,26 +14,30 @@ namespace Ryujinx.Graphics.Shader.Translation.Optimizations
             int sbUseMask = 0;
             int ubeUseMask = 0;
             bool fullBindlessAllowed = true;
+            int textureBufferIndex = config.GpuAccessor.QueryTextureBufferIndex();
 
             // Those passes are looking for specific patterns and only needs to run once.
             for (int blkIndex = 0; blkIndex < blocks.Length; blkIndex++)
             {
-                BasicBlock block = blocks[blkIndex];
-
-                for (LinkedListNode<INode> node = block.Operations.First; node != null; node = node.Next)
+                if (textureBufferIndex == TextureHandle.NvnTextureBufferIndex)
                 {
-                    for (int index = 0; index < node.Value.SourcesCount; index++)
-                    {
-                        Operand src = node.Value.GetSource(index);
+                    BasicBlock block = blocks[blkIndex];
 
-                        // The shader accessing constant buffer 2 is an indication that
-                        // the bindless access is for separate texture/sampler combinations.
-                        // Bindless elimination should be able to take care of that, but if it doesn't,
-                        // we still don't want to use full bindless for those cases
-                        if (src.Type == OperandType.ConstantBuffer && src.GetCbufSlot() == TextureHandle.NvnTextureBufferIndex)
+                    for (LinkedListNode<INode> node = block.Operations.First; node != null; node = node.Next)
+                    {
+                        for (int index = 0; index < node.Value.SourcesCount; index++)
                         {
-                            fullBindlessAllowed = false;
-                            break;
+                            Operand src = node.Value.GetSource(index);
+
+                            // The shader accessing constant buffer 2 is an indication that
+                            // the bindless access is for separate texture/sampler combinations.
+                            // Bindless elimination should be able to take care of that, but if it doesn't,
+                            // we still don't want to use full bindless for those cases
+                            if (src.Type == OperandType.ConstantBuffer && src.GetCbufSlot() == textureBufferIndex)
+                            {
+                                fullBindlessAllowed = false;
+                                break;
+                            }
                         }
                     }
                 }
