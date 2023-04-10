@@ -139,10 +139,12 @@ namespace Ryujinx.Graphics.OpenGL.Image
             {
                 return GL.NV.GetTextureHandle(texture);
             }
-            else
+            else if (HwCapabilities.SupportsArbBindlessTexture)
             {
                 return GL.Arb.GetTextureHandle(texture);
             }
+
+            return 0;
         }
 
         private static long GetTextureSamplerHandle(int texture, int sampler)
@@ -151,10 +153,12 @@ namespace Ryujinx.Graphics.OpenGL.Image
             {
                 return GL.NV.GetTextureSamplerHandle(texture, sampler);
             }
-            else
+            else if (HwCapabilities.SupportsArbBindlessTexture)
             {
                 return GL.Arb.GetTextureSamplerHandle(texture, sampler);
             }
+
+            return 0;
         }
 
         private static void MakeTextureHandleResident(long handle)
@@ -163,7 +167,7 @@ namespace Ryujinx.Graphics.OpenGL.Image
             {
                 GL.NV.MakeTextureHandleResident(handle);
             }
-            else
+            else if (HwCapabilities.SupportsArbBindlessTexture)
             {
                 GL.Arb.MakeTextureHandleResident(handle);
             }
@@ -175,7 +179,7 @@ namespace Ryujinx.Graphics.OpenGL.Image
             {
                 GL.NV.MakeTextureHandleNonResident(handle);
             }
-            else
+            else if (HwCapabilities.SupportsArbBindlessTexture)
             {
                 GL.Arb.MakeTextureHandleNonResident(handle);
             }

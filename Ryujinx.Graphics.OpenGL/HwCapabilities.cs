@@ -5,6 +5,7 @@ namespace Ryujinx.Graphics.OpenGL
 {
     static class HwCapabilities
     {
+        private static readonly Lazy<bool> _supportsArbBindlessTexture           = new Lazy<bool>(() => HasExtension("GL_ARB_bindless_texture"));
         private static readonly Lazy<bool> _supportsAlphaToCoverageDitherControl = new Lazy<bool>(() => HasExtension("GL_NV_alpha_to_coverage_dither_control"));
         private static readonly Lazy<bool> _supportsAstcCompression              = new Lazy<bool>(() => HasExtension("GL_KHR_texture_compression_astc_ldr"));
         private static readonly Lazy<bool> _supportsBlendEquationAdvanced        = new Lazy<bool>(() => HasExtension("GL_NV_blend_equation_advanced"));
@@ -51,6 +52,7 @@ namespace Ryujinx.Graphics.OpenGL
 
         public static bool UsePersistentBufferForFlush       => _gpuVendor.Value == GpuVendor.AmdWindows || _gpuVendor.Value == GpuVendor.Nvidia;
 
+        public static bool SupportsArbBindlessTexture           => _supportsArbBindlessTexture.Value;
         public static bool SupportsAlphaToCoverageDitherControl => _supportsAlphaToCoverageDitherControl.Value;
         public static bool SupportsAstcCompression              => _supportsAstcCompression.Value;
         public static bool SupportsBlendEquationAdvanced        => _supportsBlendEquationAdvanced.Value;
