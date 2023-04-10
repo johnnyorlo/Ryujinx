@@ -854,11 +854,6 @@ namespace Ryujinx.Graphics.Shader.Translation
             return ldcSrc0.Type == OperandType.Constant && ldcSrc0.Value == textureBufferIndex;
         }
 
-        private static void RemoveBindlessTextureAccess(LinkedListNode<INode> node)
-        {
-
-        }
-
         private static int FindDescriptorIndex(TextureDescriptor[] array, TextureOperation texOp)
         {
             for (int i = 0; i < array.Length; i++)

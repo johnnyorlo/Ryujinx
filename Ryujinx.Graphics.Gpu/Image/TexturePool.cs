@@ -2,6 +2,7 @@ using Ryujinx.Common.Logging;
 using Ryujinx.Graphics.GAL;
 using Ryujinx.Graphics.Gpu.Memory;
 using Ryujinx.Graphics.Texture;
+using Ryujinx.Memory;
 using Ryujinx.Memory.Range;
 using System;
 using System.Collections.Concurrent;
@@ -236,7 +237,7 @@ namespace Ryujinx.Graphics.Gpu.Image
 
             while ((id = ModifiedEntries.GetNextAndClear()) >= 0)
             {
-                Texture texture = Items[id] ?? GetValidated(id, true);
+                Texture texture = Items[id] ?? GetValidated(id);
 
                 if (texture != null)
                 {
@@ -262,11 +263,11 @@ namespace Ryujinx.Graphics.Gpu.Image
         /// <summary>
         /// Gets the texture at the given <paramref name="id"/> from the cache,
         /// or creates a new one if not found.
+        /// This will return null if the texture entry is considered invalid.
         /// </summary>
         /// <param name="id">Index of the texture on the pool</param>
-        /// <param name="forBindless">Indicates that the texture is only used for bindless access</param>
         /// <returns>Texture for the given pool index</returns>
-        private Texture GetValidated(int id, bool forBindless = false)
+        private Texture GetValidated(int id)
         {
             TextureDescriptor descriptor = GetDescriptor(id);
 
@@ -276,14 +277,6 @@ namespace Ryujinx.Graphics.Gpu.Image
             }
 
             TextureInfo info = GetInfo(descriptor, out int layerSize);
-
-            // For bindless, we exclude 3D textures due to the current method used for 2D to 3D
-            // slice copies, that only happens when the 3D texture is created for the first time.
-            /* if (forBindless && info.Target == Target.Texture3D)
-            {
-                return null;
-            }*/
-
             TextureValidationResult validationResult = TextureValidation.Validate(ref info);
 
             if (validationResult != TextureValidationResult.Valid)
@@ -292,7 +285,9 @@ namespace Ryujinx.Graphics.Gpu.Image
             }
 
             // TODO: Eventually get rid of that...
-            if (forBindless && (info.Width > 8192 || info.Height > 8192 || info.DepthOrLayers > 8192))
+            // For now it avoids creating textures for garbage entries in some cases, but it is not
+            // correct as a width or height of 8192 is valid (although extremely unlikely).
+            if (info.Width > 8192 || info.Height > 8192 || info.DepthOrLayers > 8192)
             {
                 return null;
             }
@@ -301,7 +296,7 @@ namespace Ryujinx.Graphics.Gpu.Image
             {
                 return Get(id);
             }
-            catch (Ryujinx.Memory.InvalidMemoryRegionException)
+            catch (InvalidMemoryRegionException)
             {
                 return null;
             }

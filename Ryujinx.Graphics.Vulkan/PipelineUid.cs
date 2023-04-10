@@ -22,7 +22,7 @@ namespace Ryujinx.Graphics.Vulkan
         public ulong Id8;
         public ulong Id9;
         public ulong Id10;
-        public ulong Id11;
+        public ulong Id11 = 0; // Unused.
 
         private uint VertexAttributeDescriptionsCount => (byte)((Id6 >> 38) & 0xFF);
         private uint VertexBindingDescriptionsCount => (byte)((Id6 >> 46) & 0xFF);

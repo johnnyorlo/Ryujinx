@@ -62,8 +62,6 @@ namespace Ryujinx.Graphics.Gpu.Image
 
         private BindlessTextureFlags[] _bindlessTextureFlags;
 
-        private readonly HashSet<Texture> _bindlessTextures = new HashSet<Texture>();
-
         private int _textureBufferIndex;
 
         private readonly float[] _scales;
@@ -824,8 +822,6 @@ namespace Ryujinx.Graphics.Gpu.Image
                 {
                     continue;
                 }
-
-                // _bindlessTextures.Add(texture);
 
                 if (texture.Target == Target.TextureBuffer)
                 {

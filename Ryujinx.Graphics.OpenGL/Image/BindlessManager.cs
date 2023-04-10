@@ -111,7 +111,6 @@ namespace Ryujinx.Graphics.OpenGL.Image
             if (bindlessHandle != 0 && texture.AddBindlessHandle(textureId, samplerId, this, bindlessHandle))
             {
                 _handles.Add(bindlessHandle);
-                // System.Console.WriteLine($"Register {textureId} {samplerId} 0x{bindlessHandle:X} {texture.Info.Width}x{texture.Info.Height} {texture.Info.Target} {texture.Format} | {_handles.Count}");
                 MakeTextureHandleResident(bindlessHandle);
                 _handleManager.AddBindlessHandle(textureId, samplerId, bindlessHandle, texture.ScaleFactor);
             }
@@ -119,7 +118,6 @@ namespace Ryujinx.Graphics.OpenGL.Image
 
         public void Unregister(int textureId, int samplerId, long bindlessHandle)
         {
-            // System.Console.WriteLine($"Unregister {textureId} {samplerId} 0x{bindlessHandle:X}");
             _handleManager.RemoveBindlessHandle(textureId, samplerId);
             MakeTextureHandleNonResident(bindlessHandle);
             _handles.Remove(bindlessHandle);

@@ -50,7 +50,7 @@ namespace Ryujinx.Graphics.Gpu.Memory
         public bool AsBindless { get; }
 
         /// <summary>
-        /// For bindless textures, indicates  the texture ID.
+        /// For bindless textures, indicates the texture ID.
         /// </summary>
         public int TextureId { get; }
 

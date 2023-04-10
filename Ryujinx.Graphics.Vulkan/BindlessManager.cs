@@ -262,11 +262,6 @@ namespace Ryujinx.Graphics.Vulkan
                 {
                     var bufferView = buffer.GetBufferView(cbs);
 
-                    if (bufferView.Handle == 0)
-                    {
-                        // throw new Exception("buffer texture has invalid buffer view...");
-                    }
-
                     bbtDsc.UpdateBufferImage(0, 0, i, bufferView, DescriptorType.UniformTexelBuffer);
 
                     if (buffer.Format.IsImageCompatible())

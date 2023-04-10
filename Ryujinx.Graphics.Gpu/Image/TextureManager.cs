@@ -1,7 +1,6 @@
 ﻿using Ryujinx.Graphics.GAL;
 using Ryujinx.Graphics.Gpu.Engine.Types;
 using Ryujinx.Graphics.Gpu.Shader;
-using Ryujinx.Graphics.Shader;
 using System;
 
 namespace Ryujinx.Graphics.Gpu.Image

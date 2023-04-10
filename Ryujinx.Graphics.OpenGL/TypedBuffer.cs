@@ -51,7 +51,6 @@ namespace Ryujinx.Graphics.OpenGL
 
             if (Size < size)
             {
-                // System.Console.WriteLine("buffer resized " + Size + " -> " + size);
                 BufferHandle oldBuffer = _buffer;
                 BufferHandle newBuffer = _renderer.CreateBuffer(size, BufferHandle.Null);
                 _renderer.SetBufferData(newBuffer, 0, new byte[size]);

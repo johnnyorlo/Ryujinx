@@ -126,7 +126,7 @@ namespace Ryujinx.Graphics.OpenGL.Image
         /// <param name="renderer">Renderer</param>
         public void Bind(OpenGLRenderer renderer)
         {
-            // TODO: Proper shader stage.
+            // TODO: Proper shader stage (doesn't really matter as the OpenGL backend doesn't use this at all).
             renderer.Pipeline.SetTextureAndSampler(ShaderStage.Vertex, 0, _bufferTextureForTextureList, null);
             renderer.Pipeline.SetTextureAndSampler(ShaderStage.Vertex, 1, _bufferTextureForHandleList, null);
         }

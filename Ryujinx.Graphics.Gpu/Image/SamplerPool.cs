@@ -149,6 +149,7 @@ namespace Ryujinx.Graphics.Gpu.Image
         /// <summary>
         /// Gets the sampler at the given <paramref name="id"/> from the cache,
         /// or creates a new one if not found.
+        /// This will return null if the sampler entry is considered invalid.
         /// </summary>
         /// <param name="id">Index of the sampler on the pool</param>
         /// <returns>Sampler for the given pool index</returns>
