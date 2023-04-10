@@ -36,7 +36,7 @@ ivec2 Helper_TexelFetchScaleBindless(ivec2 inputVec, int nvHandle)
     return ivec2(vec2(inputVec) * scale + mod(gl_FragCoord.xy, scale));
 }
 
-int Helper_TextureSizeUnscaleBindless(int size, int samplerIndex, int nvHandle)
+int Helper_TextureSizeUnscaleBindless(int size, int nvHandle)
 {
     float scale = Helper_GetBindlessScale(nvHandle);
     if (scale == 1.0)

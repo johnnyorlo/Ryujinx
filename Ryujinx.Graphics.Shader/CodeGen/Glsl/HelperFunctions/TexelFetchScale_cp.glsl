@@ -19,7 +19,7 @@ int Helper_TextureSizeUnscale(int size, int samplerIndex)
 }
 
 #ifdef HAS_BINDLESS
-ivec2 Helper_TexelFetchScaleBindless(ivec2 inputVec, int samplerIndex, int nvHandle)
+ivec2 Helper_TexelFetchScaleBindless(ivec2 inputVec, int nvHandle)
 {
     float scale = Helper_GetBindlessScale(nvHandle);
     if (scale == 1.0)
@@ -29,7 +29,7 @@ ivec2 Helper_TexelFetchScaleBindless(ivec2 inputVec, int samplerIndex, int nvHan
     return ivec2(vec2(inputVec) * scale);
 }
 
-int Helper_TextureSizeUnscaleBindless(int size, int samplerIndex, int nvHandle)
+int Helper_TextureSizeUnscaleBindless(int size, int nvHandle)
 {
     float scale = Helper_GetBindlessScale(nvHandle);
     if (scale == 1.0)
