@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Numerics;
 
 namespace Ryujinx.Graphics.Gpu.Image
@@ -9,43 +8,28 @@ namespace Ryujinx.Graphics.Gpu.Image
     class BitMap
     {
         private const int IntSize = 64;
+
+        private const int IntShift = 6;
         private const int IntMask = IntSize - 1;
 
-        private readonly List<ulong> _masks;
+        private readonly ulong[] _masks;
 
         /// <summary>
         /// Creates a new instance of the bitmap.
         /// </summary>
-        public BitMap()
+        /// <param name="count">Size (in bits) that the bitmap can hold</param>
+        public BitMap(int count)
         {
-            _masks = new List<ulong>(0);
+            _masks = new ulong[(count + IntMask) / IntSize];
         }
 
         /// <summary>
-        /// Creates a new instance of the bitmap.
-        /// </summary>
-        /// <param name="initialCapacity">Initial size (in bits) that the bitmap can hold</param>
-        public BitMap(int initialCapacity)
-        {
-            int count = (initialCapacity + IntMask) / IntSize;
-
-            _masks = new List<ulong>(count);
-
-            while (count-- > 0)
-            {
-                _masks.Add(0);
-            }
-        }
-
-        /// <summary>
-        /// Sets a bit on the list to 1.
+        /// Sets a bit to 1.
         /// </summary>
         /// <param name="bit">Index of the bit</param>
         /// <returns>True if the bit value was modified by this operation, false otherwise</returns>
         public bool Set(int bit)
         {
-            EnsureCapacity(bit + 1);
-
             int wordIndex = bit / IntSize;
             int wordBit   = bit & IntMask;
 
@@ -62,13 +46,49 @@ namespace Ryujinx.Graphics.Gpu.Image
         }
 
         /// <summary>
-        /// Sets a bit on the list to 0.
+        /// Sets a range of bits to 1.
+        /// </summary>
+        /// <param name="start">Inclusive index of the first bit to set</param>
+        /// <param name="end">Inclusive index of the last bit to set</param>
+        public void SetRange(int start, int end)
+        {
+            if (start == end)
+            {
+                Set(start);
+                return;
+            }
+
+            int startIndex = start >> IntShift;
+            int startBit = start & IntMask;
+            ulong startMask = ulong.MaxValue << startBit;
+
+            int endIndex = end >> IntShift;
+            int endBit = end & IntMask;
+            ulong endMask = ulong.MaxValue >> (IntMask - endBit);
+
+            if (startIndex == endIndex)
+            {
+                _masks[startIndex] |= startMask & endMask;
+            }
+            else
+            {
+                _masks[startIndex] |= startMask;
+
+                for (int i = startIndex + 1; i < endIndex; i++)
+                {
+                    _masks[i] = ulong.MaxValue;
+                }
+
+                _masks[endIndex] |= endMask;
+            }
+        }
+
+        /// <summary>
+        /// Sets a bit to 0.
         /// </summary>
         /// <param name="bit">Index of the bit</param>
         public void Clear(int bit)
         {
-            EnsureCapacity(bit + 1);
-
             int wordIndex = bit / IntSize;
             int wordBit   = bit & IntMask;
 
@@ -78,21 +98,21 @@ namespace Ryujinx.Graphics.Gpu.Image
         }
 
         /// <summary>
-        /// Finds the first bit on the list with a value of 0.
+        /// Finds the first bit with a value of 0.
         /// </summary>
-        /// <returns>Index of the bit with value 0</returns>
+        /// <returns>Index of the bit with value 0, or -1 if none found</returns>
         public int FindFirstUnset()
         {
             int index = 0;
 
-            while (index < _masks.Count && _masks[index] == ulong.MaxValue)
+            while (index < _masks.Length && _masks[index] == ulong.MaxValue)
             {
                 index++;
             }
 
-            if (index == _masks.Count)
+            if (index == _masks.Length)
             {
-                _masks.Add(0);
+                return -1;
             }
 
             int bit = index * IntSize;
@@ -100,18 +120,6 @@ namespace Ryujinx.Graphics.Gpu.Image
             bit += BitOperations.TrailingZeroCount(~_masks[index]);
 
             return bit;
-        }
-
-        /// <summary>
-        /// Ensures that the array can hold a given number of bits, resizing as needed.
-        /// </summary>
-        /// <param name="size">Number of bits</param>
-        private void EnsureCapacity(int size)
-        {
-            while (_masks.Count * IntSize < size)
-            {
-                _masks.Add(0);
-            }
         }
 
         private int _iterIndex;
@@ -123,21 +131,21 @@ namespace Ryujinx.Graphics.Gpu.Image
         public void BeginIterating()
         {
             _iterIndex = 0;
-            _iterMask = _masks.Count != 0 ? _masks[0] : 0;
+            _iterMask = _masks.Length != 0 ? _masks[0] : 0;
         }
 
         /// <summary>
-        /// Gets the next bit set to 1 on the list.
+        /// Gets the next bit set to 1.
         /// </summary>
         /// <returns>Index of the bit, or -1 if none found</returns>
         public int GetNext()
         {
-            if (_iterIndex >= _masks.Count)
+            if (_iterIndex >= _masks.Length)
             {
                 return -1;
             }
 
-            while (_iterMask == 0 && _iterIndex + 1 < _masks.Count)
+            while (_iterMask == 0 && _iterIndex + 1 < _masks.Length)
             {
                 _iterMask = _masks[++_iterIndex];
             }
@@ -155,19 +163,19 @@ namespace Ryujinx.Graphics.Gpu.Image
         }
 
         /// <summary>
-        /// Gets the next bit set to 1 on the list, while also setting it to 0.
+        /// Gets the next bit set to 1, while also setting it to 0.
         /// </summary>
         /// <returns>Index of the bit, or -1 if none found</returns>
         public int GetNextAndClear()
         {
-            if (_iterIndex >= _masks.Count)
+            if (_iterIndex >= _masks.Length)
             {
                 return -1;
             }
 
             ulong mask = _masks[_iterIndex];
 
-            while (mask == 0 && _iterIndex + 1 < _masks.Count)
+            while (mask == 0 && _iterIndex + 1 < _masks.Length)
             {
                 mask = _masks[++_iterIndex];
             }

@@ -331,6 +331,23 @@ namespace Ryujinx.Graphics.Gpu.Image
             // If it wasn't, then it's possible to avoid looking up textures again when the handle remains the same.
             if (_cachedTexturePool != texturePool || _cachedSamplerPool != samplerPool)
             {
+                bool anyFullBindless = false;
+
+                for (int index = 0; index < (_isCompute ? 1 : _bindlessTextureFlags.Length); index++)
+                {
+                    if (_bindlessTextureFlags[index].HasFlag(BindlessTextureFlags.BindlessFull))
+                    {
+                        anyFullBindless = true;
+                        break;
+                    }
+                }
+
+                if (anyFullBindless)
+                {
+                    texturePool?.ForceModifiedEntries();
+                    samplerPool?.ForceModifiedEntries();
+                }
+
                 Rebind();
 
                 _cachedTexturePool = texturePool;

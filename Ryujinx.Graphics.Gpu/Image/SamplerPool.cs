@@ -1,4 +1,5 @@
 using Ryujinx.Graphics.Gpu.Memory;
+using System;
 using System.Collections.Generic;
 
 namespace Ryujinx.Graphics.Gpu.Image
@@ -172,6 +173,8 @@ namespace Ryujinx.Graphics.Gpu.Image
         {
             ulong endAddress = address + size;
 
+            UpdateModifiedEntries(address, endAddress);
+
             for (; address < endAddress; address += DescriptorSize)
             {
                 int id = (int)((address - Address) / DescriptorSize);
@@ -192,8 +195,6 @@ namespace Ryujinx.Graphics.Gpu.Image
 
                     Items[id] = null;
                 }
-
-                ModifiedEntries.Set(id);
             }
         }
 

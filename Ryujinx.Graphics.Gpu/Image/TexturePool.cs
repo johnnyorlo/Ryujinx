@@ -429,6 +429,8 @@ namespace Ryujinx.Graphics.Gpu.Image
 
             ulong endAddress = address + size;
 
+            UpdateModifiedEntries(address, endAddress);
+
             for (; address < endAddress; address += DescriptorSize)
             {
                 int id = (int)((address - Address) / DescriptorSize);
@@ -457,8 +459,6 @@ namespace Ryujinx.Graphics.Gpu.Image
                         texture.DecrementReferenceCount(this, id);
                     }
                 }
-
-                ModifiedEntries.Set(id);
             }
         }
 
