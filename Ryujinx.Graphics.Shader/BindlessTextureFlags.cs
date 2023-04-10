@@ -6,8 +6,6 @@ namespace Ryujinx.Graphics.Shader
 
         BindlessConverted = 1 << 0,
         BindlessNvn = 1 << 1,
-        BindlessNvnSeparate = 1 << 2,
-        BindlessNvnImage = 1 << 3,
-        BindlessFull = 1 << 4
+        BindlessFull = 1 << 2
     }
 }
