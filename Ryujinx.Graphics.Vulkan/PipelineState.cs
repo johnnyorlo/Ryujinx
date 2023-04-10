@@ -339,6 +339,7 @@ namespace Ryujinx.Graphics.Vulkan
 
             LineWidth = 1f;
             SamplesCount = 1;
+            Internal.Id11 = 0; // Unused.
         }
 
         public unsafe Auto<DisposablePipeline> CreateComputePipeline(

@@ -9,28 +9,8 @@ namespace Ryujinx.Graphics.OpenGL.Image
     /// </summary>
     class BindlessManager
     {
-        private struct IdList
-        {
-            public int Id { get; }
-            public HashSet<int> Others { get; }
-
-            public IdList(int id)
-            {
-                Id = id;
-                Others = null;
-            }
-
-            public IdList(HashSet<int> others)
-            {
-                Id = 0;
-                Others = others;
-            }
-        }
-
         private readonly OpenGLRenderer _renderer;
         private BindlessHandleManager _handleManager;
-        private readonly Dictionary<TextureView, IdList> _textures;
-        private readonly Dictionary<Sampler, IdList> _samplers;
         private readonly Dictionary<int, ITexture> _separateTextures;
         private readonly Dictionary<int, ISampler> _separateSamplers;
 
@@ -39,8 +19,6 @@ namespace Ryujinx.Graphics.OpenGL.Image
         public BindlessManager(OpenGLRenderer renderer)
         {
             _renderer = renderer;
-            _textures = new Dictionary<TextureView, IdList>();
-            _samplers = new Dictionary<Sampler, IdList>();
             _separateTextures = new Dictionary<int, ITexture>();
             _separateSamplers = new Dictionary<int, ISampler>();
         }
