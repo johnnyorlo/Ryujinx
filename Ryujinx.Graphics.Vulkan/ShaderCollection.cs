@@ -15,6 +15,7 @@ namespace Ryujinx.Graphics.Vulkan
 
         private readonly PipelineLayoutCacheEntry _plce;
 
+        public bool HasBindless { get; }
         public bool HasMinimalLayout { get; }
         public bool UsePushDescriptors { get; }
         public bool IsCompute { get; }
@@ -52,7 +53,13 @@ namespace Ryujinx.Graphics.Vulkan
         private Task _compileTask;
         private bool _firstBackgroundUse;
 
-        public ShaderCollection(VulkanRenderer gd, Device device, ShaderSource[] shaders, SpecDescription[] specDescription = null, bool isMinimal = false)
+        public ShaderCollection(
+            VulkanRenderer gd,
+            Device device,
+            ShaderSource[] shaders,
+            SpecDescription[] specDescription = null,
+            bool hasBindless = false,
+            bool isMinimal = false)
         {
             _gd = gd;
             _device = device;
@@ -103,6 +110,7 @@ namespace Ryujinx.Graphics.Vulkan
                 ? gd.PipelineLayoutCache.Create(gd, device, shaders)
                 : gd.PipelineLayoutCache.GetOrCreate(gd, device, stages, usePushDescriptors);
 
+            HasBindless = hasBindless;
             HasMinimalLayout = isMinimal;
             UsePushDescriptors = usePushDescriptors;
 
@@ -140,7 +148,8 @@ namespace Ryujinx.Graphics.Vulkan
             Device device,
             ShaderSource[] sources,
             ProgramPipelineState state,
-            bool fromCache) : this(gd, device, sources)
+            bool hasBindless,
+            bool fromCache) : this(gd, device, sources, null, hasBindless)
         {
             _state = state;
 
@@ -233,6 +242,12 @@ namespace Ryujinx.Graphics.Vulkan
             pipeline.Stages[0] = _shaders[0].GetInfo();
             pipeline.StagesCount = 1;
 
+            if (HasBindless)
+            {
+                pipeline.BindlessTexturesCount = BindlessManager.MinimumTexturesCount;
+                pipeline.BindlessSamplersCount = BindlessManager.MinimumSamplersCount;
+            }
+
             pipeline.CreateComputePipeline(_gd, _device, this, (_gd.Pipeline as PipelineBase).PipelineCache);
             pipeline.Dispose();
         }
@@ -259,6 +274,12 @@ namespace Ryujinx.Graphics.Vulkan
             }
 
             pipeline.StagesCount = (uint)_shaders.Length;
+
+            if (HasBindless)
+            {
+                pipeline.BindlessTexturesCount = BindlessManager.MinimumTexturesCount;
+                pipeline.BindlessSamplersCount = BindlessManager.MinimumSamplersCount;
+            }
 
             pipeline.CreateGraphicsPipeline(_gd, _device, this, (_gd.Pipeline as PipelineBase).PipelineCache, renderPass.Value);
             pipeline.Dispose();

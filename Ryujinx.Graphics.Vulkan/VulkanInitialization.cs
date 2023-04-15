@@ -298,6 +298,14 @@ namespace Ryujinx.Graphics.Vulkan
 
             features2.PNext = &supportedFeaturesVk11;
 
+            PhysicalDeviceVulkan12Features supportedFeaturesVk12 = new PhysicalDeviceVulkan12Features()
+            {
+                SType = StructureType.PhysicalDeviceVulkan12Features,
+                PNext = features2.PNext
+            };
+
+            features2.PNext = &supportedFeaturesVk12;
+
             PhysicalDeviceCustomBorderColorFeaturesEXT supportedFeaturesCustomBorderColor = new PhysicalDeviceCustomBorderColorFeaturesEXT()
             {
                 SType = StructureType.PhysicalDeviceCustomBorderColorFeaturesExt,
@@ -365,8 +373,8 @@ namespace Ryujinx.Graphics.Vulkan
                 ShaderFloat64 = supportedFeatures.ShaderFloat64,
                 ShaderImageGatherExtended = supportedFeatures.ShaderImageGatherExtended,
                 ShaderStorageImageMultisample = supportedFeatures.ShaderStorageImageMultisample,
-                // ShaderStorageImageReadWithoutFormat = true,
-                // ShaderStorageImageWriteWithoutFormat = true,
+                ShaderStorageImageReadWithoutFormat = supportedFeatures.ShaderStorageImageReadWithoutFormat,
+                ShaderStorageImageWriteWithoutFormat = supportedFeatures.ShaderStorageImageWriteWithoutFormat,
                 TessellationShader = supportedFeatures.TessellationShader,
                 VertexPipelineStoresAndAtomics = true,
                 RobustBufferAccess = useRobustBufferAccess
@@ -439,9 +447,15 @@ namespace Ryujinx.Graphics.Vulkan
             {
                 SType = StructureType.PhysicalDeviceVulkan12Features,
                 PNext = pExtendedFeatures,
+                DescriptorBindingSampledImageUpdateAfterBind = supportedFeaturesVk12.DescriptorBindingSampledImageUpdateAfterBind,
+                DescriptorBindingStorageImageUpdateAfterBind = supportedFeaturesVk12.DescriptorBindingStorageImageUpdateAfterBind,
+                DescriptorBindingStorageTexelBufferUpdateAfterBind = supportedFeaturesVk12.DescriptorBindingStorageTexelBufferUpdateAfterBind,
+                DescriptorBindingUniformTexelBufferUpdateAfterBind = supportedFeaturesVk12.DescriptorBindingUniformTexelBufferUpdateAfterBind,
                 DescriptorIndexing = physicalDevice.IsDeviceExtensionPresent("VK_EXT_descriptor_indexing"),
                 DrawIndirectCount = physicalDevice.IsDeviceExtensionPresent(KhrDrawIndirectCount.ExtensionName),
-                UniformBufferStandardLayout = physicalDevice.IsDeviceExtensionPresent("VK_KHR_uniform_buffer_standard_layout")
+                RuntimeDescriptorArray = supportedFeaturesVk12.RuntimeDescriptorArray,
+                SamplerMirrorClampToEdge = supportedFeaturesVk12.SamplerMirrorClampToEdge,
+                UniformBufferStandardLayout = physicalDevice.IsDeviceExtensionPresent("VK_KHR_uniform_buffer_standard_layout"),
             };
 
             pExtendedFeatures = &featuresVk12;

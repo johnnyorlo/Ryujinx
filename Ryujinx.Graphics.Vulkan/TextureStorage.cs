@@ -80,7 +80,7 @@ namespace Ryujinx.Graphics.Vulkan
 
             var sampleCountFlags = ConvertToSampleCountFlags(gd.Capabilities.SupportedSampleCounts, (uint)info.Samples);
 
-            var usage = GetImageUsageFromFormat(info.Format);
+            var usage = GetImageUsageFromFormat(info.Format, forceStorage: true);
 
             var flags = ImageCreateFlags.CreateMutableFormatBit;
 
@@ -293,7 +293,7 @@ namespace Ryujinx.Graphics.Vulkan
             }
         }
 
-        public static ImageUsageFlags GetImageUsageFromFormat(GAL.Format format)
+        public static ImageUsageFlags GetImageUsageFromFormat(GAL.Format format, bool forceStorage = false)
         {
             var usage = DefaultUsageFlags;
 
@@ -306,7 +306,7 @@ namespace Ryujinx.Graphics.Vulkan
                 usage |= ImageUsageFlags.ColorAttachmentBit;
             }
 
-            if (format.IsImageCompatible())
+            if ((forceStorage && !format.IsDepthOrStencil()) || format.IsImageCompatible())
             {
                 usage |= ImageUsageFlags.StorageBit;
             }

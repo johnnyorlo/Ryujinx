@@ -224,7 +224,9 @@ namespace Ryujinx.Graphics.Gpu.Shader
 
             ShaderSource[] shaderSourcesArray = new ShaderSource[] { CreateShaderSource(translatedShader.Program) };
 
-            IProgram hostProgram = _context.Renderer.CreateProgram(shaderSourcesArray, new ShaderInfo(-1));
+            bool hasBindless = translatedShader.Shader.Info.BindlessTextureFlags != BindlessTextureFlags.None;
+
+            IProgram hostProgram = _context.Renderer.CreateProgram(shaderSourcesArray, new ShaderInfo(-1, hasBindless));
 
             cpShader = new CachedShaderProgram(hostProgram, specState, translatedShader.Shader);
 
@@ -363,6 +365,8 @@ namespace Ryujinx.Graphics.Gpu.Shader
 
             TranslatorContext previousStage = null;
 
+            bool hasBindless = false;
+
             for (int stageIndex = 0; stageIndex < Constants.ShaderStages; stageIndex++)
             {
                 TranslatorContext currentStage = translatorContexts[stageIndex + 1];
@@ -398,6 +402,11 @@ namespace Ryujinx.Graphics.Gpu.Shader
                     if (program != null)
                     {
                         shaderSources.Add(CreateShaderSource(program));
+
+                        if (program.Info.BindlessTextureFlags != BindlessTextureFlags.None)
+                        {
+                            hasBindless = true;
+                        }
                     }
 
                     previousStage = currentStage;
@@ -415,7 +424,7 @@ namespace Ryujinx.Graphics.Gpu.Shader
             ShaderSource[] shaderSourcesArray = shaderSources.ToArray();
 
             int fragmentOutputMap = shaders[5]?.Info.FragmentOutputMap ?? -1;
-            IProgram hostProgram = _context.Renderer.CreateProgram(shaderSourcesArray, new ShaderInfo(fragmentOutputMap, pipeline));
+            IProgram hostProgram = _context.Renderer.CreateProgram(shaderSourcesArray, new ShaderInfo(fragmentOutputMap, hasBindless, pipeline));
 
             gpShaders = new CachedShaderProgram(hostProgram, specState, shaders);
 

@@ -485,12 +485,18 @@ namespace Ryujinx.Graphics.Gpu.Shader.DiskCache
             {
                 ShaderSource[] shaderSources = new ShaderSource[compilation.TranslatedStages.Length];
 
+                bool hasBindless = false;
                 int fragmentOutputMap = -1;
 
                 for (int index = 0; index < compilation.TranslatedStages.Length; index++)
                 {
                     ShaderProgram shader = compilation.TranslatedStages[index];
                     shaderSources[index] = CreateShaderSource(shader);
+
+                    if (shader.Info.BindlessTextureFlags != BindlessTextureFlags.None)
+                    {
+                        hasBindless = true;
+                    }
 
                     if (shader.Info.Stage == ShaderStage.Fragment)
                     {
@@ -499,8 +505,8 @@ namespace Ryujinx.Graphics.Gpu.Shader.DiskCache
                 }
 
                 ShaderInfo shaderInfo = compilation.SpecializationState.PipelineState.HasValue
-                    ? new ShaderInfo(fragmentOutputMap, compilation.SpecializationState.PipelineState.Value, fromCache: true)
-                    : new ShaderInfo(fragmentOutputMap, fromCache: true);
+                    ? new ShaderInfo(fragmentOutputMap, hasBindless, compilation.SpecializationState.PipelineState.Value, fromCache: true)
+                    : new ShaderInfo(fragmentOutputMap, hasBindless, fromCache: true);
 
                 IProgram hostProgram = _context.Renderer.CreateProgram(shaderSources, shaderInfo);
                 CachedShaderProgram program = new CachedShaderProgram(hostProgram, compilation.SpecializationState, compilation.Shaders);

@@ -21,6 +21,9 @@ namespace Ryujinx.Graphics.Vulkan
         // Note that each entry must be aligned to 16 bytes, this is a constant buffer layout restriction.
         private const int IdMapElements = 4;
 
+        public const uint MinimumTexturesCount = 256;
+        public const uint MinimumSamplersCount = 256;
+
         private readonly Dictionary<int, int> _textureIdMap;
         private readonly Dictionary<int, int> _samplerIdMap;
         private readonly ulong[] _textureBlockBitmap;
@@ -68,12 +71,12 @@ namespace Ryujinx.Graphics.Vulkan
 
         private uint CalculateTexturesCount()
         {
-            return (uint)BitUtils.Pow2RoundUp(_textureRefs.Length);
+            return Math.Max(MinimumTexturesCount, (uint)BitUtils.Pow2RoundUp(_textureRefs.Length));
         }
 
         private uint CalculateSamplersCount()
         {
-            return (uint)BitUtils.Pow2RoundUp(_samplerRefs.Length);
+            return Math.Max(MinimumSamplersCount, (uint)BitUtils.Pow2RoundUp(_samplerRefs.Length));
         }
 
         public void SetBindlessTexture(int textureId, ITexture texture)

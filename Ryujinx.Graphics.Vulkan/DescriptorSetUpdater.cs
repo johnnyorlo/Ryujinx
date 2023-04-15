@@ -342,12 +342,21 @@ namespace Ryujinx.Graphics.Vulkan
                 UpdateAndBind(cbs, PipelineBase.ImageSetIndex, pbp);
             }
 
-            if (_dirty.HasFlag(DirtyFlags.Bindless) && !_program.HasMinimalLayout)
+            DirtyFlags newFlags = DirtyFlags.None;
+
+            if (_dirty.HasFlag(DirtyFlags.Bindless))
             {
-                _bindlessManager.UpdateAndBind(_gd, _program, cbs, pbp, _dummySampler);
+                if (_program.HasBindless)
+                {
+                    _bindlessManager.UpdateAndBind(_gd, _program, cbs, pbp, _dummySampler);
+                }
+                else
+                {
+                    newFlags = DirtyFlags.Bindless;
+                }
             }
 
-            _dirty = DirtyFlags.None;
+            _dirty = newFlags;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -533,7 +542,9 @@ namespace Ryujinx.Graphics.Vulkan
                 }
             }
 
-            var pipelineLayout = _program.GetPipelineLayout(_gd, BindlessTexturesCount, BindlessSamplersCount);
+            (uint bindlessTexturesCount, uint bindlessSamplersCount) = GetBindlessCountsForProgram();
+
+            var pipelineLayout = _program.GetPipelineLayout(_gd, bindlessTexturesCount, bindlessSamplersCount);
             var sets = dsc.GetSets();
 
             _gd.Api.CmdBindDescriptorSets(cbs.CommandBuffer, pbp, pipelineLayout, (uint)setIndex, 1, sets, 0, ReadOnlySpan<uint>.Empty);
@@ -551,7 +562,9 @@ namespace Ryujinx.Graphics.Vulkan
                 return;
             }
 
-            var pipelineLayout = _program.GetPipelineLayout(_gd, BindlessTexturesCount, BindlessSamplersCount);
+            (uint bindlessTexturesCount, uint bindlessSamplersCount) = GetBindlessCountsForProgram();
+
+            var pipelineLayout = _program.GetPipelineLayout(_gd, bindlessTexturesCount, bindlessSamplersCount);
 
             fixed (DescriptorBufferInfo* pBufferInfo = bufferInfo)
             {
@@ -627,6 +640,16 @@ namespace Ryujinx.Graphics.Vulkan
                     }
                 }
             }
+        }
+
+        private (uint, uint) GetBindlessCountsForProgram()
+        {
+            if (_program == null || !_program.HasBindless)
+            {
+                return (0, 0);
+            }
+
+            return (BindlessTexturesCount, BindlessSamplersCount);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

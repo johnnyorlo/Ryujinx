@@ -239,9 +239,24 @@ namespace Ryujinx.Graphics.Vulkan
 
         public unsafe void ClearRenderTargetDepthStencil(int layer, int layerCount, float depthValue, bool depthMask, int stencilValue, int stencilMask)
         {
-            // TODO: Use stencilMask (fully)
+            // TODO: Use stencilMask (fully).
 
             if (FramebufferParams == null || !FramebufferParams.HasDepthStencil)
+            {
+                return;
+            }
+
+            var clearValue = new ClearValue(null, new ClearDepthStencilValue(depthValue, (uint)stencilValue));
+            var flags = depthMask ? ImageAspectFlags.DepthBit : 0;
+
+            if (stencilMask != 0)
+            {
+                flags |= ImageAspectFlags.StencilBit;
+            }
+
+            flags &= FramebufferParams.GetDepthStencilAspectFlags();
+
+            if (flags == ImageAspectFlags.None)
             {
                 return;
             }
@@ -252,14 +267,6 @@ namespace Ryujinx.Graphics.Vulkan
             }
 
             BeginRenderPass();
-
-            var clearValue = new ClearValue(null, new ClearDepthStencilValue(depthValue, (uint)stencilValue));
-            var flags = depthMask ? ImageAspectFlags.DepthBit : 0;
-
-            if (stencilMask != 0)
-            {
-                flags |= ImageAspectFlags.StencilBit;
-            }
 
             var attachment = new ClearAttachment(flags, 0, clearValue);
             var clearRect = FramebufferParams.GetClearRect(ClearScissor, layer, layerCount);
@@ -708,7 +715,8 @@ namespace Ryujinx.Graphics.Vulkan
         {
             _descriptorSetUpdater.SetBindlessSampler(samplerId, sampler);
 
-            uint bindlessSamplersCount = _descriptorSetUpdater.BindlessSamplersCount;
+            bool hasBindless = _program?.HasBindless ?? false;
+            uint bindlessSamplersCount = hasBindless ? _descriptorSetUpdater.BindlessSamplersCount : 0;
 
             if (_newState.BindlessSamplersCount != bindlessSamplersCount)
             {
@@ -722,7 +730,8 @@ namespace Ryujinx.Graphics.Vulkan
         {
             _descriptorSetUpdater.SetBindlessTexture(textureId, texture);
 
-            uint bindlessTexturesCount = _descriptorSetUpdater.BindlessTexturesCount;
+            bool hasBindless = _program?.HasBindless ?? false;
+            uint bindlessTexturesCount = hasBindless ? _descriptorSetUpdater.BindlessTexturesCount : 0;
 
             if (_newState.BindlessTexturesCount != bindlessTexturesCount)
             {
@@ -972,9 +981,23 @@ namespace Ryujinx.Graphics.Vulkan
 
             stages.CopyTo(_newState.Stages.AsSpan().Slice(0, stages.Length));
 
+            if (internalProgram.HasBindless)
+            {
+                uint bindlessTexturesCount = _descriptorSetUpdater.BindlessTexturesCount;
+                uint bindlessSamplersCount = _descriptorSetUpdater.BindlessSamplersCount;
+
+                _newState.BindlessTexturesCount = bindlessTexturesCount;
+                _newState.BindlessSamplersCount = bindlessSamplersCount;
+            }
+            else
+            {
+                _newState.BindlessTexturesCount = 0;
+                _newState.BindlessSamplersCount = 0;
+            }
+
             SignalStateChange();
 
-            if (_program.IsCompute)
+            if (internalProgram.IsCompute)
             {
                 EndRenderPass();
             }
