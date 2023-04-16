@@ -716,6 +716,8 @@ namespace Ryujinx.Graphics.Vulkan
             {
                 _dummyTexture.Dispose();
                 _dummySampler.Dispose();
+
+                _bindlessManager.Dispose();
             }
         }
 

@@ -341,5 +341,19 @@ namespace Ryujinx.Graphics.Vulkan
             gd.Api.CmdBindDescriptorSets(cbs.CommandBuffer, pbp, pipelineLayout, PipelineBase.BindlessImagesSetIndex, 1, bindlessImages.GetSets(), 0, ReadOnlySpan<uint>.Empty);
             gd.Api.CmdBindDescriptorSets(cbs.CommandBuffer, pbp, pipelineLayout, PipelineBase.BindlessBufferImageSetIndex, 1, bindlessBufferImages.GetSets(), 0, ReadOnlySpan<uint>.Empty);
         }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _idMapBuffer?.Dispose();
+                _textureScalesBuffer?.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
     }
 }
