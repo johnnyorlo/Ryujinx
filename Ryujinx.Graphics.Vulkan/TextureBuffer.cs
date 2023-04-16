@@ -22,7 +22,7 @@ namespace Ryujinx.Graphics.Vulkan
         public int Width { get; }
         public int Height { get; }
 
-        public GAL.Format Format { get;}
+        public GAL.Format Format { get; }
         public VkFormat VkFormat { get; }
 
         public float ScaleFactor { get; }
