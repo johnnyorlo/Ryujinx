@@ -1135,7 +1135,7 @@ namespace Ryujinx.Graphics.Vulkan
                 scissors[0] = new Rectangle<int>(0, 0, dst.Width, dst.Height);
 
                 _pipeline.SetScissors(scissors);
-                _pipeline.SetViewports(viewports, false);
+                _pipeline.SetViewports(viewports);
                 _pipeline.SetPrimitiveTopology(GAL.PrimitiveTopology.TriangleStrip);
 
                 for (int z = 0; z < depth; z++)
