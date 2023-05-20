@@ -488,7 +488,7 @@ namespace Ryujinx.Graphics.Vulkan
                 _pipeline.ClearRenderTargetColor(0, 0, 1, new ColorF(0f, 0f, 0f, 1f));
             }
 
-            _pipeline.SetViewports(viewports, false);
+            _pipeline.SetViewports(viewports);
             _pipeline.SetPrimitiveTopology(GAL.PrimitiveTopology.TriangleStrip);
             _pipeline.Draw(4, 1, 0, 0);
 
@@ -564,7 +564,7 @@ namespace Ryujinx.Graphics.Vulkan
 
             _pipeline.SetRenderTarget(dst, (uint)dstWidth, (uint)dstHeight, (uint)dstSamples, true, dstFormat);
             _pipeline.SetScissors(scissors);
-            _pipeline.SetViewports(viewports, false);
+            _pipeline.SetViewports(viewports);
             _pipeline.SetPrimitiveTopology(GAL.PrimitiveTopology.TriangleStrip);
 
             var aspectFlags = src.Info.Format.ConvertAspectFlags();
@@ -728,7 +728,7 @@ namespace Ryujinx.Graphics.Vulkan
             _pipeline.SetProgram(program);
             _pipeline.SetRenderTarget(dst, (uint)dstWidth, (uint)dstHeight, false, dstFormat);
             _pipeline.SetRenderTargetColorMasks(new uint[] { componentMask });
-            _pipeline.SetViewports(viewports, false);
+            _pipeline.SetViewports(viewports);
             _pipeline.SetScissors(scissors);
             _pipeline.SetPrimitiveTopology(GAL.PrimitiveTopology.TriangleStrip);
             _pipeline.Draw(4, 1, 0, 0);
@@ -792,7 +792,7 @@ namespace Ryujinx.Graphics.Vulkan
             Span<Rectangle<int>> scissors = stackalloc Rectangle<int>[1];
 
             pipeline.SetProgram(_programColorBlit);
-            pipeline.SetViewports(viewports, false);
+            pipeline.SetViewports(viewports);
             pipeline.SetPrimitiveTopology(GAL.PrimitiveTopology.TriangleStrip);
             pipeline.Draw(4, 1, 0, 0);
 
@@ -1268,7 +1268,7 @@ namespace Ryujinx.Graphics.Vulkan
 
             _pipeline.SetRenderTargetColorMasks(new uint[] { 0xf });
             _pipeline.SetScissors(scissors);
-            _pipeline.SetViewports(viewports, false);
+            _pipeline.SetViewports(viewports);
             _pipeline.SetPrimitiveTopology(GAL.PrimitiveTopology.TriangleStrip);
 
             _pipeline.SetUniformBuffers(stackalloc[] { new BufferAssignment(0, new BufferRange(bufferHandle, 0, ParamsBufferSize)) });

@@ -159,7 +159,17 @@ namespace Ryujinx.Graphics.Shader.Translation
             _sbSlots        = new Dictionary<int, int>();
             _sbSlotsReverse = new Dictionary<int, int>();
 
-            Properties = new ShaderProperties();
+            switch (stage)
+            {
+                case ShaderStage.Fragment:
+                    bool originUpperLeft = options.TargetApi == TargetApi.Vulkan || gpuAccessor.QueryYNegateEnabled();
+                    Properties = new ShaderProperties(originUpperLeft);
+                    break;
+                default:
+                    Properties = new ShaderProperties();
+                    break;
+            }
+
             ResourceManager = new ResourceManager(stage, gpuAccessor, Properties);
         }
 

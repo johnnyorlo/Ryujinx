@@ -687,11 +687,10 @@ namespace Ryujinx.Graphics.Gpu.Engine.Threed
             var face = _state.State.FaceState;
 
             bool disableTransform = _state.State.ViewportTransformEnable == 0;
+            bool yNegate = yControl.HasFlag(YControl.NegateY);
 
             UpdateFrontFace(yControl, face.FrontFace);
             UpdateDepthMode();
-
-            bool flipY = yControl.HasFlag(YControl.NegateY);
 
             Span<Viewport> viewports = stackalloc Viewport[Constants.TotalViewports];
 
@@ -714,7 +713,7 @@ namespace Ryujinx.Graphics.Gpu.Engine.Threed
                 float scaleX = MathF.Abs(transform.ScaleX);
                 float scaleY = transform.ScaleY;
 
-                if (flipY)
+                if (yNegate)
                 {
                     scaleY = -scaleY;
                 }
@@ -760,10 +759,11 @@ namespace Ryujinx.Graphics.Gpu.Engine.Threed
             }
 
             _context.Renderer.Pipeline.SetDepthMode(GetDepthMode());
-            _context.Renderer.Pipeline.SetViewports(viewports, disableTransform);
+            _context.Renderer.Pipeline.SetViewports(viewports, disableTransform, yNegate);
 
             _currentSpecState.SetViewportTransformDisable(_state.State.ViewportTransformEnable == 0);
             _currentSpecState.SetDepthMode(GetDepthMode() == DepthMode.MinusOneToOne);
+            _currentSpecState.SetYNegateEnabled(yNegate);
         }
 
         /// <summary>
