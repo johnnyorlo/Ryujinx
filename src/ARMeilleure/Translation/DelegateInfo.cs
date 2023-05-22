@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 
 namespace ARMeilleure.Translation
 {
@@ -9,11 +8,10 @@ namespace ARMeilleure.Translation
 
         public IntPtr FuncPtr { get; }
 
-        public DelegateInfo(Delegate dlg)
+        public DelegateInfo(Delegate dlg, IntPtr funcPtr)
         {
             _dlg = dlg;
-
-            FuncPtr = Marshal.GetFunctionPointerForDelegate<Delegate>(dlg);
+            FuncPtr = funcPtr;
         }
     }
 }
