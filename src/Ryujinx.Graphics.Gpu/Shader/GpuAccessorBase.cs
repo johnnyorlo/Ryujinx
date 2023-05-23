@@ -18,6 +18,7 @@ namespace Ryujinx.Graphics.Gpu.Shader
         private readonly int _stageIndex;
 
         private readonly int[] _constantBufferBindings;
+        private readonly int[] _storageBufferBindings;
 
         /// <summary>
         /// Creates a new GPU accessor.
@@ -33,6 +34,9 @@ namespace Ryujinx.Graphics.Gpu.Shader
             {
                 _constantBufferBindings = new int[Constants.TotalGpUniformBuffers];
                 _constantBufferBindings.AsSpan().Fill(-1);
+
+                _storageBufferBindings = new int[Constants.TotalGpStorageBuffers];
+                _storageBufferBindings.AsSpan().Fill(-1);
             }
         }
 
@@ -65,7 +69,15 @@ namespace Ryujinx.Graphics.Gpu.Shader
             }
             else
             {
-                return _resourceCounts.StorageBuffersCount++;
+                int binding = _storageBufferBindings[index];
+
+                if (binding < 0)
+                {
+                    binding = _resourceCounts.StorageBuffersCount++;
+                    _storageBufferBindings[index] = binding;
+                }
+
+                return binding;
             }
         }
 
