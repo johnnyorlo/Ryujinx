@@ -537,6 +537,11 @@ namespace Ryujinx.Graphics.Gpu.Engine.Threed
             _drawState.DrawIndexed = indexed;
             _currentSpecState.SetHasConstantBufferDrawParameters(true);
 
+            if (instanceCount > 1)
+            {
+                _channel.BufferManager.SetInstancedDrawVertexCount(count);
+            }
+
             engine.UpdateState();
 
             if (indexed)
@@ -676,6 +681,8 @@ namespace Ryujinx.Graphics.Gpu.Engine.Threed
                         _channel.BufferManager.SetIndexBuffer(br, IndexType.UInt);
                     }
 
+                    _channel.BufferManager.SetInstancedDrawVertexCount(_instancedIndexCount);
+
                     _context.Renderer.Pipeline.DrawIndexed(
                         _instancedIndexCount,
                         _instanceIndex + 1,
@@ -685,6 +692,8 @@ namespace Ryujinx.Graphics.Gpu.Engine.Threed
                 }
                 else
                 {
+                    _channel.BufferManager.SetInstancedDrawVertexCount(_instancedDrawStateCount);
+
                     _context.Renderer.Pipeline.Draw(
                         _instancedDrawStateCount,
                         _instanceIndex + 1,

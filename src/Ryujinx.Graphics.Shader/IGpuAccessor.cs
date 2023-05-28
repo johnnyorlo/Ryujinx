@@ -79,7 +79,7 @@ namespace Ryujinx.Graphics.Shader
         /// <returns>Binding number</returns>
         int QueryBindingConstantBuffer(int index)
         {
-            return index;
+            return index + 1;
         }
 
         /// <summary>
@@ -345,6 +345,15 @@ namespace Ryujinx.Graphics.Shader
         /// </summary>
         /// <returns>True if the GPU and driver supports texture shadow LOD, false otherwise</returns>
         bool QueryHostSupportsTextureShadowLod()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Queries host GPU transform feedback support.
+        /// </summary>
+        /// <returns>True if the GPU and driver supports transform feedback, false otherwise</returns>
+        bool QueryHostSupportsTransformFeedback()
         {
             return true;
         }
