@@ -725,7 +725,7 @@ namespace Ryujinx.Graphics.Gpu.Memory
                     {
                         var isWrite = bounds.Flags.HasFlag(BufferUsageFlags.Write);
                         var range = isStorage
-                            ? bufferCache.GetBufferRangeTillEnd(bounds.Address, bounds.Size, isWrite)
+                            ? bufferCache.GetBufferRangeAligned(bounds.Address, bounds.Size, isWrite)
                             : bufferCache.GetBufferRange(bounds.Address, bounds.Size);
 
                         ranges[rangesCount++] = new BufferAssignment(bindingInfo.Binding, range);
@@ -762,7 +762,7 @@ namespace Ryujinx.Graphics.Gpu.Memory
                 {
                     var isWrite = bounds.Flags.HasFlag(BufferUsageFlags.Write);
                     var range = isStorage
-                        ? bufferCache.GetBufferRangeTillEnd(bounds.Address, bounds.Size, isWrite)
+                        ? bufferCache.GetBufferRangeAligned(bounds.Address, bounds.Size, isWrite)
                         : bufferCache.GetBufferRange(bounds.Address, bounds.Size);
 
                     ranges[rangesCount++] = new BufferAssignment(bindingInfo.Binding, range);
