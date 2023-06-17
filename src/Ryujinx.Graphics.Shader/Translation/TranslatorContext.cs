@@ -13,6 +13,7 @@ namespace Ryujinx.Graphics.Shader.Translation
     public class TranslatorContext
     {
         private readonly DecodedProgram _program;
+        private readonly int _localMemorySize;
 
         public ulong Address { get; }
         public int Size { get; }
@@ -30,8 +31,6 @@ namespace Ryujinx.Graphics.Shader.Translation
         internal IGpuAccessor GpuAccessor { get; }
 
         internal TranslationOptions Options { get; }
-
-        internal ResourceManager ResourceManager { get; set; }
 
         internal byte ClipDistancesWritten { get; private set; }
 
@@ -52,40 +51,12 @@ namespace Ryujinx.Graphics.Shader.Translation
             Address = address;
             Size = size;
             _program = program;
+            _localMemorySize = localMemorySize;
             Definitions = definitions;
             GpuAccessor = gpuAccessor;
             Options = options;
 
             SetUsedFeature(program.UsedFeatures);
-
-            var properties = new ShaderProperties();
-
-            ResourceManager = new ResourceManager(definitions.Stage, gpuAccessor, properties, localMemorySize);
-
-            if (!gpuAccessor.QueryHostSupportsTransformFeedback() && gpuAccessor.QueryTransformFeedbackEnabled())
-            {
-                StructureType tfeInfoStruct = new StructureType(new StructureField[]
-                {
-                    new StructureField(AggregateType.Array | AggregateType.U32, "base_offset", 4),
-                    new StructureField(AggregateType.U32, "vertex_count")
-                });
-
-                BufferDefinition tfeInfoBuffer = new BufferDefinition(BufferLayout.Std430, 1, Constants.TfeInfoBinding, "tfe_info", tfeInfoStruct);
-
-                properties.AddOrUpdateStorageBuffer(Constants.TfeInfoBinding, tfeInfoBuffer);
-
-                StructureType tfeDataStruct = new StructureType(new StructureField[]
-                {
-                    new StructureField(AggregateType.Array | AggregateType.U32, "data", 0)
-                });
-
-                for (int i = 0; i < Constants.TfeBuffersCount; i++)
-                {
-                    int binding = Constants.TfeBufferBaseBinding + i;
-                    BufferDefinition tfeDataBuffer = new BufferDefinition(BufferLayout.Std430, 1, binding, $"tfe_data{i}", tfeDataStruct);
-                    properties.AddOrUpdateStorageBuffer(binding, tfeDataBuffer);
-                }
-            }
         }
 
         private static bool IsLoadUserDefined(Operation operation)
@@ -186,13 +157,13 @@ namespace Ryujinx.Graphics.Shader.Translation
             return output;
         }
 
-        public int GetDepthRegister()
+        internal int GetDepthRegister()
         {
             // The depth register is always two registers after the last color output.
             return BitOperations.PopCount((uint)Definitions.OmapTargets) + 1;
         }
 
-        public void InheritFrom(TranslatorContext other)
+        private void InheritFrom(TranslatorContext other)
         {
             ClipDistancesWritten |= other.ClipDistancesWritten;
             UsedFeatures |= other.UsedFeatures;
@@ -247,13 +218,15 @@ namespace Ryujinx.Graphics.Shader.Translation
 
         public ShaderProgram Translate()
         {
-            FunctionCode[] code = EmitShader(this, _program, initializeOutputs: true, out _);
+            ResourceManager resourceManager = CreateResourceManager();
+
+            FunctionCode[] code = EmitShader(this, resourceManager, _program, initializeOutputs: true, out _);
 
             return Translator.Translate(
                 code,
                 AttributeUsage,
                 Definitions,
-                ResourceManager,
+                resourceManager,
                 GpuAccessor,
                 Options,
                 UsedFeatures,
@@ -262,31 +235,59 @@ namespace Ryujinx.Graphics.Shader.Translation
 
         public ShaderProgram Translate(TranslatorContext other)
         {
-            FunctionCode[] code = EmitShader(this, _program, initializeOutputs: false, out _);
+            ResourceManager resourceManager = CreateResourceManager();
 
-            if (other != null)
-            {
-                other.MergeOutputUserAttributes(AttributeUsage.UsedOutputAttributes, Enumerable.Empty<int>());
+            FunctionCode[] code = EmitShader(this, resourceManager, _program, initializeOutputs: false, out _);
 
-                // We need to share the resource manager since both shaders accesses the same constant buffers.
-                other.ResourceManager = ResourceManager;
+            other.MergeOutputUserAttributes(AttributeUsage.UsedOutputAttributes, Enumerable.Empty<int>());
 
-                FunctionCode[] otherCode = EmitShader(other, other._program, initializeOutputs: true, out int aStart);
+            FunctionCode[] otherCode = EmitShader(other, resourceManager, other._program, initializeOutputs: true, out int aStart);
 
-                code = Combine(otherCode, code, aStart);
+            code = Combine(otherCode, code, aStart);
 
-                InheritFrom(other);
-            }
+            InheritFrom(other);
 
             return Translator.Translate(
                 code,
                 AttributeUsage,
                 Definitions,
-                ResourceManager,
+                resourceManager,
                 GpuAccessor,
                 Options,
                 UsedFeatures,
                 ClipDistancesWritten);
+        }
+
+        private ResourceManager CreateResourceManager()
+        {
+            ResourceManager resourceManager = new ResourceManager(Definitions.Stage, GpuAccessor, _localMemorySize);
+
+            if (!GpuAccessor.QueryHostSupportsTransformFeedback() && GpuAccessor.QueryTransformFeedbackEnabled())
+            {
+                StructureType tfeInfoStruct = new StructureType(new StructureField[]
+                {
+                    new StructureField(AggregateType.Array | AggregateType.U32, "base_offset", 4),
+                    new StructureField(AggregateType.U32, "vertex_count")
+                });
+
+                BufferDefinition tfeInfoBuffer = new BufferDefinition(BufferLayout.Std430, 1, Constants.TfeInfoBinding, "tfe_info", tfeInfoStruct);
+
+                resourceManager.Properties.AddOrUpdateStorageBuffer(Constants.TfeInfoBinding, tfeInfoBuffer);
+
+                StructureType tfeDataStruct = new StructureType(new StructureField[]
+                {
+                    new StructureField(AggregateType.Array | AggregateType.U32, "data", 0)
+                });
+
+                for (int i = 0; i < Constants.TfeBuffersCount; i++)
+                {
+                    int binding = Constants.TfeBufferBaseBinding + i;
+                    BufferDefinition tfeDataBuffer = new BufferDefinition(BufferLayout.Std430, 1, binding, $"tfe_data{i}", tfeDataStruct);
+                    resourceManager.Properties.AddOrUpdateStorageBuffer(binding, tfeDataBuffer);
+                }
+            }
+
+            return resourceManager;
         }
 
         public ShaderProgram GenerateGeometryPassthrough()
@@ -315,7 +316,7 @@ namespace Ryujinx.Graphics.Shader.Translation
             }
 
             var attributeUsage = new AttributeUsage(GpuAccessor);
-            var resourceManager = new ResourceManager(ShaderStage.Geometry, GpuAccessor, new ShaderProperties(), 0);
+            var resourceManager = new ResourceManager(ShaderStage.Geometry, GpuAccessor, 0);
 
             var context = new EmitterContext();
 

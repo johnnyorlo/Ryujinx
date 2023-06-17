@@ -46,10 +46,10 @@ namespace Ryujinx.Graphics.Shader.Translation
 
         public ShaderProperties Properties => _properties;
 
-        public ResourceManager(ShaderStage stage, IGpuAccessor gpuAccessor, ShaderProperties properties, int localMemorySize)
+        public ResourceManager(ShaderStage stage, IGpuAccessor gpuAccessor, int localMemorySize)
         {
             _gpuAccessor = gpuAccessor;
-            _properties = properties;
+            _properties = new ShaderProperties();
             _stage = stage;
             _stagePrefix = GetShaderStagePrefix(stage);
 
@@ -66,7 +66,7 @@ namespace Ryujinx.Graphics.Shader.Translation
             _usedTextures = new Dictionary<TextureInfo, TextureMeta>();
             _usedImages = new Dictionary<TextureInfo, TextureMeta>();
 
-            properties.AddOrUpdateConstantBuffer(0, new BufferDefinition(BufferLayout.Std140, 0, 0, "support_buffer", SupportBuffer.GetStructureType()));
+            _properties.AddOrUpdateConstantBuffer(0, new BufferDefinition(BufferLayout.Std140, 0, 0, "support_buffer", SupportBuffer.GetStructureType()));
 
             LocalMemoryId = -1;
             SharedMemoryId = -1;
@@ -75,7 +75,7 @@ namespace Ryujinx.Graphics.Shader.Translation
             {
                 var lmem = new MemoryDefinition("local_memory", AggregateType.Array | AggregateType.U32, BitUtils.DivRoundUp(localMemorySize, sizeof(uint)));
 
-                LocalMemoryId = properties.AddLocalMemory(lmem);
+                LocalMemoryId = _properties.AddLocalMemory(lmem);
             }
 
             int sharedMemorySize = stage == ShaderStage.Compute ? gpuAccessor.QueryComputeSharedMemorySize() : 0;
@@ -84,7 +84,7 @@ namespace Ryujinx.Graphics.Shader.Translation
             {
                 var smem = new MemoryDefinition("shared_memory", AggregateType.Array | AggregateType.U32,  BitUtils.DivRoundUp(sharedMemorySize, sizeof(uint)));
 
-                SharedMemoryId = properties.AddSharedMemory(smem);
+                SharedMemoryId = _properties.AddSharedMemory(smem);
             }
         }
 
