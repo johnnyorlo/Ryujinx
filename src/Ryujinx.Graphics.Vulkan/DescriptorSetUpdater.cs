@@ -110,7 +110,7 @@ namespace Ryujinx.Graphics.Vulkan
                 SwizzleComponent.Red,
                 SwizzleComponent.Green,
                 SwizzleComponent.Blue,
-                SwizzleComponent.Alpha), 1f);
+                SwizzleComponent.Alpha));
 
             _dummySampler = (SamplerHolder)gd.CreateSampler(new GAL.SamplerCreateInfo(
                 MinFilter.Nearest,
