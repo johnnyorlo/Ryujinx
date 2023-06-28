@@ -2,7 +2,6 @@
 using Ryujinx.Graphics.Shader;
 using Silk.NET.Vulkan;
 using System;
-using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace Ryujinx.Graphics.Vulkan
@@ -32,7 +31,6 @@ namespace Ryujinx.Graphics.Vulkan
 
         private bool[] _uniformSet;
         private bool[] _storageSet;
-        private Silk.NET.Vulkan.Buffer _cachedSupportBuffer;
 
         [Flags]
         private enum DirtyFlags
@@ -389,26 +387,6 @@ namespace Ryujinx.Graphics.Vulkan
                 {
                     Initialize(cbs, setIndex, dsc);
                 }
-
-                if (setIndex == PipelineBase.UniformSetIndex)
-                {
-                    Span<DescriptorBufferInfo> uniformBuffer = stackalloc DescriptorBufferInfo[1];
-
-                    if (!_uniformSet[0])
-                    {
-                        _cachedSupportBuffer = _gd.BufferManager.GetBuffer(cbs.CommandBuffer, _pipeline.SupportBufferUpdater.Handle, false).Get(cbs, 0, SupportBuffer.RequiredSize).Value;
-                        _uniformSet[0] = true;
-                    }
-
-                    uniformBuffer[0] = new DescriptorBufferInfo()
-                    {
-                        Offset = 0,
-                        Range = (ulong)SupportBuffer.RequiredSize,
-                        Buffer = _cachedSupportBuffer
-                    };
-
-                    dsc.UpdateBuffers(0, 0, uniformBuffer, DescriptorType.UniformBuffer);
-                }
             }
 
             foreach (ResourceBindingSegment segment in bindingSegments)
@@ -550,22 +528,6 @@ namespace Ryujinx.Graphics.Vulkan
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void UpdateAndBindUniformBufferPd(CommandBufferScoped cbs, PipelineBindPoint pbp)
         {
-            if (!_uniformSet[0])
-            {
-                Span<DescriptorBufferInfo> uniformBuffer = stackalloc DescriptorBufferInfo[1];
-
-                uniformBuffer[0] = new DescriptorBufferInfo()
-                {
-                    Offset = 0,
-                    Range = (ulong)SupportBuffer.RequiredSize,
-                    Buffer = _gd.BufferManager.GetBuffer(cbs.CommandBuffer, _pipeline.SupportBufferUpdater.Handle, false).Get(cbs, 0, SupportBuffer.RequiredSize).Value
-                };
-
-                _uniformSet[0] = true;
-
-                UpdateBuffers(cbs, pbp, 0, uniformBuffer, DescriptorType.UniformBuffer);
-            }
-
             var bindingSegments = _program.BindingSegments[PipelineBase.UniformSetIndex];
             var dummyBuffer = _dummyBuffer?.GetBuffer();
 
