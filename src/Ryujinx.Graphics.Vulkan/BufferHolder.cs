@@ -103,6 +103,22 @@ namespace Ryujinx.Graphics.Vulkan
             _flushLock = new ReaderWriterLock();
         }
 
+        public BufferHolder(VulkanRenderer gd, Device device, VkBuffer buffer, int size, Auto<MemoryAllocation>[] storageAllocations)
+        {
+            _gd = gd;
+            _device = device;
+            _waitable = new MultiFenceHolder(size);
+            _buffer = new Auto<DisposableBuffer>(new DisposableBuffer(gd.Api, device, buffer), _waitable, storageAllocations);
+            _bufferHandle = buffer.Handle;
+            Size = size;
+
+            _baseType = BufferAllocationType.Sparse;
+            _currentType = BufferAllocationType.Sparse;
+            DesiredType = BufferAllocationType.Sparse;
+
+            _flushLock = new ReaderWriterLock();
+        }
+
         public bool TryBackingSwap(ref CommandBufferScoped? cbs)
         {
             if (_swapQueued && DesiredType != _currentType)
@@ -242,6 +258,14 @@ namespace Ryujinx.Graphics.Vulkan
             }
         }
 
+        public void Pin()
+        {
+            if (_baseType == BufferAllocationType.Auto)
+            {
+                _baseType = _currentType;
+            }
+        }
+
         public unsafe Auto<DisposableBufferView> CreateView(VkFormat format, int offset, int size, Action invalidateView)
         {
             var bufferViewCreateInfo = new BufferViewCreateInfo
@@ -337,6 +361,16 @@ namespace Ryujinx.Graphics.Vulkan
             }
 
             return _buffer;
+        }
+
+        public Auto<MemoryAllocation> GetAllocation()
+        {
+            return _allocationAuto;
+        }
+
+        public (DeviceMemory, ulong) GetDeviceMemoryAndOffset()
+        {
+            return (_allocation.Memory, _allocation.Offset);
         }
 
         public void SignalWrite(int offset, int size)
@@ -807,7 +841,7 @@ namespace Ryujinx.Graphics.Vulkan
             {
                 _allocationAuto.DecrementReferenceCount();
             }
-            else
+            else if (_allocationAuto != null)
             {
                 _allocationAuto.Dispose();
             }
