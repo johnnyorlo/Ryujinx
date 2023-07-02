@@ -46,7 +46,7 @@ namespace Ryujinx.Graphics.Vulkan
 
         private bool _lastAccessIsWrite;
 
-        private readonly BufferAllocationType _baseType;
+        private BufferAllocationType _baseType;
         private BufferAllocationType _currentType;
         private bool _swapQueued;
 
